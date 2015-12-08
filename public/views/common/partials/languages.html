@@ -1,0 +1,7 @@
+<a class="dropdown-toggle count-info" uib-dropdown-toggle ng-init="ns='base.header.language'">
+    {{ 'base.header.languages' | translate }}
+</a>
+<ul class="dropdown-menu animated fadeInRight m-t-xs" ng-controller="translate.controller">
+    <li><a ng-click="changeLanguage('en')">{{ (ns+'.english') | translate }}</a></li>
+    <li><a ng-click="changeLanguage('fr')">{{ (ns+'.french') | translate }}</a></li>
+</ul>

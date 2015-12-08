@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CorpNet</title>
+
+    <link href="dist/app.min.css" rel="stylesheet">
+</head>
+
+
+<body ng-controller="main.controller" ng-class="!$state.current.data.includes && 'gray-bg'"
+      class="pace-done"  id="page-top">
+<div id="wrapper">
+    <div ng-if="$state.current.data.includes" ng-include="'views/common/left-sidebar.html'"></div>
+    <div ng-attr-id="{{$state.current.data.includes && 'page-wrapper'}}" ng-class="$state.current.data.includes && 'gray-bg'">
+        <div ng-if="$state.current.data.includes" ng-include="'views/common/header.html'"></div>
+
+        <div ui-view></div>
+
+        <div ng-if="$state.current.data.includes" ng-include="'views/common/chat.html'"></div>
+        <div ng-if="$state.current.data.includes" ng-include="'views/common/footer.html'"></div>
+    </div>
+    <div ng-if="$state.current.data.includes" ng-include="'views/common/right-sidebar.html'"></div>
+</div>
+<!-- End wrapper-->
+<script src="dist/vendor.min.js"></script>
+<script src="dist/app.min.js"></script>
+<script src="dist/templateCacheHtml.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+
+<script type="text/javascript">
+    'use strict';
+
+    try {
+        angular.element(document).ready(function() {
+            angular.bootstrap(document, ['otr']);
+        });
+    } catch (e) {
+        console.error(e.message);
+    }
+</script>
+</body>
+</html>

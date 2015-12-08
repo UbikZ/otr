@@ -1,0 +1,11 @@
+<div    ng-controller="login.controller" ng-init="ns='login'; login();"
+        class="middle-box text-center loginscreen  animated fadeInDown">
+    <div>
+        <h1 class="logo-name">CN+</h1>
+    </div>
+    <h3>{{ (ns+'.welcome') | translate }}</h3>
+    <p>{{ (ns+'.desscription') | translate }}</p>
+    <p>{{ (ns+'.login') | translate }}</p>
+    <button ng-click="login()" class="btn btn-primary block full-width m-b">{{ (ns+'.submit') | translate }}</button>
+    <p class="m-t"> <small>CorpNet &copy; 2015</small> </p>
+</div>

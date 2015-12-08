@@ -1,0 +1,40 @@
+<a class="dropdown-toggle count-info" uib-dropdown-toggle ng-init="ns='base.header.alert'">
+    <i class="fa fa-bell"></i> <span class="label label-primary">8</span>
+</a>
+<ul class="dropdown-menu dropdown-alerts">
+    <li>
+        <a ui-sref="inbox">
+            <div>
+                <i class="fa fa-envelope fa-fw"></i>
+                <span class="pull-right text-muted small">{{ (ns+'.time') | translate:'{ number: 3 }' }}</span>
+            </div>
+        </a>
+    </li>
+    <li class="divider"></li>
+    <li>
+        <a ui-sref="profile">
+            <div>
+                <i class="fa fa-twitter fa-fw"></i> {{ (ns+'.twitter') | translate:'{number: 5}' }}
+                <span class="pull-right text-muted small">{{ (ns+'.time') | translate:'{ number: 12 }' }}</span>
+            </div>
+        </a>
+    </li>
+    <li class="divider"></li>
+    <li>
+        <a ui-sref="grid_options">
+            <div>
+                <i class="fa fa-upload fa-fw"></i>
+                <span class="pull-right text-muted small">{{ (ns+'.time') | translate:'{ number: 26 }' }}</span>
+            </div>
+        </a>
+    </li>
+    <li class="divider"></li>
+    <li>
+        <div class="text-center link-block">
+            <a ui-sref="miscellaneous.notify">
+                <strong>{{ (ns+'.all') | translate }}</strong>
+                <i class="fa fa-angle-right"></i>
+            </a>
+        </div>
+    </li>
+</ul>

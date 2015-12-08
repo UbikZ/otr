@@ -1,0 +1,23 @@
+{
+  "env": {
+    "debug": false
+  },
+  "mongo": {
+    "uri": "mongodb://localhost:27017/otr"
+  },
+  "main": "app.js",
+  "path": {
+    "public": "./public",
+    "client": {
+      "views": "./public/views"
+    },
+    "server": {
+      "controller": "./src/server/controllers",
+      "socket": "./src/server/sockets",
+      "model": "./src/server/models"
+    }
+  },
+  "particularities": {
+    "jquery-slimscroll": "jquery-slimscroll/jquery.slimscroll"
+  }
+}

@@ -1,0 +1,70 @@
+<div class="wrapper wrapper-content animated fadeInRight" ng-init="ns='account.profile'">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="ibox">
+                <div class="ibox-content" ng-controller="form.profile.controller">
+                    <h4>{{ (ns+'.manage.title') | translate }}</h4>
+                    <form role="form" name="formProfile" novalidate ng-submit="update(profile)">
+                        <div class="form-group">
+                            <label>{{ (ns+'.manage.username.label') | translate }}</label>
+                            <input type="text" placeholder="{{ (ns+'.manage.username.input') | translate }}"
+                                   class="form-control" name="username"
+                                   ng-model="profile.userName" ng-minlength="3" ng-maxlength="20" required>
+                            <div class="m-t-xs" ng-show="formProfile.username.$invalid && formProfile.username.$dirty">
+                                <small class="text-danger help-block" ng-show="formProfile.username.$error.required">
+                                    {{ (ns+'.manage.username.error.required') | translate }}
+                                </small>
+                                <small class="text-danger help-block" ng-show="formProfile.username.$error.minlength">
+                                    {{ (ns+'.manage.username.error.minLength') | translate }}
+                                </small>
+                                <small class="text-danger help-block" ng-show="formProfile.username.$error.maxlength">
+                                    {{ (ns+'.manage.username.error.maxLength') | translate }}
+                                </small>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>{{ (ns+'.manage.firstname.label') | translate }}</label>
+                            <input type="text" placeholder="{{ (ns+'.manage.firstname.input') | translate }}"
+                                   class="form-control" name="firstname"
+                                   ng-model="profile.firstName" required>
+                            <div class="m-t-xs" ng-show="formProfile.firstname.$invalid && formProfile.firstname.$dirty">
+                                <small class="text-danger help-block" ng-show="formProfile.firstname.$error.required">
+                                    {{ (ns+'.manage.firstname.error.required') | translate }}
+                                </small>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>{{ (ns+'.manage.lastname.label') | translate }}</label>
+                            <input type="text" placeholder="{{ (ns+'.manage.lastname.input') | translate }}"
+                                   class="form-control" name="lastname"
+                                   ng-model="profile.lastName" required>
+                            <div class="m-t-xs" ng-show="formProfile.lastname.$invalid && formProfile.lastname.$dirty">
+                                <small class="text-danger help-block" ng-show="formProfile.lastname.$error.required">
+                                    {{ (ns+'.manage.lastname.error.required') | translate }}
+                                </small>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-sm btn-primary" type="submit" ng-disabled="formProfile.$invalid">
+                                <strong>{{ (ns+'.manage.submit') | translate }}</strong>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="ibox">
+                <div class="ibox-content">
+                    <h4>{{ (ns+'.identity.title') | translate }}</h4>
+                    <form role="form">
+                        <div class="form-group">
+                            <label>{{ (ns+'.identity.email') | translate }}</label>
+                            <p class="form-control-static">{{ $root.user.info.email }}</p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
