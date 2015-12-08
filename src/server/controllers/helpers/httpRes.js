@@ -4,12 +4,13 @@ var moment = require('moment');
 var merge = require('merge');
 
 module.exports = {
-  sendJSON: function(res, status, data, err) {
+  response: function(res, status, data, message, err) {
     var dat = merge({
       date: moment().format('YYYY-MM-DD HH:mm:SS'),
       code: status,
       error: err,
-      message: null
+      message: message,
+      data: {},
     }, data);
 
     res.status(status);
