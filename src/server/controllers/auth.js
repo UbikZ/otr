@@ -28,13 +28,6 @@ module.exports.controller = function(app, config) {
    */
   app.post('/signin', function(req, res) {
     var reqObject = { username: req.body.username, password: req.body.password };
-
-    console.log(ontimeRequester.requestToken(reqObject));
-  });
-
-  app.get('/api/test', function(req, res) {
-    var reqObject = { username: 'gmalet', password: 'Gabyfric188' };
-
     ontimeRequester.requestToken(reqObject, function(obj) {
       console.log(obj);
     });
