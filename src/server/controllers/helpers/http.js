@@ -36,9 +36,22 @@ function ontimeRequestToken(req, res, cb) {
     if (result.error) {
       response(res, 403, {error: result}, result.error_description, result.error);
     } else if (result.access_token) {
+      cb(merge(result.data, {access_token: result.access_token}));
+    } else {
+      response(res, 500, {}, "Internal error during OnTime /authenticate.");
+    }
+  });
+}
+
+function ontimeMe(access_token, res, cb) {
+  ontimeRequester.me(access_token, function (result) {
+    result = JSON.parse(result);
+    if (result.error) {
+      response(res, 403, {error: result}, result.error_description, result.error);
+    } else if (result.data) {
       cb(result.data);
     } else {
-      response(res, 500, {}, "Internal error during OnTime Request Token.");
+      response(res, 500, {}, "Internal error during OnTime /me.");
     }
   });
 }
@@ -47,4 +60,5 @@ module.exports = {
   response: response,
   ensureAuthorized: ensureAuthorized,
   ontimeRequestToken: ontimeRequestToken,
+  ontimeMe: ontimeMe,
 };

@@ -7,6 +7,7 @@ module.exports = (function() {
     id: String,
     identity: {
       token: String,
+      ontime_token: String,
     },
     name: {
       username: String,

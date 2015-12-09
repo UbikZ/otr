@@ -35,9 +35,14 @@ module.exports.controller = function (app, config) {
         if (err) {
           http.response(res, 500, {}, "An error occurred.", err);
         } else if (user) {
-          http.response(res, 200, {user: user});
+          user.identity.ontime_token = userData.access_token;
+          user.save(function (err, newUser) {
+            console.log(newUser);
+            http.response(res, 200, {user: newUser});
+          });
         } else {
           var userModel = new User();
+          userModel.identity.ontime_token = userData.access_token;
           userModel.info.email = userData.email;
           userModel.name.username = req.body.username;
           userModel.name.firstname = userData.first_name;
@@ -67,4 +72,21 @@ module.exports.controller = function (app, config) {
       }
     });
   });
+
+  /*
+   * Ontime Me
+   */
+  app.get(prefix + '/me', http.ensureAuthorized, function (req, res) {
+    User.findOne({"identity.token": req.token}, function (err, user) {
+      if (err) {
+        http.response(res, 500, "An error occurred.", err);
+      } else if (user) {
+        http.response(res, 200, {user: user});
+      } else {
+        http.response(res, 404, {}, "User not found.", err);
+      }
+    });
+  });
+
+
 };
