@@ -5,8 +5,7 @@ var qs = require('querystring');
 var ontimeConfig = require('../../config/ontime.json');
 
 module.exports = {
-  requestToken: function(authObject, cb) {
-    var json = '{}';
+  requestToken: function (authObject, cb) {
     var url = ontimeConfig.ontime_url + '/api/oauth2/token?' +
       qs.stringify({
         'grant_type': 'password',
