@@ -57,7 +57,6 @@ module.exports.controller = function (app, config) {
    * Me
    */
   app.get(prefix + '/me', http.ensureAuthorized, function (req, res) {
-    console.log(req.token);
     User.findOne({"identity.token": req.token}, function (err, user) {
       if (err) {
         http.response(res, 500, "An error occurred.", err);

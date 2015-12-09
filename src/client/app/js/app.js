@@ -41,12 +41,12 @@ app.config(require('./config'))
       ioSocket: io(),
     });
   })
-  .run(function(auth, $rootScope, $state, store, jwtHelper, $location, socket) {
+  .run(function (auth, $rootScope, $state, store, jwtHelper, $location, socket) {
     auth.hookEvents();
     $rootScope.$state = $state;
     $rootScope.user = {};
 
-    $rootScope.$on('$locationChangeStart', function() {
+    $rootScope.$on('$locationChangeStart', function () {
       var token = store.get('token');
       if (token) {
         if (!jwtHelper.isTokenExpired(token)) {

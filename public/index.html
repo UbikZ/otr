@@ -13,10 +13,11 @@
 
 
 <body ng-controller="main.controller" ng-class="!$state.current.data.includes && 'gray-bg'"
-      class="pace-done"  id="page-top">
+      class="pace-done" id="page-top">
 <div id="wrapper">
     <div ng-if="$state.current.data.includes" ng-include="'views/common/left-sidebar.html'"></div>
-    <div ng-attr-id="{{$state.current.data.includes && 'page-wrapper'}}" ng-class="$state.current.data.includes && 'gray-bg'">
+    <div ng-attr-id="{{$state.current.data.includes && 'page-wrapper'}}"
+         ng-class="$state.current.data.includes && 'gray-bg'">
         <div ng-if="$state.current.data.includes" ng-include="'views/common/header.html'"></div>
 
         <div ui-view></div>
@@ -34,7 +35,7 @@
     'use strict';
 
     try {
-        angular.element(document).ready(function() {
+        angular.element(document).ready(function () {
             angular.bootstrap(document, ['otr']);
         });
     } catch (e) {
