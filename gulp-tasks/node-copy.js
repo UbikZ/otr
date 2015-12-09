@@ -15,6 +15,8 @@ module.exports = function(gulp, plugins, npmPackages, config) {
         nodePath + '/font-awesome/less/!(variables).less',
         // Animate
         nodePath + '/animate.css/animate.css',
+        // Spinkit
+        nodePath + '/spinkit/css/spinkit.css',
         // Toastr
         nodePath + '/toastr/build/toastr.css',
       ], { base: nodePath }

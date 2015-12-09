@@ -42,6 +42,7 @@
     "pace": "HubSpot/pace",
     "querystring": "^0.2.0",
     "request": "^2.67.0",
+    "spinkit": "^1.2.5",
     "toastr": "^2.1.2",
     "yargs": "^3.27.0"
   }
