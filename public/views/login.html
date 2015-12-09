@@ -32,10 +32,23 @@
                     {{ (ns+'.passwordError') | translate }}
                 </p>
             </div>
-            <button ng-click="login(userLogin)" ng-disabled="!loginForm.$valid"
+            <button ng-click="login(userLogin)" ng-disabled="!loginForm.$valid || loading"
                     type="submit" class="btn btn-primary block full-width m-b">
                 {{ (ns+'.submit') | translate }}
             </button>
+            <p class="help-block">
+                <div class="sk-cube-grid" ng-if="loading">
+                    <div class="sk-cube sk-cube1"></div>
+                    <div class="sk-cube sk-cube2"></div>
+                    <div class="sk-cube sk-cube3"></div>
+                    <div class="sk-cube sk-cube4"></div>
+                    <div class="sk-cube sk-cube5"></div>
+                    <div class="sk-cube sk-cube6"></div>
+                    <div class="sk-cube sk-cube7"></div>
+                    <div class="sk-cube sk-cube8"></div>
+                    <div class="sk-cube sk-cube9"></div>
+                </div>
+            </p>
         </form>
         <p class="m-t">
             <small>OTR &copy; 2014-2015</small>
