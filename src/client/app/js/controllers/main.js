@@ -3,7 +3,7 @@
 var toastr = require('toastr');
 
 module.exports = ['$scope', '$rootScope',
-  function($scope, $rootScope) {
-    console.log('main controller');
+  function ($scope, $rootScope) {
+    // todo
   }
 ];
