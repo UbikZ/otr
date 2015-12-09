@@ -1,1 +1,32 @@
-// users
+<div class="wrapper wrapper-content animated fadeIn ng-scope" ng-controller="user.controller">
+    <div class="row">
+        <div class="col-lg-4" ng-repeat="user in users">
+            <div class="contact-box">
+                <div>
+                    <div class="col-sm-4">
+                        <div class="text-center">
+                            <img gravatar-src="'{{ user.info.email }}'" gravatar-size="80" class="img-circle">
+
+                            <div class="m-t-xs font-bold">{{ user.info.job }}</div>
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <h3><strong>{{ user.name.firstname }} {{ user.name.lastname }}</strong></h3>
+
+                        <p>
+                            <i class="fa fa-map-marker"></i> Bordeaux, France<br/>
+                            <i class="fa fa-skype"></i> pseudo.skype.33<br/>
+                        </p>
+                        <address>
+                            <strong>Galilée</strong><br>
+                            P.A. de la Gardette<br>
+                            Rue Cantelaudette, 33310 Lormont<br>
+                            <abbr title="Phone">P:</abbr> (+33) 05 56 01 02 03
+                        </address>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
