@@ -37,7 +37,11 @@ module.exports.controller = function (app, config) {
         } else if (user) {
           user.identity.ontime_token = userData.access_token;
           user.save(function (err, newUser) {
-            http.response(res, 200, {user: newUser});
+            if (err) {
+              http.response(res, 500, {}, "An error occurred.", err);
+            } else {
+              http.response(res, 200, {user: newUser});
+            }
           });
         } else {
           var userModel = new User();
