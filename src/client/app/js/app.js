@@ -36,9 +36,17 @@ app.config(require('./config'))
     $rootScope.isAuthenticated = false;
     $rootScope.user = $localStorage.user ? JSON.parse($localStorage.user) : undefined;
 
+
+    $rootScope.logout = function () {
+      $rootScope.isAuthenticated = false;
+      $rootScope.user = undefined;
+      delete $localStorage.user;
+      delete $localStorage.token;
+      delete $localStorage.ot_token;
+    };
+
     $rootScope.$on('$locationChangeStart', function () {
-      var token = $localStorage.token;
-      if (token) {
+      if ($localStorage.token && $localStorage.ot_token) {
         $rootScope.isAuthenticated = true;
         if ($location.path() == '/login') {
           $location.path('/');
@@ -52,6 +60,7 @@ app.config(require('./config'))
         }
         $localStorage.user = JSON.stringify($rootScope.user);
       } else {
+        $rootScope.logout();
         $location.path('/login');
       }
     });

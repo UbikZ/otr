@@ -14,7 +14,7 @@
             <li class="dropdown" uib-dropdown ng-include="'views/common/partials/messages.html'"></li>
             <li class="dropdown" uib-dropdown ng-include="'views/common/partials/alerts.html'"></li>-->
             <li ng-controller="login.controller">
-                <a ui-sref="login" ng-click="logout()">
+                <a ui-sref="login" ng-click="$root.logout()">
                     <i class="fa fa-sign-out"></i> Log out
                 </a>
             </li>

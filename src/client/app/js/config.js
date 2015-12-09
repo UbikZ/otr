@@ -26,6 +26,10 @@ module.exports = [
         url: '/home',
         templateUrl: env.templatePath('home.html'),
       })
+      .state('app.users', {
+        url: '/home',
+        templateUrl: env.templatePath('users.html'),
+      })
       .state('account', {
         abstract: true,
         url: '/account',
@@ -54,8 +58,8 @@ module.exports = [
         return {
           'request': function (config) {
             config.headers = config.headers || {};
-            if ($localStorage.token) {
-              config.headers.Authorization = 'Bearer ' + $localStorage.token;
+            if ($localStorage.token && $localStorage.ot_token) {
+              config.headers.Authorization = 'Bearer ' + $localStorage.token + ' ' + $localStorage.token;
             }
 
             return config;
