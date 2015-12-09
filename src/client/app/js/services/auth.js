@@ -1,10 +1,11 @@
 'use strict';
 
 var angular = require('angular');
+var env = require('../env');
 
-module.exports = ['$http', '$localStorage',
-  function($http, $localStorage) {
-    var baseUrl = "http://localhost:3000/api/v1";
+module.exports = ['$http',
+  function($http) {
+    var baseUrl = env.apiUrl;
 
     return {
       authenticate: function(data, success, error) {
