@@ -4,7 +4,6 @@ var express = require('express');
 var http = require('http');
 var path = require('path');
 var bodyParser = require('body-parser');
-var jwt = require("jsonwebtoken");
 var config = require('./config.json');
 var argv = require('yargs').argv;
 var fs = require('fs');

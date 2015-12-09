@@ -9,9 +9,9 @@ module.exports = (function() {
       token: String,
     },
     name: {
-      userName: String,
-      firstName: String,
-      lastName: String
+      username: String,
+      firstname: String,
+      lastname: String
     },
     info: {
       job: String,

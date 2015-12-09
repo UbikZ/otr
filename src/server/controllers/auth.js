@@ -1,35 +1,67 @@
 'use strict';
 
 var User = require('../models/user');
-var httpRes = require('./helpers/httpRes');
-var ontimeRequester = require('./helpers/ontime');
+var http = require('./helpers/http');
+var jwt = require("jsonwebtoken");
 
-module.exports.controller = function(app, config) {
+module.exports.controller = function (app, config) {
+
+  var prefix = '/api/v' + config.api.version;
 
   /*
    * Authentication to get user token
    */
-  app.post('api/v' + config.api.version + '/authenticate', function(req, res) {
-    User.findOne({email: req.body.email, password: req.body.password}, function(err, user) {
-      if (err) {
-        httpRes.response(res, 404, {}, "Error occurred", err);
-      } else {
-        if (user) {
-          httpRes.response(res, 404, { user: user, token: user.identity.token }, "Incorrect email/password", err);
+  app.post(prefix + '/authenticate', function (req, res) {
+    http.ontimeRequestToken(req, res, function(userData) {
+      User.findOne({email: userData.email}, function (err, user) {
+        if (err) {
+          http.response(res, 404, {}, "An error occurred.", err);
+        } else if (user) {
+          http.response(res, 200, {user: user, token: user.identity.token});
         } else {
-          httpRes.response(res, 404, {}, "Incorrect email/password", err);
+          http.response(res, 404, {}, "Incorrect email/password.", err);
         }
-      }
+      });
     });
   });
 
   /*
    * Sigin with OnTime
    */
-  app.post('/signin', function(req, res) {
-    var reqObject = { username: req.body.username, password: req.body.password };
-    ontimeRequester.requestToken(reqObject, function(obj) {
-      console.log(obj);
+  app.post(prefix + '/signin', function (req, res) {
+    http.ontimeRequestToken(req, res, function(userData) {
+      User.findOne({email: userData.email}, function (err, user) {
+        if (err) {
+          http.response(res, 404, {}, "An error occurred.", err);
+        } else if (user) {
+          http.response(res, 404, {}, "User already exists.", err);
+        } else {
+          var userModel = new User();
+          userModel.info.email = userData.email;
+          userModel.name.username = req.body.username;
+          userModel.name.firstname = userData.first_name;
+          userModel.name.lastname = userData.last_name;
+          userModel.save(function (err, user) {
+            user.identity.token = jwt.sign(user, process.env.JWT_SECRET);
+            user.save(function (err, newUser) {
+              http.response(res, 200, {user: newUser, token: newUser.indentity.token });
+            });
+          })
+        }
+      });
+    });
+  });
+
+  /*
+   * Me
+   */
+  app.get(prefix + '/me', http.ensureAuthorized, function(req, res) {
+    User.findOne({"identity.token": req.token}, function(err, user) {
+      if (err) {
+        http.response(res, 500, "An error occurred.", err);
+      } else {
+        http.response(res, 200, {user: user });
+      }
     });
   });
 };
