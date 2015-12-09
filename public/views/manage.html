@@ -1,26 +1,17 @@
-<div class="wrapper wrapper-content animated fadeInRight" ng-init="ns='account.profile'">
+<div class="wrapper wrapper-content animated fadeIn" ng-init="ns='account.profile'">
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-12">
             <div class="ibox">
                 <div class="ibox-content" ng-controller="form.profile.controller">
                     <h4>{{ (ns+'.manage.title') | translate }}</h4>
                     <form role="form" name="formProfile" novalidate ng-submit="update(profile)">
                         <div class="form-group">
-                            <label>{{ (ns+'.manage.username.label') | translate }}</label>
-                            <input type="text" placeholder="{{ (ns+'.manage.username.input') | translate }}"
-                                   class="form-control" name="username"
-                                   ng-model="profile.userName" ng-minlength="3" ng-maxlength="20" required>
-                            <div class="m-t-xs" ng-show="formProfile.username.$invalid && formProfile.username.$dirty">
-                                <small class="text-danger help-block" ng-show="formProfile.username.$error.required">
-                                    {{ (ns+'.manage.username.error.required') | translate }}
-                                </small>
-                                <small class="text-danger help-block" ng-show="formProfile.username.$error.minlength">
-                                    {{ (ns+'.manage.username.error.minLength') | translate }}
-                                </small>
-                                <small class="text-danger help-block" ng-show="formProfile.username.$error.maxlength">
-                                    {{ (ns+'.manage.username.error.maxLength') | translate }}
-                                </small>
-                            </div>
+                            <label>{{ (ns+'.identity.email') | translate }}</label>
+                            <p class="form-control-static">{{ $root.user.info.email }}</p>
+                        </div>
+                        <div class="form-group">
+                            <label>{{ (ns+'.identity.username') | translate }}</label>
+                            <p class="form-control-static">{{ $root.user.name.username }}</p>
                         </div>
                         <div class="form-group">
                             <label>{{ (ns+'.manage.firstname.label') | translate }}</label>
@@ -45,22 +36,22 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <button class="btn btn-sm btn-primary" type="submit" ng-disabled="formProfile.$invalid">
-                                <strong>{{ (ns+'.manage.submit') | translate }}</strong>
-                            </button>
+                            <label>{{ (ns+'.manage.job.label') | translate }}</label>
+                            <input type="text" placeholder="{{ (ns+'.manage.job.input') | translate }}"
+                                   class="form-control" name="job"
+                                   ng-model="profile.job" required>
+                            <div class="m-t-xs" ng-show="formProfile.job.$invalid && formProfile.job.$dirty">
+                                <small class="text-danger help-block" ng-show="formProfile.job.$error.required">
+                                    {{ (ns+'.manage.job.error.required') | translate }}
+                                </small>
+                            </div>
                         </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6">
-            <div class="ibox">
-                <div class="ibox-content">
-                    <h4>{{ (ns+'.identity.title') | translate }}</h4>
-                    <form role="form">
-                        <div class="form-group">
-                            <label>{{ (ns+'.identity.email') | translate }}</label>
-                            <p class="form-control-static">{{ $root.user.info.email }}</p>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <button class="btn btn-sm btn-success pull-right" type="submit" ng-disabled="formProfile.$invalid">
+                                    <strong>{{ (ns+'.manage.submit') | translate }}</strong>
+                                </button>
+                            </div>
                         </div>
                     </form>
                 </div>
