@@ -27,7 +27,7 @@ module.exports = [
         templateUrl: env.templatePath('home.html'),
       })
       .state('app.users', {
-        url: '/home',
+        url: '/users',
         templateUrl: env.templatePath('users.html'),
       })
       .state('account', {
