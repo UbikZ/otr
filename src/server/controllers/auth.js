@@ -2,6 +2,7 @@
 
 var User = require('../models/user');
 var http = require('./helpers/http');
+var otrConf = require('../config/ontime.json');
 var jwt = require("jsonwebtoken");
 
 module.exports.controller = function (app, config) {
@@ -30,7 +31,7 @@ module.exports.controller = function (app, config) {
    */
   app.post(prefix + '/signin', function (req, res) {
     http.ontimeRequestToken(req, res, function(userData) {
-      User.findOne({email: userData.email}, function (err, user) {
+      User.findOne({"info.email": userData.email}, function (err, user) {
         if (err) {
           http.response(res, 404, {}, "An error occurred.", err);
         } else if (user) {
@@ -42,9 +43,9 @@ module.exports.controller = function (app, config) {
           userModel.name.firstname = userData.first_name;
           userModel.name.lastname = userData.last_name;
           userModel.save(function (err, user) {
-            user.identity.token = jwt.sign(user, process.env.JWT_SECRET);
+            user.identity.token = jwt.sign(user, otrConf.jwt_secret);
             user.save(function (err, newUser) {
-              http.response(res, 200, {user: newUser, token: newUser.indentity.token });
+              http.response(res, 200, {user: newUser });
             });
           })
         }

@@ -1,0 +1,8 @@
+{
+  "jwt_secret": "xxxx",
+  "client_id": "xxxxx",
+  "client_secret": "xxxxx",
+  "api_version": "x",
+  "ontime_url": "https://xxxxx.xxxxx.com",
+  "scope": "xxxxx"
+}

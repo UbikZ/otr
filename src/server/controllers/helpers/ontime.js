@@ -2,7 +2,7 @@
 
 var request = require('request');
 var qs = require('querystring');
-var ontimeConfig = require('./config/ontime.json');
+var ontimeConfig = require('../../config/ontime.json');
 
 module.exports = {
   requestToken: function(authObject, cb) {
