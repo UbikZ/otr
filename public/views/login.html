@@ -1,11 +1,44 @@
-<div    ng-controller="login.controller" ng-init="ns='login'; login();"
-        class="middle-box text-center loginscreen  animated fadeInDown">
+<div ng-controller="login.controller" ng-init="ns='login'"
+     class="middle-box text-center loginscreen  animated fadeInDown">
     <div>
-        <h1 class="logo-name">CN+</h1>
+        <div>
+            <h1 class="logo-name">OTR</h1>
+        </div>
+        <h3>{{ (ns+'.welcome') | translate }}</h3>
+
+        <p>{{ (ns+'.description') | translate }}
+        </p>
+
+        <p>{{ (ns+'.login') | translate }}</p>
+
+        <form class="m-t" role="form" name="loginForm" novalidate>
+            <div class="form-group"
+                 ng-class="{ 'has-error': loginForm.username.$invalid && loginForm.username.$dirty }">
+                <input ng-model="userLogin.username" name="username"
+                       type="text" class="form-control" placeholder="{{ (ns+'.username') | translate }}" required>
+
+                <p class="help-block has-error"
+                   ng-show="loginForm.username.$dirty && loginForm.username.$error.required">
+                    {{ (ns+'.usernameError') | translate }}
+                </p>
+            </div>
+            <div class="form-group"
+                 ng-class="{ 'has-error': loginForm.password.$invalid && loginForm.password.$dirty }">
+                <input ng-model="userLogin.password" name="password"
+                       type="password" class="form-control" placeholder="{{ (ns+'.password') | translate }}" required>
+
+                <p class="help-block has-error"
+                   ng-show="loginForm.password.$dirty && loginForm.password.$error.required">
+                    {{ (ns+'.passwordError') | translate }}
+                </p>
+            </div>
+            <button ng-click="login(userLogin)" ng-disabled="!loginForm.$valid"
+                    type="submit" class="btn btn-primary block full-width m-b">
+                {{ (ns+'.submit') | translate }}
+            </button>
+        </form>
+        <p class="m-t">
+            <small>OTR &copy; 2014-2015</small>
+        </p>
     </div>
-    <h3>{{ (ns+'.welcome') | translate }}</h3>
-    <p>{{ (ns+'.desscription') | translate }}</p>
-    <p>{{ (ns+'.login') | translate }}</p>
-    <button ng-click="login()" class="btn btn-primary block full-width m-b">{{ (ns+'.submit') | translate }}</button>
-    <p class="m-t"> <small>OTR &copy; 2015</small> </p>
 </div>

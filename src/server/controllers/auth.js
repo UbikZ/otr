@@ -35,7 +35,7 @@ module.exports.controller = function (app, config) {
         if (err) {
           http.response(res, 500, {}, "An error occurred.", err);
         } else if (user) {
-          http.response(res, 404, {}, "User already exists.", err);
+          http.response(res, 200, {user: user});
         } else {
           var userModel = new User();
           userModel.info.email = userData.email;
