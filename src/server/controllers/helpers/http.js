@@ -31,13 +31,11 @@ function ensureAuthorized (req, res, next) {
 }
 
 function ontimeRequestToken (req, res, cb) {
-  console.log(req.body);
   ontimeRequester.requestToken({username: req.body.username, password: req.body.password}, function (result) {
     if (result.error) {
       response(res, 403, {}, result.error_description, result.error);
-    } else if (result.access_token) {
-      var userData = result.data;
-      cb(userData);
+    } else if (result.access_token != "undefined") {
+      cb(JSON.parse(result).data);
     } else {
       response(res, 500, {}, "Internal error during OnTime Request Token.");
     }
