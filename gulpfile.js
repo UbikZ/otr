@@ -37,6 +37,7 @@ var browserDependencies = [
   'angular-ui-bootstrap',
   'angular-translate',
   'bootstrap-ui',
+  'ngStorage',
   'jquery',
   'jquery-ui',
   'jquery-slimscroll',

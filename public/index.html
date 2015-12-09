@@ -22,7 +22,6 @@
 
         <div ui-view></div>
 
-        <div ng-if="$state.current.data.includes" ng-include="'views/common/chat.html'"></div>
         <div ng-if="$state.current.data.includes" ng-include="'views/common/footer.html'"></div>
     </div>
     <div ng-if="$state.current.data.includes" ng-include="'views/common/right-sidebar.html'"></div>
@@ -30,7 +29,6 @@
 <!-- End wrapper-->
 <script src="dist/vendor.min.js"></script>
 <script src="dist/app.min.js"></script>
-<script src="dist/templateCacheHtml.js"></script>
 <script type="text/javascript">
     'use strict';
 

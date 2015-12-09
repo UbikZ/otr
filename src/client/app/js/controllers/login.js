@@ -2,8 +2,8 @@
 
 var toastr = require('toastr');
 
-module.exports = ['$scope', '$http', 'socket', '$location',
-  function ($scope, $http, socket, $location) {
+module.exports = ['$scope', 'authService',
+  function ($scope) {
     $scope.login = function () {
 
     };

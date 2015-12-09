@@ -9,7 +9,7 @@ module.exports = function(gulp, plugins, npmPackages, config) {
         quotes: true
       }))
       .pipe(plugins.angularTemplateCache('templateCacheHtml.js', {
-        module: 'corpnet',
+        module: 'otr',
       }))
       .pipe(gulp.dest(config.path.public + '/dist'));
   };
