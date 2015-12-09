@@ -38,7 +38,7 @@ module.exports.controller = function (app, config) {
           user.name.firstname = data.firstname;
         }
         if (data.lastname) {
-          user.name.lasntame = data.lastname;
+          user.name.lastname = data.lastname;
         }
         if (data.job) {
           user.info.job = data.job;
