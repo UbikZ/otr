@@ -44,7 +44,6 @@ var browserDependencies = [
   'oclazyload',
   'pace',
   'toastr',
-  'ng-focus-if',
 ];
 
 config.env.current = process.env.NODE_ENV || argv.env;

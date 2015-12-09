@@ -29,7 +29,7 @@ module.exports.controller = function (app, config) {
   /*
    * Sigin with OnTime
    */
-  app.post(prefix + '/signin', function (req, res) {
+  app.post(prefix + '/sign-up', function (req, res) {
     http.ontimeRequestToken(req, res, function (userData) {
       User.findOne({"info.email": userData.email}, function (err, user) {
         if (err) {

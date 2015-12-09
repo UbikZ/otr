@@ -18,7 +18,6 @@
   },
   "dependencies": {
     "angular": "^1.4.7",
-    "angular-cookies": "^1.4.7",
     "angular-gravatar": "^0.4.1",
     "angular-translate": "^2.8.1",
     "angular-ui-bootstrap": "^0.14.3",
@@ -38,7 +37,7 @@
     "metismenu": "^2.2.0",
     "moment": "^2.10.6",
     "mongoose": "^4.2.4",
-    "ng-focus-if": "^1.0.2",
+    "ngstorage": "^0.3.10",
     "oclazyload": "^1.0.6",
     "pace": "HubSpot/pace",
     "querystring": "^0.2.0",
