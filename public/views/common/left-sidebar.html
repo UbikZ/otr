@@ -20,7 +20,7 @@
                     </ul>
                 </div>
                 <div class="logo-element">
-                    CN
+                    OTR
                 </div>
             </li>
             <li ui-sref-active="active">
@@ -38,11 +38,15 @@
                     <li ui-sref-active="active">
                         <a ui-sref="account.manage">{{ (ns+'.account.manage') | translate }}</a>
                     </li>
-                    <li ui-sref-active="active">
-                        <a ui-sref="account.ontime">{{ (ns+'.account.ontime') | translate }}</a>
-                    </li>
                 </ul>
             </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.users">
+                    <i class="fa fa-fw fa-users"></i>
+                    <span class="nav-label">{{(ns+'.users') | translate }}</span>
+                </a>
+            </li>
+
         </ul>
     </div>
 </nav>
