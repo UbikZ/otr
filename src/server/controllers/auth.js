@@ -75,17 +75,9 @@ module.exports.controller = function (app, config) {
   /*
    * Ontime Me
    */
-  app.get(prefix + '/me', http.ensureAuthorized, function (req, res) {
-    User.findOne({"identity.token": req.token}, function (err, user) {
-      if (err) {
-        http.response(res, 500, "An error occurred.", err);
-      } else if (user) {
-        http.response(res, 200, {user: user});
-      } else {
-        http.response(res, 404, {}, "User not found.", err);
-      }
+  app.get(prefix + '/me-ontime', http.ensureAuthorized, function (req, res) {
+    http.ontimeMe(req, res, function (userData) {
+      http.response(res, 200, {ontime_user: userData});
     });
   });
-
-
 };

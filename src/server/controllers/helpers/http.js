@@ -18,12 +18,14 @@ function response(res, status, data, message, err) {
 }
 
 function ensureAuthorized(req, res, next) {
-  var bearerToken;
+  var bearerToken, bearerOtToken;
   var bearerHeader = req.headers["authorization"];
   if (typeof bearerHeader !== 'undefined') {
     var bearer = bearerHeader.split(" ");
     bearerToken = bearer[1];
+    bearerOtToken = bearer[2];
     req.token = bearerToken;
+    req.ot_token = bearerOtToken;
     next();
   } else {
     res.sendStatus(403);
@@ -43,8 +45,8 @@ function ontimeRequestToken(req, res, cb) {
   });
 }
 
-function ontimeMe(access_token, res, cb) {
-  ontimeRequester.me(access_token, function (result) {
+function ontimeMe(req, res, cb) {
+  ontimeRequester.me(req.ot_token, function (result) {
     result = JSON.parse(result);
     if (result.error) {
       response(res, 403, {error: result}, result.error_description, result.error);

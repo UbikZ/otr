@@ -6,6 +6,7 @@ var ontimeConfig = require('../../config/ontime.json');
 
 function req(url, cb) {
   request(url, function (error, response, body) {
+    console.log('# Ontime Call : ' + url);
     if (error && response.statusCode != 200) {
       console.log('Error while requesting (' + url + ').');
     }
