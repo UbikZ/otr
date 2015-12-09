@@ -37,7 +37,6 @@ module.exports.controller = function (app, config) {
         } else if (user) {
           user.identity.ontime_token = userData.access_token;
           user.save(function (err, newUser) {
-            console.log(newUser);
             http.response(res, 200, {user: newUser});
           });
         } else {
@@ -48,7 +47,7 @@ module.exports.controller = function (app, config) {
           userModel.name.firstname = userData.first_name;
           userModel.name.lastname = userData.last_name;
           userModel.save(function (err, user) {
-            user.identity.token = jwt.sign(user, otrConf.jwt_secret);
+            user.identity.token = jwt.sign(user._id, otrConf.jwt_secret);
             user.save(function (err, newUser) {
               http.response(res, 200, {user: newUser});
             });
