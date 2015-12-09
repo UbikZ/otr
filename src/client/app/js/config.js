@@ -59,7 +59,7 @@ module.exports = [
           'request': function (config) {
             config.headers = config.headers || {};
             if ($localStorage.token && $localStorage.ot_token) {
-              config.headers.Authorization = 'Bearer ' + $localStorage.token + ' ' + $localStorage.token;
+              config.headers.Authorization = 'Bearer ' + $localStorage.token + ' ' + $localStorage.ot_token;
             }
 
             return config;
