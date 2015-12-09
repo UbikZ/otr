@@ -32,17 +32,13 @@ module.exports = [
         templateUrl: env.templatePath('common/content.html'),
         data: {includes: true, requiresLogin: true},
       })
-      .state('account.profile', {
-        url: '/profile',
-        templateUrl: env.templatePath('profile.html'),
+      .state('account.ontime', {
+        url: '/ontime',
+        templateUrl: env.templatePath('ontime.html'),
       })
       .state('account.manage', {
         url: '/manage',
         templateUrl: env.templatePath('manage.html'),
-      })
-      .state('account.contact', {
-        url: '/contact',
-        templateUrl: env.templatePath('contact.html'),
       })
       .state('login', {
         url: '/login',

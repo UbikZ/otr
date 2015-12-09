@@ -14,5 +14,12 @@ module.exports = ['$scope', '$rootScope', 'authService', '$location', '$localSto
         toastr.error(err.message);
       });
     };
+
+    $scope.logout = function () {
+      $rootScope.isAuthenticated = false;
+      $rootScope.user = undefined;
+      delete $localStorage.user;
+      delete $localStorage.token;
+    }
   }
 ];

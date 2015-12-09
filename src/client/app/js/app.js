@@ -34,6 +34,7 @@ app.config(require('./config'))
   .run(function ($rootScope, $state, $localStorage, $location, authService) {
     $rootScope.$state = $state;
     $rootScope.isAuthenticated = false;
+    $rootScope.user = $localStorage.user ? JSON.parse($localStorage.user) : undefined;
 
     $rootScope.$on('$locationChangeStart', function () {
       var token = $localStorage.token;
@@ -49,6 +50,7 @@ app.config(require('./config'))
             console.error(err);
           });
         }
+        $localStorage.user = JSON.stringify($rootScope.user);
       } else {
         $location.path('/login');
       }

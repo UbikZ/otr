@@ -8,7 +8,7 @@
                     <a class="dropdown-toggle" uib-dropdown-toggle>
                             <span class="clear">
                                 <span class="block m-t-xs">
-                                    <strong class="font-bold">{{ $root.user.name.username }}</strong>
+                                    <strong class="font-bold">{{ $root.user.name.firstname }} {{ $root.user.name.lastname }}</strong>
                              </span>
                                 <span class="text-muted text-xs block">{{ $root.user.info.job }} <b class="caret"></b></span>
                             </span>
@@ -36,13 +36,10 @@
                 </a>
                 <ul class="nav nav-second-level collapse" ng-class="{in: $state.includes('account.*')}">
                     <li ui-sref-active="active">
-                        <a ui-sref="account.profile">{{ (ns+'.account.profile') | translate }}</a>
-                    </li>
-                    <li ui-sref-active="active">
                         <a ui-sref="account.manage">{{ (ns+'.account.manage') | translate }}</a>
                     </li>
                     <li ui-sref-active="active">
-                        <a ui-sref="account.contact">{{ (ns+'.account.contact') | translate }}</a>
+                        <a ui-sref="account.ontime">{{ (ns+'.account.ontime') | translate }}</a>
                     </li>
                 </ul>
             </li>
