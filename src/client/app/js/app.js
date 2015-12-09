@@ -34,7 +34,6 @@ app.config(require('./config'))
   .run(function ($rootScope, $state, $localStorage, $location, authService) {
     $rootScope.$state = $state;
     $rootScope.isAuthenticated = false;
-    $rootScope.user = {};
 
     $rootScope.$on('$locationChangeStart', function () {
       var token = $localStorage.token;
@@ -43,7 +42,7 @@ app.config(require('./config'))
         if ($location.path() == '/login') {
           $location.path('/');
         }
-        if (!$rootScope.user) {
+        if ($rootScope.user == undefined) {
           authService.me(function (user) {
             $rootScope.user = user;
           }, function (err) {
