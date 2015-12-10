@@ -54,7 +54,9 @@ module.exports.controller = function (app, config) {
             if (err) {
               http.response(res, 500, {}, "An error occurred.", err);
             } else {
-              http.response(res, 200, {organization: newOrganization});
+              newOrganization.populate('creation.user', function(err, newOrg) {
+                http.response(res, 200, {organization: newOrg});
+              });
             }
           });
         } else {
@@ -70,7 +72,9 @@ module.exports.controller = function (app, config) {
             if (err) {
               http.response(res, 500, {}, "An error occurred.", err);
             } else {
-              http.response(res, 200, {organization: newOrganization});
+              newOrganization.populate('creation.user', function(err, newOrg) {
+                http.response(res, 200, {organization: newOrg});
+              });
             }
           });
         }
