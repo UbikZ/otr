@@ -15,9 +15,9 @@
                     <div class="m-t-xs m-b-lg">
                         <div class="input-group">
                             <span class="input-group-addon" id="search">{{ (ns+'.search.title') | translate }}</span>
-                            <input type="text" ng-model="query"
+                            <input type="text" ng-model="search"
                                    placeholder="{{ (ns+'.search.placeholder') | translate }}"
-                                   class=" form-control" aria-describedby="search">
+                                   class=" form-control">
                         </div>
                     </div>
                     <div ng-if="loading">
