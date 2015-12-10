@@ -1,7 +1,6 @@
 <div class="row ng-scope" ng-controller="organization.controller" ng-init="ns='organization.list'">
     <div class="col-lg-12">
         <div class="wrapper wrapper-content animated fadeIn">
-
             <div class="ibox">
                 <div class="ibox-title">
                     <h5>{{ (ns + ".title") | translate }}</h5>
@@ -14,65 +13,79 @@
                     <div class="m-t-xs m-b-lg">
                         <div class="input-group">
                             <span class="input-group-addon" id="search">{{ (ns+'.search.title') | translate }}</span>
-                            <input type="text" ng-model="query" placeholder="{{ (ns+'.search.placeholder') | translate }}"
+                            <input type="text" ng-model="query"
+                                   placeholder="{{ (ns+'.search.placeholder') | translate }}"
                                    class=" form-control" aria-describedby="search">
                         </div>
                     </div>
-
-                    <div class="project-list">
-                        <table class="table table-hover">
-                            <tbody>
-                            <tr>
-                                <td class="project-status">
-                                    <span class="label label-primary">Active</span>
-                                </td>
-                                <td class="project-title">
-                                    <a ui-sref="project_detail">There are many variations of passages</a>
-                                    <br>
-                                    <small>Created 11.08.2014</small>
-                                </td>
-                                <td class="project-completion">
-                                    <small>Completion with: 28%</small>
-                                    <div class="progress progress-mini">
-                                        <div style="width: 28%;" class="progress-bar"></div>
-                                    </div>
-                                </td>
-                                <td class="project-people">
-                                    <a href=""><img alt="image" class="img-circle" src="img/a7.jpg"></a>
-                                    <a href=""><img alt="image" class="img-circle" src="img/a6.jpg"></a>
-                                    <a href=""><img alt="image" class="img-circle" src="img/a3.jpg"></a>
-                                </td>
-                                <td class="project-actions">
-                                    <a href="" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> View </a>
-                                    <a href="" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Edit </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="project-status">
-                                    <span class="label label-default">Unactive</span>
-                                </td>
-                                <td class="project-title">
-                                    <a ui-sref="project_detail">Many desktop publishing packages and web</a>
-                                    <br>
-                                    <small>Created 10.08.2014</small>
-                                </td>
-                                <td class="project-completion">
-                                    <small>Completion with: 8%</small>
-                                    <div class="progress progress-mini">
-                                        <div style="width: 8%;" class="progress-bar"></div>
-                                    </div>
-                                </td>
-                                <td class="project-people">
-                                    <a href=""><img alt="image" class="img-circle" src="img/a5.jpg"></a>
-                                    <a href=""><img alt="image" class="img-circle" src="img/a3.jpg"></a>
-                                </td>
-                                <td class="project-actions">
-                                    <a href="" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> View </a>
-                                    <a href="" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Edit </a>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+                    <div ng-if="loading">
+                        <div class="col-lg-12">
+                            <div class="contact-box">
+                                <div class="sk-folding-cube">
+                                    <div class="sk-cube1 sk-cube"></div>
+                                    <div class="sk-cube2 sk-cube"></div>
+                                    <div class="sk-cube4 sk-cube"></div>
+                                    <div class="sk-cube3 sk-cube"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="!loading">
+                        <div class="project-list">
+                            <table class="table table-hover">
+                                <tbody>
+                                <tr>
+                                    <td class="project-status">
+                                        <span class="label label-primary">Active</span>
+                                    </td>
+                                    <td class="project-title">
+                                        <a ui-sref="project_detail">There are many variations of passages</a>
+                                        <br>
+                                        <small>Created 11.08.2014</small>
+                                    </td>
+                                    <td class="project-completion">
+                                        <small>Completion with: 28%</small>
+                                        <div class="progress progress-mini">
+                                            <div style="width: 28%;" class="progress-bar"></div>
+                                        </div>
+                                    </td>
+                                    <td class="project-people">
+                                        <a href=""><img alt="image" class="img-circle" src="img/a7.jpg"></a>
+                                        <a href=""><img alt="image" class="img-circle" src="img/a6.jpg"></a>
+                                        <a href=""><img alt="image" class="img-circle" src="img/a3.jpg"></a>
+                                    </td>
+                                    <td class="project-actions">
+                                        <a href="" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> View </a>
+                                        <a href="" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Edit </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="project-status">
+                                        <span class="label label-default">Unactive</span>
+                                    </td>
+                                    <td class="project-title">
+                                        <a ui-sref="project_detail">Many desktop publishing packages and web</a>
+                                        <br>
+                                        <small>Created 10.08.2014</small>
+                                    </td>
+                                    <td class="project-completion">
+                                        <small>Completion with: 8%</small>
+                                        <div class="progress progress-mini">
+                                            <div style="width: 8%;" class="progress-bar"></div>
+                                        </div>
+                                    </td>
+                                    <td class="project-people">
+                                        <a href=""><img alt="image" class="img-circle" src="img/a5.jpg"></a>
+                                        <a href=""><img alt="image" class="img-circle" src="img/a3.jpg"></a>
+                                    </td>
+                                    <td class="project-actions">
+                                        <a href="" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> View </a>
+                                        <a href="" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Edit </a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
