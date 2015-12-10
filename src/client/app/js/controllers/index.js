@@ -10,6 +10,7 @@ app.controller('translate.controller', require('./translate'));
 app.controller('ontime.controller', require('./ontime'));
 app.controller('user.controller', require('./user'));
 app.controller('organization.controller', require('./organization'));
+app.controller('organization-detail.controller', require('./organization-detail'));
 
 // Form controllers
 app.controller('form.profile.controller', require('./forms/profile'));
