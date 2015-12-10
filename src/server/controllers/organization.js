@@ -15,7 +15,12 @@ module.exports.controller = function (app, config) {
   app.get(prefix, http.ensureAuthorized, function (req, res) {
     var data = req.query;
     http.checkAuthorized(req, res, function () {
-      var query = Organization.find({_id: new mongoose.Types.ObjectId(data.id)}).populate('creation.user');
+      var criteria = {};
+      if (data.id) {
+        criteria = {_id: new mongoose.Types.ObjectId(data.id)};
+      }
+      
+      var query = Organization.find(criteria).populate('creation.user');
 
       if (data.populate === true) {
         query.populate('projects').populate('settings');
