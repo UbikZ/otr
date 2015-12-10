@@ -1,8 +1,10 @@
 'use strict';
 
-module.exports = ['$scope', '$rootScope', 'userService',
-  function ($scope, $rootScope, userService) {
-    userService.get({}, function (res) {
+var toastr = require('toastr');
+
+module.exports = ['$scope', '$rootScope', 'organizationService',
+  function ($scope, $rootScope, organizationService) {
+    organizationService.get({}, function (res) {
       $scope.loading = false;
       $scope.users = res.users;
     }, function (err) {

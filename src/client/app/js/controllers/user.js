@@ -1,5 +1,7 @@
 'use strict';
 
+var toastr = require('toastr');
+
 module.exports = ['$scope', '$rootScope', 'userService',
   function ($scope, $rootScope, userService) {
     userService.get({}, function (res) {
