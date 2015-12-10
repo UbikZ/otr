@@ -4,6 +4,7 @@ var toastr = require('toastr');
 
 module.exports = ['$scope', '$rootScope', 'organizationService',
   function ($scope, $rootScope, organizationService) {
+    $scope.loading = true;
     organizationService.get({}, function (res) {
       $scope.loading = false;
       $scope.users = res.users;
