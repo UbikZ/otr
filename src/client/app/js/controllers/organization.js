@@ -20,7 +20,7 @@ module.exports = ['$scope', '$rootScope', 'organizationService', '$uibModal',
         templateUrl: 'views/partials/modal-organization.html',
         controller: 'form.organization.controller',
         resolve: {
-          societyObjectId: function() { return objectId; },
+          identifier: function() { return objectId; },
         }
       });
     }

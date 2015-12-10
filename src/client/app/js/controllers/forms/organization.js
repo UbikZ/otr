@@ -2,9 +2,9 @@
 
 var toastr = require('toastr');
 
-module.exports = ['$rootScope', '$scope', 'societyObjectId', 'organizationService', '$uibModalInstance',
-  function ($rootScope, $scope, societyObjectId, organizationService, $uibModalInstance) {
-    $scope.identifier = societyObjectId;
+module.exports = ['$rootScope', '$scope', 'identifier', 'organizationService', '$uibModalInstance',
+  function ($rootScope, $scope, identifier, organizationService, $uibModalInstance) {
+    $scope.identifier = identifier;
 
     $scope.organization = {
 
