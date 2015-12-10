@@ -6,6 +6,10 @@ module.exports = ['$rootScope', '$scope', 'societyObjectId', 'organizationServic
   function ($rootScope, $scope, societyObjectId, organizationService, $uibModalInstance) {
     $scope.identifier = societyObjectId;
 
+    $scope.organization = {
+
+    };
+
     $scope.submit = function (organization) {
       $scope.loading = true;
       if ($scope.identifier) {

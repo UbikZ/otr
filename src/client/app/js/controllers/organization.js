@@ -8,7 +8,7 @@ module.exports = ['$scope', '$rootScope', 'organizationService', '$uibModal',
 
     organizationService.get({}, function (res) {
       $scope.loading = false;
-      $scope.users = res.users;
+      $scope.organizations = res.organizations;
     }, function (err) {
       $scope.loading = false;
       toastr.error(err.message);

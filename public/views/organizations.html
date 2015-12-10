@@ -48,19 +48,25 @@
                                     <td class="project-title">
                                         <a ui-sref="project_detail">{{ organization.name }}</a>
                                         <br>
-                                        <small>{{ (ns+'.item.create') | translate }} {{ organization.creation.date }}</small>
+                                        <small>{{ (ns+'.item.create') | translate }} {{ organization.creation.date | date:'dd-MM-yyyy HH:mm:ss'}}</small>
                                     </td>
                                     <td>
-                                        <small>{{ (ns+'.item.created_by') | translate }} {{ organization.creation.user.firstname }} {{ organization.creation.user.lastname }}</small>
+                                        <small>
+                                            {{ (ns+'.item.created_by') | translate }}
+                                            <strong>
+                                                {{ organization.creation.user.name.firstname}}
+                                                {{ organization.creation.user.name.lastname }}
+                                            </strong>
+                                        </small>
                                     </td>
                                     <td class="project-people">
-                                        <a href="">
+                                        <a href="#">
                                             <img gravatar-src="'{{ organization.creation.user.info.email }}'" gravatar-size="30" class="img-circle">
                                         </a>
                                     </td>
                                     <td class="project-actions">
-                                        <a href="" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> {{ (ns+'.item.view') | translate }}</a>
-                                        <a href="" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> {{ (ns+'.item.edit') | translate }}</a>
+                                        <a href="#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> {{ (ns+'.item.view') | translate }}</a>
+                                        <a ng-click="open(organization._id)" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> {{ (ns+'.item.edit') | translate }}</a>
                                     </td>
                                 </tr>
                                 </tbody>
