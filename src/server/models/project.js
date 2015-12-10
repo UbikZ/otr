@@ -5,8 +5,7 @@ var mongoose = require('mongoose');
 module.exports = (function(){
   var schema = new mongoose.Schema({
     name: String,
-    description: String,
-    logo: String,
+    priority: { type: Number, min: 0, max: 2 },
     creation: {
       user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
       date: Date
@@ -19,5 +18,5 @@ module.exports = (function(){
     settings: {type: mongoose.Schema.Types.ObjectId, ref: 'Setting'}
   });
 
-  return mongoose.model('Organization', schema);
+  return mongoose.model('Project', schema);
 })();
