@@ -10,7 +10,7 @@ module.exports = ['$http',
 
     return {
       get: function(data, success, error) {
-        var url = baseUrl + '/organizations?' + jquery.param(data);
+        var url = baseUrl + '/organization?' + jquery.param(data);
         $http.get(url).success(success).error(error)
       }
     };
