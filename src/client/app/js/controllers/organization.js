@@ -37,6 +37,22 @@ module.exports = ['$scope', '$rootScope', 'organizationService', '$uibModal',
           $scope.organizations.push(organization);
         }
       });
-    }
+    };
+
+    $scope.delete = function(objectId) {
+      $scope.deleteLoading = true;
+      organizationService.delete({id: objectId}, function(res) {
+        $scope.organizations.forEach(function (org, index) {
+          if (org._id === res.id) {
+            $scope.organizations.splice(index, 1);
+          }
+        });
+        toastr.info(res.message);
+        $scope.deleteLoading = false;
+      }, function(err) {
+        $scope.deleteLoading = false;
+        toastr.error(err.message);
+      });
+    };
   }
 ];
