@@ -22,7 +22,7 @@
     <div class="modal-footer">
         <div class="row">
             <div class="col-lg-12">
-                <a ui-sref="app.home" class="btn btn-sm btn-success pull-right m-l-lg" ng-disabled="loading">
+                <a ng-click="cancel()" class="btn btn-sm btn-success pull-right m-l-lg" ng-disabled="loading">
                     <i class="fa fa-reply"></i> <strong>{{ (ns+'.manage.quit') | translate }}</strong>
                 </a>
                 <button class="btn btn-sm btn-primary pull-right" type="submit"

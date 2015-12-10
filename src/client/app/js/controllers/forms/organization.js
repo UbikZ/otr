@@ -2,8 +2,8 @@
 
 var toastr = require('toastr');
 
-module.exports = ['$rootScope', '$scope', 'societyObjectId', 'organizationService',
-  function ($rootScope, $scope, societyObjectId, organizationService) {
+module.exports = ['$rootScope', '$scope', 'societyObjectId', 'organizationService', '$uibModalInstance',
+  function ($rootScope, $scope, societyObjectId, organizationService, $uibModalInstance) {
     $scope.identifier = societyObjectId;
 
     $scope.submit = function (organization) {
@@ -14,10 +14,15 @@ module.exports = ['$rootScope', '$scope', 'societyObjectId', 'organizationServic
       organizationService.update(organization, function (res) {
         console.log(res);
         $scope.loading = false;
+        $uibModalInstance.close();
       }, function (err) {
         $scope.loading = false;
         toastr.error(err.message);
       });
-    }
+    };
+
+    $scope.cancel = function () {
+      $uibModalInstance.dismiss('cancel');
+    };
   }
 ];
