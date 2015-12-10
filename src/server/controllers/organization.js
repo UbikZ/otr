@@ -15,7 +15,7 @@ module.exports.controller = function (app, config) {
     Organization.find({}, function (err, organizations) {
       if (err) {
         http.response(res, 500, "An error occurred.", err);
-      } else if (users) {
+      } else if (organizations) {
         http.response(res, 200, {organizations: organizations});
       } else {
         http.response(res, 404, {}, "User not found.", err);
