@@ -14,15 +14,18 @@ module.exports.controller = function (app, config) {
   app.get(prefix, http.ensureAuthorized, function (req, res) {
     // todo: add filters
     http.checkAuthorized(req, res, function () {
-      Organization.find({}, function (err, organizations) {
-        if (err) {
-          http.response(res, 500, "An error occurred.", err);
-        } else if (organizations) {
-          http.response(res, 200, {organizations: organizations});
-        } else {
-          http.response(res, 404, {}, "User not found.", err);
-        }
-      });
+      Organization
+        .find({})
+        .populate('creation.user')
+        .exec(function (err, organizations) {
+          if (err) {
+            http.response(res, 500, "An error occurred.", err);
+          } else if (organizations) {
+            http.response(res, 200, {organizations: organizations});
+          } else {
+            http.response(res, 404, {}, "User not found.", err);
+          }
+        });
     });
   });
 
@@ -46,7 +49,7 @@ module.exports.controller = function (app, config) {
           if (data.logo) {
             organization.name = data.logo;
           }
-          organization.update = {user: user._id, date: Date.now};
+          organization.update = {user: user._id, date: new Date()};
           organization.save(function (err, newOrganization) {
             if (err) {
               http.response(res, 500, {}, "An error occurred.", err);
