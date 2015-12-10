@@ -13,3 +13,4 @@ app.controller('organization.controller', require('./organization'));
 
 // Form controllers
 app.controller('form.profile.controller', require('./forms/profile'));
+app.controller('form.organization.controller', require('./forms/organization'));

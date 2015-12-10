@@ -6,7 +6,9 @@
                     <h5>{{ (ns + ".title") | translate }}</h5>
 
                     <div class="ibox-tools">
-                        <a href="" class="btn btn-primary btn-xs">{{ (ns + ".create") | translate }}</a>
+                        <button type="button" ng-click="open('test')" class="btn btn-primary btn-xs">
+                            {{ (ns + ".create") | translate }}
+                        </button>
                     </div>
                 </div>
                 <div class="ibox-content">

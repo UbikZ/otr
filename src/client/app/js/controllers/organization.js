@@ -2,9 +2,10 @@
 
 var toastr = require('toastr');
 
-module.exports = ['$scope', '$rootScope', 'organizationService',
-  function ($scope, $rootScope, organizationService) {
+module.exports = ['$scope', '$rootScope', 'organizationService', '$uibModal',
+  function ($scope, $rootScope, organizationService, $uibModal) {
     $scope.loading = true;
+
     organizationService.get({}, function (res) {
       $scope.loading = false;
       $scope.users = res.users;
@@ -12,5 +13,16 @@ module.exports = ['$scope', '$rootScope', 'organizationService',
       $scope.loading = false;
       toastr.error(err.message);
     });
+
+    $scope.open = function(objectId) {
+      $uibModal.open({
+        animation: true,
+        templateUrl: 'views/partials/modal-organization.html',
+        controller: 'form.organization.controller',
+        resolve: {
+          societyObjectId: function() { return objectId; },
+        }
+      });
+    }
   }
 ];
