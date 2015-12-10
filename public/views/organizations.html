@@ -65,8 +65,8 @@
                                         </a>
                                     </td>
                                     <td class="project-actions">
-                                        <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-folder"></i> {{ (ns+'.item.open') | translate }}</a>
-                                        <a ng-click="open(organization._id)" class="btn btn-success btn-sm"><i class="fa fa-pencil"></i> {{ (ns+'.item.edit') | translate }}</a>
+                                        <a ui-sref="organization.detail({id: organization._id})" class="btn btn-primary btn-sm"><i class="fa fa-folder"></i> {{ (ns+'.item.open') | translate }}</a>
+                                        <a ng-click="edit(organization._id)" class="btn btn-success btn-sm"><i class="fa fa-pencil"></i> {{ (ns+'.item.edit') | translate }}</a>
                                         <a ng-click="delete(organization._id)" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> {{ (ns+'.item.delete') | translate }}</a>
                                     </td>
                                 </tr>

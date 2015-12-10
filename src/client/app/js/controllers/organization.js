@@ -14,7 +14,7 @@ module.exports = ['$scope', '$rootScope', 'organizationService', '$uibModal',
       toastr.error(err.message);
     });
 
-    $scope.open = function (objectId) {
+    $scope.edit = function (objectId) {
       var modalInstance = $uibModal.open({
         animation: true,
         templateUrl: 'views/partials/modal-organization.html',
