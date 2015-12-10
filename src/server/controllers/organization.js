@@ -29,6 +29,20 @@ module.exports.controller = function (app, config) {
     });
   });
 
+  app.post(prefix  + '/delete', http.ensureAuthorized, function (req, res) {
+    var data = req.body;
+
+    http.checkAuthorized(req, res, function () {
+      Organization.findByIdAndRemove(data.id, function(err) {
+        if (err) {
+          http.response(res, 500, "An error occurred.", err);
+        } else {
+          http.response(res, 200, {id: data.id}, 'Your organization has been remove.');
+        }
+      });
+    });
+  });
+
   app.post(prefix + '/update', http.ensureAuthorized, function (req, res) {
     var data = req.body;
 
