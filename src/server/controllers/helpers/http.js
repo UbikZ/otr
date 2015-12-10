@@ -3,6 +3,7 @@
 var moment = require('moment');
 var merge = require('merge');
 var ontimeRequester = require('./ontime');
+var User = require('../../models/user');
 
 function response(res, status, data, message, err) {
   var dat = merge({
@@ -30,6 +31,18 @@ function ensureAuthorized(req, res, next) {
   } else {
     res.sendStatus(403);
   }
+}
+
+function checkAuthorized(req, res, cb) {
+  User.findOne({"identity.token": req.token}, function (err, user) {
+    if (err) {
+      response(res, 500, "An error occurred.", err);
+    } else if (user) {
+      cb(user);
+    } else {
+      response(res, 404, {}, "Token given is incorrect.", err);
+    }
+  });
 }
 
 function ontimeRequestToken(req, res, cb) {
@@ -61,6 +74,7 @@ function ontimeMe(req, res, cb) {
 module.exports = {
   response: response,
   ensureAuthorized: ensureAuthorized,
+  checkAuthorized: checkAuthorized,
   ontimeRequestToken: ontimeRequestToken,
   ontimeMe: ontimeMe,
 };

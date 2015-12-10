@@ -14,14 +14,16 @@ module.exports.controller = function (app, config) {
    */
   app.get(prefix, http.ensureAuthorized, function (req, res) {
     // todo: add filters
-    User.find({}, function (err, users) {
-      if (err) {
-        http.response(res, 500, "An error occurred.", err);
-      } else if (users) {
-        http.response(res, 200, {users: users});
-      } else {
-        http.response(res, 404, {}, "User not found.", err);
-      }
+    http.checkAuthorized(req, res, function() {
+      User.find({}, function (err, users) {
+        if (err) {
+          http.response(res, 500, "An error occurred.", err);
+        } else if (users) {
+          http.response(res, 200, {users: users});
+        } else {
+          http.response(res, 404, {}, "User not found.", err);
+        }
+      });
     });
   });
 

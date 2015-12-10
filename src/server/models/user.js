@@ -4,7 +4,6 @@ var mongoose = require('mongoose');
 
 module.exports = (function() {
   var schema = new mongoose.Schema({
-    id: String,
     identity: {
       token: String,
       ontime_token: String,
