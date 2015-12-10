@@ -16,9 +16,8 @@ module.exports = ['$rootScope', '$scope', 'identifier', 'organizationService', '
         organization = Object.assign(organization, {_id: $scope.identifier});
       }
       organizationService.update(organization, function (res) {
-        console.log(res);
         $scope.loading = false;
-        $uibModalInstance.close();
+        $uibModalInstance.close(res.organization);
       }, function (err) {
         $scope.loading = false;
         toastr.error(err.message);
