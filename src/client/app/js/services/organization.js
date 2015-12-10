@@ -12,6 +12,9 @@ module.exports = ['$http',
       get: function(data, success, error) {
         var url = baseUrl + '/organization?' + jquery.param(data);
         $http.get(url).success(success).error(error)
+      },
+      update: function(data, success, error) {
+        $http.post(baseUrl + '/organization/update', data).success(success).error(error);
       }
     };
   }
