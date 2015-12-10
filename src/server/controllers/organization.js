@@ -2,6 +2,7 @@
 
 var Organization = require('../models/organization');
 var User = require('../models/user');
+var mongoose = require('mongoose');
 var http = require('./helpers/http');
 
 module.exports.controller = function (app, config) {
@@ -12,12 +13,15 @@ module.exports.controller = function (app, config) {
    * Get users (by filtering)
    */
   app.get(prefix, http.ensureAuthorized, function (req, res) {
-    // todo: add filters
+    var data = req.query;
     http.checkAuthorized(req, res, function () {
-      Organization
-        .find({})
-        .populate('creation.user')
-        .exec(function (err, organizations) {
+      var query = Organization.find({_id: new mongoose.Types.ObjectId(data.id)}).populate('creation.user');
+
+      if (data.populate === true) {
+        query.populate('projects').populate('settings');
+      }
+
+      query.exec(function (err, organizations) {
           if (err) {
             http.response(res, 500, "An error occurred.", err);
           } else if (organizations) {
