@@ -6,6 +6,7 @@ module.exports = (function(){
   var schema = new mongoose.Schema({
     name: String,
     description: String,
+    active: Boolean,
     logo: String,
     creation: {
       user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
