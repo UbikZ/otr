@@ -44,6 +44,16 @@ module.exports = [
         url: '/manage',
         templateUrl: env.templatePath('manage.html'),
       })
+      .state('organization', {
+        abstract: true,
+        url: '/organization',
+        templateUrl: env.templatePath('common/content.html'),
+        data: {includes: true, requiresLogin: true},
+      })
+      .state('organization.list', {
+        url: '/list',
+        templateUrl: env.templatePath('organizations.html'),
+      })
       .state('login', {
         url: '/login',
         templateUrl: env.templatePath('login.html'),
