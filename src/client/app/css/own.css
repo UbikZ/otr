@@ -6,7 +6,7 @@
 
 /* Angular Tree Control */
 [treecontrol].tree-light {
-    margin-left: -30px;
+    margin-left: -22px;
 }
 
 [treecontrol].tree-light li.tree-expanded i.tree-branch-head {
@@ -17,4 +17,9 @@
 [treecontrol].tree-light li.tree-collapsed i.tree-branch-head {
     padding: 1px 10px;
     background: url("../img/node-closed-2.png") no-repeat;
+}
+
+/* Others */
+.file-box {
+    width: 200px;
 }
