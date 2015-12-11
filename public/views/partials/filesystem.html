@@ -25,7 +25,7 @@
                     <h5>{{ (ns+'.node.arbo') | translate }}</h5>
 
                     <div treecontrol class="tree-light"
-                         tree-model="dataForTheTree"
+                         tree-model="items"
                          options="treeOptions"
                          on-selection="showSelected(node)"
                          filter-expression="nodeSearch"
@@ -46,7 +46,7 @@
             <div class="col-lg-12">
                 <div class="file-box">
                     <div class="file">
-                        <button class="btn btn-block btn-outline btn-default p-sm" uib-tooltip="test">
+                        <button class="btn btn-block btn-outline btn-default p-sm" ng-click="edit()">
                             <i class="fa fa-plus fa-5x m-b-md"></i> <br/>
                             <strong>{{ (ns+'.item.creation.create') | translate }}</strong>
                         </button>

@@ -16,3 +16,4 @@ app.controller('filesystem.controller', require('./filesystem'));
 // Form controllers
 app.controller('form.profile.controller', require('./forms/profile'));
 app.controller('form.organization.controller', require('./forms/organization'));
+app.controller('form.item.controller', require('./forms/item'));
