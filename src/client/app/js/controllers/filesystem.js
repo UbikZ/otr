@@ -10,6 +10,7 @@ module.exports = ['$scope', '$rootScope', 'organizationService',
       nodeChildren: "children",
       dirSelectable: true,
     };
+
     $scope.dataForTheTree =
       [
         { "name" : "Joe", "age" : "21", "type": "folder", "children" : [

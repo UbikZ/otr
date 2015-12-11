@@ -16,21 +16,19 @@
         <div class="ibox float-e-margins">
             <div class="ibox-content">
                 <div class="file-manager">
-                    <h5>Show:</h5>
-                    <a href="" class="file-control active">Ale</a>
-                    <a href="" class="file-control">Documents</a>
-                    <a href="" class="file-control">Audio</a>
-                    <a href="" class="file-control">Images</a>
+                    <h5>{{ (ns+'.node') | translate }}</h5>
 
                     <div class="hr-line-dashed"></div>
-                    <button class="btn btn-primary btn-block">Upload Files</button>
+                    <input type="text" ng-model="nodeSearch" placeholder="{{ (ns+'.search.placeholder') | translate }}"
+                           class=" form-control">
                     <div class="hr-line-dashed"></div>
-                    <h5>Folders</h5>
+                    <h5>{{ (ns+'.node.arbo') | translate }}</h5>
 
                     <div treecontrol class="tree-light"
                          tree-model="dataForTheTree"
                          options="treeOptions"
                          on-selection="showSelected(node)"
+                         filter-expression="nodeSearch"
                          selected-node="node1">
                         <span ng-switch="" on="node.type">
                             <span ng-switch-when="folder" class="fa fa-folder" aria-hidden="true"></span>
