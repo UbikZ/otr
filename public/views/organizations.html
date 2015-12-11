@@ -37,6 +37,11 @@
                             <table class="table table-hover">
                                 <tbody>
                                 <tr ng-repeat="(id,organization) in organizations | filter:search">
+                                    <td class="col-md-2">
+                                        <a href="{{ organization.url }}">
+                                            <img src="{{ organization.logo }}" class="img-responsive">
+                                        </a>
+                                    </td>
                                     <td class="project-status">
                                         <span ng-if="organization.active" class="label label-primary">
                                             {{ (ns+'.item.active') | translate }}
@@ -58,11 +63,6 @@
                                                 {{ organization.creation.user.name.lastname }}
                                             </strong>
                                         </small>
-                                    </td>
-                                    <td class="project-people">
-                                        <a href="#">
-                                            <img gravatar-src="'{{ organization.creation.user.info.email }}'" gravatar-size="30" class="img-circle">
-                                        </a>
                                     </td>
                                     <td class="project-actions">
                                         <a ui-sref="organization.detail({id: organization._id})" class="btn btn-primary btn-sm"><i class="fa fa-folder"></i> {{ (ns+'.item.open') | translate }}</a>
