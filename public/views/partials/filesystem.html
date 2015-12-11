@@ -29,7 +29,7 @@
                          options="treeOptions"
                          on-selection="showSelected(node)"
                          filter-expression="nodeSearch"
-                         order-by="name">
+                         order-by="type" reverse-order="true">
                         <span ng-switch="" on="node.type">
                             <span ng-switch-when="folder" class="fa fa-folder text-success" aria-hidden="true"></span>
                             <span ng-switch-when="file" class="fa fa-file-text-o text-navy" aria-hidden="true"></span>
