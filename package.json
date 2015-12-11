@@ -24,6 +24,7 @@
     "angular-ui-router": "^0.2.15",
     "angular-ui-sortable": "^0.13.4",
     "animate.css": "^3.4.0",
+    "awesome-bootstrap-checkbox": "^0.3.6",
     "body-parser": "^1.14.1",
     "bootstrap": "^3.3.5",
     "express": "^4.8.3",

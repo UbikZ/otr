@@ -7,7 +7,7 @@ module.exports = (function(){
     name: String,
     description: String,
     active: Boolean,
-    ur: String,
+    url: String,
     logo: String,
     creation: {
       user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
