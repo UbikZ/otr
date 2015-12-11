@@ -1,74 +1,82 @@
-<div class="row ng-scope" ng-controller="organization-detail.controller" ng-init="ns='organization.detail'">
-    <div class="col-lg-9">
-        <div class="wrapper wrapper-content animated fadeIn">
-            <div class="ibox">
-                <div class="ibox-content">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="m-b-md">
-                                <a ng-click="edit(organization._id)" class="btn btn-primary btn-xs pull-right">
-                                    <i class="fa fa-pencil"></i> {{ (ns+'.edit') | translate }}
-                                </a>
-                                <a ui-sref="organization.list" class="btn btn-success btn-xs pull-right m-r-md">
-                                    <i class="fa fa-reply"></i> {{ (ns+'.back') | translate }}
-                                </a>
+<div class="ng-scope" ng-controller="organization-detail.controller" ng-init="ns='organization.detail'">
+    <div class="row wrapper border-bottom white-bg page-heading ng-scope">
+        <div class="col-sm-12">
+            <h2>{{ (ns+'.organizations') | translate }}</h2>
+            <ol class="breadcrumb">
+                <li>
+                    <a ui-sref="organization.list">{{ (ns+'.organizations') | translate }}</a>
+                </li>
+                <li class="active">
+                    <strong>{{ organization.name }}</strong>
+                </li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-9">
+            <div class="wrapper wrapper-content animated fadeIn">
+                <div class="ibox row">
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="m-b-md">
+                                    <a ng-click="edit(organization._id)" class="btn btn-primary btn-xs pull-right">
+                                        <i class="fa fa-pencil"></i> {{ (ns+'.edit') | translate }}
+                                    </a>
+                                    <a ui-sref="organization.list" class="btn btn-success btn-xs pull-right m-r-md">
+                                        <i class="fa fa-reply"></i> {{ (ns+'.back') | translate }}
+                                    </a>
 
-                                <h2>{{ organization.name }}</h2>
-                            </div>
-                            <dl class="dl-horizontal">
-                                <dt>{{ (ns+'.status') | translate }}</dt>
-                                <dd>
+                                    <h2>{{ organization.name }}</h2>
+                                </div>
+                                <dl class="dl-horizontal">
+                                    <dt>{{ (ns+'.status') | translate }}</dt>
+                                    <dd>
                                     <span ng-if="organization.active" class="label label-primary">
                                         {{ (ns+'.active') | translate }}
                                     </span>
                                     <span ng-if="!organization.active" class="label label-default">
                                         {{ (ns+'.unactive') | translate }}
                                     </span>
-                                </dd>
-                            </dl>
+                                    </dd>
+                                </dl>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-5">
-                            <dl class="dl-horizontal">
-                                <dt>{{ (ns+'.createdBy') | translate }}:</dt>
-                                <dd>
-                                    {{ organization.creation.user.name.firstname }}
-                                    {{ organization.creation.user.name.lastname }}
-                                </dd>
-                                <dt>{{ (ns+'.projects') | translate }}:</dt>
-                                <dd> {{ organization.projects.length }}</dd>
-                                <dt>{{ (ns+'.website') | translate }}:</dt>
-                                <dd><a href="{{ organization.url }}" class="text-navy"> {{ organization.url }}</a></dd>
-                            </dl>
-                        </div>
-                        <div class="col-lg-7" id="cluster_info">
-                            <dl class="dl-horizontal">
-                                <dt>{{ (ns+'.createDate') | translate }}:</dt>
-                                <dd>{{ organization.creation.date | date:'dd-MM-yyyy HH:mm:ss'}}</dd>
-                                <dt>{{ (ns+'.updateDate') | translate }}:</dt>
-                                <dd>{{ organization.update.date | date:'dd-MM-yyyy HH:mm:ss'}}</dd>
-                            </dl>
-                        </div>
-                    </div>
-                    <div class="row m-t-sm">
-                        <div class="col-lg-12">
-                            <div class="panel blank-panel ui-tab">
-
-
+                        <div class="row">
+                            <div class="col-lg-5">
+                                <dl class="dl-horizontal">
+                                    <dt>{{ (ns+'.createdBy') | translate }}:</dt>
+                                    <dd>
+                                        {{ organization.creation.user.name.firstname }}
+                                        {{ organization.creation.user.name.lastname }}
+                                    </dd>
+                                    <dt>{{ (ns+'.projects') | translate }}:</dt>
+                                    <dd> {{ organization.projects.length }}</dd>
+                                    <dt>{{ (ns+'.website') | translate }}:</dt>
+                                    <dd><a href="{{ organization.url }}" class="text-navy"> {{ organization.url }}</a>
+                                    </dd>
+                                </dl>
+                            </div>
+                            <div class="col-lg-7" id="cluster_info">
+                                <dl class="dl-horizontal">
+                                    <dt>{{ (ns+'.createDate') | translate }}:</dt>
+                                    <dd>{{ organization.creation.date | date:'dd-MM-yyyy HH:mm:ss'}}</dd>
+                                    <dt>{{ (ns+'.updateDate') | translate }}:</dt>
+                                    <dd>{{ organization.update.date | date:'dd-MM-yyyy HH:mm:ss'}}</dd>
+                                </dl>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-lg-3">
-        <div class="wrapper wrapper-content project-manager">
-            <h4 class="m-b-md">{{ (ns+'.description') | translate }}</h4>
-            <img src="{{ organization.logo }}" class="img-responsive">
+        <div class="col-lg-3">
+            <div class="wrapper wrapper-content project-manager">
+                <h4 class="m-b-md">{{ (ns+'.description') | translate }}</h4>
+                <img src="{{ organization.logo }}" class="img-responsive">
 
-            <p class="small m-t-md">{{ organization.description }}</p>
+                <p class="small m-t-md">{{ organization.description }}</p>
+            </div>
         </div>
     </div>
 </div>
