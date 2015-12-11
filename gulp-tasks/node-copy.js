@@ -12,6 +12,8 @@ module.exports = function(gulp, plugins, npmPackages, config) {
         nodePath + '/bootstrap/less/!(variables).less',
         nodePath + '/bootstrap/less/mixins/*.less',
         nodePath + '/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css',
+        // TreeControl
+        nodePath + 'angular-tree-control/css/tree-control-attribute.css',
         // Font Awesome
         nodePath + '/font-awesome/less/!(variables).less',
         // Animate

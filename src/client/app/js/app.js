@@ -9,6 +9,7 @@ require('angular-gravatar');
 require('angular-ui-router');
 require('angular-translate');
 require('angular-ui-bootstrap');
+require('angular-tree-control');
 require('ngstorage');
 require('oclazyload');
 require('pace').start();
@@ -28,6 +29,7 @@ var app = angular.module('otr', [
   'otr.services',
   'pascalprecht.translate',
   'ngStorage',
+  'treeControl',
 ]);
 
 app.config(require('./config'))
