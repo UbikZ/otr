@@ -1,6 +1,7 @@
 'use strict';
 
 var mongoose = require('mongoose');
+var Setting = require('./setting');
 
 module.exports = (function(){
   var schema = new mongoose.Schema({
@@ -16,7 +17,7 @@ module.exports = (function(){
       date: {type: Date, default: Date.now },
     },
     // todo: add properties
-    settings: {type: mongoose.Schema.Types.ObjectId, ref: 'Setting'}
+    settings: Setting,
   });
 
   return mongoose.model('Document', schema);

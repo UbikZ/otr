@@ -1,6 +1,8 @@
 'use strict';
 
 var mongoose = require('mongoose');
+var Project = require('./project');
+var Setting = require('./setting');
 
 module.exports = (function(){
   var schema = new mongoose.Schema({
@@ -17,8 +19,8 @@ module.exports = (function(){
       user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
       date: {type: Date, default: Date.now },
     },
-    projects: [{type: mongoose.Schema.Types.ObjectId, ref: 'Project'}],
-    settings: {type: mongoose.Schema.Types.ObjectId, ref: 'Setting'}
+    projects: [Project],
+    settings: Setting,
   });
 
   schema.index({name: 1}, {unique: true});

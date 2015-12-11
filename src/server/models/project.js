@@ -1,6 +1,9 @@
 'use strict';
 
 var mongoose = require('mongoose');
+var Project = require('./project');
+var Setting = require('./setting');
+var Document = require('./document');
 
 module.exports = (function(){
   var schema = new mongoose.Schema({
@@ -15,9 +18,9 @@ module.exports = (function(){
       user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
       date: {type: Date, default: Date.now },
     },
-    projects: [{type: mongoose.Schema.Types.ObjectId, ref: 'Project'}],
-    documents: [{type: mongoose.Schema.Types.ObjectId, ref: 'Document'}],
-    settings: {type: mongoose.Schema.Types.ObjectId, ref: 'Setting'}
+    projects: [Project],
+    documents: [Document],
+    settings: Setting,
   });
 
   return mongoose.model('Project', schema);
