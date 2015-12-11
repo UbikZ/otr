@@ -64,13 +64,16 @@ module.exports.controller = function (app, config) {
             organization.name = data.name;
           }
           if (data.description) {
-            organization.name = data.description;
+            organization.description = data.description;
           }
-          if (data.active) {
-            organization.name = data.active;
+          if (data.active != undefined) {
+            organization.active = data.active;
           }
           if (data.logo) {
-            organization.name = data.logo;
+            organization.logo = data.logo;
+          }
+          if (data.url) {
+            organization.url = data.url;
           }
           organization.update = {user: user._id, date: new Date()};
           organization.save(function (err, newOrganization) {
@@ -88,6 +91,7 @@ module.exports.controller = function (app, config) {
             description: data.description,
             active: true,
             logo: data.logo,
+            url: data.url,
             creation: {user: user._id},
             update: {user: user._id},
           });
