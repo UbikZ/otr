@@ -46,28 +46,56 @@
             <div class="col-lg-12">
                 <div class="file-box">
                     <div class="file">
-                        <button class="btn btn-block btn-outline btn-success p-sm" uib-tooltip="test">
-                            <i class="fa fa-folder fa-5x m-b-md"></i> <br/>
-                            <strong>Alex Johnatan</strong>
+                        <button class="btn btn-block btn-outline btn-default p-sm" uib-tooltip="test">
+                            <i class="fa fa-plus fa-5x m-b-md"></i> <br/>
+                            <strong>{{ (ns+'.item.creation.create') | translate }}</strong>
                         </button>
                         <div>
                             <span class="corner"></span>
-                            <div class="file-name">
-                                <small>Added: Jan 11, 2014</small>
+                            <div class="file-name text-center">
+                                {{ (ns+'.item.creation.description') | translate }}
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="file-box">
+                <div class="file-box" ng-repeat="project in projects | orderBy:name">
                     <div class="file">
-                        <button class="btn btn-block btn-outline btn-primary p-sm" uib-tooltip="test">
-                            <i class="fa fa-file-o fa-5x m-b-md"></i> <br/>
-                            <strong>Alex Johnatan</strong>
+                        <button class="btn btn-block btn-outline btn-success p-sm" uib-tooltip="{{ project.description }}">
+                            <i class="fa fa-folder fa-5x m-b-md"></i> <br/>
+                            <strong>{{ project.name }}</strong>
                         </button>
                         <div>
                             <span class="corner"></span>
-                            <div class="file-name">
-                                <small>Added: Jan 11, 2014</small>
+                            <div class="file-name text-center">
+                                <div class="m-t-xs btn-group">
+                                    <a class="btn btn-xs btn-white"><i class="fa fa-pencil"></i>
+                                        {{ (ns+'.item.edit') | translate }}
+                                    </a>
+                                    <a class="btn btn-xs btn-danger"><i class="fa fa-trash"></i>
+                                        {{ (ns+'.item.delete') | translate }}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="file-box" ng-repeat="document in documents | orderBy:name">
+                    <div class="file">
+                        <button class="btn btn-block btn-outline btn-success p-sm" uib-tooltip="{{ document.description }}">
+                            <i class="fa fa-folder fa-5x m-b-md"></i> <br/>
+                            <strong>{{ document.name }}</strong>
+                        </button>
+                        <div>
+                            <span class="corner"></span>
+                            <div class="file-name text-center">
+                                <div class="m-t-xs btn-group">
+                                    <a class="btn btn-xs btn-white"><i class="fa fa-pencil"></i>
+                                        {{ (ns+'.item.edit') | translate }}
+                                    </a>
+                                    <a class="btn btn-xs btn-danger"><i class="fa fa-trash"></i>
+                                        {{ (ns+'.item.delete') | translate }}
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
