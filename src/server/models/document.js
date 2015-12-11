@@ -14,10 +14,9 @@ module.exports = (function(){
       user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
       date: {type: Date, default: Date.now },
     },
-    projects: [{type: mongoose.Schema.Types.ObjectId, ref: 'Project'}],
-    documents: [{type: mongoose.Schema.Types.ObjectId, ref: 'Document'}],
+    // todo: add properties
     settings: {type: mongoose.Schema.Types.ObjectId, ref: 'Setting'}
   });
 
-  return mongoose.model('Project', schema);
+  return mongoose.model('Document', schema);
 })();
