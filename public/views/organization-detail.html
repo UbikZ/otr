@@ -16,7 +16,7 @@
                                 <h2>{{ organization.name }}</h2>
                             </div>
                             <dl class="dl-horizontal">
-                                <dt>Status:</dt>
+                                <dt>{{ (ns+'.status') | translate }}</dt>
                                 <dd>
                                     <span ng-if="organization.active" class="label label-primary">
                                         {{ (ns+'.active') | translate }}
