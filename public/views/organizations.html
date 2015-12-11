@@ -38,8 +38,8 @@
                                 <tbody>
                                 <tr ng-repeat="(id,organization) in organizations | filter:search">
                                     <td class="col-md-2">
-                                        <a href="{{ organization.url }}">
-                                            <img src="{{ organization.logo }}" class="img-responsive">
+                                        <a href="{{ organization.url }}" >
+                                            <img src="{{ organization.logo }}" class="img-responsive height-fix-md">
                                         </a>
                                     </td>
                                     <td class="project-status">
