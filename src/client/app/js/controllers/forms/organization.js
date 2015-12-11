@@ -6,9 +6,19 @@ module.exports = ['$rootScope', '$scope', 'identifier', 'organizationService', '
   function ($rootScope, $scope, identifier, organizationService, $uibModalInstance) {
     $scope.identifier = identifier;
 
-    $scope.organization = {
-
-    };
+    if (identifier) {
+      organizationService.get({id: identifier}, function (res) {
+        if (res.organizations.length != 1) {
+          toastr.error('Error loading current organization.');
+        } else {
+          $scope.organization = res.organizations[0];
+        }
+        $scope.loading = false;
+      }, function (err) {
+        $scope.loading = false;
+        toastr.error(err.message);
+      });
+    }
 
     $scope.submit = function (organization) {
       $scope.loading = true;

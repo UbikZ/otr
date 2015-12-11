@@ -20,6 +20,36 @@
             </div>
         </div>
         <div class="form-group">
+            <label>{{ (ns+'.manage.logo.label') | translate }}</label>
+            <input type="url" placeholder="{{ (ns+'.manage.logo.input') | translate }}"
+                   class="form-control" name="logo"
+                   ng-model="organization.logo">
+
+            <div class="m-t-xs"
+                 ng-show="formOrganization.logo.$invalid && formOrganization.logo.$dirty">
+                <small class="text-danger help-block" ng-show="formOrganization.logo.$error.url">
+                    {{ (ns+'.manage.logo.error.url') | translate }}
+                </small>
+            </div>
+            <div class="contact-box text-center"
+                 ng-if="formOrganization.logo.$valid && organization.logo">
+                <img src="{{ organization.logo }}" class="img-responsive">
+            </div>
+        </div>
+        <div class="form-group">
+            <label>{{ (ns+'.manage.url.label') | translate }}</label>
+            <input type="url" placeholder="{{ (ns+'.manage.url.input') | translate }}"
+                   class="form-control" name="url"
+                   ng-model="organization.url">
+
+            <div class="m-t-xs"
+                 ng-show="formOrganization.url.$invalid && formOrganization.url.$dirty">
+                <small class="text-danger help-block" ng-show="formOrganization.url.$error.url">
+                    {{ (ns+'.manage.url.error.url') | translate }}
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
             <label>{{ (ns+'.manage.description.label') | translate }}</label>
             <textarea type="text" placeholder="{{ (ns+'.manage.description.input') | translate }}"
                       class="form-control" name="description" rows="5"
