@@ -1,3 +1,20 @@
+/* Utils */
+
 .height-fix-md {
     height: 90px;
+}
+
+/* Angular Tree Control */
+[treecontrol].tree-light {
+    margin-left: -30px;
+}
+
+[treecontrol].tree-light li.tree-expanded i.tree-branch-head {
+    padding: 1px 10px;
+    background: url("../img/node-opened-2.png") no-repeat;
+}
+
+[treecontrol].tree-light li.tree-collapsed i.tree-branch-head {
+    padding: 1px 10px;
+    background: url("../img/node-closed-2.png") no-repeat;
 }
