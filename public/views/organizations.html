@@ -36,7 +36,7 @@
                         <div class="project-list">
                             <table class="table table-hover">
                                 <tbody>
-                                <tr ng-repeat="(id,organization) in organizations | filter:search">
+                                <tr ng-repeat="(id,organization) in organizations | orderBy:'name' | filter:search">
                                     <td class="col-md-2">
                                         <a href="{{ organization.url }}" >
                                             <img src="{{ organization.logo }}" class="img-responsive height-fix-md">
