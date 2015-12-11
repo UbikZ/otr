@@ -9,7 +9,7 @@ require('angular-gravatar');
 require('angular-ui-router');
 require('angular-translate');
 require('angular-ui-bootstrap');
-require('ngStorage');
+require('ngstorage');
 require('oclazyload');
 require('pace').start();
 
