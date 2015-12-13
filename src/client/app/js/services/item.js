@@ -13,6 +13,9 @@ module.exports = ['$http',
         var url = baseUrl + '/item?' + jquery.param(data);
         $http.get(url).success(success).error(error)
       },
+      create: function(data, success, error) {
+        $http.post(baseUrl + '/item/create', data).success(success).error(error);
+      },
       update: function(data, success, error) {
         $http.post(baseUrl + '/item/update', data).success(success).error(error);
       },

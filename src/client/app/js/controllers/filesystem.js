@@ -4,7 +4,6 @@ var toastr = require('toastr');
 
 module.exports = ['$scope', '$rootScope', 'organizationService', '$uibModal',
   function ($scope, $rootScope, organizationService, $uibModal) {
-    var organization = organizationService.getCurrentOrganization();
 
     $scope.treeOptions = {
       nodeChildren: "children",
@@ -31,6 +30,9 @@ module.exports = ['$scope', '$rootScope', 'organizationService', '$uibModal',
         templateUrl: 'views/partials/modal-item.html',
         controller: 'form.item.controller',
         resolve: {
+          organizationId: function() {
+            return organizationService.getCurrentOrganization()._id;
+          },
           identifier: function () {
             return objectId;
           },

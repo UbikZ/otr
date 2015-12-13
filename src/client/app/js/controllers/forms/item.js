@@ -2,9 +2,11 @@
 
 var toastr = require('toastr');
 
-module.exports = ['$rootScope', '$scope', 'identifier', 'itemService', '$uibModalInstance',
-  function ($rootScope, $scope, identifier, itemService, $uibModalInstance) {
+module.exports = ['$rootScope', '$scope', 'identifier', 'organizationId', 'itemService', '$uibModalInstance',
+  function ($rootScope, $scope, identifier, organizationId, itemService, $uibModalInstance) {
     $scope.identifier = identifier;
+    $scope.organizationId = organizationId;
+    $scope.isRoot = true;
 
     if (identifier) {
       itemService.get({id: identifier}, function (res) {
@@ -22,12 +24,21 @@ module.exports = ['$rootScope', '$scope', 'identifier', 'itemService', '$uibModa
 
     $scope.submit = function (item) {
       $scope.loading = true;
+      console.log(item);
+      console.log($scope.identifier);
+      console.log($scope.organizationId);
+
       if ($scope.identifier) {
         item = Object.assign(item, {_id: $scope.identifier});
       }
-      itemService.update(item, function (res) {
+      if ($scope.organizationId) {
+        item = Object.assign(item, {organizationId: $scope.organizationId});
+      }
+
+      console.log(item);
+      itemService.create(item, function (res) {
         $scope.loading = false;
-        $uibModalInstance.close(res.item);
+        //$uibModalInstance.close(res.item);
       }, function (err) {
         $scope.loading = false;
         toastr.error(err.message);
