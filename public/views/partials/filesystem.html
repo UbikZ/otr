@@ -27,7 +27,7 @@
                     <div treecontrol class="tree-light"
                          tree-model="items"
                          options="treeOptions"
-                         on-selection="showSelected(node)"
+                         on-selection="onSelect(node, selected, $parentNode, $index)"
                          filter-expression="nodeSearch"
                          order-by="type" reverse-order="true">
                         <span ng-switch="" on="node.type">

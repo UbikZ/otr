@@ -15,6 +15,21 @@ module.exports = ['$scope', '$rootScope', 'organizationService', 'itemService', 
       }, 0, false);
     });
 
+    $scope.currentProjectIdNode = undefined;
+    var onCurrentProjectIdNodeChange = function () {
+        if ($scope.currentProjectIdNode == undefined) {
+          $scope.documents = $scope.organization.documents;
+          $scope.projects = $scope.organization.projects;
+        } else {
+          recursiveTool.findRecursivelyById($scope.organization, 'projects', $scope.currentProjectIdNode,
+            function (item) {
+              $scope.projects = item.projects;
+            }
+          );
+        }
+    };
+    onCurrentProjectIdNodeChange();
+
     $scope.documents = $scope.organization.documents;
     $scope.projects = $scope.organization.projects;
 
@@ -23,6 +38,18 @@ module.exports = ['$scope', '$rootScope', 'organizationService', 'itemService', 
       dirSelectable: true,
     };
 
+    $scope.onSelect = function (node, selected, $parentNode, $index) {
+      if (selected) {
+        if (node.type == 'project') {
+          $scope.currentProjectIdNode = node.id;
+        } else if (node.type == 'document') {
+          $scope.currentProjectIdNode = $parentNode.id;
+        }
+      } else {
+        $scope.currentProjectIdNode = undefined;
+      }
+      onCurrentProjectIdNodeChange();
+    };
 
     $scope.edit = function (objectId, type) {
       var modalInstance = $uibModal.open({
