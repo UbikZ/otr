@@ -13,11 +13,9 @@ module.exports = ['$http',
         var url = baseUrl + '/item?' + jquery.param(data);
         $http.get(url).success(success).error(error)
       },
-      create: function(data, success, error) {
-        $http.post(baseUrl + '/item/create', data).success(success).error(error);
-      },
-      update: function(data, success, error) {
-        $http.post(baseUrl + '/item/update', data).success(success).error(error);
+      edit: function(data, success, error) {
+        var url = baseUrl + (data._id == undefined ? '/item/create' : '/item/update');
+        $http.post(url, data).success(success).error(error);
       },
       delete: function(data, success, error) {
         $http.post(baseUrl + '/item/delete', data).success(success).error(error);

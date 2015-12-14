@@ -1,12 +1,13 @@
 'use strict';
 
 var toastr = require('toastr');
+var recursiveTool = require('../helpers/recursive');
 
 module.exports = ['$scope', '$rootScope', 'organizationService', 'itemService', '$uibModal',
   function ($scope, $rootScope, organizationService, itemService, $uibModal) {
 
     $scope.organization = organizationService.getCurrentOrganization();
-    $scope.$watch($scope.organization, function() {
+    $scope.$watch($scope.organization, function () {
       if ($scope.organization != undefined) {
         $scope.documents = $scope.organization.documents;
         $scope.projects = $scope.organization.projects;
@@ -38,7 +39,7 @@ module.exports = ['$scope', '$rootScope', 'organizationService', 'itemService', 
       {"name": "Ron", "age": "29", type: "file"}
     ];
 
-    $scope.edit = function (objectId) {
+    $scope.edit = function (objectId, type) {
       var modalInstance = $uibModal.open({
         animation: true,
         templateUrl: 'views/partials/modal-item.html',
@@ -48,16 +49,23 @@ module.exports = ['$scope', '$rootScope', 'organizationService', 'itemService', 
             return $scope.organization._id;
           },
           identifier: function () {
-            return objectId;
+            return {id: objectId, type: type};
           },
         }
       });
 
       modalInstance.result.then(function (orga) {
+        $scope.organization = orga;
         if (objectId) {
-          // todo : recursive find and push item
+          var itemType = type == undefined ? 'projects' : 'documents';
+          recursiveTool.findRecursivelyById($scope.organization, itemType, objectId, function(item) {
+            $scope[itemType].forEach(function(itemToUpdate, index) {
+              if (itemToUpdate._id === item._id) {
+                $scope[itemType][index] = item;
+              }
+            });
+          });
         } else {
-          $scope.organization = orga;
           $scope.documents = orga.documents;
           $scope.projects = orga.projects;
         }
@@ -74,8 +82,11 @@ module.exports = ['$scope', '$rootScope', 'organizationService', 'itemService', 
 
       itemService.delete(data,
         function (res) {
-          $scope.projects = res.organization.projects;
-          $scope.documents = res.organization.documents;
+          var itemType = type == undefined ? 'projects' : 'documents';
+          recursiveTool.removeRecursivelyById($scope.organization, itemType, objectId, function(items) {
+            $scope[itemType] = items;
+          });
+          $scope.organization = res.organization;
           $scope.deleteLoading = false;
         }, function (err) {
           $scope.deleteLoading = false;

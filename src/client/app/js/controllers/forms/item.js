@@ -5,17 +5,18 @@ var recursiveTool = require('../../helpers/recursive');
 
 module.exports = ['$rootScope', '$scope', 'identifier', 'organizationId', 'itemService', '$uibModalInstance',
   function ($rootScope, $scope, identifier, organizationId, itemService, $uibModalInstance) {
-    $scope.identifier = identifier;
+    $scope.identifier = identifier.id;
     $scope.organizationId = organizationId;
     $scope.isRoot = true;
 
-    if (identifier) {
+    if ($scope.identifier) {
       itemService.get({id: organizationId}, function (res) {
         if (res.organizations.length != 1) {
           toastr.error('Error loading current item.');
         } else {
           var organization = res.organizations[0];
-          recursiveTool.findRecursivelyById(organization, 'projects', identifier, function(element) {
+          var itemType = identifier.type == undefined ? 'projects' : 'documents';
+          recursiveTool.findRecursivelyById(organization, itemType, $scope.identifier, function(element) {
             $scope.item = element;
           });
         }
@@ -30,13 +31,17 @@ module.exports = ['$rootScope', '$scope', 'identifier', 'organizationId', 'itemS
       $scope.loading = true;
 
       if ($scope.identifier) {
-        item = Object.assign(item, {_id: $scope.identifier});
+        if (identifier.type == 'document') {
+          item = Object.assign(item, {documentId: $scope.identifier});
+        } else {
+          item = Object.assign(item, {projectId: $scope.identifier});
+        }
       }
       if ($scope.organizationId) {
         item = Object.assign(item, {organizationId: $scope.organizationId});
       }
 
-      itemService.create(item, function (res) {
+      itemService.edit(item, function (res) {
         $scope.loading = false;
         $uibModalInstance.close(res.organization);
       }, function (err) {
