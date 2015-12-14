@@ -25,7 +25,7 @@ var schema = new mongoose.Schema({
 
 schema.index({name: 1}, {unique: true});
 
-schema.statics.findDeepAttributeById = function (projectId, attributeName, cb) {
+schema.methods.findDeepAttributeById = function (projectId, attributeName, cb) {
   var model = this;
 
   utilsHelper.findRecursivelyById(model, attributeName, projectId, function (element) {
