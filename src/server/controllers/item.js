@@ -122,8 +122,6 @@ module.exports.controller = function (app, config) {
               });
             } else if (data.type == "project") {
               organization.projects.push(item);
-            } else {
-              // todo
             }
 
             organization.save(function (err, newOrganization) {
