@@ -6,8 +6,8 @@ var recursiveTool = require('../../helpers/recursive');
 module.exports = ['$rootScope', '$scope', 'identifier', 'organizationId', 'itemService', '$uibModalInstance',
   function ($rootScope, $scope, identifier, organizationId, itemService, $uibModalInstance) {
     $scope.identifier = identifier.id;
+    $scope.isProject = identifier.projectId ==! undefined;
     $scope.organizationId = organizationId;
-    $scope.isRoot = true;
 
     if ($scope.identifier) {
       itemService.get({id: organizationId}, function (res) {
