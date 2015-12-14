@@ -58,7 +58,7 @@ module.exports.controller = function (app, config) {
                 }
               });
             } else if (data.documentId != undefined) {
-              organization.findDeepAttributeById(data.projectId, 'documents', function (element) {
+              organization.findDeepAttributeById(data.documentId, 'documents', function (element) {
                 if (element != undefined) {
                   element.remove();
                 } else {
@@ -107,7 +107,7 @@ module.exports.controller = function (app, config) {
               };
             }
 
-            if (data.projectId) {
+            if (data.projectId != undefined) {
               organization.findDeepAttributeById(data.projectId, 'projects', function (element) {
                 if (element != undefined) {
                   if (data.type == "project") {

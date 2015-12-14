@@ -6,32 +6,28 @@ var recursiveTool = require('../helpers/recursive');
 module.exports = ['$scope', '$rootScope', 'organizationService', 'itemService', '$uibModal', '$timeout',
   function ($scope, $rootScope, organizationService, itemService, $uibModal, $timeout) {
 
-    $scope.organization = organizationService.getCurrentOrganization();
-    $scope.$watch('organization', function () {
-      $timeout(function () {
-        if ($scope.organization != undefined) {
-          $scope.items = recursiveTool.convertTreeView($scope.organization);
-        }
-      }, 0, false);
-    });
-
-    $scope.currentProjectIdNode = undefined;
-    var onCurrentProjectIdNodeChange = function () {
-        if ($scope.currentProjectIdNode == undefined) {
-          $scope.documents = $scope.organization.documents;
-          $scope.projects = $scope.organization.projects;
-        } else {
-          recursiveTool.findRecursivelyById($scope.organization, 'projects', $scope.currentProjectIdNode,
-            function (item) {
-              $scope.projects = item.projects;
-            }
-          );
-        }
+    var changeCurrentOrganization = function (organization) {
+      $scope.organization = organization;
+      if ($scope.organization != undefined) {
+        $scope.items = recursiveTool.convertTreeView($scope.organization);
+      }
     };
-    onCurrentProjectIdNodeChange();
+    changeCurrentOrganization(organizationService.getCurrentOrganization());
 
-    $scope.documents = $scope.organization.documents;
-    $scope.projects = $scope.organization.projects;
+    var changeCurrentProjectIdNode = function (id) {
+      $scope.currentProjectIdNode = id;
+      if ($scope.currentProjectIdNode == undefined) {
+        $scope.documents = [];
+        $scope.projects = $scope.organization.projects;
+      } else {
+        recursiveTool.findRecursivelyById($scope.organization, 'projects', $scope.currentProjectIdNode,
+          function (item) {
+            $scope.projects = item.projects;
+          }
+        );
+      }
+    };
+    changeCurrentProjectIdNode();
 
     $scope.treeOptions = {
       nodeChildren: "children",
@@ -39,16 +35,17 @@ module.exports = ['$scope', '$rootScope', 'organizationService', 'itemService', 
     };
 
     $scope.onSelect = function (node, selected, $parentNode, $index) {
+      var idNode;
       if (selected) {
         if (node.type == 'project') {
-          $scope.currentProjectIdNode = node.id;
+          idNode = node.id;
         } else if (node.type == 'document') {
-          $scope.currentProjectIdNode = $parentNode.id;
+          idNode = $parentNode.id;
         }
       } else {
-        $scope.currentProjectIdNode = undefined;
+        idNode = undefined;
       }
-      onCurrentProjectIdNodeChange();
+      changeCurrentProjectIdNode(idNode);
     };
 
     $scope.edit = function (objectId, type) {
@@ -61,13 +58,13 @@ module.exports = ['$scope', '$rootScope', 'organizationService', 'itemService', 
             return $scope.organization._id;
           },
           identifier: function () {
-            return {id: objectId, type: type};
+            return {id: objectId, projectId: $scope.currentProjectIdNode, type: type};
           },
         }
       });
 
       modalInstance.result.then(function (orga) {
-        $scope.organization = orga;
+        changeCurrentOrganization(orga);
         if (objectId) {
           var itemType = type == undefined ? 'projects' : 'documents';
           recursiveTool.findRecursivelyById($scope.organization, itemType, objectId, function (item) {
@@ -96,9 +93,7 @@ module.exports = ['$scope', '$rootScope', 'organizationService', 'itemService', 
           recursiveTool.removeRecursivelyById($scope.organization, itemType, objectId, function (items) {
             $scope[itemType] = items;
           });
-          $scope.organization = res.organization;
-          // todo: can't update without this...
-          $scope.items = recursiveTool.convertTreeView($scope.organization);
+          changeCurrentOrganization(res.organization);
         }, function (err) {
           toastr.error(err.message);
         }

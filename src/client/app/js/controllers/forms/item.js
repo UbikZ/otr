@@ -40,6 +40,9 @@ module.exports = ['$rootScope', '$scope', 'identifier', 'organizationId', 'itemS
       if ($scope.organizationId) {
         item = Object.assign(item, {organizationId: $scope.organizationId});
       }
+      if (identifier.projectId) {
+        item = Object.assign(item, {projectId: identifier.projectId});
+      }
 
       itemService.edit(item, function (res) {
         $scope.loading = false;
