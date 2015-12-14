@@ -1,6 +1,7 @@
 'use strict';
 
 var toastr = require('toastr');
+var recursiveTool = require('../../helpers/recursive');
 
 module.exports = ['$rootScope', '$scope', 'identifier', 'organizationId', 'itemService', '$uibModalInstance',
   function ($rootScope, $scope, identifier, organizationId, itemService, $uibModalInstance) {
@@ -9,11 +10,14 @@ module.exports = ['$rootScope', '$scope', 'identifier', 'organizationId', 'itemS
     $scope.isRoot = true;
 
     if (identifier) {
-      itemService.get({id: identifier}, function (res) {
-        if (res.items.length != 1) {
+      itemService.get({id: organizationId}, function (res) {
+        if (res.organizations.length != 1) {
           toastr.error('Error loading current item.');
         } else {
-          $scope.item = res.items[0];
+          var organization = res.organizations[0];
+          recursiveTool.findRecursivelyById(organization, 'projects', identifier, function(element) {
+            $scope.item = element;
+          });
         }
         $scope.loading = false;
       }, function (err) {
