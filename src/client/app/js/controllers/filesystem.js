@@ -64,26 +64,18 @@ module.exports = ['$scope', '$rootScope', 'organizationService', 'itemService', 
       });
     };
 
-    $scope.deleteProject = function (objectId) {
+    $scope.delete = function (objectId, type) {
       $scope.deleteLoading = true;
-      itemService.delete({organizationId: $scope.organization._id, projectId: objectId},
-        function (res) {
-          $scope.documents = res.organization.projects;
-          toastr.info(res.message);
-          $scope.deleteLoading = false;
-        }, function (err) {
-          $scope.deleteLoading = false;
-          toastr.error(err.message);
-        }
-      );
-    };
 
-    $scope.deleteDocument = function (objectId) {
-      $scope.deleteLoading = true;
-      itemService.delete({organizationId: $scope.organization._id, documentId: objectId},
+      var data = Object.assign(
+        {organizationId: $scope.organization._id},
+        type == 'document' ? {documentId: objectId} : {projectId: objectId}
+      );
+
+      itemService.delete(data,
         function (res) {
+          $scope.projects = res.organization.projects;
           $scope.documents = res.organization.documents;
-          toastr.info(res.message);
           $scope.deleteLoading = false;
         }, function (err) {
           $scope.deleteLoading = false;

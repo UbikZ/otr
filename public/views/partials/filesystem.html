@@ -71,7 +71,8 @@
                                     <a class="btn btn-xs btn-white"><i class="fa fa-pencil"></i>
                                         {{ (ns+'.item.edit') | translate }}
                                     </a>
-                                    <a class="btn btn-xs btn-danger" ng-click="deleteProject(project._id)"><i class="fa fa-trash"></i>
+                                    <a class="btn btn-xs btn-danger" ng-click="delete(project._id)">
+                                        <i class="fa fa-trash"></i>
                                         {{ (ns+'.item.delete') | translate }}
                                     </a>
                                 </div>
