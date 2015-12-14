@@ -68,7 +68,7 @@
                             <span class="corner"></span>
                             <div class="file-name text-center">
                                 <div class="m-t-xs btn-group">
-                                    <a class="btn btn-xs btn-white"><i class="fa fa-pencil"></i>
+                                    <a class="btn btn-xs btn-white" ng-click="edit(project._id)"><i class="fa fa-pencil"></i>
                                         {{ (ns+'.item.edit') | translate }}
                                     </a>
                                     <a class="btn btn-xs btn-danger" ng-click="delete(project._id)">
