@@ -9,7 +9,6 @@ module.exports = ['$scope', '$rootScope', '$stateParams', 'organizationService',
         toastr.error('Error loading current organization.');
       } else {
         $scope.organization = res.organizations[0];
-        $rootScope.$broadcast('broadcast-organization', {organization: $scope.organization});
       }
       $scope.loading = false;
     }, function (err) {

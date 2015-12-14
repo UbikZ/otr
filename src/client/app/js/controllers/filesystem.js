@@ -5,11 +5,9 @@ var toastr = require('toastr');
 module.exports = ['$scope', '$rootScope', 'organizationService', '$uibModal',
   function ($scope, $rootScope, organizationService, $uibModal) {
 
-    $rootScope.$on('broadcast-organization', function(event, args) {
-      $scope.organization = args.organization;
-      $scope.documents = args.organization.documents;
-      $scope.projects = args.organization.projects;
-    });
+    $scope.organization = organizationService.getCurrentOrganization();
+    $scope.documents = $scope.organization.documents;
+    $scope.projects = $scope.organization.projects;
 
     $scope.treeOptions = {
       nodeChildren: "children",
@@ -17,17 +15,23 @@ module.exports = ['$scope', '$rootScope', 'organizationService', '$uibModal',
     };
 
     $scope.items = [
-      { "name" : "Joe", "age" : "21", "type": "folder", "children" : [
-        { "name" : "Smith", "age" : "42", type: "file"},
-        { "name" : "Gary", "age" : "21", "type": "folder", "children" : [
-          { "name" : "Jenifer", "age" : "23", "type": "folder", "children" : [
-            { "name" : "Dani", "age" : "32", type: "file" },
-            { "name" : "Max", "age" : "34", type: "file" }
-          ]}
-        ]}
-      ]},
-      { "name" : "Albert", "age" : "33", type: "file" },
-      { "name" : "Ron", "age" : "29", type: "file" }
+      {
+        "name": "Joe", "age": "21", "type": "folder", "children": [
+        {"name": "Smith", "age": "42", type: "file"},
+        {
+          "name": "Gary", "age": "21", "type": "folder", "children": [
+          {
+            "name": "Jenifer", "age": "23", "type": "folder", "children": [
+            {"name": "Dani", "age": "32", type: "file"},
+            {"name": "Max", "age": "34", type: "file"}
+          ]
+          }
+        ]
+        }
+      ]
+      },
+      {"name": "Albert", "age": "33", type: "file"},
+      {"name": "Ron", "age": "29", type: "file"}
     ];
 
     $scope.edit = function (objectId) {
@@ -36,7 +40,7 @@ module.exports = ['$scope', '$rootScope', 'organizationService', '$uibModal',
         templateUrl: 'views/partials/modal-item.html',
         controller: 'form.item.controller',
         resolve: {
-          organizationId: function() {
+          organizationId: function () {
             return $scope.organization._id;
           },
           identifier: function () {
@@ -56,7 +60,7 @@ module.exports = ['$scope', '$rootScope', 'organizationService', '$uibModal',
       });
     };
 
-    $scope.delete = function(objectId) {
+    $scope.delete = function (objectId) {
       // todo
     };
   }
