@@ -25,7 +25,7 @@
                 <select class="form-control" name="account" ng-model="item.type" required>
                     <option value="">{{ (ns+'.manage.type.select') | translate }}</option>
                     <option value="project">{{ (ns+'.manage.type.project') | translate }}</option>
-                    <option ng-if="!isRoot" value="document">{{ (ns+'.manage.type.document') | translate }}</option>
+                    <option ng-if="isProject" value="document">{{ (ns+'.manage.type.document') | translate }}</option>
                 </select>
             </div>
             <div class="m-t-xs"
