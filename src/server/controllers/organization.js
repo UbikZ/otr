@@ -22,10 +22,6 @@ module.exports.controller = function (app, config) {
       
       var query = Organization.find(criteria).populate('creation.user');
 
-      if (data.populate === true) {
-        query.populate('projects').populate('settings');
-      }
-
       query.exec(function (err, organizations) {
           if (err) {
             http.response(res, 500, "An error occurred.", err);

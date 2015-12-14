@@ -5,6 +5,12 @@ var toastr = require('toastr');
 module.exports = ['$scope', '$rootScope', 'organizationService', '$uibModal',
   function ($scope, $rootScope, organizationService, $uibModal) {
 
+    $rootScope.$on('broadcast-organization', function(event, args) {
+      $scope.organization = args.organization;
+      $scope.documents = args.organization.documents;
+      $scope.projects = args.organization.projects;
+    });
+
     $scope.treeOptions = {
       nodeChildren: "children",
       dirSelectable: true,
@@ -31,7 +37,7 @@ module.exports = ['$scope', '$rootScope', 'organizationService', '$uibModal',
         controller: 'form.item.controller',
         resolve: {
           organizationId: function() {
-            return organizationService.getCurrentOrganization()._id;
+            return $scope.organization._id;
           },
           identifier: function () {
             return objectId;
@@ -39,15 +45,13 @@ module.exports = ['$scope', '$rootScope', 'organizationService', '$uibModal',
         }
       });
 
-      modalInstance.result.then(function (item) {
+      modalInstance.result.then(function (orga) {
         if (objectId) {
-          $scope.items.forEach(function (element, index) {
-            if (element._id === item._id) {
-              $scope.items[index] = item;
-            }
-          });
+          // todo : recursive find and push item
         } else {
-          $scope.items.push(item);
+          $scope.organization = orga;
+          $scope.documents = orga.documents;
+          $scope.projects = orga.projects;
         }
       });
     };

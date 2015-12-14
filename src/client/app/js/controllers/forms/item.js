@@ -24,9 +24,6 @@ module.exports = ['$rootScope', '$scope', 'identifier', 'organizationId', 'itemS
 
     $scope.submit = function (item) {
       $scope.loading = true;
-      console.log(item);
-      console.log($scope.identifier);
-      console.log($scope.organizationId);
 
       if ($scope.identifier) {
         item = Object.assign(item, {_id: $scope.identifier});
@@ -35,10 +32,9 @@ module.exports = ['$rootScope', '$scope', 'identifier', 'organizationId', 'itemS
         item = Object.assign(item, {organizationId: $scope.organizationId});
       }
 
-      console.log(item);
       itemService.create(item, function (res) {
         $scope.loading = false;
-        //$uibModalInstance.close(res.item);
+        $uibModalInstance.close(res.organization);
       }, function (err) {
         $scope.loading = false;
         toastr.error(err.message);
