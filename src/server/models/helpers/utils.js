@@ -12,5 +12,5 @@ function findRecursivelyById(parentElement, attributeName, elementId, cb) {
 };
 
 module.exports = {
-  findRecursively: findRecursivelyById,
+  findRecursivelyById: findRecursivelyById,
 };
