@@ -2,12 +2,16 @@
 
 var toastr = require('toastr');
 
-module.exports = ['$scope', '$rootScope', 'organizationService', '$uibModal',
-  function ($scope, $rootScope, organizationService, $uibModal) {
+module.exports = ['$scope', '$rootScope', 'organizationService', 'itemService', '$uibModal',
+  function ($scope, $rootScope, organizationService, itemService, $uibModal) {
 
     $scope.organization = organizationService.getCurrentOrganization();
-    $scope.documents = $scope.organization.documents;
-    $scope.projects = $scope.organization.projects;
+    $scope.$watch($scope.organization, function() {
+      if ($scope.organization != undefined) {
+        $scope.documents = $scope.organization.documents;
+        $scope.projects = $scope.organization.projects;
+      }
+    });
 
     $scope.treeOptions = {
       nodeChildren: "children",
@@ -60,8 +64,32 @@ module.exports = ['$scope', '$rootScope', 'organizationService', '$uibModal',
       });
     };
 
-    $scope.delete = function (objectId) {
-      // todo
+    $scope.deleteProject = function (objectId) {
+      $scope.deleteLoading = true;
+      itemService.delete({organizationId: $scope.organization._id, projectId: objectId},
+        function (res) {
+          $scope.documents = res.organization.projects;
+          toastr.info(res.message);
+          $scope.deleteLoading = false;
+        }, function (err) {
+          $scope.deleteLoading = false;
+          toastr.error(err.message);
+        }
+      );
+    };
+
+    $scope.deleteDocument = function (objectId) {
+      $scope.deleteLoading = true;
+      itemService.delete({organizationId: $scope.organization._id, documentId: objectId},
+        function (res) {
+          $scope.documents = res.organization.documents;
+          toastr.info(res.message);
+          $scope.deleteLoading = false;
+        }, function (err) {
+          $scope.deleteLoading = false;
+          toastr.error(err.message);
+        }
+      );
     };
   }
 ];
