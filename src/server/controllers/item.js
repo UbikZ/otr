@@ -90,7 +90,6 @@ module.exports.controller = function (app, config) {
 
   app.post(prefix + '/create', http.ensureAuthorized, function (req, res) {
     var data = req.body;
-    console.log(data);
     http.checkAuthorized(req, res, function (user) {
       if (data.organizationId != undefined) {
         Organization.findById(data.organizationId, function (err, organization) {
