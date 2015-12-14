@@ -44,13 +44,47 @@ module.exports.controller = function (app, config) {
     var data = req.body;
 
     http.checkAuthorized(req, res, function () {
-      Organization.findByIdAndRemove(data.id, function (err) {
-        if (err) {
-          http.response(res, 500, "An error occurred.", err);
-        } else {
-          http.response(res, 200, {id: data.id}, 'Your organization has been remove.');
-        }
-      });
+      if (data.organizationId != undefined) {
+        Organization.findById(data.organizationId, function (err, organization) {
+          if (err) {
+            http.response(res, 500, "An error occurred.", err);
+          } else if (organization) {
+            if (data.projectId != undefined) {
+              organization.findDeepAttributeById(data.projectId, 'projects', function (element) {
+                if (element != undefined) {
+                  element.remove();
+                } else {
+                  http.response(res, 404, {}, "Impossible to retrieve attached project.", err);
+                }
+              });
+            } else if (data.documentId != undefined) {
+              organization.findDeepAttributeById(data.projectId, 'documents', function (element) {
+                if (element != undefined) {
+                  element.remove();
+                } else {
+                  http.response(res, 404, {}, "Impossible to retrieve attached project.", err);
+                }
+              });
+            } else {
+              // todo
+            }
+
+            organization.save(function (err, newOrganization) {
+              if (err) {
+                http.response(res, 500, {}, "An error occurred.", err);
+              } else {
+                newOrganization.populate('creation.user', function (err, newOrg) {
+                  http.response(res, 200, {organization: newOrg});
+                });
+              }
+            });
+          } else {
+            http.response(res, 404, {}, "Organization not found.", err);
+          }
+        });
+      } else {
+        http.response(res, 404, {}, "Wrong parameters.");
+      }
     });
   });
 
