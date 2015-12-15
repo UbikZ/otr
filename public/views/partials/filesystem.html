@@ -62,7 +62,7 @@
                     <div class="file">
                         <div class="file-box">
                             <div class="file">
-                                <span uib-dropdown on-toggle="toggled(open)">
+                                <span uib-dropdown ng-init="opened = false">
                                   <div>
                                       <span class="corner"></span>
 
@@ -70,7 +70,7 @@
                                           <i class="fa fa-file"></i>
                                       </div>
                                       <div class="file-name">
-                                          <div class="btn-group pull-right" uib-dropdown is-open="status.isopen">
+                                          <div class="btn-group pull-right" uib-dropdown is-open="opened">
                                               <button id="single-button" type="button" class="btn btn-white btn-xs"
                                                       uib-dropdown-toggle ng-disabled="disabled">
                                                   <span class="caret"></span>
