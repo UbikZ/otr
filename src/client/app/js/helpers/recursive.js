@@ -30,7 +30,7 @@ function removeRecursivelyById(parentElement, attributeName, elementId, cb) {
   var indexToRemove;
   parentElement[attributeName].forEach(function (subElement, index) {
     if (subElement['_id'] != elementId) {
-      findRecursivelyById(subElement, attributeName, elementId, cb);
+      removeRecursivelyById(subElement, attributeName, elementId, cb);
     } else {
       indexToRemove = index;
     }
