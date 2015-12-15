@@ -86,8 +86,10 @@ module.exports = ['$scope', '$rootScope', 'organizationService', 'itemService', 
       itemService.delete(data,
         function (res) {
           var itemType = type == undefined ? 'projects' : 'documents';
-          recursiveTool.removeRecursivelyById($scope.organization, itemType, objectId, function (items) {
-            $scope[itemType] = items;
+          $scope[itemType].forEach(function(item, index) {
+            if (item._id == res.item._id) {
+              $scope[itemType].splice(index, 1);
+            }
           });
           changeCurrentOrganization(res.organization);
         }, function (err) {

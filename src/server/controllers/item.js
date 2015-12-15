@@ -49,9 +49,11 @@ module.exports.controller = function (app, config) {
           if (err) {
             http.response(res, 500, "An error occurred.", err);
           } else if (organization) {
+            var itemModel;
             if (data.projectId != undefined) {
               organization.findDeepAttributeById(data.projectId, 'projects', function (element) {
                 if (element != undefined) {
+                  itemModel = element;
                   element.remove();
                 } else {
                   http.response(res, 404, {}, "Impossible to retrieve attached project.", err);
@@ -60,6 +62,7 @@ module.exports.controller = function (app, config) {
             } else if (data.documentId != undefined) {
               organization.findDeepAttributeById(data.documentId, 'documents', function (element) {
                 if (element != undefined) {
+                  itemModel = element;
                   element.remove();
                 } else {
                   http.response(res, 404, {}, "Impossible to retrieve attached project.", err);
@@ -74,7 +77,7 @@ module.exports.controller = function (app, config) {
                 http.response(res, 500, {}, "An error occurred.", err);
               } else {
                 newOrganization.populate('creation.user', function (err, newOrg) {
-                  http.response(res, 200, {organization: newOrg});
+                  http.response(res, 200, {organization: newOrg, item: itemModel});
                 });
               }
             });
