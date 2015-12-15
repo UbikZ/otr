@@ -63,17 +63,13 @@ module.exports = ['$scope', '$rootScope', 'organizationService', 'itemService', 
         }
       });
 
-      modalInstance.result.then(function (orga) {
+      modalInstance.result.then(function (res) {
+        var orga = res.organization;
+        var lastItem = res.item;
         changeCurrentOrganization(orga);
         if ($scope.currentProjectIdNode) {
           var itemType = type == undefined ? 'projects' : 'documents';
-          recursiveTool.findRecursivelyById($scope.organization, itemType, objectId, function (item) {
-            $scope[itemType].forEach(function (itemToUpdate, index) {
-              if (itemToUpdate._id === item._id) {
-                $scope[itemType][index] = item;
-              }
-            });
-          });
+          $scope[itemType].push(lastItem);
         } else {
           $scope.documents = orga.documents;
           $scope.projects = orga.projects;
