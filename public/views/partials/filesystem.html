@@ -13,6 +13,7 @@
                     <div class="hr-line-dashed"></div>
                     <input type="text" ng-model="nodeSearch" placeholder="{{ (ns+'.search.placeholder') | translate }}"
                            class=" form-control">
+
                     <div class="hr-line-dashed"></div>
                     <h5>{{ (ns+'.node.arbo') | translate }}</h5>
 
@@ -23,10 +24,11 @@
                          filter-expression="nodeSearch"
                          selected-node="selected"
                          expanded-nodes="expandedNodes"
-                         order-by="type" reverse-order="true">
+                         order-by="type">
                         <span ng-switch="" on="node.type">
                             <span ng-switch-when="project" class="fa fa-folder text-success" aria-hidden="true"></span>
-                            <span ng-switch-when="document" class="fa fa-file-text-o text-navy" aria-hidden="true"></span>
+                            <span ng-switch-when="document" class="fa fa-file-text-o text-navy"
+                                  aria-hidden="true"></span>
                         </span>
                         {{node.name}}
                     </div>
@@ -38,6 +40,19 @@
     <div class="col-lg-8">
         <div class="row">
             <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <div class="file-manager">
+                            <h5>{{ (ns+'.breadcrumb') | translate }}</h5>
+                            <ol class="breadcrumb">
+                                <li><a ng-click="clearSelected()"><i class="fa fa-home"></i> Home</a></li>
+                                <li ng-repeat="element in breadcrumbElements">
+                                    <a ng-click="open(element._id)">{{ element.name }}</a>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
                 <div class="file-box">
                     <div class="file">
                         <button class="btn btn-block btn-outline btn-default p-sm" ng-click="edit()">
@@ -46,6 +61,7 @@
                         </button>
                         <div>
                             <span class="corner"></span>
+
                             <div class="file-name text-center">
                                 {{ (ns+'.item.creation.description') | translate }}
                             </div>
@@ -96,12 +112,14 @@
                 </div>
                 <div class="file-box" ng-repeat="document in documents | orderBy:name">
                     <div class="file">
-                        <button class="btn btn-block btn-outline btn-success p-sm" uib-tooltip="{{ document.description }}">
+                        <button class="btn btn-block btn-outline btn-success p-sm"
+                                uib-tooltip="{{ document.description }}">
                             <i class="fa fa-folder fa-5x m-b-md text-navy"></i> <br/>
                             <strong>{{ document.name }}</strong>
                         </button>
                         <div>
                             <span class="corner"></span>
+
                             <div class="file-name text-center">
                                 <div class="m-t-xs btn-group">
                                     <a class="btn btn-xs btn-white"><i class="fa fa-pencil"></i>

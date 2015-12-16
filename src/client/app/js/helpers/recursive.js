@@ -29,6 +29,30 @@ function findRecursivelyById(parentElement, attributeName, elementId, getParent,
   });
 }
 
+// todo: breadcrumb feature here
+/*function findPathRecursivelyById(parentElement, attributeName, elementId, getParent, cb, passFirstElement) {
+  var elements = passFirstElement === true ? parentElement : parentElement[attributeName];
+  elements.forEach(function (subElement) {
+    if (subElement['_id'] != elementId) {
+      findRecursivelyById(subElement, attributeName, elementId, getParent, cb);
+    } else if (parentElement.length === undefined) {
+      cb(getParent === true ? parentElement : subElement);
+    } else {
+      cb(getParent === true ? undefined : subElement);
+    }
+  });
+}*/
+
+function walkTreeRecursively(element, attributeName, type, cb) {
+  if (element.type != type || element[attributeName] == undefined || element[attributeName].length == 0) {
+    return;
+  }
+  element[attributeName].forEach(function (child) {
+    cb(element);
+    walkTreeRecursively(child, attributeName, type, cb);
+  });
+}
+
 function removeRecursivelyById(parentElement, attributeName, elementId, cb) {
   var indexToRemove;
   parentElement[attributeName].forEach(function (subElement, index) {
@@ -49,4 +73,5 @@ module.exports = {
   convertTreeView: convertTreeView,
   findRecursivelyById: findRecursivelyById,
   removeRecursivelyById: removeRecursivelyById,
+  walkTreeRecursively: walkTreeRecursively,
 };

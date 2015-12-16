@@ -18,11 +18,18 @@ module.exports = ['$scope', '$rootScope', 'itemService', '$uibModal',
         $scope.documents = [];
         $scope.projects = $scope.organization.projects;
       } else {
+        $scope.breadcrumbElements = [];
         recursiveTool.findRecursivelyById($scope.organization, 'projects', $scope.currentProjectIdNode, false,
           function (item) {
             $scope.projects = item.projects;
           }
         );
+        // todo : add breadcrumb feature
+        /*$scope.items.forEach(function (item) {
+          recursiveTool.walkTreeRecursively(item, 'project', function(element) {
+            $scope.breadcrumbElements.push(element);
+          });
+        });*/
       }
     };
 
@@ -36,19 +43,9 @@ module.exports = ['$scope', '$rootScope', 'itemService', '$uibModal',
       dirSelectable: true,
     };
 
-    $scope.onSelect = function (node, selected, $parentNode, $index) {
-      var idNode;
-      if (selected) {
-        if (node.type == 'project') {
-          idNode = node._id;
-        } else if (node.type == 'document') {
-          idNode = $parentNode._id;
-        }
-      } else {
-        idNode = undefined;
-      }
-      changeCurrentProjectIdNode(idNode);
-    };
+    /*
+     * Modal edition
+     */
 
     $scope.edit = function (objectId, type) {
       var modalInstance = $uibModal.open({
@@ -119,28 +116,40 @@ module.exports = ['$scope', '$rootScope', 'itemService', '$uibModal',
      * Angular Control Tree actions
      */
 
-    $scope.clearSelected = function() {
+    $scope.clearSelected = function () {
       $scope.selected = undefined;
       changeCurrentProjectIdNode();
     };
 
     $scope.expandAll = function () {
       $scope.expandedNodes = [];
-      $scope.items.forEach(function(item) {
-        (function addToAllNodes(element) {
-          if (element.type != 'project' || element.children == undefined || element.children.length == 0) {
-            return;
-          }
-          element.children.forEach(function(child) {
-            $scope.expandedNodes.push(element);
-            addToAllNodes(child);
-          });
-        })(item);
+      $scope.items.forEach(function (item) {
+        recursiveTool.walkTreeRecursively(item, 'children', 'project', function(element) {
+          $scope.expandedNodes.push(element);
+        });
       });
     };
 
     $scope.collapseAll = function () {
       $scope.expandedNodes = [];
+    };
+
+    $scope.open = function(idNode) {
+      changeCurrentProjectIdNode(idNode);
+    };
+
+    $scope.onSelect = function (node, selected, $parentNode, $index) {
+      var idNode;
+      if (selected) {
+        if (node.type == 'project') {
+          idNode = node._id;
+        } else if (node.type == 'document') {
+          idNode = $parentNode._id;
+        }
+      } else {
+        idNode = undefined;
+      }
+      changeCurrentProjectIdNode(idNode);
     };
 
     function addExpandedNode(id) {
