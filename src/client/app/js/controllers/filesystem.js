@@ -115,6 +115,34 @@ module.exports = ['$scope', '$rootScope', 'itemService', '$uibModal',
       $scope.opened = !$scope.opened;
     };
 
+    /*
+     * Angular Control Tree actions
+     */
+
+    $scope.clearSelected = function() {
+      $scope.selected = undefined;
+      changeCurrentProjectIdNode();
+    };
+
+    $scope.expandAll = function () {
+      $scope.expandedNodes = [];
+      $scope.items.forEach(function(item) {
+        (function addToAllNodes(element) {
+          if (element.type != 'project' || element.children == undefined || element.children.length == 0) {
+            return;
+          }
+          element.children.forEach(function(child) {
+            $scope.expandedNodes.push(element);
+            addToAllNodes(child);
+          });
+        })(item);
+      });
+    };
+
+    $scope.collapseAll = function () {
+      $scope.expandedNodes = [];
+    };
+
     function addExpandedNode(id) {
       recursiveTool.findRecursivelyById($scope.items, 'children', id, true, function (element) {
         $scope.expandedNodes = $scope.expandedNodes || [];

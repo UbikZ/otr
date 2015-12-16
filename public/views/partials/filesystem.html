@@ -1,9 +1,14 @@
-<div class="row animated fadeIn">
+<div class="row animated fadeIn" ng-controller="filesystem.controller">
     <div class="col-lg-4">
         <div class="ibox float-e-margins">
             <div class="ibox-content">
                 <div class="file-manager">
                     <h5>{{ (ns+'.node') | translate }}</h5>
+
+                    <h5>Show:</h5>
+                    <a ng-click="clearSelected()" class="file-control">{{ (ns+'.actions.unselect') | translate }}</a>
+                    <a ng-click="expandAll()" class="file-control">{{ (ns+'.actions.expand') | translate }}</a>
+                    <a ng-click="collapseAll()" class="file-control">{{ (ns+'.actions.collapse') | translate }}</a>
 
                     <div class="hr-line-dashed"></div>
                     <input type="text" ng-model="nodeSearch" placeholder="{{ (ns+'.search.placeholder') | translate }}"
@@ -16,6 +21,7 @@
                          options="treeOptions"
                          on-selection="onSelect(node, selected, $parentNode, $index)"
                          filter-expression="nodeSearch"
+                         selected-node="selected"
                          expanded-nodes="expandedNodes"
                          order-by="type" reverse-order="true">
                         <span ng-switch="" on="node.type">
