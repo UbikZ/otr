@@ -49,13 +49,13 @@
                 <div class="file-box" ng-repeat="project in projects | orderBy:name">
                     <div class="file">
                         <div class="file-box">
-                            <div class="file">
+                            <div class="file text-success">
                                 <span uib-dropdown ng-init="opened = false">
                                   <div>
                                       <span class="corner"></span>
 
                                       <div class="icon">
-                                          <i class="fa fa-file"></i>
+                                          <i class="fa fa-folder text-primary"></i>
                                       </div>
                                       <div class="file-name">
                                           <div class="btn-group pull-right" uib-dropdown is-open="opened">
@@ -89,9 +89,9 @@
                     </div>
                 </div>
                 <div class="file-box" ng-repeat="document in documents | orderBy:name">
-                    <div class="file">
+                    <div class="file text-success">
                         <button class="btn btn-block btn-outline btn-success p-sm" uib-tooltip="{{ document.description }}">
-                            <i class="fa fa-folder fa-5x m-b-md"></i> <br/>
+                            <i class="fa fa-folder fa-5x m-b-md text-success"></i> <br/>
                             <strong>{{ document.name }}</strong>
                         </button>
                         <div>

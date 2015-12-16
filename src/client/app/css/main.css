@@ -4658,7 +4658,7 @@ ul.notes li div {
 }
 .file .icon i {
     font-size: 70px;
-    color: #dadada;
+    /*color: #dadada;*/
 }
 .file .file-name {
     padding: 10px;

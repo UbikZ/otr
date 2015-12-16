@@ -117,6 +117,7 @@ module.exports = ['$scope', '$rootScope', 'itemService', '$uibModal',
 
     function addExpandedNode(id) {
       recursiveTool.findRecursivelyById($scope.items, 'children', id, true, function (element) {
+        $scope.expandedNodes = $scope.expandedNodes || [];
         if (element !== undefined) {
           $scope.expandedNodes.push(element);
         }
