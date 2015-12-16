@@ -126,7 +126,11 @@ module.exports.controller = function (app, config) {
                 }
               });
             } else if (data.type == "project") {
-              organization.projects.push(item);
+              modelItem = organization.projects.create(item);
+              organization.projects.push(modelItem);
+            } else if (data.type == "document") {
+              modelItem = organization.documents.create(item);
+              organization.documents.push(modelItem);
             }
 
             organization.save(function (err, newOrganization) {
@@ -156,7 +160,7 @@ module.exports.controller = function (app, config) {
           if (err) {
             http.response(res, 500, "An error occurred.", err);
           } else if (organization) {
-            if (data.projectId) {
+             if (data.projectId != undefined) {
               organization.findDeepAttributeById(data.projectId, 'projects', function (element) {
                 if (element != undefined) {
                   element.name = data.name;
