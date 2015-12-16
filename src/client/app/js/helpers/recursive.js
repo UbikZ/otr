@@ -30,18 +30,27 @@ function findRecursivelyById(parentElement, attributeName, elementId, getParent,
 }
 
 // todo: breadcrumb feature here
-/*function findPathRecursivelyById(parentElement, attributeName, elementId, getParent, cb, passFirstElement) {
-  var elements = passFirstElement === true ? parentElement : parentElement[attributeName];
-  elements.forEach(function (subElement) {
-    if (subElement['_id'] != elementId) {
-      findRecursivelyById(subElement, attributeName, elementId, getParent, cb);
-    } else if (parentElement.length === undefined) {
-      cb(getParent === true ? parentElement : subElement);
-    } else {
-      cb(getParent === true ? undefined : subElement);
+function findPathRecursivelyById(elements, elementId, attributeName) {
+  var sub, index;
+
+  function slice(object, properties) {
+    var result = {}, props = properties || [];
+
+    props.forEach(function(property) {
+      result[property] = object[property];
+    });
+
+    return result;
+  }
+
+  for (index = 0; index < elements.length ; index++) {
+    if (elements[index]._id === elementId) {
+      return [slice(elements[index], ['_id', 'name'])];
+    } else if (sub = findPathRecursivelyById(elements[index][attributeName], elementId, attributeName)) {
+      return [slice(elements[index], ['_id', 'name'])].concat(sub);
     }
-  });
-}*/
+  }
+}
 
 function walkTreeRecursively(element, attributeName, type, cb) {
   if (element.type != type || element[attributeName] == undefined || element[attributeName].length == 0) {
@@ -74,4 +83,5 @@ module.exports = {
   findRecursivelyById: findRecursivelyById,
   removeRecursivelyById: removeRecursivelyById,
   walkTreeRecursively: walkTreeRecursively,
+  findPathRecursivelyById: findPathRecursivelyById,
 };

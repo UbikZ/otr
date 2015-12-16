@@ -18,18 +18,13 @@ module.exports = ['$scope', '$rootScope', 'itemService', '$uibModal',
         $scope.documents = [];
         $scope.projects = $scope.organization.projects;
       } else {
-        $scope.breadcrumbElements = [];
         recursiveTool.findRecursivelyById($scope.organization, 'projects', $scope.currentProjectIdNode, false,
           function (item) {
             $scope.projects = item.projects;
           }
         );
-        // todo : add breadcrumb feature
-        /*$scope.items.forEach(function (item) {
-          recursiveTool.walkTreeRecursively(item, 'project', function(element) {
-            $scope.breadcrumbElements.push(element);
-          });
-        });*/
+        $scope.breadcrumbElements =
+          recursiveTool.findPathRecursivelyById($scope.items, $scope.currentProjectIdNode, 'children');
       }
     };
 
@@ -119,6 +114,7 @@ module.exports = ['$scope', '$rootScope', 'itemService', '$uibModal',
     $scope.clearSelected = function () {
       $scope.selected = undefined;
       changeCurrentProjectIdNode();
+      $scope.breadcrumbElements = [];
     };
 
     $scope.expandAll = function () {
