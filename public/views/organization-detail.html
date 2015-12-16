@@ -1,4 +1,4 @@
-<div class="ng-scope" ng-controller="organization-detail.controller as orgDetailCtrl" ng-init="ns='organization.detail'">
+<div class="ng-scope" ng-controller="organization-detail.controller" ng-init="ns='organization.detail'">
     <div class="row wrapper border-bottom white-bg page-heading ng-scope">
         <div class="col-sm-12">
             <h2>{{ (ns+'.organizations') | translate }}</h2>
@@ -68,7 +68,7 @@
                         </div>
                     </div>
                 </div>
-                <div ng-include="'views/partials/filesystem.html'"></div>
+                <div ng-include="'views/partials/filesystem.html'" ng-controller="filesystem.controller"></div>
             </div>
         </div>
         <div class="col-lg-3">

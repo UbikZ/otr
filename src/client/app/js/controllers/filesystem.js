@@ -3,8 +3,8 @@
 var toastr = require('toastr');
 var recursiveTool = require('../helpers/recursive');
 
-module.exports = ['$scope', '$rootScope', 'organizationService', 'itemService', '$uibModal', '$timeout',
-  function ($scope, $rootScope, organizationService, itemService, $uibModal, $timeout) {
+module.exports = ['$scope', '$rootScope', 'itemService', '$uibModal',
+  function ($scope, $rootScope, itemService, $uibModal) {
 
     var changeCurrentOrganization = function (organization) {
       $scope.organization = organization;
@@ -12,8 +12,6 @@ module.exports = ['$scope', '$rootScope', 'organizationService', 'itemService', 
         $scope.items = recursiveTool.convertTreeView($scope.organization);
       }
     };
-    changeCurrentOrganization(organizationService.getCurrentOrganization());
-
     var changeCurrentProjectIdNode = function (id) {
       $scope.currentProjectIdNode = id;
       if ($scope.currentProjectIdNode == undefined) {
@@ -27,7 +25,11 @@ module.exports = ['$scope', '$rootScope', 'organizationService', 'itemService', 
         );
       }
     };
-    changeCurrentProjectIdNode();
+
+    $scope.$on('load-organization', function (event, data) {
+      changeCurrentOrganization(data.organization);
+      changeCurrentProjectIdNode();
+    });
 
     $scope.treeOptions = {
       nodeChildren: "children",
@@ -69,7 +71,15 @@ module.exports = ['$scope', '$rootScope', 'organizationService', 'itemService', 
         changeCurrentOrganization(orga);
         if ($scope.currentProjectIdNode) {
           var itemType = type == undefined ? 'projects' : 'documents';
-          $scope[itemType].push(lastItem);
+          var currentIds = $scope[itemType].map(function (object) {
+            return object._id;
+          });
+          var index = currentIds.indexOf(lastItem._id);
+          if (index === -1) {
+            $scope[itemType].push(lastItem);
+          } else {
+            $scope[itemType][index] = lastItem;
+          }
           addExpandedNode(lastItem._id);
         } else {
           $scope.documents = orga.documents;
@@ -87,7 +97,7 @@ module.exports = ['$scope', '$rootScope', 'organizationService', 'itemService', 
       itemService.delete(data,
         function (res) {
           var itemType = type == undefined ? 'projects' : 'documents';
-          $scope[itemType].forEach(function(item, index) {
+          $scope[itemType].forEach(function (item, index) {
             if (item._id == res.item._id) {
               $scope[itemType].splice(index, 1);
             }
@@ -99,14 +109,14 @@ module.exports = ['$scope', '$rootScope', 'organizationService', 'itemService', 
       );
     };
 
-    $scope.toggleDropdown = function($event) {
+    $scope.toggleDropdown = function ($event) {
       $event.preventDefault();
       $event.stopPropagation();
       $scope.opened = !$scope.opened;
     };
 
     function addExpandedNode(id) {
-      recursiveTool.findRecursivelyById($scope.items, 'children', id, true, function(element) {
+      recursiveTool.findRecursivelyById($scope.items, 'children', id, true, function (element) {
         if (element !== undefined) {
           $scope.expandedNodes.push(element);
         }

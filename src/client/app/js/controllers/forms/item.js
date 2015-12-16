@@ -5,6 +5,7 @@ var recursiveTool = require('../../helpers/recursive');
 
 module.exports = ['$rootScope', '$scope', 'identifier', 'organizationId', 'itemService', '$uibModalInstance',
   function ($rootScope, $scope, identifier, organizationId, itemService, $uibModalInstance) {
+    // todo: improve this
     var itemModelType = identifier.type == undefined ? 'projects' : 'documents',
       itemType = identifier.type == undefined ? 'project' : 'document';
 
@@ -50,7 +51,7 @@ module.exports = ['$rootScope', '$scope', 'identifier', 'organizationId', 'itemS
       } else {
         item = Object.assign(item, {type: itemType});
       }
-      
+
       itemService.edit(item, function (res) {
         $scope.loading = false;
         $uibModalInstance.close({organization: res.organization, item: res.item});
