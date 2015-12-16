@@ -20,7 +20,7 @@ module.exports = ['$scope', '$rootScope', 'organizationService', 'itemService', 
         $scope.documents = [];
         $scope.projects = $scope.organization.projects;
       } else {
-        recursiveTool.findRecursivelyById($scope.organization, 'projects', $scope.currentProjectIdNode,
+        recursiveTool.findRecursivelyById($scope.organization, 'projects', $scope.currentProjectIdNode, false,
           function (item) {
             $scope.projects = item.projects;
           }
@@ -38,9 +38,9 @@ module.exports = ['$scope', '$rootScope', 'organizationService', 'itemService', 
       var idNode;
       if (selected) {
         if (node.type == 'project') {
-          idNode = node.id;
+          idNode = node._id;
         } else if (node.type == 'document') {
-          idNode = $parentNode.id;
+          idNode = $parentNode._id;
         }
       } else {
         idNode = undefined;
@@ -70,6 +70,7 @@ module.exports = ['$scope', '$rootScope', 'organizationService', 'itemService', 
         if ($scope.currentProjectIdNode) {
           var itemType = type == undefined ? 'projects' : 'documents';
           $scope[itemType].push(lastItem);
+          addExpandedNode(lastItem._id);
         } else {
           $scope.documents = orga.documents;
           $scope.projects = orga.projects;
@@ -103,5 +104,13 @@ module.exports = ['$scope', '$rootScope', 'organizationService', 'itemService', 
       $event.stopPropagation();
       $scope.opened = !$scope.opened;
     };
+
+    function addExpandedNode(id) {
+      recursiveTool.findRecursivelyById($scope.items, 'children', id, true, function(element) {
+        if (element !== undefined) {
+          $scope.expandedNodes.push(element);
+        }
+      }, true);
+    }
   }
 ];

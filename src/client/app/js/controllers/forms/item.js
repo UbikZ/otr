@@ -16,7 +16,7 @@ module.exports = ['$rootScope', '$scope', 'identifier', 'organizationId', 'itemS
         } else {
           var organization = res.organizations[0];
           var itemType = identifier.type == undefined ? 'projects' : 'documents';
-          recursiveTool.findRecursivelyById(organization, itemType, $scope.identifier, function(element) {
+          recursiveTool.findRecursivelyById(organization, itemType, $scope.identifier, false, function(element) {
             $scope.item = element;
           });
         }
