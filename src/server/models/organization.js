@@ -6,7 +6,7 @@ var Setting = require('./setting').schema;
 var utilsHelper = require('./helpers/utils');
 
 var schema = new mongoose.Schema({
-  name: String,
+  name: { type: String, index: { unique: true } },
   description: String,
   active: Boolean,
   url: String,
@@ -22,8 +22,6 @@ var schema = new mongoose.Schema({
   projects: [Project],
   settings: Setting,
 });
-
-schema.index({name: 1}, {unique: true});
 
 schema.methods.findDeepAttributeById = function (projectId, attributesName, cb) {
   var model = this;

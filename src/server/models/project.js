@@ -22,6 +22,4 @@ Project.add({
   settings: Setting,
 });
 
-Project.index({name: 1}, {unique: true});
-
 module.exports = mongoose.model('Project', Project);

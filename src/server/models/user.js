@@ -8,13 +8,13 @@ var schema = new mongoose.Schema({
     ontime_token: String,
   },
   name: {
-    username: String,
+    username: { type: String, index: { unique: true } },
     firstname: String,
     lastname: String
   },
   info: {
     job: String,
-    email: String,
+    email: { type: String, index: { unique: true } },
   },
 });
 
