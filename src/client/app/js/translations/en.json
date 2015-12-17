@@ -55,7 +55,7 @@
           "placeholder": ""
         },
         "submit": "Enregistrer",
-        "quit": "Quitter"
+        "quit": "Annuler"
       },
       "avatar": {
         "title": "Image de profile",
@@ -107,7 +107,7 @@
           "label": "Société active"
         },
         "submit": "Enregistrer",
-        "quit": "Quitter"
+        "quit": "Annuler"
       }
     },
     "detail": {
@@ -143,6 +143,9 @@
         "expand": "Tout déplier",
         "collapse": "Tout replier"
       },
+      "actions": {
+        "create": "Ajouter"
+      },
       "search": {
         "placeholder": "Rechercher un élément"
       },
@@ -150,10 +153,6 @@
     },
     "breadcrumb": "Fil d'Arianne",
     "item": {
-      "creation": {
-        "create": "Ajouter",
-        "description": "Project ou Document"
-      },
       "open": "Ouvrir",
       "edit": "Editer",
       "delete": "Supprimer",
@@ -181,7 +180,7 @@
             "placeholder": ""
           },
           "submit": "Enregistrer",
-          "quit": "Quitter"
+          "quit": "Annuler"
         }
       }
     }
