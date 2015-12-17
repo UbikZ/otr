@@ -15,26 +15,26 @@
             <div class="form-group"
                  ng-class="{ 'has-error': loginForm.username.$invalid && loginForm.username.$dirty }">
                 <input ng-model="userLogin.username" name="username"
-                       type="text" class="form-control" placeholder="{{ (ns+'.username') | translate }}" required>
+                       type="text" class="form-control" placeholder="{{ (ns+'.form.username.placeholder') | translate }}" required>
 
                 <p class="help-block has-error"
                    ng-show="loginForm.username.$dirty && loginForm.username.$error.required">
-                    {{ (ns+'.usernameError') | translate }}
+                    {{ (ns+'.form.username.errors.required') | translate }}
                 </p>
             </div>
             <div class="form-group"
                  ng-class="{ 'has-error': loginForm.password.$invalid && loginForm.password.$dirty }">
                 <input ng-model="userLogin.password" name="password"
-                       type="password" class="form-control" placeholder="{{ (ns+'.password') | translate }}" required>
+                       type="password" class="form-control" placeholder="{{ (ns+'.form.password.placeholder') | translate }}" required>
 
                 <p class="help-block has-error"
                    ng-show="loginForm.password.$dirty && loginForm.password.$error.required">
-                    {{ (ns+'.passwordError') | translate }}
+                    {{ (ns+'.form.password.errors.required') | translate }}
                 </p>
             </div>
             <button ng-click="login(userLogin)" ng-disabled="!loginForm.$valid || loading"
                     type="submit" class="btn btn-primary block full-width m-b">
-                {{ (ns+'.submit') | translate }}
+                {{ (ns+'.form.submit') | translate }}
             </button>
             <p class="help-block">
                 <div class="sk-cube-grid" ng-if="loading">
@@ -51,7 +51,7 @@
             </p>
         </form>
         <p class="m-t">
-            <small>OTR &copy; 2014-2015</small>
+            <small>OTRv3 &copy; 2014-2015</small>
         </p>
     </div>
 </div>

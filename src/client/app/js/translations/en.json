@@ -3,9 +3,21 @@
     "welcome": "Bienvenue sur la version 3 d'OnTime Reader",
     "description": "",
     "login": "Veuillez utiliser votre nom d'utilisateur et mot de passe d'OnTime",
-    "username": "Nom d'utilisateur",
-    "password": "Mot de passe",
-    "submit": "Login"
+    "form": {
+      "username": {
+        "placeholder": "Nom d'utilisateur",
+        "errors": {
+          "required": "Vous devez renseigner votre nom d'utilisateur (celui de votre compte OnTime)"
+        }
+      },
+      "password": {
+        "placeholder": "Mot de passe",
+        "errors": {
+          "required": "Vous devez renseigner votre mot de passe (celui de compte OnTime)"
+        }
+      },
+      "submit": "Se connecter"
+    }
   },
   "base": {
     "header": {
