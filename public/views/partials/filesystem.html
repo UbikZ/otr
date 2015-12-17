@@ -1,21 +1,21 @@
-<div class="row animated fadeIn" ng-controller="filesystem.controller">
+<div class="row animated fadeIn" ng-controller="filesystem.controller" ng-init="ns='filesystem'">
     <div class="col-lg-4">
         <div class="ibox float-e-margins">
             <div class="ibox-content">
                 <div class="file-manager">
-                    <h5>{{ (ns+'.node') | translate }}</h5>
+                    <h5>{{ (ns+'.control.title') | translate }}</h5>
 
-                    <h5>Show:</h5>
-                    <a ng-click="clearSelected()" class="file-control">{{ (ns+'.actions.unselect') | translate }}</a>
-                    <a ng-click="expandAll()" class="file-control">{{ (ns+'.actions.expand') | translate }}</a>
-                    <a ng-click="collapseAll()" class="file-control">{{ (ns+'.actions.collapse') | translate }}</a>
+                    <h5>{{ (ns+'.control.filter') | translate }}</h5>
+                    <a ng-click="clearSelected()" class="file-control">{{ (ns+'.control.filters.unselect') | translate }}</a>
+                    <a ng-click="expandAll()" class="file-control">{{ (ns+'.control.filters.expand') | translate }}</a>
+                    <a ng-click="collapseAll()" class="file-control">{{ (ns+'.control.filters.collapse') | translate }}</a>
 
                     <div class="hr-line-dashed"></div>
-                    <input type="text" ng-model="nodeSearch" placeholder="{{ (ns+'.search.placeholder') | translate }}"
+                    <input type="text" ng-model="nodeSearch" placeholder="{{ (ns+'.control.search.placeholder') | translate }}"
                            class=" form-control">
 
                     <div class="hr-line-dashed"></div>
-                    <h5>{{ (ns+'.node.arbo') | translate }}</h5>
+                    <h5>{{ (ns+'.control.tree') | translate }}</h5>
 
                     <div treecontrol class="tree-light"
                          tree-model="items"
@@ -45,7 +45,11 @@
                         <div class="file-manager">
                             <h5>{{ (ns+'.breadcrumb') | translate }}</h5>
                             <ol class="breadcrumb">
-                                <li><a ng-click="clearSelected()"><i class="fa fa-home"></i> Home</a></li>
+                                <li>
+                                    <a ng-click="clearSelected()"><i class="fa fa-home"></i>
+                                        <strong>{{ organization.name }}</strong>
+                                    </a>
+                                </li>
                                 <li ng-repeat="element in breadcrumbElements">
                                     <a ng-click="open(element._id)">{{ element.name }}</a>
                                 </li>
@@ -102,7 +106,7 @@
                                           </div>
                                           <span class="text-success">{{ project.name }}</span>
                                           <br>
-                                          <small>Added: {{ project.creation.date }}</small>
+                                          <small>{{ (ns+'.item.added') | translate }} {{ project.creation.date | date:'dd-MM-yyyy' }}</small>
                                       </div>
                                   </div>
                                 </span>

@@ -125,5 +125,28 @@
         }
       }
     }
+  },
+  "filesystem": {
+    "control": {
+      "title": "Vision globale",
+      "filter": "Filtres",
+      "filters": {
+        "unselect": "Tout désélectionner",
+        "expand": "Tout déplier",
+        "collapse": "Tout replier"
+      },
+      "search": {
+        "placeholder": "Rechercher un élément"
+      },
+      "tree": "Arborescence"
+    },
+    "breadcrumb": "Fil d'Arianne",
+    "item": {
+      "creation": {
+        "create": "Ajouter",
+        "description": "Nouveau Project ou Document"
+      },
+      "added": "Ajouté le"
+    }
   }
 }
