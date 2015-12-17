@@ -32,9 +32,13 @@ var app = angular.module('otr', [
   'treeControl',
 ]);
 
-app.config(require('./config'))
-  .run(function ($rootScope, $state, $localStorage, $location, authService) {
+app
+  .constant('_CONST', require('./constants'))
+  .config(require('./config'))
+  .run(function ($rootScope, $state, $localStorage, $location, authService, _CONST) {
     $rootScope.$state = $state;
+    $rootScope.routes = _CONST.ROUTES;
+    console.log($rootScope.routes);
     $rootScope.isAuthenticated = false;
     $rootScope.user = $localStorage.user ? JSON.parse($localStorage.user) : undefined;
 

@@ -3,15 +3,17 @@
 var env = require('./env');
 
 module.exports = [
-  '$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$translateProvider', '$httpProvider',
-  function ($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, $translateProvider, $httpProvider) {
+  '$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$translateProvider', '$httpProvider', '_CONST',
+  function ($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, $translateProvider, $httpProvider, _CONST) {
+
+    var routes = _CONST.ROUTES;
 
     $ocLazyLoadProvider.config({
       debug: true
     });
 
     $stateProvider
-      .state('app', {
+      .state(routes.APP, {
         abstract: true,
         url: '/app',
         templateUrl: env.templatePath('common/content.html'),
@@ -22,43 +24,43 @@ module.exports = [
           }
         }
       })
-      .state('app.home', {
+      .state(routes.APP_HOME, {
         url: '/home',
         templateUrl: env.templatePath('home.html'),
       })
-      .state('app.users', {
+      .state(routes.APP_USERS, {
         url: '/users',
-        templateUrl: env.templatePath('users.html'),
+        templateUrl: env.templatePath('users/list.html'),
       })
-      .state('account', {
+      .state(routes.ACCOUNT, {
         abstract: true,
         url: '/account',
         templateUrl: env.templatePath('common/content.html'),
         data: {includes: true, requiresLogin: true},
       })
-      .state('account.ontime', {
+      .state(routes.ACCOUNT_ONTIME, {
         url: '/ontime',
-        templateUrl: env.templatePath('ontime.html'),
+        templateUrl: env.templatePath('account/ontime.html'),
       })
-      .state('account.manage', {
+      .state(routes.ACCOUNT_MANAGE, {
         url: '/manage',
-        templateUrl: env.templatePath('manage.html'),
+        templateUrl: env.templatePath('account/manage.html'),
       })
-      .state('organization', {
+      .state(routes.ORGANIZATIONS, {
         abstract: true,
-        url: '/organization',
+        url: '/organizations',
         templateUrl: env.templatePath('common/content.html'),
         data: {includes: true, requiresLogin: true},
       })
-      .state('organization.list', {
+      .state(routes.ORGANIZATIONS_LIST, {
         url: '/list',
-        templateUrl: env.templatePath('organizations.html'),
+        templateUrl: env.templatePath('organizations/list.html'),
       })
-      .state('organization.detail', {
+      .state(routes.ORGANIZATIONS_DETAIL, {
         url: '/detail/:id',
-        templateUrl: env.templatePath('organization-detail.html'),
+        templateUrl: env.templatePath('organizations/detail.html'),
       })
-      .state('login', {
+      .state(routes.LOGIN, {
         url: '/login',
         templateUrl: env.templatePath('login.html'),
         data: {includes: false},
