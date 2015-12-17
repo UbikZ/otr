@@ -22,6 +22,8 @@ module.exports = function(gulp, plugins, npmPackages, config) {
         nodePath + '/spinkit/css/spinkit.css',
         // Toastr
         nodePath + '/toastr/build/toastr.css',
+        // iHover
+        nodePath + '/ihover/src/ihover.css',
       ], { base: nodePath }
     ).pipe(gulp.dest(config.path.public + '/lib'));
   };

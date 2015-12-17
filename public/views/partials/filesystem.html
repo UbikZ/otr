@@ -6,12 +6,15 @@
                     <h5>{{ (ns+'.control.title') | translate }}</h5>
 
                     <h5>{{ (ns+'.control.filter') | translate }}</h5>
-                    <a ng-click="clearSelected()" class="file-control">{{ (ns+'.control.filters.unselect') | translate }}</a>
+                    <a ng-click="clearSelected()" class="file-control">{{ (ns+'.control.filters.unselect') | translate
+                        }}</a>
                     <a ng-click="expandAll()" class="file-control">{{ (ns+'.control.filters.expand') | translate }}</a>
-                    <a ng-click="collapseAll()" class="file-control">{{ (ns+'.control.filters.collapse') | translate }}</a>
+                    <a ng-click="collapseAll()" class="file-control">{{ (ns+'.control.filters.collapse') | translate
+                        }}</a>
 
                     <div class="hr-line-dashed"></div>
-                    <input type="text" ng-model="nodeSearch" placeholder="{{ (ns+'.control.search.placeholder') | translate }}"
+                    <input type="text" ng-model="nodeSearch"
+                           placeholder="{{ (ns+'.control.search.placeholder') | translate }}"
                            class=" form-control">
 
                     <div class="hr-line-dashed"></div>
@@ -62,16 +65,16 @@
                         <div class="file-box">
                             <div class="file">
                                 <a ng-click="edit()">
-                                  <div class="text-muted">
-                                      <div class="icon">
-                                          <i class="fa fa-plus"></i>
-                                      </div>
-                                      <div class="file-name text-center">
-                                          <strong>{{ (ns+'.item.creation.create') | translate }}</strong>
-                                          <br>
-                                          <small>{{ (ns+'.item.creation.description') | translate }}</small>
-                                      </div>
-                                  </div>
+                                    <div class="text-muted">
+                                        <div class="icon">
+                                            <i class="fa fa-plus"></i>
+                                        </div>
+                                        <div class="file-name text-center">
+                                            <strong>{{ (ns+'.item.creation.create') | translate }}</strong>
+                                            <br>
+                                            <small>{{ (ns+'.item.creation.description') | translate }}</small>
+                                        </div>
+                                    </div>
                                 </a>
                             </div>
                         </div>
@@ -85,11 +88,19 @@
                                   <div>
                                       <span class="corner"></span>
 
-                                      <a ng-click="open(project._id)">
-                                          <div class="icon">
-                                              <i class="fa fa-folder text-success"></i>
-                                          </div>
-                                      </a>
+                                      <div class="ih-item square effect6 from_top_and_bottom">
+                                          <a ng-click="open(project._id)">
+                                              <div class="img">
+                                                  <div class="icon">
+                                                      <i class="fa fa-folder text-success"></i>
+                                                  </div>
+                                              </div>
+                                              <div class="info">
+                                                  <h3>Open</h3>
+                                              </div>
+                                          </a>
+                                      </div>
+
 
                                       <div class="file-name">
                                           <div class="btn-group pull-right" uib-dropdown is-open="opened">
@@ -114,7 +125,9 @@
                                           </div>
                                           <span class="text-success">{{ project.name }}</span>
                                           <br>
-                                          <small>{{ (ns+'.item.added') | translate }} {{ project.creation.date | date:'dd-MM-yyyy' }}</small>
+                                          <small>{{ (ns+'.item.added') | translate }} {{ project.creation.date |
+                                              date:'dd-MM-yyyy' }}
+                                          </small>
                                       </div>
                                   </div>
                                 </span>

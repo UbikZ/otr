@@ -19,6 +19,24 @@
     background: url("../img/node-closed-2.png") no-repeat;
 }
 
+/* iHover */
+.file .ih-item.square {
+    position: relative;
+    width: auto;
+    height: auto;
+    border: none;
+    box-shadow: none;
+}
+
+.ih-item.square.effect6 .info {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.ih-item.square.effect6 .info h3 {
+    text-transform: uppercase;
+    background: rgba(0, 0, 0, 0.4);
+}
+
 /* Others */
 .file-box {
     width: 200px;
