@@ -11,6 +11,15 @@ var schema = new mongoose.Schema({
   active: Boolean,
   url: String,
   logo: String,
+  address: {
+    line1: String,
+    line2: String,
+    line3: String,
+    post_code: String,
+    region: String,
+    city: String,
+    country: String
+  },
   creation: {
     user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
     date: {type: Date, default: Date.now},
