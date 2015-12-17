@@ -5,7 +5,10 @@
                 <div class="ibox-content">
                     <div class="m-t-xs">
                         <div class="input-group">
-                            <span class="input-group-addon" id="search">{{ (ns+'.search.title') | translate }}</span>
+                            <span class="input-group-addon" id="search">
+                                <i class="fa fa-search"></i>
+                                {{ (ns+'.search.title') | translate }}
+                            </span>
                             <input type="text" ng-model="query" placeholder="{{ (ns+'.search.placeholder') | translate }}"
                                    class=" form-control" aria-describedby="search">
                         </div>
