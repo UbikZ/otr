@@ -84,13 +84,23 @@ module.exports.controller = function (app, config) {
         } else {
           var org = new Organization({
             name: data.name,
-            description: data.description,
-            active: true,
-            logo: data.logo,
-            url: data.url,
             creation: {user: user._id},
             update: {user: user._id},
           });
+
+          if (data.description) {
+            org.description = data.description;
+          }
+          if (data.active != undefined) {
+            org.active = data.active;
+          }
+          if (data.logo) {
+            org.logo = data.logo;
+          }
+          if (data.url) {
+            org.url = data.url;
+          }
+
           org.save(function (err, newOrganization) {
             if (err) {
               http.response(res, 500, {}, "An error occurred.", err);
