@@ -38,6 +38,10 @@
 }
 
 /* Others */
+.file {
+    border: none;
+}
+
 .file-box {
     width: 200px;
 }
