@@ -59,15 +59,20 @@
                 </div>
                 <div class="file-box">
                     <div class="file">
-                        <button class="btn btn-block btn-outline btn-default p-sm" ng-click="edit()">
-                            <i class="fa fa-plus fa-5x m-b-md"></i> <br/>
-                            <strong>{{ (ns+'.item.creation.create') | translate }}</strong>
-                        </button>
-                        <div>
-                            <span class="corner"></span>
-
-                            <div class="file-name text-center">
-                                {{ (ns+'.item.creation.description') | translate }}
+                        <div class="file-box">
+                            <div class="file">
+                                <a ng-click="edit()">
+                                  <div class="text-muted">
+                                      <div class="icon">
+                                          <i class="fa fa-plus"></i>
+                                      </div>
+                                      <div class="file-name">
+                                          <strong>{{ (ns+'.item.creation.create') | translate }}</strong>
+                                          <br>
+                                          <small>{{ (ns+'.item.creation.description') | translate }}</small>
+                                      </div>
+                                  </div>
+                                </a>
                             </div>
                         </div>
                     </div>

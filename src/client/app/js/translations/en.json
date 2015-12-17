@@ -144,7 +144,7 @@
     "item": {
       "creation": {
         "create": "Ajouter",
-        "description": "Nouveau Project ou Document"
+        "description": "Project ou Document"
       },
       "edit": "Editer",
       "delete": "Supprimer",
