@@ -6,13 +6,22 @@
                     <h5>{{ (ns+'.control.title') | translate }}</h5>
 
                     <h5>{{ (ns+'.control.filter') | translate }}</h5>
-                    <a ng-click="clearSelected()" class="file-control">{{ (ns+'.control.filters.unselect') | translate
-                        }}</a>
-                    <a ng-click="expandAll()" class="file-control">{{ (ns+'.control.filters.expand') | translate }}</a>
-                    <a ng-click="collapseAll()" class="file-control">{{ (ns+'.control.filters.collapse') | translate
-                        }}</a>
+                    <a ng-click="clearSelected()" class="file-control">
+                        {{ (ns+'.control.filters.unselect') | translate }}
+                    </a>
+                    <a ng-click="expandAll()" class="file-control">
+                        {{ (ns+'.control.filters.expand') | translate }}
+                    </a>
+                    <a ng-click="collapseAll()" class="file-control">
+                        {{ (ns+'.control.filters.collapse') | translate }}
+                    </a>
 
                     <div class="hr-line-dashed"></div>
+                    <button class="btn btn-primary btn-block" ng-click="edit()">
+                        {{ (ns+'.control.actions.create') | translate }}
+                    </button>
+                    <div class="hr-line-dashed"></div>
+
                     <input type="text" ng-model="nodeSearch"
                            placeholder="{{ (ns+'.control.search.placeholder') | translate }}"
                            class=" form-control">
@@ -60,32 +69,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="file-box">
-                    <div class="file">
-                        <div class="file-box">
-                            <div class="file">
-                                <a ng-click="edit()">
-                                    <div class="text-muted">
-                                        <div class="ih-item square effect6 from_top_and_bottom">
-                                            <a ng-click="edit()">
-                                                <div class="img">
-                                                    <div class="icon">
-                                                        <i class="fa fa-plus"></i>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="file-name text-center">
-                                            <strong>{{ (ns+'.item.creation.create') | translate }}</strong>
-                                            <br>
-                                            <small>{{ (ns+'.item.creation.description') | translate }}</small>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div class="file-box" ng-repeat="project in projects | orderBy:name">
                     <div class="file">
                         <div class="file-box">
@@ -106,7 +89,6 @@
                                               </div>
                                           </a>
                                       </div>
-
 
                                       <div class="file-name">
                                           <div class="btn-group pull-right" uib-dropdown is-open="opened">
