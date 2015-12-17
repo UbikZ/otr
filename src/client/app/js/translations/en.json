@@ -148,7 +148,33 @@
       },
       "edit": "Editer",
       "delete": "Supprimer",
-      "added": "Ajouté le"
+      "added": "Ajouté le",
+      "edition": {
+        "title": {
+          "edit": "Edition d'un project/document",
+          "create": "Création d'un project/document"
+        },
+        "form": {
+          "name": {
+            "label": "Nom",
+            "placeholder": "Nom du projet ou du document"
+          },
+          "type": {
+            "label": "Type d'élément (project ou document)",
+            "select": "Veuillez choisir un type d'élément",
+            "items": {
+              "project": "Projet",
+              "document": "Document"
+            }
+          },
+          "description": {
+            "label": "Description du projet",
+            "placeholder": ""
+          },
+          "submit": "Enregistrer",
+          "quit": "Quitter"
+        }
+      }
     }
   }
 }

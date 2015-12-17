@@ -1,4 +1,4 @@
-<form role="form" name="formItem" novalidate ng-init="ns='item.edit'"
+<form role="form" name="formItem" novalidate ng-init="ns='filesystem.item.edition'"
       ng-submit="submit(item)">
     <div class="modal-header">
         <h3 ng-if="!identifier" class="modal-title">{{ (ns+'.title.create') | translate }}</h3>
@@ -7,37 +7,37 @@
     </div>
     <div class="modal-body">
         <div class="form-group">
-            <label>{{ (ns+'.manage.name.label') | translate }} *</label>
-            <input type="text" placeholder="{{ (ns+'.manage.name.input') | translate }}"
+            <label>{{ (ns+'.form.name.label') | translate }} *</label>
+            <input type="text" placeholder="{{ (ns+'.form.name.placeholder') | translate }}"
                    class="form-control" name="name"
                    ng-model="item.name" required>
 
             <div class="m-t-xs"
                  ng-show="formItem.name.$invalid && formItem.name.$dirty">
                 <small class="text-danger help-block" ng-show="formItem.name.$error.required">
-                    {{ (ns+'.manage.name.error.required') | translate }}
+                    {{ (ns+'.form.name.error.required') | translate }}
                 </small>
             </div>
         </div>
         <div class="form-group" ng-if="!identifier">
-            <label>{{ (ns+'.manage.type.label') | translate }}</label>
+            <label>{{ (ns+'.form.type.label') | translate }}</label>
             <div class="m-t-xs">
                 <select class="form-control" name="account" ng-model="item.type" required>
-                    <option value="">{{ (ns+'.manage.type.select') | translate }}</option>
-                    <option value="project">{{ (ns+'.manage.type.project') | translate }}</option>
-                    <option ng-if="isProject" value="document">{{ (ns+'.manage.type.document') | translate }}</option>
+                    <option value="">{{ (ns+'.form.type.select') | translate }}</option>
+                    <option value="project">{{ (ns+'.form.type.items.project') | translate }}</option>
+                    <option ng-if="isProject" value="document">{{ (ns+'.form.type.items.document') | translate }}</option>
                 </select>
             </div>
             <div class="m-t-xs"
                  ng-show="formItem.type.$invalid && formItem.type.$dirty">
                 <small class="text-danger help-block" ng-show="formItem.type.$error.required">
-                    {{ (ns+'.manage.type.error.required') | translate }}
+                    {{ (ns+'.form.type.error.required') | translate }}
                 </small>
             </div>
         </div>
         <div class="form-group">
-            <label>{{ (ns+'.manage.description.label') | translate }}</label>
-            <textarea type="text" placeholder="{{ (ns+'.manage.description.input') | translate }}"
+            <label>{{ (ns+'.form.description.label') | translate }}</label>
+            <textarea type="text" placeholder="{{ (ns+'.form.description.placeholder') | translate }}"
                       class="form-control" name="description" rows="5"
                       ng-model="item.description">
             </textarea>
@@ -47,11 +47,11 @@
         <div class="row">
             <div class="col-lg-12">
                 <a ng-click="cancel()" class="btn btn-sm btn-success pull-right m-l-lg" ng-disabled="loading">
-                    <i class="fa fa-reply"></i> <strong>{{ (ns+'.manage.quit') | translate }}</strong>
+                    <i class="fa fa-reply"></i> <strong>{{ (ns+'.form.quit') | translate }}</strong>
                 </a>
                 <button class="btn btn-sm btn-primary pull-right" type="submit"
                         ng-disabled="formItem.$invalid || loading">
-                    <i class="fa fa-save"></i> <strong>{{ (ns+'.manage.submit') | translate }}</strong>
+                    <i class="fa fa-save"></i> <strong>{{ (ns+'.form.submit') | translate }}</strong>
                 </button>
             </div>
         </div>
