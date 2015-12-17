@@ -115,27 +115,7 @@
                     </div>
                 </div>
                 <div class="file-box" ng-repeat="document in documents | orderBy:name">
-                    <div class="file">
-                        <button class="btn btn-block btn-outline btn-success p-sm"
-                                uib-tooltip="{{ document.description }}">
-                            <i class="fa fa-folder fa-5x m-b-md text-navy"></i> <br/>
-                            <strong>{{ document.name }}</strong>
-                        </button>
-                        <div>
-                            <span class="corner"></span>
-
-                            <div class="file-name text-center">
-                                <div class="m-t-xs btn-group">
-                                    <a class="btn btn-xs btn-white"><i class="fa fa-pencil"></i>
-                                        {{ (ns+'.item.edit') | translate }}
-                                    </a>
-                                    <a class="btn btn-xs btn-danger"><i class="fa fa-trash"></i>
-                                        {{ (ns+'.item.delete') | translate }}
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- todo -->
                 </div>
             </div>
         </div>

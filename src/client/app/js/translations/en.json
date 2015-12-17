@@ -146,6 +146,8 @@
         "create": "Ajouter",
         "description": "Nouveau Project ou Document"
       },
+      "edit": "Editer",
+      "delete": "Supprimer",
       "added": "Ajouté le"
     }
   }
