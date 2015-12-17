@@ -43,15 +43,21 @@
       },
       "form": {
         "firstname": {
-          "title": "Prénom",
-          "placeholder": ""
+          "label": "Prénom",
+          "placeholder": "",
+          "errors": {
+            "required": "Vous devez renseigner le champs \"Prénom\""
+          }
         },
         "lastname": {
-          "title": "Nom",
-          "placeholder": ""
+          "label": "Nom",
+          "placeholder": "",
+          "errors": {
+            "required": "Vous devez renseigner le champs \"Nom\""
+          }
         },
         "job": {
-          "title": "Métier / Fonction",
+          "label": "Métier / Fonction",
           "placeholder": ""
         },
         "submit": "Enregistrer",

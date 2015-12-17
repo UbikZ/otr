@@ -17,41 +17,35 @@
                             <p class="form-control-static">{{ $root.user.name.username }}</p>
                         </div>
                         <div class="form-group">
-                            <label>{{ (ns+'.form.firstname.label') | translate }}</label>
-                            <input type="text" placeholder="{{ (ns+'.form.firstname.input') | translate }}"
+                            <label>{{ (ns+'.form.firstname.label') | translate }} *</label>
+                            <input type="text" placeholder="{{ (ns+'.form.firstname.placeholder') | translate }}"
                                    class="form-control" name="firstname"
                                    ng-model="profile.firstname" required>
 
                             <div class="m-t-xs"
                                  ng-show="formProfile.firstname.$invalid && formProfile.firstname.$dirty">
                                 <small class="text-danger help-block" ng-show="formProfile.firstname.$error.required">
-                                    {{ (ns+'.form.firstname.error.required') | translate }}
+                                    {{ (ns+'.form.firstname.errors.required') | translate }}
                                 </small>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>{{ (ns+'.form.lastname.label') | translate }}</label>
-                            <input type="text" placeholder="{{ (ns+'.form.lastname.input') | translate }}"
+                            <label>{{ (ns+'.form.lastname.label') | translate }} *</label>
+                            <input type="text" placeholder="{{ (ns+'.form.lastname.placeholder') | translate }}"
                                    class="form-control" name="lastname"
                                    ng-model="profile.lastname" required>
 
                             <div class="m-t-xs" ng-show="formProfile.lastname.$invalid && formProfile.lastname.$dirty">
                                 <small class="text-danger help-block" ng-show="formProfile.lastname.$error.required">
-                                    {{ (ns+'.form.lastname.error.required') | translate }}
+                                    {{ (ns+'.form.lastname.errors.required') | translate }}
                                 </small>
                             </div>
                         </div>
                         <div class="form-group">
                             <label>{{ (ns+'.form.job.label') | translate }}</label>
-                            <input type="text" placeholder="{{ (ns+'.form.job.input') | translate }}"
+                            <input type="text" placeholder="{{ (ns+'.form.job.placeholder') | translate }}"
                                    class="form-control" name="job"
-                                   ng-model="profile.job" required>
-
-                            <div class="m-t-xs" ng-show="formProfile.job.$invalid && formProfile.job.$dirty">
-                                <small class="text-danger help-block" ng-show="formProfile.job.$error.required">
-                                    {{ (ns+'.form.job.error.required') | translate }}
-                                </small>
-                            </div>
+                                   ng-model="profile.job">
                         </div>
                         <div class="row">
                             <div class="col-lg-12">
