@@ -6,7 +6,7 @@ var Setting = require('./setting').schema;
 var utilsHelper = require('./helpers/utils');
 
 var schema = new mongoose.Schema({
-  name: { type: String, index: { unique: true } },
+  name: { type: String, index: { unique: true }},
   description: String,
   active: Boolean,
   url: String,
