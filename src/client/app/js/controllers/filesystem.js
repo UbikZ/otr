@@ -23,6 +23,11 @@ module.exports = ['$scope', '$rootScope', 'itemService', '$uibModal',
             $scope.projects = item.projects;
           }
         );
+        recursiveTool.findRecursivelyById($scope.items, 'children', id, false, function (element) {
+          if (element._id === id) {
+            $scope.selected = element;
+          }
+        }, true);
         $scope.breadcrumbElements =
           recursiveTool.findPathRecursivelyById($scope.items, $scope.currentProjectIdNode, 'children');
       }
