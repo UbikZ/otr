@@ -1,4 +1,12 @@
 {
+  "login": {
+    "welcome": "Bienvenue sur la version 3 d'OnTime Reader",
+    "description": "",
+    "login": "Veuillez utiliser votre nom d'utilisateur et mot de passe d'OnTime",
+    "username": "Nom d'utilisateur",
+    "password": "Mot de passe",
+    "submit": "Login"
+  },
   "base": {
     "header": {
       "logout": "Se déconnecter"
