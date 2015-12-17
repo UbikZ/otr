@@ -23,6 +23,38 @@
       "placeholder": "Nom d'uilisateurs"
     }
   },
+  "account": {
+    "ontime": {
+      "title": "Données (brutes) issues d'OnTime concernant votre compte"
+    },
+    "manage": {
+      "title": "Edition de votre profile utilisateur",
+      "identity": {
+        "email": "Votre email OnTime (non modifiable)",
+        "username": "Votre nom d'utilisateur Ontime (non modifiable)",
+      },
+      "form": {
+        "firstname": {
+          "title": "Prénom",
+          "placeholder": ""
+        },
+        "lastname": {
+          "title": "Nom",
+          "placeholder": ""
+        },
+        "job": {
+          "title": "Métier / Fonction",
+          "placeholder": ""
+        },
+        "submit": "Enregistrer",
+        "quit": "Quitter"
+      },
+      "avatar": {
+        "title": "Image de profile",
+        "gravatar": "permet de modifier votre avatar"
+      }
+    }
+  },
   "organization": {
     "list": {
       "title": "Liste de toutes les sociétés",

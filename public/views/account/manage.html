@@ -1,9 +1,9 @@
-<div class="wrapper wrapper-content animated fadeIn" ng-init="ns='account.profile'">
+<div class="wrapper wrapper-content animated fadeIn" ng-init="ns='account.manage'">
     <div class="row">
         <div class="col-lg-6">
             <div class="ibox">
                 <div class="ibox-content" ng-controller="form.profile.controller">
-                    <h4>{{ (ns+'.manage.title') | translate }}</h4>
+                    <h4>{{ (ns+'.title') | translate }}</h4>
 
                     <form role="form" name="formProfile" novalidate ng-submit="update(profile)">
                         <div class="form-group">
@@ -17,50 +17,50 @@
                             <p class="form-control-static">{{ $root.user.name.username }}</p>
                         </div>
                         <div class="form-group">
-                            <label>{{ (ns+'.manage.firstname.label') | translate }}</label>
-                            <input type="text" placeholder="{{ (ns+'.manage.firstname.input') | translate }}"
+                            <label>{{ (ns+'.form.firstname.label') | translate }}</label>
+                            <input type="text" placeholder="{{ (ns+'.form.firstname.input') | translate }}"
                                    class="form-control" name="firstname"
                                    ng-model="profile.firstname" required>
 
                             <div class="m-t-xs"
                                  ng-show="formProfile.firstname.$invalid && formProfile.firstname.$dirty">
                                 <small class="text-danger help-block" ng-show="formProfile.firstname.$error.required">
-                                    {{ (ns+'.manage.firstname.error.required') | translate }}
+                                    {{ (ns+'.form.firstname.error.required') | translate }}
                                 </small>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>{{ (ns+'.manage.lastname.label') | translate }}</label>
-                            <input type="text" placeholder="{{ (ns+'.manage.lastname.input') | translate }}"
+                            <label>{{ (ns+'.form.lastname.label') | translate }}</label>
+                            <input type="text" placeholder="{{ (ns+'.form.lastname.input') | translate }}"
                                    class="form-control" name="lastname"
                                    ng-model="profile.lastname" required>
 
                             <div class="m-t-xs" ng-show="formProfile.lastname.$invalid && formProfile.lastname.$dirty">
                                 <small class="text-danger help-block" ng-show="formProfile.lastname.$error.required">
-                                    {{ (ns+'.manage.lastname.error.required') | translate }}
+                                    {{ (ns+'.form.lastname.error.required') | translate }}
                                 </small>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>{{ (ns+'.manage.job.label') | translate }}</label>
-                            <input type="text" placeholder="{{ (ns+'.manage.job.input') | translate }}"
+                            <label>{{ (ns+'.form.job.label') | translate }}</label>
+                            <input type="text" placeholder="{{ (ns+'.form.job.input') | translate }}"
                                    class="form-control" name="job"
                                    ng-model="profile.job" required>
 
                             <div class="m-t-xs" ng-show="formProfile.job.$invalid && formProfile.job.$dirty">
                                 <small class="text-danger help-block" ng-show="formProfile.job.$error.required">
-                                    {{ (ns+'.manage.job.error.required') | translate }}
+                                    {{ (ns+'.form.job.error.required') | translate }}
                                 </small>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-12">
-                                <a ui-sref="app.home" class="btn btn-sm btn-success pull-right m-l-lg" ng-disabled="loading">
-                                    <i class="fa fa-reply"></i> <strong>{{ (ns+'.manage.quit') | translate }}</strong>
+                                <a ui-sref="{{ $root.routes.APP_HOME }}" class="btn btn-sm btn-success pull-right m-l-lg" ng-disabled="loading">
+                                    <i class="fa fa-reply"></i> <strong>{{ (ns+'.form.quit') | translate }}</strong>
                                 </a>
                                 <button class="btn btn-sm btn-primary pull-right" type="submit"
                                         ng-disabled="formProfile.$invalid || loading">
-                                    <i class="fa fa-save"></i> <strong>{{ (ns+'.manage.submit') | translate }}</strong>
+                                    <i class="fa fa-save"></i> <strong>{{ (ns+'.form.submit') | translate }}</strong>
                                 </button>
                             </div>
                         </div>
@@ -71,7 +71,7 @@
         <div class="col-lg-6">
             <div class="ibox">
                 <div class="ibox-content">
-                    <h4>{{ (ns+'.manage.avatar.title') | translate }}</h4>
+                    <h4>{{ (ns+'.avatar.title') | translate }}</h4>
 
                     <div class="contact-box text-center">
                         <img gravatar-src="'{{ $root.user.info.email }}'" gravatar-size="200" class="img-circle">
@@ -79,7 +79,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="pull-right">
-                                <strong><a href="http://gravatar.com/">Gravatar</a> {{ (ns+'.manage.avatar.gravatar') | translate }}</strong>
+                                <strong><a href="http://gravatar.com/">Gravatar</a> {{ (ns+'.avatar.gravatar') | translate }}</strong>
                             </div>
                         </div>
                     </div>
