@@ -7,28 +7,28 @@
     </div>
     <div class="modal-body">
         <div class="form-group">
-            <label>{{ (ns+'.manage.name.label') | translate }} *</label>
-            <input type="text" placeholder="{{ (ns+'.manage.name.input') | translate }}"
+            <label>{{ (ns+'.form.name.label') | translate }} *</label>
+            <input type="text" placeholder="{{ (ns+'.form.name.placeholder') | translate }}"
                    class="form-control" name="name"
                    ng-model="organization.name" required>
 
             <div class="m-t-xs"
                  ng-show="formOrganization.name.$invalid && formOrganization.name.$dirty">
                 <small class="text-danger help-block" ng-show="formOrganization.name.$error.required">
-                    {{ (ns+'.manage.name.error.required') | translate }}
+                    {{ (ns+'.form.name.error.required') | translate }}
                 </small>
             </div>
         </div>
         <div class="form-group">
-            <label>{{ (ns+'.manage.logo.label') | translate }}</label>
-            <input type="url" placeholder="{{ (ns+'.manage.logo.input') | translate }}"
+            <label>{{ (ns+'.form.logo.label') | translate }}</label>
+            <input type="url" placeholder="{{ (ns+'.form.logo.placeholder') | translate }}"
                    class="form-control" name="logo"
                    ng-model="organization.logo">
 
             <div class="m-t-xs"
                  ng-show="formOrganization.logo.$invalid && formOrganization.logo.$dirty">
                 <small class="text-danger help-block" ng-show="formOrganization.logo.$error.url">
-                    {{ (ns+'.manage.logo.error.url') | translate }}
+                    {{ (ns+'.form.logo.error.url') | translate }}
                 </small>
             </div>
             <div class="contact-box text-center"
@@ -37,21 +37,21 @@
             </div>
         </div>
         <div class="form-group">
-            <label>{{ (ns+'.manage.url.label') | translate }}</label>
-            <input type="url" placeholder="{{ (ns+'.manage.url.input') | translate }}"
+            <label>{{ (ns+'.form.url.label') | translate }}</label>
+            <input type="url" placeholder="{{ (ns+'.form.url.placeholder') | translate }}"
                    class="form-control" name="url"
                    ng-model="organization.url">
 
             <div class="m-t-xs"
                  ng-show="formOrganization.url.$invalid && formOrganization.url.$dirty">
                 <small class="text-danger help-block" ng-show="formOrganization.url.$error.url">
-                    {{ (ns+'.manage.url.error.url') | translate }}
+                    {{ (ns+'.form.url.error.url') | translate }}
                 </small>
             </div>
         </div>
         <div class="form-group">
-            <label>{{ (ns+'.manage.description.label') | translate }}</label>
-            <textarea type="text" placeholder="{{ (ns+'.manage.description.input') | translate }}"
+            <label>{{ (ns+'.form.description.label') | translate }}</label>
+            <textarea type="text" placeholder="{{ (ns+'.form.description.placeholder') | translate }}"
                       class="form-control" name="description" rows="5"
                       ng-model="organization.description">
             </textarea>
@@ -59,7 +59,7 @@
         <div class="form-group">
             <div class="checkbox m-r-xs">
                 <input type="checkbox" id="active" ng-model="organization.active">
-                <label for="active">{{ (ns+'.manage.active.label') | translate }}</label>
+                <label for="active">{{ (ns+'.form.active.label') | translate }}</label>
             </div>
         </div>
     </div>
@@ -67,11 +67,11 @@
         <div class="row">
             <div class="col-lg-12">
                 <a ng-click="cancel()" class="btn btn-sm btn-success pull-right m-l-lg" ng-disabled="loading">
-                    <i class="fa fa-reply"></i> <strong>{{ (ns+'.manage.quit') | translate }}</strong>
+                    <i class="fa fa-reply"></i> <strong>{{ (ns+'.form.quit') | translate }}</strong>
                 </a>
                 <button class="btn btn-sm btn-primary pull-right" type="submit"
                         ng-disabled="formOrganization.$invalid || loading">
-                    <i class="fa fa-save"></i> <strong>{{ (ns+'.manage.submit') | translate }}</strong>
+                    <i class="fa fa-save"></i> <strong>{{ (ns+'.form.submit') | translate }}</strong>
                 </button>
             </div>
         </div>
