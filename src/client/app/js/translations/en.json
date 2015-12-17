@@ -72,6 +72,14 @@
           "label": "Métier / Fonction",
           "placeholder": ""
         },
+        "skype": {
+          "label": "Skype",
+          "placeholder": ""
+        },
+        "location": {
+          "label": "Lieu",
+          "placeholder": ""
+        },
         "submit": "Enregistrer",
         "quit": "Annuler"
       },

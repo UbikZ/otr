@@ -10,6 +10,8 @@ module.exports = ['$rootScope', '$scope', '$localStorage', 'userService',
       firstname: $rootScope.user.name.firstname,
       lastname: $rootScope.user.name.lastname,
       job: $rootScope.user.info.job,
+      skype: $rootScope.user.info.skype,
+      location: $rootScope.user.info.location,
     };
 
     $scope.update = function (profile) {
