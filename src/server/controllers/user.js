@@ -41,6 +41,12 @@ module.exports.controller = function (app, config) {
         if (data.lastname) {
           user.name.lastname = data.lastname;
         }
+        if (data.skype) {
+          user.info.skype = data.skype;
+        }
+        if (data.location) {
+          user.info.location = data.location;
+        }
         if (data.job) {
           user.info.job = data.job;
         }
