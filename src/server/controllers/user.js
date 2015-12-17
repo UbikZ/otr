@@ -2,7 +2,6 @@
 
 var User = require('../models/user');
 var http = require('./helpers/http');
-var otrConf = require('../config/ontime.json');
 var jwt = require("jsonwebtoken");
 
 module.exports.controller = function (app, config) {
