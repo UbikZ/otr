@@ -41,3 +41,7 @@
 .file-box {
     width: 200px;
 }
+
+.file a:hover, a:focus {
+    color: #777;
+}
