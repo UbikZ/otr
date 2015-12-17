@@ -51,7 +51,7 @@
                                         </span>
                                     </td>
                                     <td class="project-title">
-                                        <a ui-sref="project_detail">{{ organization.name }}</a>
+                                        <strong>{{ organization.name }}</strong>
                                         <br>
                                         <small>{{ (ns+'.item.create') | translate }} {{ organization.creation.date | date:'dd-MM-yyyy HH:mm:ss'}}</small>
                                     </td>
@@ -65,7 +65,7 @@
                                         </small>
                                     </td>
                                     <td class="project-actions">
-                                        <a ui-sref="organization.detail({id: organization._id})" class="btn btn-primary btn-sm"><i class="fa fa-folder"></i> {{ (ns+'.item.open') | translate }}</a>
+                                        <a ui-sref="{{ $root.routes.ORGANIZATIONS_DETAIL }}({id: organization._id})" class="btn btn-primary btn-sm"><i class="fa fa-folder"></i> {{ (ns+'.item.open') | translate }}</a>
                                         <a ng-click="edit(organization._id)" class="btn btn-success btn-sm"><i class="fa fa-pencil"></i> {{ (ns+'.item.edit') | translate }}</a>
                                         <a ng-click="delete(organization._id)" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> {{ (ns+'.item.delete') | translate }}</a>
                                     </td>
