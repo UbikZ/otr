@@ -85,9 +85,12 @@
                                   <div>
                                       <span class="corner"></span>
 
-                                      <div class="icon">
-                                          <i class="fa fa-folder text-success"></i>
-                                      </div>
+                                      <a ng-click="open(project._id)">
+                                          <div class="icon">
+                                              <i class="fa fa-folder text-success"></i>
+                                          </div>
+                                      </a>
+
                                       <div class="file-name">
                                           <div class="btn-group pull-right" uib-dropdown is-open="opened">
                                               <button id="single-button" type="button" class="btn btn-white btn-xs"
