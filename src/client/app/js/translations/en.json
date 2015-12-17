@@ -146,6 +146,7 @@
         "create": "Ajouter",
         "description": "Project ou Document"
       },
+      "open": "Ouvrir",
       "edit": "Editer",
       "delete": "Supprimer",
       "added": "Ajouté le",
