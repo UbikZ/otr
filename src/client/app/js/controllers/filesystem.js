@@ -26,6 +26,7 @@ module.exports = ['$scope', '$rootScope', 'itemService', '$uibModal',
         recursiveTool.findRecursivelyById($scope.items, 'children', id, false, function (element) {
           if (element._id === id) {
             $scope.selected = element;
+            $scope.expandedNodes.push(element);
           }
         }, true);
         $scope.breadcrumbElements =
