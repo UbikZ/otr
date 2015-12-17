@@ -101,6 +101,29 @@
         "submit": "Enregistrer",
         "quit": "Quitter"
       }
+    },
+    "detail": {
+      "title": "Informations",
+      "list": "Liste des sociétés",
+      "actions": {
+        "back": "Retour",
+        "edit": "Editer"
+      },
+      "organization": {
+        "state": "Status",
+        "states": {
+          "active": "Activé",
+          "unactive": "Désactivé"
+        },
+        "created_by": "Créée par",
+        "projects_number": "Nb. de projects",
+        "website": "Site web",
+        "creation_date": "Créée le",
+        "update_date": "Mise à jour le",
+        "description": {
+          "title": "Informations complémentaires"
+        }
+      }
     }
   }
 }
