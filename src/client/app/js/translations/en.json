@@ -7,13 +7,13 @@
       "username": {
         "placeholder": "Nom d'utilisateur",
         "errors": {
-          "required": "Vous devez renseigner votre nom d'utilisateur (celui de votre compte OnTime)"
+          "required": "Vous devez renseigner votre nom d'utilisateur (celui de votre compte OnTime)."
         }
       },
       "password": {
         "placeholder": "Mot de passe",
         "errors": {
-          "required": "Vous devez renseigner votre mot de passe (celui de compte OnTime)"
+          "required": "Vous devez renseigner votre mot de passe (celui de compte OnTime)."
         }
       },
       "submit": "Se connecter"
@@ -58,14 +58,14 @@
           "label": "Prénom",
           "placeholder": "",
           "errors": {
-            "required": "Vous devez renseigner le champs \"Prénom\""
+            "required": "Vous devez renseigner votre prénom."
           }
         },
         "lastname": {
           "label": "Nom",
           "placeholder": "",
           "errors": {
-            "required": "Vous devez renseigner le champs \"Nom\""
+            "required": "Vous devez renseigner votre nom."
           }
         },
         "job": {
