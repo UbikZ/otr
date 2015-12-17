@@ -4,8 +4,8 @@ var mongoose = require('mongoose');
 var Setting = require('./setting').schema;
 
 var schema = new mongoose.Schema({
-  name: String,
-  description: String,
+  name: {type: String, trim: true, require: true},
+  description: {type: String, trim: true},
   priority: {type: Number, min: 0, max: 2},
   creation: {
     user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},

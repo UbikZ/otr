@@ -6,8 +6,8 @@ var Document = require('./document').schema;
 
 var Project = new mongoose.Schema();
 Project.add({
-  name: String,
-  description: String,
+  name: {type: String, trim: true, require: true},
+  description: {type: String, trim: true},
   priority: {type: Number, min: 0, max: 2},
   creation: {
     user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},

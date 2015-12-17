@@ -6,19 +6,19 @@ var Setting = require('./setting').schema;
 var utilsHelper = require('./helpers/utils');
 
 var schema = new mongoose.Schema({
-  name: { type: String, index: { unique: true }},
-  description: String,
+  name: {type: String, index: {unique: true}, trim: true, require: true},
+  description: {type: String, trim: true},
   active: Boolean,
-  url: String,
-  logo: String,
+  url: {type: String, trim: true},
+  logo: {type: String, trim: true},
   address: {
-    line1: String,
-    line2: String,
-    line3: String,
-    post_code: String,
-    region: String,
-    city: String,
-    country: String
+    line1: {type: String, trim: true},
+    line2: {type: String, trim: true},
+    line3: {type: String, trim: true},
+    post_code: {type: String, trim: true},
+    region: {type: String, trim: true},
+    city: {type: String, trim: true},
+    country: {type: String, trim: true}
   },
   creation: {
     user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
@@ -35,7 +35,7 @@ var schema = new mongoose.Schema({
 schema.methods.findDeepAttributeById = function (projectId, attributesName, cb) {
   var model = this;
 
-  attributesName.forEach(function(attributeName) {
+  attributesName.forEach(function (attributeName) {
     utilsHelper.findRecursivelyById(model, attributeName, projectId, function (element) {
       cb(element);
     });

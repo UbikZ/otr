@@ -19,7 +19,7 @@ var schema = new mongoose.Schema({
     final_estimate: Boolean,
   },
   unit: {
-    label: String,
+    label: {type: String, trim: true},
     type: {type: Number, min: 0, max: 2}, // 0: minutes | 1: hours | 2: days
   },
   date: {

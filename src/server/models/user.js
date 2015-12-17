@@ -8,16 +8,16 @@ var schema = new mongoose.Schema({
     ontime_token: String,
   },
   name: {
-    username: { type: String, index: { unique: true } },
-    firstname: String,
-    lastname: String
+    username: {type: String, index: {unique: true}},
+    firstname: {type: String, trim: true},
+    lastname: {type: String, trim: true},
   },
   info: {
-    job: String,
-    skype: String,
-    location: String,
+    job: {type: String, trim: true},
+    skype: {type: String, trim: true},
+    location: {type: String, trim: true},
     organization: {type: mongoose.Schema.Types.ObjectId, ref: 'Organization'},
-    email: { type: String, index: { unique: true } },
+    email: {type: String, index: {unique: true}},
   },
 });
 
