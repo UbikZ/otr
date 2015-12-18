@@ -49,7 +49,7 @@ module.exports = ['$scope', '$rootScope', 'itemService', '$uibModal',
      * Modal edition
      */
 
-    $scope.edit = function (objectId, type) {
+    $scope.edit = function (objectId) {
       var modalInstance = $uibModal.open({
         animation: true,
         templateUrl: 'views/partials/modal-item.html',
@@ -59,7 +59,7 @@ module.exports = ['$scope', '$rootScope', 'itemService', '$uibModal',
             return $scope.organization._id;
           },
           identifier: function () {
-            return {id: objectId, projectId: $scope.currentProjectIdNode, type: type};
+            return {id: objectId, projectId: $scope.currentProjectIdNode};
           },
         }
       });
@@ -87,19 +87,16 @@ module.exports = ['$scope', '$rootScope', 'itemService', '$uibModal',
       });
     };
 
-    $scope.delete = function (objectId, type) {
-      var data = Object.assign(
-        {organizationId: $scope.organization._id},
-        type == 'document' ? {documentId: objectId} : {projectId: objectId}
-      );
-
-      itemService.delete(data,
+    $scope.delete = function (objectId) {
+       itemService.delete(
+        {organizationId: $scope.organization._id, itemId: objectId},
         function (res) {
-          var itemType = type == undefined ? 'projects' : 'documents';
-          $scope[itemType].forEach(function (item, index) {
-            if (item._id == res.item._id) {
-              $scope[itemType].splice(index, 1);
-            }
+          ['projects', 'documents'].forEach(function(itemType) {
+            $scope[itemType].forEach(function (item, index) {
+              if (item._id == res.item._id) {
+                $scope[itemType].splice(index, 1);
+              }
+            });
           });
           changeCurrentOrganization(res.organization);
         }, function (err) {

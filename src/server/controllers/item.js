@@ -45,17 +45,8 @@ module.exports.controller = function (app, config) {
             http.response(res, 500, "An error occurred.", err);
           } else if (organization) {
             var itemModel;
-            if (data.projectId != undefined) {
-              organization.findDeepAttributeById(data.projectId, function (element) {
-                if (element != undefined) {
-                  itemModel = element;
-                  element.remove();
-                } else {
-                  http.response(res, 404, {}, "Impossible to retrieve attached project.", err);
-                }
-              });
-            } else if (data.documentId != undefined) {
-              organization.findDeepAttributeById(data.documentId, function (element) {
+            if (data.itemId != undefined) {
+              organization.findDeepAttributeById(data.itemId, function (element) {
                 if (element != undefined) {
                   itemModel = element;
                   element.remove();
@@ -64,7 +55,7 @@ module.exports.controller = function (app, config) {
                 }
               });
             } else {
-              // todo
+              http.response(res, 404, {}, "Item to delete not found.", err);
             }
 
             organization.save(function (err, newOrganization) {
@@ -163,17 +154,12 @@ module.exports.controller = function (app, config) {
             if (data.description != undefined) {
               item.description = data.description;
             }
-            item.update  = {user: user._id, date: new Date()};
+            item.update = {user: user._id, date: new Date()};
 
             if (data._id != undefined) {
               organization.findDeepAttributeById(data._id, function (element) {
                 if (element != undefined) {
-                  if (data.type == "project") {
-                    element = modelItem = Object.assign(element, item);
-                  }
-                  if (data.type == "document") {
-                    element = modelItem = Object.assign(element, item);
-                  }
+                  element = modelItem = Object.assign(element, item);
                 } else {
                   http.response(res, 404, {}, "Impossible to retrieve attached project.", err);
                 }
