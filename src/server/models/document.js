@@ -3,7 +3,8 @@
 var mongoose = require('mongoose');
 var Setting = require('./setting').schema;
 
-var schema = new mongoose.Schema({
+var Document = new mongoose.Schema();
+Document.add({
   name: {type: String, trim: true, require: true},
   description: {type: String, trim: true},
   priority: {type: Number, min: 0, max: 2},
@@ -19,4 +20,4 @@ var schema = new mongoose.Schema({
   settings: Setting,
 });
 
-module.exports = mongoose.model('Document', schema);
+module.exports = mongoose.model('Document', Document);

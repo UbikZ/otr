@@ -45,7 +45,7 @@ module.exports = ['$rootScope', '$scope', 'identifier', 'organizationId', 'itemS
 
       itemService.edit(item, function (res) {
         $scope.loading = false;
-        $uibModalInstance.close({organization: res.organization, item: res.item});
+        $uibModalInstance.close({organization: res.organization, item: res.item, type: res.type});
       }, function (err) {
         $scope.loading = false;
         toastr.error(err.message);

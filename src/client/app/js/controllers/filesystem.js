@@ -69,15 +69,14 @@ module.exports = ['$scope', '$rootScope', 'itemService', '$uibModal',
         var lastItem = res.item;
         changeCurrentOrganization(orga);
         if ($scope.currentProjectIdNode) {
-          var itemType = type == undefined ? 'projects' : 'documents';
-          var currentIds = $scope[itemType].map(function (object) {
+          var currentIds = $scope[res.type].map(function (object) {
             return object._id;
           });
           var index = currentIds.indexOf(lastItem._id);
           if (index === -1) {
-            $scope[itemType].push(lastItem);
+            $scope[res.type].push(lastItem);
           } else {
-            $scope[itemType][index] = lastItem;
+            $scope[res.type][index] = lastItem;
           }
           addExpandedNode(lastItem._id);
         } else {

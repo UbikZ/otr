@@ -6,6 +6,7 @@ var Document = require('../models/document');
 var User = require('../models/user');
 var mongoose = require('mongoose');
 var http = require('./helpers/http');
+var merge = require('merge');
 
 module.exports.controller = function (app, config) {
 
@@ -98,11 +99,15 @@ module.exports.controller = function (app, config) {
 
             if (data.projectId != undefined) {
               organization.findDeepAttributeById(data.projectId, function (element) {
+                console.log('** Project **');
+                console.log(element);
+                console.log('****');
                 if (element != undefined) {
                   if (data.type == "project") {
                     modelItem = element.projects.create(item);
                     element.projects.push(modelItem);
                   }
+                  // todo : fix this
                   if (data.type == "document") {
                     modelItem = element.documents.create(item);
                     element.documents.push(modelItem);
@@ -114,9 +119,8 @@ module.exports.controller = function (app, config) {
             } else if (data.type == "project") {
               modelItem = organization.projects.create(item);
               organization.projects.push(modelItem);
-            } else if (data.type == "document") {
-              modelItem = organization.documents.create(item);
-              organization.documents.push(modelItem);
+            } else {
+              http.response(res, 404, {}, "Can't create a new item.", err);
             }
 
             organization.save(function (err, newOrganization) {
@@ -124,7 +128,7 @@ module.exports.controller = function (app, config) {
                 http.response(res, 500, {}, "An error occurred.", err);
               } else {
                 newOrganization.populate('creation.user', function (err, newOrg) {
-                  http.response(res, 200, {organization: newOrg, item: modelItem});
+                  http.response(res, 200, {organization: newOrg, item: item, type: data.type + 's'});
                 });
               }
             });
