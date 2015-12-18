@@ -22,7 +22,7 @@
       "ref": "origin/master",
       "repo": "https://github.com/UbikZ/otr.git",
       "path": "/var/www/otr3",
-      "post-deploy": "npm install --env=production ; pm2 startOrRestart ecosystem.json --env production"
+      "post-deploy": "npm install --env=production ; gulp pre-clean && gulp install ; pm2 startOrRestart ecosystem.json --env production"
     }
   }
 }
