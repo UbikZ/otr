@@ -13,6 +13,24 @@ function findRecursivelyById(parentElement, attributeName, elementId, cb) {
   }
 };
 
+function findSpecificRecursivelyById(parentElement, elementId, cb) {
+  if (parentElement.projects != undefined) {
+    var element = parentElement.projects.id(elementId);
+    if (element == undefined && parentElement.documents !== undefined) {
+      element = parentElement.documents.id(elementId);
+    }
+    if (element == undefined) {
+      parentElement.projects.forEach(function (subElement) {
+        findSpecificRecursivelyById(subElement, elementId, cb);
+      });
+    } else {
+      cb(element);
+    }
+  }
+};
+
+
 module.exports = {
   findRecursivelyById: findRecursivelyById,
+  findSpecificRecursivelyById: findSpecificRecursivelyById,
 };

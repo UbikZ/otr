@@ -17,24 +17,19 @@ module.exports.controller = function (app, config) {
   app.get(prefix, http.ensureAuthorized, function (req, res) {
     var data = req.query;
     http.checkAuthorized(req, res, function () {
-      var criteria = {};
-      if (data.id) {
-        criteria = {_id: new mongoose.Types.ObjectId(data.id)};
-      }
-
-      var query = Organization.find(criteria).populate('creation.user');
-
-      if (data.populate === true) {
-        query.populate('projects').populate('settings');
-      }
-
-      query.exec(function (err, organizations) {
+      Organization.findById(data.organizationId, function (err, organization) {
         if (err) {
           http.response(res, 500, "An error occurred.", err);
-        } else if (organizations) {
-          http.response(res, 200, {organizations: organizations});
+        } else if (organization) {
+          organization.findDeepAttributeById(data.itemId, function (element) {
+            if (element != undefined) {
+              http.response(res, 200, {item: element});
+            } else {
+              http.response(res, 404, {}, "Impossible to retrieve attached project.", err);
+            }
+          });
         } else {
-          http.response(res, 404, {}, "User not found.", err);
+          http.response(res, 404, {}, "Organization for item loading not found.", err);
         }
       });
     });
@@ -51,7 +46,7 @@ module.exports.controller = function (app, config) {
           } else if (organization) {
             var itemModel;
             if (data.projectId != undefined) {
-              organization.findDeepAttributeById(data.projectId, ['projects'], function (element) {
+              organization.findDeepAttributeById(data.projectId, function (element) {
                 if (element != undefined) {
                   itemModel = element;
                   element.remove();
@@ -60,7 +55,7 @@ module.exports.controller = function (app, config) {
                 }
               });
             } else if (data.documentId != undefined) {
-              organization.findDeepAttributeById(data.documentId, ['documents'], function (element) {
+              organization.findDeepAttributeById(data.documentId, function (element) {
                 if (element != undefined) {
                   itemModel = element;
                   element.remove();
@@ -111,7 +106,7 @@ module.exports.controller = function (app, config) {
             }
 
             if (data.projectId != undefined) {
-              organization.findDeepAttributeById(data.projectId, ['projects'], function (element) {
+              organization.findDeepAttributeById(data.projectId, function (element) {
                 if (element != undefined) {
                   if (data.type == "project") {
                     modelItem = element.projects.create(item);
@@ -171,7 +166,7 @@ module.exports.controller = function (app, config) {
             item.update  = {user: user._id, date: new Date()};
 
             if (data._id != undefined) {
-              organization.findDeepAttributeById(data._id, ['projects', 'documents'], function (element) {
+              organization.findDeepAttributeById(data._id, function (element) {
                 if (element != undefined) {
                   if (data.type == "project") {
                     element = modelItem = Object.assign(element, item);

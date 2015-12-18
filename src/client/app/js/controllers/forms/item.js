@@ -5,23 +5,18 @@ var recursiveTool = require('../../helpers/recursive');
 
 module.exports = ['$rootScope', '$scope', 'identifier', 'organizationId', 'itemService', '$uibModalInstance',
   function ($rootScope, $scope, identifier, organizationId, itemService, $uibModalInstance) {
-    // todo: improve this
-    var itemModelType = identifier.type == undefined ? 'projects' : 'documents',
-      itemType = identifier.type == undefined ? 'project' : 'document';
+    var itemType = identifier.type == undefined ? 'project' : 'document';
 
     $scope.identifier = identifier.id;
     $scope.isProject = identifier.projectId !== undefined;
     $scope.organizationId = organizationId;
 
     if ($scope.identifier) {
-      itemService.get({id: organizationId}, function (res) {
-        if (res.organizations.length != 1) {
-          toastr.error('Error loading current item.');
+      itemService.get({organizationId: organizationId, itemId: $scope.identifier}, function (res) {
+        if (res.item != 1) {
+          $scope.item = res.item;
         } else {
-          var organization = res.organizations[0];
-          recursiveTool.findRecursivelyById(organization, itemModelType, $scope.identifier, false, function (element) {
-            $scope.item = element;
-          });
+          toastr.error('Error loading current item.');
         }
         $scope.loading = false;
       }, function (err) {
