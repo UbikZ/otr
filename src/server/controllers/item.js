@@ -128,7 +128,7 @@ module.exports.controller = function (app, config) {
                 http.response(res, 500, {}, "An error occurred.", err);
               } else {
                 newOrganization.populate('creation.user', function (err, newOrg) {
-                  http.response(res, 200, {organization: newOrg, item: item, type: data.type + 's'});
+                  http.response(res, 200, {organization: newOrg, item: modelItem, type: data.type + 's'});
                 });
               }
             });
