@@ -10,7 +10,7 @@ module.exports = ['$rootScope', '$scope', 'identifier', 'organizationId', 'itemS
       itemType = identifier.type == undefined ? 'project' : 'document';
 
     $scope.identifier = identifier.id;
-    $scope.isProject = identifier.projectId ==! undefined;
+    $scope.isProject = identifier.projectId !== undefined;
     $scope.organizationId = organizationId;
 
     if ($scope.identifier) {
