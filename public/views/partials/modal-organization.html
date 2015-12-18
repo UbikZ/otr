@@ -15,7 +15,7 @@
             <div class="m-t-xs"
                  ng-show="formOrganization.name.$invalid && formOrganization.name.$dirty">
                 <small class="text-danger help-block" ng-show="formOrganization.name.$error.required">
-                    {{ (ns+'.form.name.error.required') | translate }}
+                    {{ (ns+'.form.name.errors.required') | translate }}
                 </small>
             </div>
         </div>
@@ -28,7 +28,7 @@
             <div class="m-t-xs"
                  ng-show="formOrganization.logo.$invalid && formOrganization.logo.$dirty">
                 <small class="text-danger help-block" ng-show="formOrganization.logo.$error.url">
-                    {{ (ns+'.form.logo.error.url') | translate }}
+                    {{ (ns+'.form.logo.errors.url') | translate }}
                 </small>
             </div>
             <div class="contact-box text-center"
@@ -45,7 +45,7 @@
             <div class="m-t-xs"
                  ng-show="formOrganization.url.$invalid && formOrganization.url.$dirty">
                 <small class="text-danger help-block" ng-show="formOrganization.url.$error.url">
-                    {{ (ns+'.form.url.error.url') | translate }}
+                    {{ (ns+'.form.url.errors.url') | translate }}
                 </small>
             </div>
         </div>

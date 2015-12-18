@@ -115,15 +115,21 @@
       "form": {
         "name": {
           "label": "Nom",
-          "placeholder": "Raison sociale de la société."
+          "placeholder": "Raison sociale de la société"
         },
         "logo": {
           "label": "Enseigne",
-          "placeholder": "Url d'une image"
+          "placeholder": "Url d'une image",
+          "errors": {
+            "url": "Le format de l'url est invalide."
+          }
         },
         "url": {
           "label": "Site web",
-          "placeholder": "Url du site web"
+          "placeholder": "Url du site web",
+          "errors": {
+            "url": "Le format de l'url est invalide."
+          }
         },
         "description": {
           "label": "Informations complémentaires",
