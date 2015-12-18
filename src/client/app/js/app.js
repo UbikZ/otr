@@ -38,7 +38,6 @@ app
   .run(function ($rootScope, $state, $localStorage, $location, authService, _CONST) {
     $rootScope.$state = $state;
     $rootScope.routes = _CONST.ROUTES;
-    console.log($rootScope.routes);
     $rootScope.isAuthenticated = false;
     $rootScope.user = $localStorage.user ? JSON.parse($localStorage.user) : undefined;
 
