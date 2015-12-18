@@ -1,0 +1,28 @@
+{
+  "apps": [
+    {
+      "name": "API",
+      "script": "app.js",
+      "error_file": "./logs/err.log",
+      "out_file": "./logs/out.log",
+      "merge_logs": true,
+      "log_date_format": "YYYY-MM-DD HH:mm Z",
+      "env": {
+        "COMMON_VARIABLE": "true"
+      },
+      "env_production": {
+        "NODE_ENV": "production"
+      }
+    }
+  ],
+  "deploy": {
+    "production": {
+      "user": "www-data",
+      "host": "ubikz.com",
+      "ref": "origin/master",
+      "repo": "https://github.com/UbikZ/otr.git",
+      "path": "/var/www/test",
+      "post-deploy": "npm install --env=production ; pm2 startOrRestart ecosystem.json --env production"
+    }
+  }
+}
