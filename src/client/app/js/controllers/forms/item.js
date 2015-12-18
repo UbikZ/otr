@@ -19,7 +19,7 @@ module.exports = ['$rootScope', '$scope', 'identifier', 'organizationId', 'itemS
           toastr.error('Error loading current item.');
         } else {
           var organization = res.organizations[0];
-          recursiveTool.findRecursivelyById(organization, itemModelType, $scope.identifier, false, function(element) {
+          recursiveTool.findRecursivelyById(organization, itemModelType, $scope.identifier, false, function (element) {
             $scope.item = element;
           });
         }
@@ -37,12 +37,10 @@ module.exports = ['$rootScope', '$scope', 'identifier', 'organizationId', 'itemS
         item = Object.assign(item, {organizationId: $scope.organizationId});
       }
       if (item._id == undefined) {
-        if ($scope.identifier) {
-          if (identifier.type == 'document') {
-            item = Object.assign(item, {documentId: $scope.identifier});
-          } else {
-            item = Object.assign(item, {projectId: $scope.identifier});
-          }
+        if (item.type == 'document') {
+          item = Object.assign(item, {documentId: $scope.identifier});
+        } else if (item.type == 'project') {
+          item = Object.assign(item, {projectId: $scope.identifier});
         }
 
         if (identifier.projectId) {

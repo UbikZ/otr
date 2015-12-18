@@ -90,11 +90,11 @@
 
                                       <div class="file-name">
                                           <div class="btn-group pull-right" uib-dropdown is-open="opened">
-                                              <button id="single-button" type="button" class="btn btn-white btn-xs"
+                                              <button id="single-button-project" type="button" class="btn btn-white btn-xs"
                                                       uib-dropdown-toggle ng-disabled="disabled">
                                                   <span class="caret"></span>
                                               </button>
-                                              <ul class="uib-dropdown-menu" role="menu" aria-labelledby="single-button">
+                                              <ul class="uib-dropdown-menu" role="menu" aria-labelledby="single-button-project">
                                                   <li role="menuitem">
                                                       <a ng-click="edit(project._id)">
                                                           <i class="fa fa-pencil"></i>
@@ -111,8 +111,9 @@
                                           </div>
                                           <span class="text-success">{{ project.name }}</span>
                                           <br>
-                                          <small>{{ (ns+'.item.added') | translate }} {{ project.creation.date |
-                                              date:'dd-MM-yyyy' }}
+                                          <small>
+                                              {{ (ns+'.item.added') | translate }}
+                                              {{ project.creation.date | date:'dd-MM-yyyy' }}
                                           </small>
                                       </div>
                                   </div>
@@ -122,7 +123,59 @@
                     </div>
                 </div>
                 <div class="file-box" ng-repeat="document in documents | orderBy:name">
-                    <!-- todo -->
+                    <div class="file">
+                        <div class="file-box">
+                            <div class="file">
+                                <span uib-dropdown ng-init="opened = false">
+                                  <div>
+                                      <span class="corner"></span>
+
+                                      <div class="ih-item square effect6 from_top_and_bottom">
+                                          <a>
+                                              <div class="img">
+                                                  <div class="icon">
+                                                      <i class="fa fa-file-text text-navy"></i>
+                                                  </div>
+                                              </div>
+                                              <div class="info">
+                                                  <h3>{{ (ns+'.item.open') | translate }}</h3>
+                                              </div>
+                                          </a>
+                                      </div>
+
+                                      <div class="file-name">
+                                          <div class="btn-group pull-right" uib-dropdown is-open="opened">
+                                              <button id="single-button-document" type="button" class="btn btn-white btn-xs"
+                                                      uib-dropdown-toggle ng-disabled="disabled">
+                                                  <span class="caret"></span>
+                                              </button>
+                                              <ul class="uib-dropdown-menu" role="menu" aria-labelledby="single-button-document">
+                                                  <li role="menuitem">
+                                                      <a ng-click="edit(document._id, 'document')">
+                                                          <i class="fa fa-pencil"></i>
+                                                          {{ (ns+'.item.edit') | translate }}
+                                                      </a>
+                                                  </li>
+                                                  <li role="menuitem">
+                                                      <a ng-click="delete(document._id, 'document')">
+                                                          <i class="fa fa-trash"></i>
+                                                          {{ (ns+'.item.delete') | translate }}
+                                                      </a>
+                                                  </li>
+                                              </ul>
+                                          </div>
+                                          <span class="text-navy">{{ document.name }}</span>
+                                          <br>
+                                          <small>
+                                              {{ (ns+'.item.added') | translate }}
+                                              {{ document.creation.date | date:'dd-MM-yyyy' }}
+                                          </small>
+                                      </div>
+                                  </div>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

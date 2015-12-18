@@ -21,6 +21,7 @@ module.exports = ['$scope', '$rootScope', 'itemService', '$uibModal',
         recursiveTool.findRecursivelyById($scope.organization, 'projects', $scope.currentProjectIdNode, false,
           function (item) {
             $scope.projects = item.projects;
+            $scope.documents = item.documents;
           }
         );
         recursiveTool.findRecursivelyById($scope.items, 'children', id, false, function (element) {
