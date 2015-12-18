@@ -1,7 +1,7 @@
 {
   "apps": [
     {
-      "name": "API",
+      "name": "otr3",
       "script": "app.js",
       "error_file": "./logs/err.log",
       "out_file": "./logs/out.log",
@@ -21,7 +21,7 @@
       "host": "ubikz.com",
       "ref": "origin/master",
       "repo": "https://github.com/UbikZ/otr.git",
-      "path": "/var/www/test",
+      "path": "/var/www/otr3",
       "post-deploy": "npm install --env=production ; pm2 startOrRestart ecosystem.json --env production"
     }
   }
