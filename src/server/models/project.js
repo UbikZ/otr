@@ -17,8 +17,8 @@ Project.add({
     user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
     date: {type: Date, default: Date.now},
   },
-  projects: [Project],
   documents: [Document],
+  projects: [Project],
   settings: Setting,
 });
 

@@ -86,38 +86,33 @@ module.exports.controller = function (app, config) {
           if (err) {
             http.response(res, 500, "An error occurred.", err);
           } else if (organization) {
-            var item, modelItem;
+            var modelItem;
 
-            if (data.type) {
-              item = {
-                name: data.name,
-                description: data.description,
-                update: {user: user._id, date: new Date()},
-                creation: {user: user._id, date: new Date()},
-              };
-            }
+            var item = {
+              name: data.name,
+              description: data.description,
+              update: {user: user._id, date: new Date()},
+              creation: {user: user._id, date: new Date()},
+            };
 
             if (data.projectId != undefined) {
               organization.findDeepAttributeById(data.projectId, function (element) {
-                console.log('** Project **');
-                console.log(element);
-                console.log('****');
                 if (element != undefined) {
                   if (data.type == "project") {
-                    modelItem = element.projects.create(item);
+                    modelItem = new Project(item);
                     element.projects.push(modelItem);
-                  }
-                  // todo : fix this
-                  if (data.type == "document") {
-                    modelItem = element.documents.create(item);
+                  } else if (data.type == "document") {
+                    modelItem = new Document(item);
                     element.documents.push(modelItem);
+                  } else {
+                    http.response(res, 404, {}, "Can't create a new item.", err);
                   }
                 } else {
                   http.response(res, 404, {}, "Impossible to retrieve attached project.", err);
                 }
               });
             } else if (data.type == "project") {
-              modelItem = organization.projects.create(item);
+              modelItem = new Project(item);
               organization.projects.push(modelItem);
             } else {
               http.response(res, 404, {}, "Can't create a new item.", err);
