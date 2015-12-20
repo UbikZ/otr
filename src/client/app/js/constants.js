@@ -11,6 +11,7 @@ module.exports = {
     'ACCOUNT_MANAGE': 'account.manage',
     'ORGANIZATIONS': 'organizations',
     'ORGANIZATIONS_LIST': 'organizations.list',
+    ORGANIZATIONS_SETTINGS: 'organizations.settings',
     'ORGANIZATIONS_DETAIL': 'organizations.detail',
   }
 };

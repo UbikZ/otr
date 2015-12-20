@@ -40,6 +40,12 @@
                             {{ (ns+'.organization.list') | translate }}
                         </a>
                     </li>
+                    <li ui-sref-active="active">
+                        <a ui-sref="{{ $root.routes.ORGANIZATIONS_SETTINGS }}">
+                            <i class="fa fa-gears"></i>
+                            {{ (ns+'.organization.settings') | translate }}
+                        </a>
+                    </li>
                 </ul>
             </li>
             <li ng-class="{active: $state.includes($root.routes.ACCOUNT + '.*')}">

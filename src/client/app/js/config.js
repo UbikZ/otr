@@ -56,6 +56,10 @@ module.exports = [
         url: '/list',
         templateUrl: env.templatePath('organizations/list.html'),
       })
+      .state(routes.ORGANIZATIONS_SETTINGS, {
+        url: '/settings',
+        templateUrl: env.templatePath('organizations/settings.html'),
+      })
       .state(routes.ORGANIZATIONS_DETAIL, {
         url: '/detail/:id',
         templateUrl: env.templatePath('organizations/detail.html'),

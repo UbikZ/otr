@@ -27,7 +27,8 @@
       "home": "Accueil",
       "organizations": "Sociétés",
       "organization": {
-        "list": "Liste"
+        "list": "Liste",
+        "settings": "Paramétrage"
       },
       "accounts": "Compte",
       "account": {
