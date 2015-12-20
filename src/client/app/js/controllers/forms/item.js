@@ -39,8 +39,6 @@ module.exports = ['$rootScope', '$scope', 'identifier', 'organizationId', 'itemS
         if (identifier.projectId) {
           item = Object.assign(item, {projectId: identifier.projectId});
         }
-      } else {
-        item = Object.assign(item);
       }
 
       itemService.edit(item, function (res) {
