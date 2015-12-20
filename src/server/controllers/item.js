@@ -172,7 +172,9 @@ module.exports.controller = function (app, config) {
                 http.response(res, 500, {}, "An error occurred.", err);
               } else {
                 newOrganization.populate('creation.user', function (err, newOrg) {
-                  http.response(res, 200, {organization: newOrg, item: modelItem});
+                  // todo : not really pretty
+                  var type = modelItem.projects == undefined ? 'documents' : 'projects';
+                  http.response(res, 200, {organization: newOrg, item: modelItem, type: type});
                 });
               }
             });
