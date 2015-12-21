@@ -127,7 +127,7 @@ module.exports.controller = function (app, config) {
     }
     if (data.dayPerWeek != undefined) {
       result.iteration = result.iteration || {};
-      result.iteration.dayPerWeek = data.dayPerWeek;
+      result.iteration.day_per_week = data.dayPerWeek;
     }
     if (data.weekPerIteration != undefined) {
       result.iteration = result.iteration || {};
