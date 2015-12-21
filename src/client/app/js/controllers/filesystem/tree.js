@@ -1,7 +1,7 @@
 'use strict';
 
 var toastr = require('toastr');
-var recursiveTool = require('../helpers/recursive');
+var recursiveTool = require('../../helpers/recursive');
 
 module.exports = ['$scope', '$rootScope', 'itemService', '$uibModal',
   function ($scope, $rootScope, itemService, $uibModal) {
