@@ -167,6 +167,10 @@
       }
     },
     "settings": {
+      "info": {
+        "description": "Cette configuration est le paramétrage par défaut appliqué à l'ensemble des sociétés et des projets/documents inhérents. ",
+        "schema": "Paramètrage par défaut > Société > Projet > ... > Projet > Document"
+      },
       "project_dev": {
         "title": "Équipe de réalisation",
         "descriptions": {
