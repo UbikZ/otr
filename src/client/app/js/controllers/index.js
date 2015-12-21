@@ -25,4 +25,4 @@ app.controller('ontime.controller', require('./account/ontime'));
 app.controller('form.profile.controller', require('./account/forms/edit'));
 
 // Settings
-app.controller('form.settings.controller', require('./settings/forms/edit'));
+app.controller('form.setting.controller', require('./setting/forms/edit'));

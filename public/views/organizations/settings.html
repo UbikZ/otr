@@ -1,4 +1,4 @@
-<div class="wrapper wrapper-content animated fadeIn" ng-controller="form.settings.controller" ng-init="ns='organization.settings'">
+<div class="wrapper wrapper-content animated fadeIn" ng-controller="form.setting.controller" ng-init="ns='organization.settings'">
     <div class="row">
         <div class="col-lg-12">
             <div class="ibox">
@@ -10,7 +10,7 @@
                 </div>
             </div>
         </div>
-        <form role="form" name="form" novalidate ng-submit="update(settings)">
+        <form role="form" name="form" novalidate ng-submit="update(setting)">
             <div class="row">
                 <div class="col-sm-4">
                     <div class="ibox">
@@ -31,7 +31,7 @@
                                     <input type="number" min="0"
                                            placeholder="{{ (ns+'.form.contributor_price.placeholder') | translate }}"
                                            class="form-control" name="contributor_price"
-                                           ng-model="settings.contributorPrice" required>
+                                           ng-model="setting.contributorPrice" required>
                                 </div>
                                 <div class="m-t-xs"
                                      ng-show="form.contributor_price.$invalid && form.contributor_price.$dirty">
@@ -62,7 +62,7 @@
                                     <input type="number" min="0" max="100"
                                            placeholder="{{ (ns+'.form.contributor_occupation.placeholder') | translate }}"
                                            class="form-control" name="contributor_occupation"
-                                           ng-model="settings.contributorOccupation" required>
+                                           ng-model="setting.contributorOccupation" required>
                                 </div>
                                 <div class="m-t-xs"
                                      ng-show="form.contributor_occupation.$invalid && form.contributor_occupation.$dirty">
@@ -107,7 +107,7 @@
                                     <input type="number" min="0"
                                            placeholder="{{ (ns+'.form.scrummaster_price.placeholder') | translate }}"
                                            class="form-control" name="scrummaster_price"
-                                           ng-model="settings.scrummasterPrice" required>
+                                           ng-model="setting.scrummasterPrice" required>
                                 </div>
                                 <div class="m-t-xs"
                                      ng-show="form.scrummaster_price.$invalid && form.scrummaster_price.$dirty">
@@ -138,7 +138,7 @@
                                     <input type="number" min="0" max="100"
                                            placeholder="{{ (ns+'.form.scrummaster_occupation.placeholder') | translate }}"
                                            class="form-control" name="scrummaster_occupation"
-                                           ng-model="settings.scrummasterOccupation" required>
+                                           ng-model="setting.scrummasterOccupation" required>
                                 </div>
                                 <div class="m-t-xs"
                                      ng-show="form.scrummaster_occupation.$invalid && form.scrummaster_occupation.$dirty">
@@ -182,7 +182,7 @@
                                     <input type="number" min="0"
                                            placeholder="{{ (ns+'.form.rate_multiplier.placeholder') | translate }}"
                                            class="form-control" name="rate_multiplier"
-                                           ng-model="settings.rateMultiplier" required>
+                                           ng-model="setting.rateMultiplier" required>
                                 </div>
                                 <div class="m-t-xs"
                                      ng-show="form.rate_multiplier.$invalid && form.rate_multiplier.$dirty">
@@ -207,7 +207,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="checkbox m-r-xs">
-                                    <input type="checkbox" id="billing-show-dev" ng-model="settings.showDev">
+                                    <input type="checkbox" id="billing-show-dev" ng-model="setting.showDev">
                                     <label for="billing-show-dev">
                                         {{ (ns + ".form.show_dev_price.label") | translate }}
                                     </label>
@@ -221,7 +221,7 @@
                             <div class="form-group">
                                 <div class="checkbox m-r-xs">
                                     <input type="checkbox" id="billing-show-management"
-                                           ng-model="settings.showManagement">
+                                           ng-model="setting.showManagement">
                                     <label for="billing-show-management">
                                         {{ (ns + ".form.show_management_price.label") | translate }}
                                     </label>
@@ -246,7 +246,7 @@
                                 <label>{{ (ns+'.form.estimate_type.label') | translate }} *</label>
 
                                 <div class="m-t-xs">
-                                    <select class="form-control" name="estimate_type" ng-model="settings.estimateType"
+                                    <select class="form-control" name="estimate_type" ng-model="setting.estimateType"
                                             required>
                                         <option value="">{{ (ns+'.form.estimate_type.select') | translate }}</option>
                                         <option value="final">{{ (ns+'.form.estimate_type.items.final') | translate }}
@@ -262,7 +262,7 @@
                                     </small>
                                 </div>
                             </div>
-                            <div ng-if="settings.estimateType == 'range'">
+                            <div ng-if="setting.estimateType == 'range'">
                                 <div class="form-group">
                                     <small class="text-navy">
                                         {{ (ns + ".unit.descriptions.range_estimate_unit") | translate }}
@@ -273,7 +273,7 @@
 
                                     <div class="m-t-xs">
                                         <select class="form-control" name="range_estimate_unit"
-                                                ng-model="settings.rangeEstimateUnit" required>
+                                                ng-model="setting.rangeEstimateUnit" required>
                                             <option value="">
                                                 {{ (ns+'.form.range_estimate_unit.select') | translate }}
                                             </option>
@@ -307,7 +307,7 @@
                                 <input type="text"
                                        placeholder="{{ (ns+'.form.label.placeholder') | translate }}"
                                        class="form-control" name="label"
-                                       ng-model="settings.label" required>
+                                       ng-model="setting.label" required>
 
                                 <div class="m-t-xs"
                                      ng-show="form.label.$invalid && form.label.$dirty">
@@ -332,7 +332,7 @@
                             <div class="form-group">
                                 <div class="checkbox m-r-xs">
                                     <input type="checkbox" id="date-show"
-                                           ng-model="settings.showDate">
+                                           ng-model="setting.showDate">
                                     <label for="date-show">
                                         {{ (ns + ".form.date.label") | translate }}
                                     </label>
@@ -354,7 +354,7 @@
                                     <input type="number" min="0"
                                            placeholder="{{ (ns+'.form.contributor_available.placeholder') | translate }}"
                                            class="form-control" name="contributor_available"
-                                           ng-model="settings.contributorAvailable" required>
+                                           ng-model="setting.contributorAvailable" required>
                                     <span class="input-group-addon">
                                         {{ (ns+'.form.contributor_available.suffix') | translate }}
                                     </span>
@@ -387,7 +387,7 @@
                                     <input type="number" min="0"
                                            placeholder="{{ (ns+'.form.hour_per_day.placeholder') | translate }}"
                                            class="form-control" name="hour_per_day"
-                                           ng-model="settings.hourPerDay" required>
+                                           ng-model="setting.hourPerDay" required>
                                     <span class="input-group-addon">
                                         {{ (ns+'.form.hour_per_day.suffix') | translate }}
                                     </span>
@@ -420,7 +420,7 @@
                                     <input type="number" min="0"
                                            placeholder="{{ (ns+'.form.day_per_week.placeholder') | translate }}"
                                            class="form-control" name="day_per_week"
-                                           ng-model="settings.dayPerWeek" required>
+                                           ng-model="setting.dayPerWeek" required>
                                     <span class="input-group-addon">
                                         {{ (ns+'.form.day_per_week.suffix') | translate }}
                                     </span>
@@ -448,7 +448,7 @@
                                     <input type="number" min="0"
                                            placeholder="{{ (ns+'.form.week_per_iteration.placeholder') | translate }}"
                                            class="form-control" name="week_per_iteration"
-                                           ng-model="settings.weekPerIteration" required>
+                                           ng-model="setting.weekPerIteration" required>
                                     <span class="input-group-addon">
                                         {{ (ns+'.form.week_per_iteration.suffix') | translate }}
                                     </span>
@@ -482,31 +482,31 @@
                                 <li><i class="fa fa-users"></i>
                                     {{ (ns+'.form.contributor_price.label') | translate }}
                                     <strong class="pull-right">
-                                        <span class="text-navy">{{ settings.contributorPrice }}</span> &euro;
+                                        <span class="text-navy">{{ setting.contributorPrice }}</span> &euro;
                                     </strong>
                                 </li>
                                 <li><i class="fa fa-users"></i>
                                     {{ (ns+'.form.contributor_occupation.label') | translate }}
                                     <strong class="pull-right">
-                                        <span class="text-navy">{{ settings.contributorOccupation }}</span> %
+                                        <span class="text-navy">{{ setting.contributorOccupation }}</span> %
                                     </strong>
                                 </li>
                                 <li><i class="fa fa-rocket"></i>
                                     {{ (ns+'.form.scrummaster_price.label') | translate }}
                                     <strong class="pull-right">
-                                        <span class="text-navy">{{ settings.scrummasterPrice }}</span> &euro;
+                                        <span class="text-navy">{{ setting.scrummasterPrice }}</span> &euro;
                                     </strong>
                                 </li>
                                 <li><i class="fa fa-rocket"></i>
                                     {{ (ns+'.form.scrummaster_occupation.label') | translate }}
                                     <strong class="pull-right">
-                                        <span class="text-navy">{{ settings.scrummasterOccupation }}</span> %
+                                        <span class="text-navy">{{ setting.scrummasterOccupation }}</span> %
                                     </strong>
                                 </li>
                                 <li><i class="fa fa-money"></i>
                                     {{ (ns+'.form.rate_multiplier.label') | translate }}
                                     <strong class="pull-right">
-                                        <span class="text-navy">{{ settings.rateMultiplier }}</span> %
+                                        <span class="text-navy">{{ setting.rateMultiplier }}</span> %
                                     </strong>
 
                                 </li>
@@ -514,28 +514,28 @@
                                     {{ (ns+'.form.show_dev_price.label') | translate }}
                                     <strong class="pull-right">
                                         <span class="fa"
-                                              ng-class="settings.showDev ? 'text-navy fa-check-square-o' : 'fa-square-o'"></span>
+                                              ng-class="setting.showDev ? 'text-navy fa-check-square-o' : 'fa-square-o'"></span>
                                     </strong>
                                 </li>
                                 <li><i class="fa fa-money"></i>
                                     {{ (ns+'.form.show_management_price.label') | translate }}
                                     <strong class="pull-right">
                                         <span class="fa"
-                                              ng-class="settings.showManagement ? 'text-navy fa-check-square-o' : 'fa-square-o'"></span>
+                                              ng-class="setting.showManagement ? 'text-navy fa-check-square-o' : 'fa-square-o'"></span>
                                     </strong>
                                 </li>
                                 <li><i class="fa fa-tasks"></i>
                                     {{ (ns+'.form.estimate_type.label') | translate }}
-                                    <div ng-switch="settings.estimateType" class="pull-right">
+                                    <div ng-switch="setting.estimateType" class="pull-right">
                                         <strong ng-switch-default=""> - </strong>
                                         <strong ng-switch-when="final" class="text-navy">{{ (ns+'.form.estimate_type.items.final') | translate }}</strong>
                                         <strong ng-switch-when="range" class="text-navy">{{ (ns+'.form.estimate_type.items.range') | translate }}</strong>
                                     </div>
                                 </li>
-                                <li ng-if="settings.estimateType=='range'">
+                                <li ng-if="setting.estimateType=='range'">
                                     <i class="fa fa-tasks"></i>
                                     {{ (ns+'.form.range_estimate_unit.label') | translate }}
-                                    <div ng-switch="settings.rangeEstimateUnit" class="pull-right">
+                                    <div ng-switch="setting.rangeEstimateUnit" class="pull-right">
                                         <strong ng-switch-default=""> - </strong>
                                         <strong ng-switch-when="minute" class="text-navy">{{ (ns+'.form.range_estimate_unit.items.minute') | translate }}</strong>
                                         <strong ng-switch-when="hour" class="text-navy">{{ (ns+'.form.range_estimate_unit.items.hour') | translate }}</strong>
@@ -544,39 +544,39 @@
                                 </li>
                                 <li><i class="fa fa-tasks"></i>
                                     {{ (ns+'.form.label.label') | translate }}
-                                    <strong class="pull-right text-navy">{{ settings.label }}</strong>
+                                    <strong class="pull-right text-navy">{{ setting.label }}</strong>
                                 </li>
                                 <li><i class="fa fa-calendar"></i>
                                     {{ (ns+'.form.date.label') | translate }}
                                     <strong class="pull-right">
-                                        <span class="fa" ng-class="settings.showDate ? 'text-navy fa-check-square-o' : 'fa-square-o'"></span>
+                                        <span class="fa" ng-class="setting.showDate ? 'text-navy fa-check-square-o' : 'fa-square-o'"></span>
                                     </strong>
                                 </li>
                                 <li><i class="fa fa-refresh"></i>
                                     {{ (ns+'.form.contributor_available.label') | translate }}
                                     <strong class="pull-right">
-                                        <span class="text-navy">{{ settings.contributorAvailable }}</span>
+                                        <span class="text-navy">{{ setting.contributorAvailable }}</span>
                                         {{ (ns+'.form.contributor_available.suffix') | translate }}
                                     </strong>
                                 </li>
                                 <li><i class="fa fa-refresh"></i>
                                     {{ (ns+'.form.hour_per_day.label') | translate }}
                                     <strong class="pull-right">
-                                        <span class="text-navy">{{ settings.hourPerDay }}</span>
+                                        <span class="text-navy">{{ setting.hourPerDay }}</span>
                                         {{ (ns+'.form.hour_per_day.suffix') | translate }}
                                     </strong>
                                 </li>
                                 <li><i class="fa fa-refresh"></i>
                                     {{ (ns+'.form.day_per_week.label') | translate }}
                                     <strong class="pull-right">
-                                        <span class="text-navy">{{ settings.dayPerWeek }}</span>
+                                        <span class="text-navy">{{ setting.dayPerWeek }}</span>
                                         {{ (ns+'.form.day_per_week.suffix') | translate }}
                                     </strong>
                                 </li>
                                 <li><i class="fa fa-refresh"></i>
                                     {{ (ns+'.form.week_per_iteration.label') | translate }}
                                     <strong class="pull-right">
-                                        <span class="text-navy">{{ settings.weekPerIteration }}</span>
+                                        <span class="text-navy">{{ setting.weekPerIteration }}</span>
                                         {{ (ns+'.form.week_per_iteration.suffix') | translate }}
                                     </strong>
                                 </li>

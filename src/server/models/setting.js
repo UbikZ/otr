@@ -3,6 +3,7 @@
 var mongoose = require('mongoose');
 
 var schema = new mongoose.Schema({
+  id: {type: Number, index: {unique: true}},
   update: {
     user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
     date: {type: Date, default: Date.now},
