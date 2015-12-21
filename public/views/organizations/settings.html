@@ -325,6 +325,137 @@
                 <div class="col-sm-6">
                     <div class="ibox">
                         <div class="ibox-title">
+                            <h5><i class="fa fa-calendar m-r-xs"></i> {{ (ns + ".iteration.title") | translate }}</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="form-group">
+                                <label>{{ (ns+'.form.contributor_available.label') | translate }} *</label>
+
+                                <div class="input-group">
+                                    <input type="number" min="0"
+                                           placeholder="{{ (ns+'.form.contributor_available.placeholder') | translate }}"
+                                           class="form-control" name="contributor_available"
+                                           ng-model="settings.contributorAvailable" required>
+                                    <span class="input-group-addon">
+                                        {{ (ns+'.form.contributor_available.suffix') | translate }}
+                                    </span>
+                                </div>
+                                <div class="m-t-xs"
+                                     ng-show="form.contributor_available.$invalid && form.contributor_available.$dirty">
+                                    <small class="text-danger help-block"
+                                           ng-show="form.contributor_available.$error.required">
+                                        {{ (ns+'.form.contributor_available.errors.required') | translate }}
+                                    </small>
+                                    <small class="text-danger help-block"
+                                           ng-show="form.contributor_available.$error.number">
+                                        {{ (ns+'.form.contributor_available.errors.number') | translate }}
+                                    </small>
+                                    <small class="text-danger help-block"
+                                           ng-show="form.contributor_available.$error.min">
+                                        {{ (ns+'.form.contributor_available.errors.min') | translate }}
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <small class="text-navy">
+                                    {{ (ns + ".iteration.descriptions.hour_per_day") | translate }}
+                                </small>
+                            </div>
+                            <div class="form-group">
+                                <label>{{ (ns+'.form.hour_per_day.label') | translate }} *</label>
+
+                                <div class="input-group">
+                                    <input type="number" min="0"
+                                           placeholder="{{ (ns+'.form.hour_per_day.placeholder') | translate }}"
+                                           class="form-control" name="hour_per_day"
+                                           ng-model="settings.hourPerDay" required>
+                                    <span class="input-group-addon">
+                                        {{ (ns+'.form.hour_per_day.suffix') | translate }}
+                                    </span>
+                                </div>
+                                <div class="m-t-xs"
+                                     ng-show="form.hour_per_day.$invalid && form.hour_per_day.$dirty">
+                                    <small class="text-danger help-block"
+                                           ng-show="form.hour_per_day.$error.required">
+                                        {{ (ns+'.form.hour_per_day.errors.required') | translate }}
+                                    </small>
+                                    <small class="text-danger help-block"
+                                           ng-show="form.hour_per_day.$error.number">
+                                        {{ (ns+'.form.hour_per_day.errors.number') | translate }}
+                                    </small>
+                                    <small class="text-danger help-block"
+                                           ng-show="form.hour_per_day.$error.min">
+                                        {{ (ns+'.form.hour_per_day.errors.min') | translate }}
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <small class="text-navy">
+                                    {{ (ns + ".iteration.descriptions.day_per_week") | translate }}
+                                </small>
+                            </div>
+                            <div class="form-group">
+                                <label>{{ (ns+'.form.day_per_week.label') | translate }} *</label>
+
+                                <div class="input-group">
+                                    <input type="number" min="0"
+                                           placeholder="{{ (ns+'.form.day_per_week.placeholder') | translate }}"
+                                           class="form-control" name="day_per_week"
+                                           ng-model="settings.dayPerWeek" required>
+                                    <span class="input-group-addon">
+                                        {{ (ns+'.form.day_per_week.suffix') | translate }}
+                                    </span>
+                                </div>
+                                <div class="m-t-xs"
+                                     ng-show="form.day_per_week.$invalid && form.day_per_week.$dirty">
+                                    <small class="text-danger help-block"
+                                           ng-show="form.day_per_week.$error.required">
+                                        {{ (ns+'.form.day_per_week.errors.required') | translate }}
+                                    </small>
+                                    <small class="text-danger help-block"
+                                           ng-show="form.day_per_week.$error.number">
+                                        {{ (ns+'.form.day_per_week.errors.number') | translate }}
+                                    </small>
+                                    <small class="text-danger help-block"
+                                           ng-show="form.day_per_week.$error.min">
+                                        {{ (ns+'.form.day_per_week.errors.min') | translate }}
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>{{ (ns+'.form.week_per_iteration.label') | translate }} *</label>
+
+                                <div class="input-group">
+                                    <input type="number" min="0"
+                                           placeholder="{{ (ns+'.form.week_per_iteration.placeholder') | translate }}"
+                                           class="form-control" name="week_per_iteration"
+                                           ng-model="settings.wekkPerIteration" required>
+                                    <span class="input-group-addon">
+                                        {{ (ns+'.form.week_per_iteration.suffix') | translate }}
+                                    </span>
+                                </div>
+                                <div class="m-t-xs"
+                                     ng-show="form.week_per_iteration.$invalid && form.week_per_iteration.$dirty">
+                                    <small class="text-danger help-block"
+                                           ng-show="form.week_per_iteration.$error.required">
+                                        {{ (ns+'.form.week_per_iteration.errors.required') | translate }}
+                                    </small>
+                                    <small class="text-danger help-block"
+                                           ng-show="form.week_per_iteration.$error.number">
+                                        {{ (ns+'.form.week_per_iteration.errors.number') | translate }}
+                                    </small>
+                                    <small class="text-danger help-block"
+                                           ng-show="form.week_per_iteration.$error.min">
+                                        {{ (ns+'.form.week_per_iteration.errors.min') | translate }}
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="ibox">
+                        <div class="ibox-title">
                             <h5><i class="fa fa-calendar m-r-xs"></i> {{ (ns + ".date.title") | translate }}</h5>
                         </div>
                         <div class="ibox-content">
@@ -347,372 +478,5 @@
                 </div>
             </div>
         </form>
-    </div>
-</div>
-<div class="settings-form">
-    <div class="form-group">
-        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-4 title">
-            <h5>
-                <i class="fa fa-users btn btn-warning btn-circle"></i>
-                Équipe de réalisation </h5>
-        </div>
-
-        <div class="col-lg-9 col-md-8 col-sm-8 col-xs-8">
-            <label class="col-lg-5 col-md-5 col-sm-5 col-xs-5" for="men_day_price">
-                Prix jour / collaborateur </label>
-
-            <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 input-group">
-                <input type="number" class="form-control" id="men_day_price" name="men_day_price"
-                       placeholder="Laisser vide pour hériter de la valeur du parent" value="650">
-                <span class="input-group-addon btn btn-primary">€</span>
-            </div>
-        </div>
-
-        <div class="
-            col-lg-9 col-lg-offset-3
-            col-md-8 col-md-offset-4
-            col-sm-8 col-sm-offset-4
-            col-xs-8 col-xs-offset-4
-            ">
-            <label class="col-lg-5 col-md-5 col-sm-5 col-xs-5" for="men_focus_rate">
-                Concentration collaborateurs </label>
-
-            <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 input-group">
-                <input type="number" class="form-control" id="men_focus_rate" name="men_focus_rate"
-                       placeholder="Laisser vide pour hériter de la valeur du parent" value="80">
-                <span class="input-group-addon btn btn-primary">%</span>
-            </div>
-        </div>
-    </div>
-    <hr class="hr-line-dashed">
-    <div class="form-group">
-        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-4 title">
-            <h5>
-                <i class="fa fa-rocket btn btn-warning btn-circle"></i>
-                Conduite de projet </h5>
-        </div>
-
-        <div class="col-lg-9 col-md-8 col-sm-8 col-xs-8">
-            <label class="col-lg-5 col-md-5 col-sm-5 col-xs-5" for="sm_day_price">
-                Prix jour/SM </label>
-
-            <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 input-group">
-                <input type="number" class="form-control" id="sm_day_price" name="sm_day_price"
-                       placeholder="Laisser vide pour hériter de la valeur du parent" value="900">
-                <span class="input-group-addon btn btn-primary">€</span>
-            </div>
-        </div>
-
-        <div class="col-lg-9 col-lg-offset-3 col-md-8 col-md-offset-4 col-sm-8 col-sm-offset-4 col-xs-8 col-xs-offset-4">
-            <label class="col-lg-5 col-md-5 col-sm-5 col-xs-5" for="sm_rate">
-                Concentration SM </label>
-
-            <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 input-group">
-                <input type="number" class="form-control" id="sm_rate" name="sm_rate"
-                       placeholder="Laisser vide pour hériter de la valeur du parent" value="12">
-                <span class="input-group-addon btn btn-primary">%</span>
-            </div>
-        </div>
-    </div>
-
-
-    <hr class="hr-line-dashed">
-    <div class="form-group">
-        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-4 title">
-            <h5>
-                <i class="fa fa-money btn btn-warning btn-circle"></i>
-                Facturation </h5>
-        </div>
-        <div class="col-lg-9 col-md-8 col-sm-8 col-xs-8">
-            <label class="col-md-5 label-checkbox" for="document_is_chargeable">
-                Documents facturables </label>
-
-            <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 checkbox i-checks">
-                <input type="checkbox" value="1" id="document_is_chargeable" name="document_is_chargeable"
-                       checked="checked">
-            </div>
-        </div>
-
-        <div class="col-lg-9 col-lg-offset-3 col-md-8 col-md-offset-4 col-sm-8 col-sm-offset-4 col-xs-8 col-xs-offset-4">
-            <label class="col-lg-5 col-md-5 col-sm-5 col-xs-5" for="estimate_multiplier">
-                Taux multiplicateur </label>
-
-            <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 input-group">
-                <input type="number" class="form-control" id="estimate_multiplier" name="estimate_multiplier"
-                       placeholder="Laisser vide pour hériter de la valeur du parent" value="130">
-                <span class="input-group-addon btn btn-primary">%</span>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="form-group">
-        <div class="col-lg-9 col-lg-offset-3 col-md-8 col-md-offset-4 col-sm-8 col-sm-offset-4 col-xs-8 col-xs-offset-4">
-            <label class="col-md-5 label-checkbox" for="men_display_price">
-                Afficher les prix (équipe) </label>
-
-            <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 checkbox i-checks">
-                <input type="checkbox" value="1" id="men_display_price" name="men_display_price" checked="checked">
-            </div>
-        </div>
-    </div>
-
-
-    <div class="form-group">
-        <div class="col-lg-9 col-lg-offset-3 col-md-8 col-md-offset-4 col-sm-8 col-sm-offset-4 col-xs-8 col-xs-offset-4">
-            <label class="col-md-5 label-checkbox" for="sm_display_price">
-                Afficher les prix (SM) </label>
-
-            <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 checkbox i-checks">
-                <input type="checkbox" value="1" id="sm_display_price" name="sm_display_price" checked="checked">
-            </div>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-lg-9 col-lg-offset-3 col-md-8 col-md-offset-4 col-sm-8 col-sm-offset-4 col-xs-8 col-xs-offset-4">
-            <label class="col-md-5 label-checkbox" for="type_estimation_display">
-                Choisir le type d'estimation: </label>
-
-            <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 input-group">
-                <select class="form-control" id="type_estimation_display" name="type_estimation_display">
-                    <option selected="selected" value="0">Estimation finale</option>
-                    <option value="1">Estimation haute / basse</option>
-                </select>
-            </div>
-        </div>
-    </div>
-
-    <hr class="hr-line-dashed">
-    <div class="form-group">
-        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-4 title">
-            <h5>
-                <i class="fa fa-tasks btn btn-warning btn-circle"></i>
-                Unités </h5>
-        </div>
-        <div class="col-lg-9 col-md-8 col-sm-8 col-xs-8">
-            <label class="col-lg-5 col-md-5 col-sm-5 col-xs-5" for="estimate_convert_unit">
-                Convertir en </label>
-
-            <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 input-group">
-                <select id="estimate_convert_unit" name="estimate_convert_unit" class="select2 form-control"
-                        disabled="">
-                    <option></option>
-                    <option value="sp">
-                        SP
-                    </option>
-                    <option value="days" selected="selected">
-                        Jours
-                    </option>
-                    <option value="hrs">
-                        Heures
-                    </option>
-                    <option value="min">
-                        Minutes
-                    </option>
-                </select>
-            </div>
-        </div>
-
-        <div class="col-lg-9 col-lg-offset-3 col-md-8 col-md-offset-4 col-sm-8 col-sm-offset-4 col-xs-8 col-xs-offset-4">
-            <label class="col-lg-5 col-md-5 col-sm-5 col-xs-5" for="estimate_default_unit">
-                Estimations <i class="fa fa-arrow-up"></i>
-                et <i class="fa fa-arrow-down"></i>
-            </label>
-
-            <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 input-group">
-                <select id="estimate_default_unit" name="estimate_default_unit" class="select2 form-control">
-                    <option></option>
-                    <option value="sp">
-                        SP
-                    </option>
-                    <option value="days" selected="selected">
-                        Jours
-                    </option>
-                    <option value="hrs">
-                        Heures
-                    </option>
-                    <option value="min">
-                        Minutes
-                    </option>
-                </select>
-            </div>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-lg-9 col-lg-offset-3 col-md-8 col-md-offset-4 col-sm-8 col-sm-offset-4 col-xs-8 col-xs-offset-4">
-            <label class="col-lg-5 col-md-5 col-sm-5 col-xs-5" for="estimate_display_unit">
-                Label à afficher </label>
-
-            <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 input-group">
-                <input type="text" class="form-control" id="estimate_display_unit" name="estimate_display_unit"
-                       placeholder="Laisser vide pour hériter de la valeur du parent" value="jr/h">
-            </div>
-        </div>
-    </div>
-
-
-    <hr class="hr-line-dashed">
-    <div class="form-group">
-        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-4 title">
-            <h5>
-                <i class="fa fa-calendar btn btn-warning btn-circle"></i>
-                Dates </h5>
-        </div>
-
-        <div class="col-lg-9 col-md-8 col-sm-8 col-xs-8">
-            <label class="col-lg-5 col-md-5 col-sm-5 col-xs-5" for="iteration_start_date">
-                Date de début </label>
-
-            <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 input-group">
-                <input type="date" class="form-control" id="iteration_start_date" name="iteration_start_date"
-                       placeholder="Laisser vide pour hériter de la valeur du parent" value="18/03/2015"
-                       data-mask="99/99/9999">
-            </div>
-        </div>
-
-        <div class="col-lg-9 col-lg-offset-3 col-md-8 col-md-offset-4 col-sm-8 col-sm-offset-4 col-xs-8 col-xs-offset-4">
-            <label class="col-md-5 label-checkbox" for="document_display_date">
-                Afficher les dates </label>
-
-            <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 checkbox i-checks">
-                <input type="checkbox" value="1" id="document_display_date" name="document_display_date"
-                       checked="checked">
-            </div>
-        </div>
-    </div>
-
-
-    <hr class="hr-line-dashed">
-    <div class="form-group">
-        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-4 title">
-            <h5>
-                <i class="fa fa-refresh btn btn-warning btn-circle"></i>
-                Itérations </h5>
-        </div>
-
-        <div class="col-lg-9 col-md-8 col-sm-8 col-xs-8">
-            <label class="col-lg-5 col-md-5 col-sm-5 col-xs-5" for="iteration_men_amount">
-                Collaborateurs disponibles </label>
-
-            <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 input-group">
-                <input type="number" step="any" class="form-control" id="iteration_men_amount"
-                       name="iteration_men_amount" placeholder="Laisser vide pour hériter de la valeur du parent"
-                       value="1">
-                <span class="input-group-addon btn btn-primary">collaborateur(s)</span>
-            </div>
-        </div>
-
-        <div class="col-lg-9 col-lg-offset-3 col-md-8 col-md-offset-4 col-sm-8 col-sm-offset-4 col-xs-8 col-xs-offset-4">
-            <label class="col-lg-5 col-md-5 col-sm-5 col-xs-5" for="men_focus_factor">
-                Focus factor moyen </label>
-
-            <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 input-group">
-                <input type="number" class="form-control" id="men_focus_factor" name="men_focus_factor"
-                       placeholder="Laisser vide pour hériter de la valeur du parent" value="1">
-                <span class="input-group-addon btn btn-primary">sp / jour</span>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="form-group">
-        <div class="col-lg-9 col-lg-offset-3 col-md-8 col-md-offset-4 col-sm-8 col-sm-offset-4 col-xs-8 col-xs-offset-4">
-            <label class="col-lg-5 col-md-5 col-sm-5 col-xs-5" for="iteration_offday_amount">
-                Jours de non production par itération </label>
-
-            <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 input-group">
-                <input type="number" class="form-control" id="iteration_offday_amount" name="iteration_offday_amount"
-                       placeholder="Laisser vide pour hériter de la valeur du parent" value="">
-                <span class="input-group-addon btn btn-primary">jour(s)</span>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="form-group">
-        <div class="col-lg-9 col-lg-offset-3 col-md-8 col-md-offset-4 col-sm-8 col-sm-offset-4 col-xs-8 col-xs-offset-4">
-            <label class="col-lg-5 col-md-5 col-sm-5 col-xs-5" for="men_absolute_availability">
-                Capacité disponible </label>
-
-            <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 input-group">
-                <input type="number" class="form-control" id="men_absolute_availability"
-                       name="men_absolute_availability"
-                       placeholder="Laisser vide pour hériter du parent ou automatiser le calcul">
-                <span class="input-group-addon btn btn-primary">jour(s)</span>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="form-group">
-        <div class="col-lg-9 col-lg-offset-3 col-md-8 col-md-offset-4 col-sm-8 col-sm-offset-4 col-xs-8 col-xs-offset-4">
-            <label class="col-lg-5 col-md-5 col-sm-5 col-xs-5" for="iteration_absolute_number">
-                Nombre d'itérations </label>
-
-            <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 input-group">
-                <input type="number" class="form-control" id="iteration_absolute_number"
-                       name="iteration_absolute_number"
-                       placeholder="Laisser vide pour hériter du parent ou automatiser le calcul">
-                <span class="input-group-addon btn btn-primary">jour(s)</span>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="form-group">
-        <div class="col-lg-9 col-lg-offset-3 col-md-8 col-md-offset-4 col-sm-8 col-sm-offset-4 col-xs-8 col-xs-offset-4">
-            <label class="col-lg-5 col-md-5 col-sm-5 col-xs-5" for="sm_absolute_availability">
-                Nombre de jours SM </label>
-
-            <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 input-group">
-                <input type="number" class="form-control" id="sm_absolute_availability" name="sm_absolute_availability"
-                       placeholder="Laisser vide pour hériter du parent ou automatiser le calcul">
-                <span class="input-group-addon btn btn-primary">jour(s)</span>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="form-group">
-        <div class="col-lg-9 col-lg-offset-3 col-md-8 col-md-offset-4 col-sm-8 col-sm-offset-4 col-xs-8 col-xs-offset-4">
-            <label class="col-lg-5 col-md-5 col-sm-5 col-xs-5" for="iteration_hours_per_day">
-                Heures par jour </label>
-
-            <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 input-group">
-                <input type="number" class="form-control" id="iteration_hours_per_day" name="iteration_hours_per_day"
-                       placeholder="Laisser vide pour hériter de la valeur du parent" value="">
-                <span class="input-group-addon btn btn-primary">heures(s)</span>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="form-group">
-        <div class="col-lg-9 col-lg-offset-3 col-md-8 col-md-offset-4 col-sm-8 col-sm-offset-4 col-xs-8 col-xs-offset-4">
-            <label class="col-lg-5 col-md-5 col-sm-5 col-xs-5" for="iteration_week_day_amount">
-                Jours par semaine </label>
-
-            <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 input-group">
-                <input type="number" class="form-control" id="iteration_week_day_amount"
-                       name="iteration_week_day_amount" placeholder="Laisser vide pour hériter de la valeur du parent"
-                       value="5">
-                <span class="input-group-addon btn btn-primary">jour(s)</span>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="form-group">
-        <div class="col-lg-9 col-lg-offset-3 col-md-8 col-md-offset-4 col-sm-8 col-sm-offset-4 col-xs-8 col-xs-offset-4">
-            <label class="col-lg-5 col-md-5 col-sm-5 col-xs-5" for="iteration_week_amount">
-                Semaines par iération </label>
-
-            <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 input-group">
-                <input type="number" class="form-control" id="iteration_week_amount" name="iteration_week_amount"
-                       placeholder="Laisser vide pour hériter de la valeur du parent" value="2">
-                <span class="input-group-addon btn btn-primary">semaine(s)</span>
-            </div>
-        </div>
     </div>
 </div>

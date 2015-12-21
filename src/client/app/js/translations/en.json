@@ -207,6 +207,13 @@
           "show": "Permet de définir si le compte rendu final doit avoir des visuels relatifs aux dates."
         }
       },
+      "iteration": {
+        "title": "Itération",
+        "descriptions": {
+          "hour_per_day": "Nombre d'heures travaillées théoriques par jour.",
+          "day_per_week": "Nombre de jours travaillés théoriques (heures ouvrées) par semaine."
+        }
+      },
       "form": {
         "contributor_price": {
           "label": "Prix jour / collaborateur",
@@ -293,6 +300,46 @@
         },
         "date": {
           "label": "Afficher les dates"
+        },
+        "contributor_available": {
+          "label": "Nombre de collaborateurs disponibles",
+          "placeholder": "",
+          "suffix": "collaborateur(s)",
+          "errors": {
+            "required": "Veuillez renseigner le nombre de collaborateurs.",
+            "number": "La valeur renseignée n'est pas un nombre.",
+            "min": "La valeur renseignée doit être supérieure ou égale à 0."
+          }
+        },
+        "hour_per_day": {
+          "label": "Nombre d'heures par jour",
+          "placeholder": "",
+          "suffix": "heure(s)",
+          "errors": {
+            "required": "Veuillez renseigner le nombre d'heures par jour.",
+            "number": "La valeur renseignée n'est pas un nombre.",
+            "min": "La valeur renseignée doit être supérieure ou égale à 0."
+          }
+        },
+        "day_per_week": {
+          "label": "Nombre de jours par semaine",
+          "placeholder": "",
+          "suffix": "jour(s)",
+          "errors": {
+            "required": "Veuillez renseigner le nombre de jours par semaine.",
+            "number": "La valeur renseignée n'est pas un nombre.",
+            "min": "La valeur renseignée doit être supérieure ou égale à 0."
+          }
+        },
+        "week_per_iteration": {
+          "label": "Nombre de semaines par itération",
+          "placeholder": "",
+          "suffix": "semaine(s)",
+          "errors": {
+            "required": "Veuillez renseigner le nombre de semaines par itération.",
+            "number": "La valeur renseignée n'est pas un nombre.",
+            "min": "La valeur renseignée doit être supérieure ou égale à 0."
+          }
         }
       }
     }
