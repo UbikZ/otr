@@ -7,13 +7,13 @@
       "username": {
         "placeholder": "Nom d'utilisateur",
         "errors": {
-          "required": "Vous devez renseigner votre nom d'utilisateur (celui de votre compte OnTime)."
+          "required": "Veuillez renseigner votre nom d'utilisateur (celui de votre compte OnTime)."
         }
       },
       "password": {
         "placeholder": "Mot de passe",
         "errors": {
-          "required": "Vous devez renseigner votre mot de passe (celui de compte OnTime)."
+          "required": "Veuillez renseigner votre mot de passe (celui de compte OnTime)."
         }
       },
       "submit": "Se connecter"
@@ -59,14 +59,14 @@
           "label": "Prénom",
           "placeholder": "",
           "errors": {
-            "required": "Vous devez renseigner votre prénom."
+            "required": "Veuillez renseigner votre prénom."
           }
         },
         "lastname": {
           "label": "Nom",
           "placeholder": "",
           "errors": {
-            "required": "Vous devez renseigner votre nom."
+            "required": "Veuillez renseigner votre nom."
           }
         },
         "job": {
@@ -193,52 +193,60 @@
           "show_management_price": ""
         }
       },
+      "unit": {
+        "title": "Unités",
+        "descriptions": {
+          "estimate_type": "Le type d'estimation permet d'afficher visuellement soit des estimations hautes / basses, soit des estimations finales.",
+          "range_estimate_unit": "L'unité de temps pour les estimations hautes/basses renseignés dans OnTime.",
+          "label": ""
+        }
+      },
       "form": {
         "contributor_price": {
           "label": "Prix jour / collaborateur",
           "placeholder": "",
           "errors": {
-            "required": "Vous devez renseigner le prix.",
+            "required": "Veuillez renseigner le prix.",
             "number": "La valeur renseignée n'est pas un nombre.",
-            "min": "La valeur renseignée doit être supérieure ou égale à 0"
+            "min": "La valeur renseignée doit être supérieure ou égale à 0."
           }
         },
         "contributor_occupation": {
           "label": "Concentration collaborateurs",
           "placeholder": "",
           "errors": {
-            "required": "Vous devez renseigner le pourcentage.",
+            "required": "Veuillez renseigner le pourcentage.",
             "number": "La valeur renseignée n'est pas un nombre.",
-            "min": "La valeur renseignée doit être supérieure ou égale à 0",
-            "max": "La valeur renseignée doit être inférieure ou égale à 100"
+            "min": "La valeur renseignée doit être supérieure ou égale à 0.",
+            "max": "La valeur renseignée doit être inférieure ou égale à 100."
           }
         },
         "scrummaster_price": {
           "label": "Prix jour / scrum-master",
           "placeholder": "",
           "errors": {
-            "required": "Vous devez renseigner le prix.",
+            "required": "Veuillez renseigner le prix.",
             "number": "La valeur renseignée n'est pas un nombre.",
-            "min": "La valeur renseignée doit être supérieure ou égale à 0"
+            "min": "La valeur renseignée doit être supérieure ou égale à 0."
           }
         },
         "scrummaster_occupation": {
           "label": "Concentration scrum-masters",
           "placeholder": "",
           "errors": {
-            "required": "Vous devez renseigner le pourcentage.",
+            "required": "Veuillez renseigner le pourcentage.",
             "number": "La valeur renseignée n'est pas un nombre.",
-            "min": "La valeur renseignée doit être supérieure ou égale à 0",
-            "max": "La valeur renseignée doit être inférieure ou égale à 100"
+            "min": "La valeur renseignée doit être supérieure ou égale à 0.",
+            "max": "La valeur renseignée doit être inférieure ou égale à 100."
           }
         },
         "rate_multiplier": {
           "label": "Coefficient multiplicateur",
           "placeholder": "",
           "errors": {
-            "required": "Vous devez renseigner le pourcentage.",
+            "required": "Veuillez renseigner le pourcentage.",
             "number": "La valeur renseignée n'est pas un nombre.",
-            "min": "La valeur renseignée doit être supérieure ou égale à 0"
+            "min": "La valeur renseignée doit être supérieure ou égale à 0."
           }
         },
         "show_dev_price": {
@@ -246,6 +254,36 @@
         },
         "show_management_price": {
           "label": "Afficher les prix (pour le management de projet)"
+        },
+        "estimate_type": {
+          "label": "Type d'estimations",
+          "select": "Veuillez sélectionner un type",
+          "items": {
+            "final": "Estimations finales",
+            "range": "Estimations hautes / basses"
+          },
+          "errors": {
+            "required": "Veuillez renseigner un type d'estimation."
+          }
+        },
+        "range_estimate_unit": {
+          "label": "Estimations hautes et basses",
+          "select": "Veuillez sélectionner une unité",
+          "items": {
+            "minute": "Minutes",
+            "hour": "Heures",
+            "day": "Jours"
+          },
+          "errors": {
+            "required": "Veuillez renseigner une unité."
+          }
+        },
+        "label": {
+          "label": "Format d'affichage de l'unité",
+          "placeholder": "",
+          "errors": {
+            "required": "Veuillez renseigner le champs texte."
+          }
         }
       }
     }

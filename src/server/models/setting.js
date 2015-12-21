@@ -19,11 +19,11 @@ var schema = new mongoose.Schema({
     show_dev_price: Boolean,
     show_management_price: Boolean,
     rate_multiplier: {type: Number, min: 0},
-    final_estimate: Boolean,
   },
   unit: {
+    estimate_type: {type: String, enum: ['final', 'range']},
+    range_estimate_unit: {type: String, enum: ['minute', 'hour', 'day']},
     label: {type: String, trim: true},
-    type: {type: String, enum: ['minute', 'hour', 'day']},
   },
   date: {
     show: Boolean,
