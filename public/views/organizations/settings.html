@@ -246,7 +246,7 @@
                                 <label>{{ (ns+'.form.estimate_type.label') | translate }} *</label>
 
                                 <div class="m-t-xs">
-                                    <select class="form-control" name="account" ng-model="settings.estimateType"
+                                    <select class="form-control" name="estimate_type" ng-model="settings.estimateType"
                                             required>
                                         <option value="">{{ (ns+'.form.estimate_type.select') | translate }}</option>
                                         <option value="final">{{ (ns+'.form.estimate_type.items.final') | translate }}
@@ -258,7 +258,7 @@
                                 <div class="m-t-xs"
                                      ng-show="form.estimate_type.$invalid && form.estimate_type.$dirty">
                                     <small class="text-danger help-block" ng-show="form.estimate_type.$error.required">
-                                        {{ (ns+'.form.estimate_type.error.required') | translate }}
+                                        {{ (ns+'.form.estimate_type.errors.required') | translate }}
                                     </small>
                                 </div>
                             </div>
@@ -272,7 +272,7 @@
                                     <label>{{ (ns+'.form.range_estimate_unit.label') | translate }} *</label>
 
                                     <div class="m-t-xs">
-                                        <select class="form-control" name="account"
+                                        <select class="form-control" name="range_estimate_unit"
                                                 ng-model="settings.rangeEstimateUnit" required>
                                             <option value="">
                                                 {{ (ns+'.form.range_estimate_unit.select') | translate }}
@@ -292,7 +292,7 @@
                                          ng-show="form.range_estimate_unit.$invalid && form.range_estimate_unit.$dirty">
                                         <small class="text-danger help-block"
                                                ng-show="form.range_estimate_unit.$error.required">
-                                            {{ (ns+'.form.range_estimate_unit.error.required') | translate }}
+                                            {{ (ns+'.form.range_estimate_unit.errors.required') | translate }}
                                         </small>
                                     </div>
                                 </div>
@@ -315,6 +315,31 @@
                                            ng-show="form.label.$error.required">
                                         {{ (ns+'.form.label.errors.required') | translate }}
                                     </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="ibox">
+                        <div class="ibox-title">
+                            <h5><i class="fa fa-calendar m-r-xs"></i> {{ (ns + ".date.title") | translate }}</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="form-group">
+                                <small class="text-navy">
+                                    {{ (ns + ".date.descriptions.show") | translate }}
+                                </small>
+                            </div>
+                            <div class="form-group">
+                                <div class="checkbox m-r-xs">
+                                    <input type="checkbox" id="date-show"
+                                           ng-model="settings.dateShow">
+                                    <label for="date-show">
+                                        {{ (ns + ".form.date.label") | translate }}
+                                    </label>
                                 </div>
                             </div>
                         </div>

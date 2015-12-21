@@ -201,6 +201,12 @@
           "label": ""
         }
       },
+      "date": {
+        "title": "Dates",
+        "descriptions": {
+          "show": "Permet de définir si le compte rendu final doit avoir des visuels relatifs aux dates."
+        }
+      },
       "form": {
         "contributor_price": {
           "label": "Prix jour / collaborateur",
@@ -284,6 +290,9 @@
           "errors": {
             "required": "Veuillez renseigner le champs texte."
           }
+        },
+        "date": {
+          "label": "Afficher les dates"
         }
       }
     }

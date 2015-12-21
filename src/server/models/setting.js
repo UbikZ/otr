@@ -27,7 +27,6 @@ var schema = new mongoose.Schema({
   },
   date: {
     show: Boolean,
-    format: String,
     start_date: {type: Date, default: Date.now},
   },
   iteration: {
