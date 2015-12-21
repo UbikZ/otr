@@ -23,3 +23,6 @@ app.controller('user.controller', require('./users/list'));
 // Account
 app.controller('ontime.controller', require('./account/ontime'));
 app.controller('form.profile.controller', require('./account/forms/edit'));
+
+// Settings
+app.controller('form.settings.controller', require('./settings/forms/edit'));
