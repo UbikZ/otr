@@ -185,7 +185,14 @@
           "scrummaster_occupation": "La concentration scrum-masters correspond au pourcentage d'occupation du collaborateur durant un sprint."
         }
       },
-
+      "billing": {
+        "title": "Facturation",
+        "descriptions": {
+          "rate_multiplier": "Le coefficient multiplicateur permet de marger la prestation pour y faire rentrer des tâches non comprises dans les estimations (Tests unitaires, Documentation etc.)",
+          "show_dev_price": "",
+          "show_management_price": ""
+        }
+      },
       "form": {
         "contributor_price": {
           "label": "Prix jour / collaborateur",
@@ -224,6 +231,21 @@
             "min": "La valeur renseignée doit être supérieure ou égale à 0",
             "max": "La valeur renseignée doit être inférieure ou égale à 100"
           }
+        },
+        "rate_multiplier": {
+          "label": "Coefficient multiplicateur",
+          "placeholder": "",
+          "errors": {
+            "required": "Vous devez renseigner le pourcentage.",
+            "number": "La valeur renseignée n'est pas un nombre.",
+            "min": "La valeur renseignée doit être supérieure ou égale à 0"
+          }
+        },
+        "show_dev_price": {
+          "label": "Afficher les prix (pour l'équipe de développement)"
+        },
+        "show_management_price": {
+          "label": "Afficher les prix (pour le management de projet)"
         }
       }
     }

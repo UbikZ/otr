@@ -27,7 +27,7 @@
                                 <input type="number" min="0"
                                        placeholder="{{ (ns+'.form.contributor_price.placeholder') | translate }}"
                                        class="form-control" name="contributor_price"
-                                       ng-model="settings.contributor_price" required>
+                                       ng-model="settings.contributorPrice" required>
                             </div>
                             <div class="m-t-xs"
                                  ng-show="formProfile.contributor_price.$invalid && formProfile.contributor_price.$dirty">
@@ -55,7 +55,7 @@
                                 <input type="number" min="0" max="100"
                                        placeholder="{{ (ns+'.form.contributor_occupation.placeholder') | translate }}"
                                        class="form-control" name="contributor_occupation"
-                                       ng-model="settings.contributor_occupation" required>
+                                       ng-model="settings.contributorOccupation" required>
                             </div>
                             <div class="m-t-xs"
                                  ng-show="formProfile.contributor_occupation.$invalid && formProfile.contributor_occupation.$dirty">
@@ -96,7 +96,7 @@
                                 <input type="number" min="0"
                                        placeholder="{{ (ns+'.form.scrummaster_price.placeholder') | translate }}"
                                        class="form-control" name="scrummaster_price"
-                                       ng-model="settings.scrummaster_price" required>
+                                       ng-model="settings.scrummasterPrice" required>
                             </div>
                             <div class="m-t-xs"
                                  ng-show="formProfile.scrummaster_price.$invalid && formProfile.scrummaster_price.$dirty">
@@ -124,7 +124,7 @@
                                 <input type="number" min="0" max="100"
                                        placeholder="{{ (ns+'.form.scrummaster_occupation.placeholder') | translate }}"
                                        class="form-control" name="scrummaster_occupation"
-                                       ng-model="settings.scrummaster_occupation" required>
+                                       ng-model="settings.scrummasterOccupation" required>
                             </div>
                             <div class="m-t-xs"
                                  ng-show="formProfile.scrummaster_occupation.$invalid && formProfile.scrummaster_occupation.$dirty">
@@ -144,6 +144,61 @@
                                        ng-show="formProfile.scrummaster_occupation.$error.max">
                                     {{ (ns+'.form.scrummaster_occupation.errors.max') | translate }}
                                 </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <h5><i class="fa fa-money m-r-xs"></i> {{ (ns + ".billing.title") | translate }}</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="form-group">
+                            <small class="text-navy">{{ (ns + ".billing.descriptions.rate_multiplier") | translate }}</small>
+                        </div>
+                        <div class="form-group">
+                            <label>{{ (ns+'.form.rate_multiplier.label') | translate }} *</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-percent"></i></span>
+                                <input type="number" min="0"
+                                       placeholder="{{ (ns+'.form.rate_multiplier.placeholder') | translate }}"
+                                       class="form-control" name="rate_multiplier"
+                                       ng-model="settings.billingRateMultiplier" required>
+                            </div>
+                            <div class="m-t-xs"
+                                 ng-show="formProfile.rate_multiplier.$invalid && formProfile.rate_multiplier.$dirty">
+                                <small class="text-danger help-block"
+                                       ng-show="formProfile.rate_multiplier.$error.required">
+                                    {{ (ns+'.form.rate_multiplier.errors.required') | translate }}
+                                </small>
+                                <small class="text-danger help-block"
+                                       ng-show="formProfile.rate_multiplier.$error.number">
+                                    {{ (ns+'.form.rate_multiplier.errors.number') | translate }}
+                                </small>
+                                <small class="text-danger help-block"
+                                       ng-show="formProfile.rate_multiplier.$error.min">
+                                    {{ (ns+'.form.rate_multiplier.errors.min') | translate }}
+                                </small>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <small class="text-navy">{{ (ns + ".billing.descriptions.show_dev_price") | translate }}</small>
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox m-r-xs">
+                                <input type="checkbox" id="billing-show-dev" ng-model="settings.billingShowDev">
+                                <label for="billing-show-dev">{{ (ns + ".form.show_dev_price.label") | translate }}</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <small class="text-navy">{{ (ns + ".billing.descriptions.show_management_price") | translate }}</small>
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox m-r-xs">
+                                <input type="checkbox" id="billing-show-management" ng-model="settings.billingShowManagement">
+                                <label for="billing-show-management">{{ (ns + ".form.show_management_price.label") | translate }}</label>
                             </div>
                         </div>
                     </div>

@@ -16,7 +16,6 @@ var schema = new mongoose.Schema({
     scrummaster_occupation: {type: Number, min: 0, max: 100},
   },
   billing: {
-    show: Boolean,
     show_dev_price: Boolean,
     show_management_price: Boolean,
     rate_multiplier: {type: Number, min: 0},
