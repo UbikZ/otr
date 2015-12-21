@@ -72,22 +72,69 @@
             </div>
             <div class="col-sm-6">
                 <div class="ibox">
+                    <div class="ibox-title">
+                        <h5><i class="fa fa-rocket m-r-xs"></i> {{ (ns + ".project_management.title") | translate }}</h5>
+                    </div>
                     <div class="ibox-content">
-                        <span class="text-muted small pull-right">Last modification: <i class="fa fa-clock-o"></i> 2:10 pm - 12.06.2014</span>
-
-                        <h2>Clients</h2>
-
-                        <p>
-                            All clients need to be verified before you can send email and set a project.
-                        </p>
-
-                        <div class="input-group">
-                            <input type="text" placeholder="Search client " class="input form-control">
-                                <span class="input-group-btn">
-                                        <button type="button" class="btn btn btn-primary"><i class="fa fa-search"></i>
-                                            Search
-                                        </button>
-                                </span>
+                        <div class="form-group">
+                            <small class="text-navy">{{ (ns + ".project_management.descriptions.scrummaster_price") | translate }}</small>
+                        </div>
+                        <div class="form-group">
+                            <label>{{ (ns+'.form.scrummaster_price.label') | translate }} *</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-euro"></i></span>
+                                <input type="number" min="0"
+                                       placeholder="{{ (ns+'.form.scrummaster_price.placeholder') | translate }}"
+                                       class="form-control" name="scrummaster_price"
+                                       ng-model="settings.scrummaster_price" required>
+                            </div>
+                            <div class="m-t-xs"
+                                 ng-show="formProfile.scrummaster_price.$invalid && formProfile.scrummaster_price.$dirty">
+                                <small class="text-danger help-block"
+                                       ng-show="formProfile.scrummaster_price.$error.required">
+                                    {{ (ns+'.form.scrummaster_price.errors.required') | translate }}
+                                </small>
+                                <small class="text-danger help-block"
+                                       ng-show="formProfile.scrummaster_price.$error.number">
+                                    {{ (ns+'.form.scrummaster_price.errors.number') | translate }}
+                                </small>
+                                <small class="text-danger help-block"
+                                       ng-show="formProfile.scrummaster_price.$error.min">
+                                    {{ (ns+'.form.scrummaster_price.errors.min') | translate }}
+                                </small>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <small class="text-navy">{{ (ns + ".project_management.descriptions.scrummaster_occupation") | translate }}</small>
+                        </div>
+                        <div class="form-group">
+                            <label>{{ (ns+'.form.scrummaster_occupation.label') | translate }} *</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-percent"></i></span>
+                                <input type="number" min="0" max="100"
+                                       placeholder="{{ (ns+'.form.scrummaster_occupation.placeholder') | translate }}"
+                                       class="form-control" name="scrummaster_occupation"
+                                       ng-model="settings.scrummaster_occupation" required>
+                            </div>
+                            <div class="m-t-xs"
+                                 ng-show="formProfile.scrummaster_occupation.$invalid && formProfile.scrummaster_occupation.$dirty">
+                                <small class="text-danger help-block"
+                                       ng-show="formProfile.scrummaster_occupation.$error.required">
+                                    {{ (ns+'.form.scrummaster_occupation.errors.required') | translate }}
+                                </small>
+                                <small class="text-danger help-block"
+                                       ng-show="formProfile.scrummaster_occupation.$error.number">
+                                    {{ (ns+'.form.scrummaster_occupation.errors.number') | translate }}
+                                </small>
+                                <small class="text-danger help-block"
+                                       ng-show="formProfile.scrummaster_occupation.$error.min">
+                                    {{ (ns+'.form.scrummaster_occupation.errors.min') | translate }}
+                                </small>
+                                <small class="text-danger help-block"
+                                       ng-show="formProfile.scrummaster_occupation.$error.max">
+                                    {{ (ns+'.form.scrummaster_occupation.errors.max') | translate }}
+                                </small>
+                            </div>
                         </div>
                     </div>
                 </div>

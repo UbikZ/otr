@@ -171,9 +171,17 @@
         "title": "Équipe de réalisation",
         "descriptions": {
           "contributor_price": "Le prix jour par collaborateur correspond à la valeur en euro du taux journalier moyen facturable.",
-          "contributor_occupation": "La concentration collaborateurs correspond au pourcentage d'occuptation du collaborateur durant un sprint."
+          "contributor_occupation": "La concentration collaborateurs correspond au pourcentage d'occupation du collaborateur durant un sprint."
         }
       },
+      "project_management": {
+        "title": "Conduite de projet",
+        "descriptions": {
+          "scrummaster_price": "Le prix jour par scrum-master correspond à la valeur en euro du taux journalier moyen facturable.",
+          "scrummaster_occupation": "La concentration scrum-masters correspond au pourcentage d'occupation du collaborateur durant un sprint."
+        }
+      },
+
       "form": {
         "contributor_price": {
           "label": "Prix jour / collaborateur",
@@ -186,6 +194,25 @@
         },
         "contributor_occupation": {
           "label": "Concentration collaborateurs",
+          "placeholder": "",
+          "errors": {
+            "required": "Vous devez renseigner le pourcentage.",
+            "number": "La valeur renseignée n'est pas un nombre.",
+            "min": "La valeur renseignée doit être supérieure ou égale à 0",
+            "max": "La valeur renseignée doit être inférieure ou égale à 100"
+          }
+        },
+        "scrummaster_price": {
+          "label": "Prix jour / scrum-master",
+          "placeholder": "",
+          "errors": {
+            "required": "Vous devez renseigner le prix.",
+            "number": "La valeur renseignée n'est pas un nombre.",
+            "min": "La valeur renseignée doit être supérieure ou égale à 0"
+          }
+        },
+        "scrummaster_occupation": {
+          "label": "Concentration scrum-masters",
           "placeholder": "",
           "errors": {
             "required": "Vous devez renseigner le pourcentage.",
