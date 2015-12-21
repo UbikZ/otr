@@ -582,6 +582,20 @@
                                 </li>
                             </ul>
                         </div>
+                        <div class="ibox-footer">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <a ui-sref="{{ $root.routes.APP_HOME }}"
+                                       class="btn btn-sm btn-success pull-right m-l-lg" ng-disabled="loading">
+                                        <i class="fa fa-reply"></i> <strong>{{ (ns+'.form.quit') | translate }}</strong>
+                                    </a>
+                                    <button class="btn btn-sm btn-primary pull-right" type="submit"
+                                            ng-disabled="form.$invalid || loading">
+                                        <i class="fa fa-save"></i> <strong>{{ (ns+'.form.submit') | translate }}</strong>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
