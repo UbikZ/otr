@@ -165,6 +165,36 @@
           "title": "Informations complémentaires"
         }
       }
+    },
+    "settings": {
+      "project_dev": {
+        "title": "Équipe de réalisation",
+        "descriptions": {
+          "contributor_price": "Le prix jour par collaborateur correspond à la valeur en euro du taux journalier moyen facturable.",
+          "contributor_occupation": "La concentration collaborateurs correspond au pourcentage d'occuptation du collaborateur durant un sprint."
+        }
+      },
+      "form": {
+        "contributor_price": {
+          "label": "Prix jour / collaborateur",
+          "placeholder": "",
+          "errors": {
+            "required": "Vous devez renseigner le prix.",
+            "number": "La valeur renseignée n'est pas un nombre.",
+            "min": "La valeur renseignée doit être supérieure ou égale à 0"
+          }
+        },
+        "contributor_occupation": {
+          "label": "Concentration collaborateurs",
+          "placeholder": "",
+          "errors": {
+            "required": "Vous devez renseigner le pourcentage.",
+            "number": "La valeur renseignée n'est pas un nombre.",
+            "min": "La valeur renseignée doit être supérieure ou égale à 0",
+            "max": "La valeur renseignée doit être inférieure ou égale à 100"
+          }
+        }
+      }
     }
   },
   "filesystem": {

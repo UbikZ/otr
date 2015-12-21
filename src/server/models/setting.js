@@ -3,6 +3,10 @@
 var mongoose = require('mongoose');
 
 var schema = new mongoose.Schema({
+  update: {
+    user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+    date: {type: Date, default: Date.now},
+  },
   project_dev: {
     contributor_price: {type: Number, min: 0},
     contributor_occupation: {type: Number, min: 0, max: 100},
@@ -20,7 +24,7 @@ var schema = new mongoose.Schema({
   },
   unit: {
     label: {type: String, trim: true},
-    type: {type: Number, min: 0, max: 2}, // 0: minutes | 1: hours | 2: days
+    type: {type: String, enum: ['minute', 'hour', 'day']},
   },
   date: {
     show: Boolean,
