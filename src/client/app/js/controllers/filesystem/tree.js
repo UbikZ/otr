@@ -6,7 +6,6 @@ var mappingSetting = require('../../helpers/mapping/setting');
 
 module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uibModal', '_CONST',
   function ($scope, $rootScope, itemService, settingService, $uibModal, _CONST) {
-    var masterSetting = undefined;
 
     function changeCurrentOrganization (organization) {
       $scope.organization = organization;
@@ -19,13 +18,13 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
       $scope.currentIdNode = id;
       if ($scope.currentIdNode == undefined) {
         $scope.currentItem = $scope.organization;
-        $scope.setting = $scope.organization.setting;
+        $scope.setting = $scope.organization.setting || $scope.masterSetting;
         $scope.documents = [];
         $scope.projects = $scope.organization.projects;
       } else {
         recursiveTool.findSpecificRecursivelyById($scope.organization, $scope.currentIdNode, function (item) {
           $scope.currentItem = item;
-          $scope.setting = item.setting;
+          $scope.setting = item.setting || $scope.masterSetting;
           $scope.projects = item.projects;
           $scope.documents = item.documents;
         });
@@ -52,14 +51,14 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
     }
 
     function loadCurrentSetting() {
-      if (masterSetting == undefined) {
+      if ($scope.masterSetting == undefined) {
         settingService.get({id: _CONST.DATAMODEL.ID_SETTING}, function (res) {
           if (res.setting != undefined) {
-            masterSetting = mappingSetting.dalToDTO(res.setting);
+            $scope.masterSetting = mappingSetting.dalToDTO(res.setting);
             if ($scope.organization.setting == undefined) {
-              $scope.setting = $scope.organization.setting = masterSetting
+              $scope.setting = $scope.organization.setting = $scope.masterSetting
             } else {
-              $scope.setting = $scope.organization.setting = Object.assign($scope.organization.setting, masterSetting);
+              $scope.setting = $scope.organization.setting = Object.assign($scope.organization.setting, $scope.masterSetting);
             }
           }
         }, function (err) {
