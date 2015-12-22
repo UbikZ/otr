@@ -58,7 +58,7 @@ module.exports = [
       })
       .state(routes.ORGANIZATIONS_SETTINGS, {
         url: '/settings',
-        templateUrl: env.templatePath('organizations/settings.html'),
+        templateUrl: env.templatePath('settings/forms/edit.html'),
       })
       .state(routes.ORGANIZATIONS_DETAIL, {
         url: '/detail/:id',

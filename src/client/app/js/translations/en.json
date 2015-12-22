@@ -165,188 +165,6 @@
           "title": "Informations complémentaires"
         }
       }
-    },
-    "settings": {
-      "info": {
-        "description": "Cette configuration est le paramétrage par défaut appliqué à l'ensemble des sociétés et des projets/documents inhérents. ",
-        "schema": "Paramètrage par défaut > Société > Projet > ... > Projet > Document"
-      },
-      "project_dev": {
-        "title": "Équipe de réalisation",
-        "descriptions": {
-          "contributor_price": "Le prix jour par collaborateur correspond à la valeur en euro du taux journalier moyen facturable.",
-          "contributor_occupation": "La concentration collaborateurs correspond au pourcentage d'occupation du collaborateur durant un sprint."
-        }
-      },
-      "project_management": {
-        "title": "Conduite de projet",
-        "descriptions": {
-          "scrummaster_price": "Le prix jour par scrum-master correspond à la valeur en euro du taux journalier moyen facturable.",
-          "scrummaster_occupation": "La concentration scrum-masters correspond au pourcentage d'occupation du collaborateur durant un sprint."
-        }
-      },
-      "billing": {
-        "title": "Facturation",
-        "descriptions": {
-          "rate_multiplier": "Le coefficient multiplicateur permet de marger la prestation pour y faire rentrer des tâches non comprises dans les estimations (Tests unitaires, Documentation etc.)",
-          "show_dev_price": "",
-          "show_management_price": ""
-        }
-      },
-      "unit": {
-        "title": "Unités",
-        "descriptions": {
-          "estimate_type": "Le type d'estimation permet d'afficher visuellement soit des estimations hautes / basses, soit des estimations finales.",
-          "range_estimate_unit": "L'unité de temps pour les estimations hautes/basses renseignés dans OnTime.",
-          "label": ""
-        }
-      },
-      "date": {
-        "title": "Dates",
-        "descriptions": {
-          "show": "Permet de définir si le compte rendu final doit avoir des visuels relatifs aux dates."
-        }
-      },
-      "iteration": {
-        "title": "Itération",
-        "descriptions": {
-          "hour_per_day": "Nombre d'heures travaillées théoriques par jour.",
-          "day_per_week": "Nombre de jours travaillés théoriques (heures ouvrées) par semaine."
-        }
-      },
-      "resume": {
-        "title": "Résumé des informations renseignées"
-      },
-      "form": {
-        "submit": "Enregistrer",
-        "quit": "Annuler",
-        "contributor_price": {
-          "label": "Prix jour / collaborateur",
-          "placeholder": "",
-          "errors": {
-            "required": "Veuillez renseigner le prix.",
-            "number": "La valeur renseignée n'est pas un nombre.",
-            "min": "La valeur renseignée doit être supérieure ou égale à 0."
-          }
-        },
-        "contributor_occupation": {
-          "label": "Concentration collaborateurs",
-          "placeholder": "",
-          "errors": {
-            "required": "Veuillez renseigner le pourcentage.",
-            "number": "La valeur renseignée n'est pas un nombre.",
-            "min": "La valeur renseignée doit être supérieure ou égale à 0.",
-            "max": "La valeur renseignée doit être inférieure ou égale à 100."
-          }
-        },
-        "scrummaster_price": {
-          "label": "Prix jour / scrum-master",
-          "placeholder": "",
-          "errors": {
-            "required": "Veuillez renseigner le prix.",
-            "number": "La valeur renseignée n'est pas un nombre.",
-            "min": "La valeur renseignée doit être supérieure ou égale à 0."
-          }
-        },
-        "scrummaster_occupation": {
-          "label": "Concentration scrum-masters",
-          "placeholder": "",
-          "errors": {
-            "required": "Veuillez renseigner le pourcentage.",
-            "number": "La valeur renseignée n'est pas un nombre.",
-            "min": "La valeur renseignée doit être supérieure ou égale à 0.",
-            "max": "La valeur renseignée doit être inférieure ou égale à 100."
-          }
-        },
-        "rate_multiplier": {
-          "label": "Coefficient multiplicateur",
-          "placeholder": "",
-          "errors": {
-            "required": "Veuillez renseigner le pourcentage.",
-            "number": "La valeur renseignée n'est pas un nombre.",
-            "min": "La valeur renseignée doit être supérieure ou égale à 0."
-          }
-        },
-        "show_dev_price": {
-          "label": "Afficher les prix (pour l'équipe de développement)"
-        },
-        "show_management_price": {
-          "label": "Afficher les prix (pour le management de projet)"
-        },
-        "estimate_type": {
-          "label": "Type d'estimations",
-          "select": "Veuillez sélectionner un type",
-          "items": {
-            "final": "Estimations finales",
-            "range": "Estimations hautes / basses"
-          },
-          "errors": {
-            "required": "Veuillez renseigner un type d'estimation."
-          }
-        },
-        "range_estimate_unit": {
-          "label": "Estimations hautes et basses",
-          "select": "Veuillez sélectionner une unité",
-          "items": {
-            "minute": "Minutes",
-            "hour": "Heures",
-            "day": "Jours"
-          },
-          "errors": {
-            "required": "Veuillez renseigner une unité."
-          }
-        },
-        "label": {
-          "label": "Format d'affichage de l'unité",
-          "placeholder": "",
-          "errors": {
-            "required": "Veuillez renseigner le champs texte."
-          }
-        },
-        "date": {
-          "label": "Afficher les dates"
-        },
-        "contributor_available": {
-          "label": "Nombre de collaborateurs disponibles",
-          "placeholder": "",
-          "suffix": "collaborateur(s)",
-          "errors": {
-            "required": "Veuillez renseigner le nombre de collaborateurs.",
-            "number": "La valeur renseignée n'est pas un nombre.",
-            "min": "La valeur renseignée doit être supérieure ou égale à 0."
-          }
-        },
-        "hour_per_day": {
-          "label": "Nombre d'heures par jour",
-          "placeholder": "",
-          "suffix": "heure(s)",
-          "errors": {
-            "required": "Veuillez renseigner le nombre d'heures par jour.",
-            "number": "La valeur renseignée n'est pas un nombre.",
-            "min": "La valeur renseignée doit être supérieure ou égale à 0."
-          }
-        },
-        "day_per_week": {
-          "label": "Nombre de jours par semaine",
-          "placeholder": "",
-          "suffix": "jour(s)",
-          "errors": {
-            "required": "Veuillez renseigner le nombre de jours par semaine.",
-            "number": "La valeur renseignée n'est pas un nombre.",
-            "min": "La valeur renseignée doit être supérieure ou égale à 0."
-          }
-        },
-        "week_per_iteration": {
-          "label": "Nombre de semaines par itération",
-          "placeholder": "",
-          "suffix": "semaine(s)",
-          "errors": {
-            "required": "Veuillez renseigner le nombre de semaines par itération.",
-            "number": "La valeur renseignée n'est pas un nombre.",
-            "min": "La valeur renseignée doit être supérieure ou égale à 0."
-          }
-        }
-      }
     }
   },
   "filesystem": {
@@ -396,6 +214,188 @@
           },
           "submit": "Enregistrer",
           "quit": "Annuler"
+        }
+      }
+    }
+  },
+  "setting": {
+    "info": {
+      "description": "Cette configuration est le paramétrage par défaut appliqué à l'ensemble des sociétés et des projets/documents inhérents. ",
+      "schema": "Paramètrage par défaut > Société > Projet > ... > Projet > Document"
+    },
+    "project_dev": {
+      "title": "Équipe de réalisation",
+      "descriptions": {
+        "contributor_price": "Le prix jour par collaborateur correspond à la valeur en euro du taux journalier moyen facturable.",
+        "contributor_occupation": "La concentration collaborateurs correspond au pourcentage d'occupation du collaborateur durant un sprint."
+      }
+    },
+    "project_management": {
+      "title": "Conduite de projet",
+      "descriptions": {
+        "scrummaster_price": "Le prix jour par scrum-master correspond à la valeur en euro du taux journalier moyen facturable.",
+        "scrummaster_occupation": "La concentration scrum-masters correspond au pourcentage d'occupation du collaborateur durant un sprint."
+      }
+    },
+    "billing": {
+      "title": "Facturation",
+      "descriptions": {
+        "rate_multiplier": "Le coefficient multiplicateur permet de marger la prestation pour y faire rentrer des tâches non comprises dans les estimations (Tests unitaires, Documentation etc.)",
+        "show_dev_price": "",
+        "show_management_price": ""
+      }
+    },
+    "unit": {
+      "title": "Unités",
+      "descriptions": {
+        "estimate_type": "Le type d'estimation permet d'afficher visuellement soit des estimations hautes / basses, soit des estimations finales.",
+        "range_estimate_unit": "L'unité de temps pour les estimations hautes/basses renseignés dans OnTime.",
+        "label": ""
+      }
+    },
+    "date": {
+      "title": "Dates",
+      "descriptions": {
+        "show": "Permet de définir si le compte rendu final doit avoir des visuels relatifs aux dates."
+      }
+    },
+    "iteration": {
+      "title": "Itération",
+      "descriptions": {
+        "hour_per_day": "Nombre d'heures travaillées théoriques par jour.",
+        "day_per_week": "Nombre de jours travaillés théoriques (heures ouvrées) par semaine."
+      }
+    },
+    "resume": {
+      "title": "Résumé des informations renseignées"
+    },
+    "form": {
+      "submit": "Enregistrer",
+      "quit": "Annuler",
+      "contributor_price": {
+        "label": "Prix jour / collaborateur",
+        "placeholder": "",
+        "errors": {
+          "required": "Veuillez renseigner le prix.",
+          "number": "La valeur renseignée n'est pas un nombre.",
+          "min": "La valeur renseignée doit être supérieure ou égale à 0."
+        }
+      },
+      "contributor_occupation": {
+        "label": "Concentration collaborateurs",
+        "placeholder": "",
+        "errors": {
+          "required": "Veuillez renseigner le pourcentage.",
+          "number": "La valeur renseignée n'est pas un nombre.",
+          "min": "La valeur renseignée doit être supérieure ou égale à 0.",
+          "max": "La valeur renseignée doit être inférieure ou égale à 100."
+        }
+      },
+      "scrummaster_price": {
+        "label": "Prix jour / scrum-master",
+        "placeholder": "",
+        "errors": {
+          "required": "Veuillez renseigner le prix.",
+          "number": "La valeur renseignée n'est pas un nombre.",
+          "min": "La valeur renseignée doit être supérieure ou égale à 0."
+        }
+      },
+      "scrummaster_occupation": {
+        "label": "Concentration scrum-masters",
+        "placeholder": "",
+        "errors": {
+          "required": "Veuillez renseigner le pourcentage.",
+          "number": "La valeur renseignée n'est pas un nombre.",
+          "min": "La valeur renseignée doit être supérieure ou égale à 0.",
+          "max": "La valeur renseignée doit être inférieure ou égale à 100."
+        }
+      },
+      "rate_multiplier": {
+        "label": "Coefficient multiplicateur",
+        "placeholder": "",
+        "errors": {
+          "required": "Veuillez renseigner le pourcentage.",
+          "number": "La valeur renseignée n'est pas un nombre.",
+          "min": "La valeur renseignée doit être supérieure ou égale à 0."
+        }
+      },
+      "show_dev_price": {
+        "label": "Afficher les prix (pour l'équipe de développement)"
+      },
+      "show_management_price": {
+        "label": "Afficher les prix (pour le management de projet)"
+      },
+      "estimate_type": {
+        "label": "Type d'estimations",
+        "select": "Veuillez sélectionner un type",
+        "items": {
+          "final": "Estimations finales",
+          "range": "Estimations hautes / basses"
+        },
+        "errors": {
+          "required": "Veuillez renseigner un type d'estimation."
+        }
+      },
+      "range_estimate_unit": {
+        "label": "Estimations hautes et basses",
+        "select": "Veuillez sélectionner une unité",
+        "items": {
+          "minute": "Minutes",
+          "hour": "Heures",
+          "day": "Jours"
+        },
+        "errors": {
+          "required": "Veuillez renseigner une unité."
+        }
+      },
+      "label": {
+        "label": "Format d'affichage de l'unité",
+        "placeholder": "",
+        "errors": {
+          "required": "Veuillez renseigner le champs texte."
+        }
+      },
+      "date": {
+        "label": "Afficher les dates"
+      },
+      "contributor_available": {
+        "label": "Nombre de collaborateurs disponibles",
+        "placeholder": "",
+        "suffix": "collaborateur(s)",
+        "errors": {
+          "required": "Veuillez renseigner le nombre de collaborateurs.",
+          "number": "La valeur renseignée n'est pas un nombre.",
+          "min": "La valeur renseignée doit être supérieure ou égale à 0."
+        }
+      },
+      "hour_per_day": {
+        "label": "Nombre d'heures par jour",
+        "placeholder": "",
+        "suffix": "heure(s)",
+        "errors": {
+          "required": "Veuillez renseigner le nombre d'heures par jour.",
+          "number": "La valeur renseignée n'est pas un nombre.",
+          "min": "La valeur renseignée doit être supérieure ou égale à 0."
+        }
+      },
+      "day_per_week": {
+        "label": "Nombre de jours par semaine",
+        "placeholder": "",
+        "suffix": "jour(s)",
+        "errors": {
+          "required": "Veuillez renseigner le nombre de jours par semaine.",
+          "number": "La valeur renseignée n'est pas un nombre.",
+          "min": "La valeur renseignée doit être supérieure ou égale à 0."
+        }
+      },
+      "week_per_iteration": {
+        "label": "Nombre de semaines par itération",
+        "placeholder": "",
+        "suffix": "semaine(s)",
+        "errors": {
+          "required": "Veuillez renseigner le nombre de semaines par itération.",
+          "number": "La valeur renseignée n'est pas un nombre.",
+          "min": "La valeur renseignée doit être supérieure ou égale à 0."
         }
       }
     }

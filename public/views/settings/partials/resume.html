@@ -1,0 +1,103 @@
+<ul class="folder-list" style="padding: 0">
+    <li><i class="fa fa-users"></i>
+        {{ (ns+'.form.contributor_price.label') | translate }}
+        <strong class="pull-right">
+            <span class="text-navy">{{ setting.contributorPrice }}</span> &euro;
+        </strong>
+    </li>
+    <li><i class="fa fa-users"></i>
+        {{ (ns+'.form.contributor_occupation.label') | translate }}
+        <strong class="pull-right">
+            <span class="text-navy">{{ setting.contributorOccupation }}</span> %
+        </strong>
+    </li>
+    <li><i class="fa fa-rocket"></i>
+        {{ (ns+'.form.scrummaster_price.label') | translate }}
+        <strong class="pull-right">
+            <span class="text-navy">{{ setting.scrummasterPrice }}</span> &euro;
+        </strong>
+    </li>
+    <li><i class="fa fa-rocket"></i>
+        {{ (ns+'.form.scrummaster_occupation.label') | translate }}
+        <strong class="pull-right">
+            <span class="text-navy">{{ setting.scrummasterOccupation }}</span> %
+        </strong>
+    </li>
+    <li><i class="fa fa-money"></i>
+        {{ (ns+'.form.rate_multiplier.label') | translate }}
+        <strong class="pull-right">
+            <span class="text-navy">{{ setting.rateMultiplier }}</span> %
+        </strong>
+
+    </li>
+    <li><i class="fa fa-money"></i>
+        {{ (ns+'.form.show_dev_price.label') | translate }}
+        <strong class="pull-right">
+                                        <span class="fa"
+                                              ng-class="setting.showDev ? 'text-navy fa-check-square-o' : 'fa-square-o'"></span>
+        </strong>
+    </li>
+    <li><i class="fa fa-money"></i>
+        {{ (ns+'.form.show_management_price.label') | translate }}
+        <strong class="pull-right">
+                                        <span class="fa"
+                                              ng-class="setting.showManagement ? 'text-navy fa-check-square-o' : 'fa-square-o'"></span>
+        </strong>
+    </li>
+    <li><i class="fa fa-tasks"></i>
+        {{ (ns+'.form.estimate_type.label') | translate }}
+        <div ng-switch="setting.estimateType" class="pull-right">
+            <strong ng-switch-default=""> - </strong>
+            <strong ng-switch-when="final" class="text-navy">{{ (ns+'.form.estimate_type.items.final') | translate }}</strong>
+            <strong ng-switch-when="range" class="text-navy">{{ (ns+'.form.estimate_type.items.range') | translate }}</strong>
+        </div>
+    </li>
+    <li ng-if="setting.estimateType=='range'">
+        <i class="fa fa-tasks"></i>
+        {{ (ns+'.form.range_estimate_unit.label') | translate }}
+        <div ng-switch="setting.rangeEstimateUnit" class="pull-right">
+            <strong ng-switch-default=""> - </strong>
+            <strong ng-switch-when="minute" class="text-navy">{{ (ns+'.form.range_estimate_unit.items.minute') | translate }}</strong>
+            <strong ng-switch-when="hour" class="text-navy">{{ (ns+'.form.range_estimate_unit.items.hour') | translate }}</strong>
+            <strong ng-switch-when="day" class="text-navy">{{ (ns+'.form.range_estimate_unit.items.day') | translate }}</strong>
+        </div>
+    </li>
+    <li><i class="fa fa-tasks"></i>
+        {{ (ns+'.form.label.label') | translate }}
+        <strong class="pull-right text-navy">{{ setting.label }}</strong>
+    </li>
+    <li><i class="fa fa-calendar"></i>
+        {{ (ns+'.form.date.label') | translate }}
+        <strong class="pull-right">
+            <span class="fa" ng-class="setting.showDate ? 'text-navy fa-check-square-o' : 'fa-square-o'"></span>
+        </strong>
+    </li>
+    <li><i class="fa fa-refresh"></i>
+        {{ (ns+'.form.contributor_available.label') | translate }}
+        <strong class="pull-right">
+            <span class="text-navy">{{ setting.contributorAvailable }}</span>
+            {{ (ns+'.form.contributor_available.suffix') | translate }}
+        </strong>
+    </li>
+    <li><i class="fa fa-refresh"></i>
+        {{ (ns+'.form.hour_per_day.label') | translate }}
+        <strong class="pull-right">
+            <span class="text-navy">{{ setting.hourPerDay }}</span>
+            {{ (ns+'.form.hour_per_day.suffix') | translate }}
+        </strong>
+    </li>
+    <li><i class="fa fa-refresh"></i>
+        {{ (ns+'.form.day_per_week.label') | translate }}
+        <strong class="pull-right">
+            <span class="text-navy">{{ setting.dayPerWeek }}</span>
+            {{ (ns+'.form.day_per_week.suffix') | translate }}
+        </strong>
+    </li>
+    <li><i class="fa fa-refresh"></i>
+        {{ (ns+'.form.week_per_iteration.label') | translate }}
+        <strong class="pull-right">
+            <span class="text-navy">{{ setting.weekPerIteration }}</span>
+            {{ (ns+'.form.week_per_iteration.suffix') | translate }}
+        </strong>
+    </li>
+</ul>
