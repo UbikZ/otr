@@ -26,3 +26,4 @@ app.controller('form.profile.controller', require('./account/forms/edit'));
 
 // Settings
 app.controller('form.setting.controller', require('./setting/forms/edit'));
+app.controller('form.light-setting.controller', require('./setting/forms/light-edit'));
