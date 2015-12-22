@@ -67,10 +67,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="file-box" ng-repeat="project in projects | orderBy:name">
-                    <div class="file">
-                        <div class="file-box">
-                            <div class="file">
+                <div ng-if="currentItem.type == 'project'">
+                    <div class="file-box" ng-repeat="project in projects | orderBy:name">
+                        <div class="file">
+                            <div class="file-box">
+                                <div class="file">
                                 <span uib-dropdown ng-init="opened = false">
                                   <div>
                                       <span class="corner"></span>
@@ -118,14 +119,14 @@
                                       </div>
                                   </div>
                                 </span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="file-box" ng-repeat="document in documents | orderBy:name">
-                    <div class="file">
-                        <div class="file-box">
-                            <div class="file">
+                    <div class="file-box" ng-repeat="document in documents | orderBy:name">
+                        <div class="file">
+                            <div class="file-box">
+                                <div class="file">
                                 <span uib-dropdown ng-init="opened = false">
                                   <div>
                                       <span class="corner"></span>
@@ -173,9 +174,13 @@
                                       </div>
                                   </div>
                                 </span>
+                                </div>
                             </div>
                         </div>
                     </div>
+                </div>
+                <div ng-if="currentItem.type == 'document'">
+                    test
                 </div>
             </div>
         </div>

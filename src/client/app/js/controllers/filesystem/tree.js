@@ -41,6 +41,7 @@ module.exports = ['$scope', '$rootScope', 'itemService', '$uibModal',
     $scope.$on('load-organization', function (event, data) {
       changeCurrentOrganization(data.organization);
       changeCurrentProjectIdNode();
+      $scope.expandAll();
     });
 
     $scope.treeOptions = {
