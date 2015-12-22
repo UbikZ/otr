@@ -31,7 +31,6 @@ function findRecursivelyById(parentElement, attributeName, elementId, getParent,
   }
 }
 
-// todo: breadcrumb feature here
 function findPathRecursivelyById(elements, elementId, attributeName) {
   var sub, index;
 
@@ -45,11 +44,13 @@ function findPathRecursivelyById(elements, elementId, attributeName) {
     return result;
   }
 
-  for (index = 0; index < elements.length ; index++) {
-    if (elements[index]._id === elementId) {
-      return [slice(elements[index], ['_id', 'name'])];
-    } else if (sub = findPathRecursivelyById(elements[index][attributeName], elementId, attributeName)) {
-      return [slice(elements[index], ['_id', 'name'])].concat(sub);
+  if (elements != undefined) {
+    for (index = 0; index < elements.length ; index++) {
+      if (elements[index]._id === elementId) {
+        return [slice(elements[index], ['_id', 'name'])];
+      } else if (sub = findPathRecursivelyById(elements[index][attributeName], elementId, attributeName)) {
+        return [slice(elements[index], ['_id', 'name'])].concat(sub);
+      }
     }
   }
 }
