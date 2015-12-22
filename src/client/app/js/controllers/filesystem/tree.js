@@ -2,17 +2,20 @@
 
 var toastr = require('toastr');
 var recursiveTool = require('../../helpers/recursive');
+var mappingSetting = require('../../helpers/mapping/setting');
 
-module.exports = ['$scope', '$rootScope', 'itemService', '$uibModal',
-  function ($scope, $rootScope, itemService, $uibModal) {
+module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uibModal', '_CONST',
+  function ($scope, $rootScope, itemService, settingService, $uibModal, _CONST) {
+    var masterSetting = undefined;
 
-    var changeCurrentOrganization = function (organization) {
+    function changeCurrentOrganization (organization) {
       $scope.organization = organization;
       if ($scope.organization != undefined) {
         $scope.items = recursiveTool.convertTreeView($scope.organization);
       }
-    };
-    var changeCurrentIdNode = function (id) {
+    }
+
+    function changeCurrentIdNode (id) {
       $scope.currentIdNode = id;
       if ($scope.currentIdNode == undefined) {
         $scope.currentItem = $scope.organization;
@@ -34,11 +37,30 @@ module.exports = ['$scope', '$rootScope', 'itemService', '$uibModal',
         $scope.breadcrumbElements =
           recursiveTool.findPathRecursivelyById($scope.items, $scope.currentIdNode, 'children');
       }
-    };
+      $scope.$broadcast('load-fs-current-item', {currentItem: $scope.currentItem});
+    }
+
+    function loadCurrentSetting() {
+      if (masterSetting == undefined) {
+        settingService.get({id: _CONST.DATAMODEL.ID_SETTING}, function (res) {
+          if (res.setting != undefined) {
+            masterSetting = mappingSetting.dalToDTO(res.setting);
+            if ($scope.organization.setting == undefined) {
+              $scope.setting = $scope.organization.setting = masterSetting
+            } else {
+              $scope.setting = $scope.organization.setting = Object.assign($scope.organization.setting, masterSetting);
+            }
+          }
+        }, function (err) {
+          toastr.error(err.message);
+        });
+      }
+    }
 
     $scope.$on('load-organization', function (event, data) {
       changeCurrentOrganization(data.organization);
       changeCurrentIdNode();
+      loadCurrentSetting();
       $scope.expandAll();
     });
 
@@ -48,7 +70,7 @@ module.exports = ['$scope', '$rootScope', 'itemService', '$uibModal',
     };
 
     /*
-     * Modal edition
+     * Modal Item Edition
      */
 
     $scope.edit = function (objectId) {
