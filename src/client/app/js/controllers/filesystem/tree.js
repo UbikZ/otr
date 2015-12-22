@@ -40,6 +40,15 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
           recursiveTool.findPathRecursivelyById($scope.items, $scope.currentIdNode, 'children');
       }
       $scope.$broadcast('load-fs-current-item', {currentItem: $scope.currentItem});
+      mergeFileItems()
+    }
+
+    function mergeFileItems() {
+      if ($scope.projects != undefined) {
+        $scope.fileItems = $scope.projects.concat($scope.documents) || [];
+      } else {
+        $scope.fileItems = $scope.documents || [];
+      }
     }
 
     function loadCurrentSetting() {
@@ -75,7 +84,7 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
      * Modal Setting Edition
      */
 
-    $scope.edit = function (objectId) {
+    $scope.editSetting = function (objectId) {
       var modalInstance = $uibModal.open({
         animation: true,
         templateUrl: 'views/partials/modal-setting.html',
@@ -101,7 +110,7 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
      * Modal Item Edition
      */
 
-    $scope.edit = function (objectId) {
+    $scope.editItem = function (objectId) {
       var modalInstance = $uibModal.open({
         animation: true,
         templateUrl: 'views/partials/modal-item.html',
@@ -135,6 +144,7 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
           $scope.documents = orga.documents;
           $scope.projects = orga.projects;
         }
+        mergeFileItems();
       });
     };
 
@@ -150,6 +160,7 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
             });
           });
           changeCurrentOrganization(res.organization);
+          mergeFileItems();
         }, function (err) {
           toastr.error(err.message);
         }
