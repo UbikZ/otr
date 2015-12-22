@@ -4,12 +4,12 @@ function convertTreeView(parent) {
   var result = [];
   if (parent.projects != undefined) {
     parent.projects.forEach(function (project) {
-      result.push({_id: project._id, name: project.name, type: 'project', children: convertTreeView(project)});
+      result.push({_id: project._id, name: project.name, setting: project.setting, type: 'project', children: convertTreeView(project)});
     });
   }
   if (parent.documents != undefined) {
     parent.documents.forEach(function (document) {
-      result.push({_id: document._id, name: document.name, type: 'document'});
+      result.push({_id: document._id, name: document.name, setting: document.setting, type: 'document'});
     });
   }
 
@@ -72,9 +72,9 @@ function findPathRecursivelyById(elements, elementId, attributeName) {
   if (elements != undefined) {
     for (index = 0; index < elements.length ; index++) {
       if (elements[index]._id === elementId) {
-        return [slice(elements[index], ['_id', 'name'])];
+        return [slice(elements[index], ['_id', 'name', 'setting'])];
       } else if (sub = findPathRecursivelyById(elements[index][attributeName], elementId, attributeName)) {
-        return [slice(elements[index], ['_id', 'name'])].concat(sub);
+        return [slice(elements[index], ['_id', 'name', 'setting'])].concat(sub);
       }
     }
   }
