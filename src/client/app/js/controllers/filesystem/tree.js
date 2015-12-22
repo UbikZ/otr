@@ -19,11 +19,13 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
       $scope.currentIdNode = id;
       if ($scope.currentIdNode == undefined) {
         $scope.currentItem = $scope.organization;
+        $scope.setting = $scope.organization.setting;
         $scope.documents = [];
         $scope.projects = $scope.organization.projects;
       } else {
         recursiveTool.findSpecificRecursivelyById($scope.organization, $scope.currentIdNode, function (item) {
           $scope.currentItem = item;
+          $scope.setting = item.setting;
           $scope.projects = item.projects;
           $scope.documents = item.documents;
         });
@@ -67,6 +69,32 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
     $scope.treeOptions = {
       nodeChildren: "children",
       dirSelectable: true,
+    };
+
+    /*
+     * Modal Setting Edition
+     */
+
+    $scope.edit = function (objectId) {
+      var modalInstance = $uibModal.open({
+        animation: true,
+        templateUrl: 'views/partials/modal-setting.html',
+        controller: 'form.light-setting.controller',
+        resolve: {
+          organizationId: function () {
+            return $scope.organization._id;
+          },
+          identifier: function () {
+            return {id: objectId};
+          },
+        }
+      });
+
+      modalInstance.result.then(function (res) {
+        var orga = res.organization;
+        $scope.setting = res.setting;
+        changeCurrentOrganization(orga);
+      });
     };
 
     /*
