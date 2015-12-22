@@ -206,15 +206,16 @@
 
                     </span>
                 </h4>
-                <div class="category-list m-b-sm" style="padding: 0">
-                    <span class="m-r-sm">
-                        <i class="fa fa-circle text-navy m-r-xs"></i> {{ (ns+'.setting.type.own') | translate }}
-                    </span>
-                    <span>
-                        <i class="fa fa-circle text-danger m-r-xs"></i> {{ (ns+'.setting.type.inherit') | translate }}
-                    </span>
-                </div>
                 <div ng-include="'views/settings/partials/resume.html'"></div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <button class="col-lg-12 btn btn-default btn-xs">
+                            <i class="fa fa-pencil m-r-sm"></i>
+                            {{ (ns+'.setting.form.edit') | translate }}
+                            <strong>{{ currentItem.name }}</strong>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -195,6 +195,9 @@
         "project": "du projet",
         "document": "du document",
         "default": "de la société"
+      },
+      "form": {
+        "edit": "Editer les paramètres de"
       }
     },
     "item": {
