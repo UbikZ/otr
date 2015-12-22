@@ -206,6 +206,14 @@
 
                     </span>
                 </h4>
+                <div class="category-list m-b-sm" style="padding: 0">
+                    <span class="m-r-sm">
+                        <i class="fa fa-circle text-navy m-r-xs"></i> {{ (ns+'.setting.type.own') | translate }}
+                    </span>
+                    <span>
+                        <i class="fa fa-circle text-danger m-r-xs"></i> {{ (ns+'.setting.type.inherit') | translate }}
+                    </span>
+                </div>
                 <div ng-include="'views/settings/partials/resume.html'" ng-init="setting = currentItem.setting"></div>
             </div>
         </div>

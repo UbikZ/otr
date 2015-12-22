@@ -187,6 +187,10 @@
     "breadcrumb": "Fil d'Arianne",
     "setting": {
       "title": "Paramétrage",
+      "type": {
+        "own": "Paramètre basique",
+        "inherit": "Paramètre hérité"
+      },
       "items": {
         "project": "du projet",
         "document": "du document",

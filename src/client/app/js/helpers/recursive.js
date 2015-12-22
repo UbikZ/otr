@@ -56,8 +56,6 @@ function findSpecificRecursivelyById(parentElement, elementId, cb, passFirstElem
   }
 }
 
-
-
 function findPathRecursivelyById(elements, elementId, attributeName) {
   var sub, index;
 
