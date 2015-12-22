@@ -185,6 +185,14 @@
       "tree": "Arborescence"
     },
     "breadcrumb": "Fil d'Arianne",
+    "setting": {
+      "title": "Paramétrage",
+      "items": {
+        "project": "du projet",
+        "document": "du document",
+        "default": "de la société"
+      }
+    },
     "item": {
       "open": "Ouvrir",
       "edit": "Editer",
@@ -274,6 +282,7 @@
       "quit": "Annuler",
       "contributor_price": {
         "label": "Prix jour / collaborateur",
+        "resume": "Prix dev",
         "placeholder": "",
         "errors": {
           "required": "Veuillez renseigner le prix.",
@@ -283,6 +292,7 @@
       },
       "contributor_occupation": {
         "label": "Concentration collaborateurs",
+        "resume": "Occupation dev",
         "placeholder": "",
         "errors": {
           "required": "Veuillez renseigner le pourcentage.",
@@ -293,6 +303,7 @@
       },
       "scrummaster_price": {
         "label": "Prix jour / scrum-master",
+        "resume": "Prix SM",
         "placeholder": "",
         "errors": {
           "required": "Veuillez renseigner le prix.",
@@ -302,6 +313,7 @@
       },
       "scrummaster_occupation": {
         "label": "Concentration scrum-masters",
+        "resume": "Occuptation SM",
         "placeholder": "",
         "errors": {
           "required": "Veuillez renseigner le pourcentage.",
@@ -312,6 +324,7 @@
       },
       "rate_multiplier": {
         "label": "Coefficient multiplicateur",
+        "resume": "Coeff. mult.",
         "placeholder": "",
         "errors": {
           "required": "Veuillez renseigner le pourcentage.",
@@ -320,13 +333,16 @@
         }
       },
       "show_dev_price": {
-        "label": "Afficher les prix (pour l'équipe de développement)"
+        "label": "Afficher les prix (pour l'équipe de développement)",
+        "resume": "Aff. prix dev"
       },
       "show_management_price": {
-        "label": "Afficher les prix (pour le management de projet)"
+        "label": "Afficher les prix (pour le management de projet)",
+        "resume": "Aff. prix SM"
       },
       "estimate_type": {
         "label": "Type d'estimations",
+        "resume": "Type d'estim.",
         "select": "Veuillez sélectionner un type",
         "items": {
           "final": "Estimations finales",
@@ -338,6 +354,7 @@
       },
       "range_estimate_unit": {
         "label": "Estimations hautes et basses",
+        "resume": "Est. hautes/basses",
         "select": "Veuillez sélectionner une unité",
         "items": {
           "minute": "Minutes",
@@ -350,18 +367,21 @@
       },
       "label": {
         "label": "Format d'affichage de l'unité",
+        "resume": "Format unité",
         "placeholder": "",
         "errors": {
           "required": "Veuillez renseigner le champs texte."
         }
       },
       "date": {
-        "label": "Afficher les dates"
+        "label": "Afficher les dates",
+        "resume": "Aff. dates"
       },
       "contributor_available": {
         "label": "Nombre de collaborateurs disponibles",
+        "resume": "Nb. dev dispo.",
         "placeholder": "",
-        "suffix": "collaborateur(s)",
+        "suffix": "collab(s)",
         "errors": {
           "required": "Veuillez renseigner le nombre de collaborateurs.",
           "number": "La valeur renseignée n'est pas un nombre.",
@@ -370,8 +390,9 @@
       },
       "hour_per_day": {
         "label": "Nombre d'heures par jour",
+        "resume": "Nb. h/jour",
         "placeholder": "",
-        "suffix": "heure(s)",
+        "suffix": "h.",
         "errors": {
           "required": "Veuillez renseigner le nombre d'heures par jour.",
           "number": "La valeur renseignée n'est pas un nombre.",
@@ -380,8 +401,9 @@
       },
       "day_per_week": {
         "label": "Nombre de jours par semaine",
+        "resume": "Nb. j/semaine",
         "placeholder": "",
-        "suffix": "jour(s)",
+        "suffix": "j.",
         "errors": {
           "required": "Veuillez renseigner le nombre de jours par semaine.",
           "number": "La valeur renseignée n'est pas un nombre.",
@@ -390,8 +412,9 @@
       },
       "week_per_iteration": {
         "label": "Nombre de semaines par itération",
+        "resume": "Nb. s/itération",
         "placeholder": "",
-        "suffix": "semaine(s)",
+        "suffix": "sem.",
         "errors": {
           "required": "Veuillez renseigner le nombre de semaines par itération.",
           "number": "La valeur renseignée n'est pas un nombre.",

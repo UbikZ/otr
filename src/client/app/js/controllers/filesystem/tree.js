@@ -15,17 +15,20 @@ module.exports = ['$scope', '$rootScope', 'itemService', '$uibModal',
     var changeCurrentProjectIdNode = function (id) {
       $scope.currentProjectIdNode = id;
       if ($scope.currentProjectIdNode == undefined) {
+        $scope.currentItem = $scope.organization;
         $scope.documents = [];
         $scope.projects = $scope.organization.projects;
       } else {
         recursiveTool.findRecursivelyById($scope.organization, 'projects', $scope.currentProjectIdNode, false,
           function (item) {
+            $scope.currentItem = item;
             $scope.projects = item.projects;
             $scope.documents = item.documents;
           }
         );
         recursiveTool.findRecursivelyById($scope.items, 'children', id, false, function (element) {
           if (element._id === id) {
+            $scope.currentItem = Object.assign($scope.currentItem, element);
             $scope.selected = element;
             $scope.expandedNodes.push(element);
           }
@@ -140,11 +143,7 @@ module.exports = ['$scope', '$rootScope', 'itemService', '$uibModal',
     $scope.onSelect = function (node, selected, $parentNode, $index) {
       var idNode;
       if (selected) {
-        if (node.type == 'project') {
           idNode = node._id;
-        } else if (node.type == 'document') {
-          idNode = $parentNode._id;
-        }
       } else {
         idNode = undefined;
       }

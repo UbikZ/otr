@@ -1,5 +1,5 @@
 <div class="row animated fadeIn" ng-controller="filesystem.controller" ng-init="ns='filesystem'">
-    <div class="col-lg-4">
+    <div class="col-lg-3">
         <div class="ibox float-e-margins">
             <div class="ibox-content">
                 <div class="file-manager">
@@ -47,7 +47,7 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-8">
+    <div class="col-lg-6">
         <div class="row">
             <div class="col-lg-12">
                 <div class="ibox float-e-margins">
@@ -177,6 +177,31 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 settings">
+        <div class="sidebar-panel col-lg-12">
+            <div>
+                <h4>
+                    {{ (ns+'.setting.title') | translate }}
+                    <span ng-switch="currentItem.type">
+                        <span ng-switch-when="project">
+                            {{ (ns+'.setting.items.project') | translate }}
+                            <strong class="text-success">{{ currentItem.name }}</strong>
+                        </span>
+                        <span ng-switch-when="document">
+                            {{ (ns+'.setting.items.document') | translate }}
+                            <strong class="text-info">{{ currentItem.name }}</strong>
+                        </span>
+                        <span ng-switch-default>
+                            {{ (ns+'.setting.items.default') | translate }}
+                            <strong class="text-warning">{{ currentItem.name }}</strong>
+                        </span>
+
+                    </span>
+                </h4>
+                <div ng-include="'views/settings/partials/resume.html'" ng-init="setting = currentItem.setting"></div>
             </div>
         </div>
     </div>
