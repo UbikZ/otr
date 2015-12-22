@@ -1,6 +1,7 @@
 'use strict';
 
 var Setting = require('../models/setting');
+var Organization = require('../models/organization');
 var http = require('./helpers/http');
 var jwt = require("jsonwebtoken");
 var merge = require('merge');
@@ -32,7 +33,7 @@ module.exports.controller = function (app, config) {
   });
 
   /*
-   * Update user
+   * Update Setting Collection
    */
   app.post(prefix + '/update', http.ensureAuthorized, function (req, res) {
     var data = req.body;
@@ -70,9 +71,56 @@ module.exports.controller = function (app, config) {
     });
   });
 
+  /*
+   * Edit Setting (as subdocument) from Organization document
+   */
+  app.post(prefix + '/edit', http.ensureAuthorized, function (req, res) {
+    var data = req.body;
+    http.checkAuthorized(req, res, function (user) {
+      if (data.organizationId != undefined) {
+        Organization.findById(data.organizationId, function (err, organization) {
+          if (err) {
+            http.response(res, 500, "An error occurred.", err);
+          } else if (organization) {
+            var modelItem;
+
+            if (data.itemId != undefined) {
+              organization.findDeepAttributeById(data._id, function (element) {
+                if (element != undefined) {
+                  modelItem = parseData(element.setting, data);
+                  modelItem.setting.update = {user: user._id, date: new Date()};
+                  element = modelItem;
+                } else {
+                  http.response(res, 404, {}, "Impossible to retrieve element.", err);
+                }
+              });
+            } else {
+              organization.setting = parseData(organization.setting, data);
+              organization.setting.update = {user: user._id, date: new Date()};
+            }
+
+            organization.save(function (err, newOrganization) {
+              if (err) {
+                http.response(res, 500, {}, "An error occurred.", err);
+              } else {
+                newOrganization.populate('creation.user', function (err, newOrg) {
+                  http.response(res, 200, {organization: newOrg, setting: modelItem});
+                });
+              }
+            });
+          } else {
+            http.response(res, 404, {}, "Organization not found.", err);
+          }
+        });
+      } else {
+        http.response(res, 404, {}, "Wrong parameters.");
+      }
+    });
+  });
+
   function parseData(object, data) {
     var result = object || {};
-    
+
     if (data.contributorPrice != undefined) {
       result.project_dev = result.project_dev || {};
       result.project_dev.contributor_price = data.contributorPrice;

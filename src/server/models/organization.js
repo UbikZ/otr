@@ -29,13 +29,13 @@ var schema = new mongoose.Schema({
     date: {type: Date, default: Date.now},
   },
   projects: [Project],
-  settings: Setting,
+  setting: Setting,
 });
 
-schema.methods.findDeepAttributeById = function (projectId, cb) {
+schema.methods.findDeepAttributeById = function (elementId, cb) {
   var model = this;
 
-  utilsHelper.findSpecificRecursivelyById(model, projectId, function (element) {
+  utilsHelper.findSpecificRecursivelyById(model, elementId, function (element) {
     cb(element);
   });
 

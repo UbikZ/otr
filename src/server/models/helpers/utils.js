@@ -11,7 +11,7 @@ function findRecursivelyById(parentElement, attributeName, elementId, cb) {
       cb(element);
     }
   }
-};
+}
 
 function findSpecificRecursivelyById(parentElement, elementId, cb) {
   if (parentElement.projects != undefined) {
@@ -27,8 +27,7 @@ function findSpecificRecursivelyById(parentElement, elementId, cb) {
       cb(element);
     }
   }
-};
-
+}
 
 module.exports = {
   findRecursivelyById: findRecursivelyById,
