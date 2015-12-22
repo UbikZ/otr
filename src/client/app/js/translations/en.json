@@ -188,7 +188,7 @@
     "setting": {
       "title": "Paramétrage",
       "type": {
-        "own": "Paramètre basique",
+        "own": "Paramètre courant",
         "inherit": "Paramètre hérité"
       },
       "items": {
