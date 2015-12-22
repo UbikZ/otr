@@ -31,6 +31,33 @@ function findRecursivelyById(parentElement, attributeName, elementId, getParent,
   }
 }
 
+function findSpecificRecursivelyById(parentElement, elementId, cb, passFirstElement) {
+  var elements = [];
+  if (passFirstElement === true) {
+    elements = parentElement;
+  } else {
+    elements = parentElement.projects;
+    if (elements == undefined) {
+      if (parentElement._id == elementId) {
+        cb(parentElement);
+      }
+    } else if (parentElement.documents != undefined) {
+      elements = elements.concat(parentElement.documents);
+    }
+  }
+  if (elements != undefined) {
+    elements.forEach(function (subElement) {
+      if (subElement._id != elementId) {
+        findSpecificRecursivelyById(subElement, elementId, cb);
+      } else {
+        cb(subElement);
+      }
+    });
+  }
+}
+
+
+
 function findPathRecursivelyById(elements, elementId, attributeName) {
   var sub, index;
 
@@ -84,6 +111,7 @@ function removeRecursivelyById(parentElement, attributeName, elementId, cb) {
 module.exports = {
   convertTreeView: convertTreeView,
   findRecursivelyById: findRecursivelyById,
+  findSpecificRecursivelyById: findSpecificRecursivelyById,
   removeRecursivelyById: removeRecursivelyById,
   walkTreeRecursively: walkTreeRecursively,
   findPathRecursivelyById: findPathRecursivelyById,

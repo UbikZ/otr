@@ -12,35 +12,33 @@ module.exports = ['$scope', '$rootScope', 'itemService', '$uibModal',
         $scope.items = recursiveTool.convertTreeView($scope.organization);
       }
     };
-    var changeCurrentProjectIdNode = function (id) {
-      $scope.currentProjectIdNode = id;
-      if ($scope.currentProjectIdNode == undefined) {
+    var changeCurrentIdNode = function (id) {
+      $scope.currentIdNode = id;
+      if ($scope.currentIdNode == undefined) {
         $scope.currentItem = $scope.organization;
         $scope.documents = [];
         $scope.projects = $scope.organization.projects;
       } else {
-        recursiveTool.findRecursivelyById($scope.organization, 'projects', $scope.currentProjectIdNode, false,
-          function (item) {
-            $scope.currentItem = item;
-            $scope.projects = item.projects;
-            $scope.documents = item.documents;
-          }
-        );
+        recursiveTool.findSpecificRecursivelyById($scope.organization, $scope.currentIdNode, function (item) {
+          $scope.currentItem = item;
+          $scope.projects = item.projects;
+          $scope.documents = item.documents;
+        });
         recursiveTool.findRecursivelyById($scope.items, 'children', id, false, function (element) {
           if (element._id === id) {
-            $scope.currentItem = Object.assign($scope.currentItem, element);
+            $scope.currentItem.type = element.type;
             $scope.selected = element;
             $scope.expandedNodes.push(element);
           }
         }, true);
         $scope.breadcrumbElements =
-          recursiveTool.findPathRecursivelyById($scope.items, $scope.currentProjectIdNode, 'children');
+          recursiveTool.findPathRecursivelyById($scope.items, $scope.currentIdNode, 'children');
       }
     };
 
     $scope.$on('load-organization', function (event, data) {
       changeCurrentOrganization(data.organization);
-      changeCurrentProjectIdNode();
+      changeCurrentIdNode();
       $scope.expandAll();
     });
 
@@ -63,7 +61,7 @@ module.exports = ['$scope', '$rootScope', 'itemService', '$uibModal',
             return $scope.organization._id;
           },
           identifier: function () {
-            return {id: objectId, projectId: $scope.currentProjectIdNode};
+            return {id: objectId, projectId: $scope.currentIdNode};
           },
         }
       });
@@ -72,7 +70,7 @@ module.exports = ['$scope', '$rootScope', 'itemService', '$uibModal',
         var orga = res.organization;
         var lastItem = res.item;
         changeCurrentOrganization(orga);
-        if ($scope.currentProjectIdNode) {
+        if ($scope.currentIdNode) {
           var currentIds = $scope[res.type].map(function (object) {
             return object._id;
           });
@@ -120,7 +118,7 @@ module.exports = ['$scope', '$rootScope', 'itemService', '$uibModal',
 
     $scope.clearSelected = function () {
       $scope.selected = undefined;
-      changeCurrentProjectIdNode();
+      changeCurrentIdNode();
       $scope.breadcrumbElements = [];
     };
 
@@ -138,7 +136,7 @@ module.exports = ['$scope', '$rootScope', 'itemService', '$uibModal',
     };
 
     $scope.open = function(idNode) {
-      changeCurrentProjectIdNode(idNode);
+      changeCurrentIdNode(idNode);
     };
 
     $scope.onSelect = function (node, selected, $parentNode, $index) {
@@ -148,7 +146,7 @@ module.exports = ['$scope', '$rootScope', 'itemService', '$uibModal',
       } else {
         idNode = undefined;
       }
-      changeCurrentProjectIdNode(idNode);
+      changeCurrentIdNode(idNode);
     };
 
     function addExpandedNode(id) {
