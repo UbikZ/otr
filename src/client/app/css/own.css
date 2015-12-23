@@ -6,7 +6,7 @@
 
 /* Angular Tree Control */
 [treecontrol].tree-light {
-    margin-left: -22px;
+    margin-left: -20px;
 }
 
 [treecontrol].tree-light li.tree-expanded i.tree-branch-head {
@@ -48,4 +48,8 @@
 
 .file a:hover, a:focus {
     color: #777;
+}
+
+.sidebar-panel {
+    position: inherit;
 }
