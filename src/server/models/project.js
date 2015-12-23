@@ -19,7 +19,7 @@ Project.add({
   },
   documents: [Document],
   projects: [Project],
-  settings: Setting,
+  setting: Setting,
 });
 
 module.exports = mongoose.model('Project', Project);

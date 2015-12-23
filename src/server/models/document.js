@@ -16,8 +16,7 @@ Document.add({
     user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
     date: {type: Date, default: Date.now},
   },
-  // todo: add properties
-  settings: Setting,
+  setting: Setting,
 });
 
 module.exports = mongoose.model('Document', Document);
