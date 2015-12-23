@@ -234,6 +234,11 @@
     }
   },
   "setting": {
+    "title": "Edition des paramètres",
+    "legend": {
+      "inherit": "Valeur héritée des parents",
+      "base": "Valeur de l'élément"
+    },
     "info": {
       "description": "Cette configuration est le paramétrage par défaut appliqué à l'ensemble des sociétés et des projets/documents inhérents. ",
       "schema": "Paramètrage par défaut > Société > Projet > ... > Projet > Document"
