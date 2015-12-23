@@ -52,6 +52,10 @@ module.exports.controller = function (app, config) {
               modelItem = organization.setting;
             }
 
+            if (modelItem != undefined && modelItem.label == "") {
+              modelItem.label = null;
+            }
+
             http.response(res, 200, {setting: modelItem});
 
           } else {
@@ -191,7 +195,7 @@ module.exports.controller = function (app, config) {
     }
     if (typeof data.label != 'undefined') {
       result.unit = result.unit || {};
-      result.unit.label = data.label;
+      result.unit.label = data.label == "" ? null : data.label;
     }
     if (typeof data.showDate != 'undefined') {
       result.date = result.date || {};

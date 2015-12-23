@@ -48,7 +48,9 @@ function dalToDTO(item) {
         result.rangeEstimateUnit = range_estimate_unit;
       });
       check(unit.label, function(label) {
-        result.label = label;
+        if (label !== "") {
+          result.label = label
+        }
       });
     });
     check(setting.date, function(date) {
