@@ -10,7 +10,7 @@
     <div class="input-group">
         <span class="input-group-addon"><i class="fa fa-euro"></i></span>
         <input type="number" min="0"
-               placeholder="{{ (ns+'.form.scrummaster_price.placeholder') | translate }}"
+               placeholder="{{ setting.parent.scrummasterPrice }}"
                class="form-control" name="scrummaster_price"
                ng-model="setting.scrummasterPrice" ng-required="!modal">
     </div>
@@ -42,7 +42,7 @@
     <div class="input-group">
         <span class="input-group-addon"><i class="fa fa-percent"></i></span>
         <input type="number" min="0" max="100"
-               placeholder="{{ (ns+'.form.scrummaster_occupation.placeholder') | translate }}"
+               placeholder="{{ setting.parent.scrummasterOccupation }}"
                class="form-control" name="scrummaster_occupation"
                ng-model="setting.scrummasterOccupation" ng-required="!modal">
     </div>

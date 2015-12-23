@@ -4,7 +4,7 @@
 
     <div class="input-group">
         <input type="number" min="0"
-               placeholder="{{ (ns+'.form.contributor_available.placeholder') | translate }}"
+               placeholder="{{ setting.parent.contributorAvailable }}"
                class="form-control" name="contributor_available"
                ng-model="setting.contributorAvailable" ng-required="!modal">
         <span class="input-group-addon">
@@ -38,12 +38,12 @@
 
     <div class="input-group">
         <input type="number" min="0"
-               placeholder="{{ (ns+'.form.hour_per_day.placeholder') | translate }}"
+               placeholder="{{ setting.parent.hourPerDay }}"
                class="form-control" name="hour_per_day"
                ng-model="setting.hourPerDay" ng-required="!modal">
-                                    <span class="input-group-addon">
-                                        {{ (ns+'.form.hour_per_day.suffix') | translate }}
-                                    </span>
+            <span class="input-group-addon">
+                {{ (ns+'.form.hour_per_day.suffix') | translate }}
+            </span>
     </div>
     <div class="m-t-xs"
          ng-show="form.hour_per_day.$invalid && form.hour_per_day.$dirty">
@@ -72,12 +72,12 @@
 
     <div class="input-group">
         <input type="number" min="0"
-               placeholder="{{ (ns+'.form.day_per_week.placeholder') | translate }}"
+               placeholder="{{ setting.parent.dayPerWeek }}"
                class="form-control" name="day_per_week"
                ng-model="setting.dayPerWeek" ng-required="!modal">
-                                    <span class="input-group-addon">
-                                        {{ (ns+'.form.day_per_week.suffix') | translate }}
-                                    </span>
+            <span class="input-group-addon">
+                {{ (ns+'.form.day_per_week.suffix') | translate }}
+            </span>
     </div>
     <div class="m-t-xs"
          ng-show="form.day_per_week.$invalid && form.day_per_week.$dirty">
@@ -101,12 +101,12 @@
 
     <div class="input-group">
         <input type="number" min="0"
-               placeholder="{{ (ns+'.form.week_per_iteration.placeholder') | translate }}"
+               placeholder="{{ setting.parent.weekPerIteration }}"
                class="form-control" name="week_per_iteration"
                ng-model="setting.weekPerIteration" ng-required="!modal">
-                                    <span class="input-group-addon">
-                                        {{ (ns+'.form.week_per_iteration.suffix') | translate }}
-                                    </span>
+            <span class="input-group-addon">
+                {{ (ns+'.form.week_per_iteration.suffix') | translate }}
+            </span>
     </div>
     <div class="m-t-xs"
          ng-show="form.week_per_iteration.$invalid && form.week_per_iteration.$dirty">

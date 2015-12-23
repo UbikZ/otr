@@ -10,7 +10,7 @@
     <div class="input-group">
         <span class="input-group-addon"><i class="fa fa-euro"></i></span>
         <input type="number" min="0"
-               placeholder="{{ (ns+'.form.contributor_price.placeholder') | translate }}"
+               placeholder="{{ setting.parent.contributorPrice }}"
                class="form-control" name="contributor_price"
                ng-model="setting.contributorPrice" ng-required="!modal">
     </div>
@@ -42,7 +42,7 @@
     <div class="input-group">
         <span class="input-group-addon"><i class="fa fa-percent"></i></span>
         <input type="number" min="0" max="100"
-               placeholder="{{ (ns+'.form.contributor_occupation.placeholder') | translate }}"
+               placeholder="{{ setting.parent.contributorOccupation }}"
                class="form-control" name="contributor_occupation"
                ng-model="setting.contributorOccupation" ng-required="!modal">
     </div>

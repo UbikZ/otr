@@ -10,7 +10,7 @@
     <div class="input-group">
         <span class="input-group-addon"><i class="fa fa-percent"></i></span>
         <input type="number" min="0"
-               placeholder="{{ (ns+'.form.rate_multiplier.placeholder') | translate }}"
+               placeholder="{{ setting.parent.rateMultiplier }}"
                class="form-control" name="rate_multiplier"
                ng-model="setting.rateMultiplier" ng-required="!modal">
     </div>

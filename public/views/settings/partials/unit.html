@@ -69,7 +69,7 @@
     <label ng-if="modal">{{ (ns+'.form.label.resume') | translate }}</label>
 
     <input type="text"
-           placeholder="{{ (ns+'.form.label.placeholder') | translate }}"
+           placeholder="{{ setting.parent.label }}"
            class="form-control" name="label"
            ng-model="setting.label" ng-required="!modal">
 
