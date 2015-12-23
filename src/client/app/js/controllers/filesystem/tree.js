@@ -40,6 +40,7 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
       }
       $scope.setting = mergeSettings();
       $scope.$broadcast('load-fs-current-item', {currentItem: $scope.currentItem});
+      mergeFileItems();
     }
 
     function mergeFileItems() {
