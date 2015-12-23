@@ -53,3 +53,8 @@
 .sidebar-panel {
     position: inherit;
 }
+
+#modal-settings .form-control::-webkit-input-placeholder { color: #ed5565; }
+#modal-settings .form-control:-moz-placeholder { color: #ed5565; }
+#modal-settings .form-control::-moz-placeholder { color: #ed5565; }
+#modal-settings .form-control:-ms-input-placeholder { color: #ed5565; }
