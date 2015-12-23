@@ -2,7 +2,6 @@
 
 var toastr = require('toastr');
 var mappingSetting = require('../../../helpers/mapping/setting');
-var recursiveTool = require('../../../helpers/recursive');
 
 module.exports = ['$rootScope', '$scope', 'identifier', 'organizationId', 'settingService', '$uibModalInstance',
   function ($rootScope, $scope, identifier, organizationId, settingService, $uibModalInstance) {
