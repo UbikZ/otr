@@ -70,7 +70,7 @@
                         </div>
                     </div>
                 </div>
-                <div ng-if="currentItem.type == 'project'">
+                <div ng-if="currentItem.type != 'document'">
                     <div class="file-box" ng-repeat="fileItem in fileItems | orderBy:name">
                         <div class="file">
                             <div class="file-box">
