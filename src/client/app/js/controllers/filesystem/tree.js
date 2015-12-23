@@ -18,16 +18,13 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
     function changeCurrentIdNode (id) {
       $scope.currentIdNode = id;
       if ($scope.currentIdNode == undefined) {
+        $scope.breadcrumbElements = undefined;
         $scope.currentItem = $scope.organization;
-        $scope.setting =
-          angular.extend({}, $scope.masterSetting, mappingSetting.dalToDTO($scope.organization.setting));
         $scope.documents = [];
         $scope.projects = $scope.organization.projects;
       } else {
         recursiveTool.findSpecificRecursivelyById($scope.organization, $scope.currentIdNode, function (item) {
           $scope.currentItem = item;
-          $scope.setting =
-            angular.extend({}, $scope.masterSetting, mappingSetting.dalToDTO(item.setting));
           $scope.projects = item.projects;
           $scope.documents = item.documents;
         });
@@ -41,16 +38,32 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
         $scope.breadcrumbElements =
           recursiveTool.findPathRecursivelyById($scope.items, $scope.currentIdNode, 'children');
       }
+      $scope.setting = mergeSettings();
       $scope.$broadcast('load-fs-current-item', {currentItem: $scope.currentItem});
-      mergeFileItems()
     }
 
     function mergeFileItems() {
+      $scope.fileItems = [];
       if ($scope.projects != undefined) {
-        $scope.fileItems = $scope.projects.concat($scope.documents) || [];
-      } else {
-        $scope.fileItems = $scope.documents || [];
+        $scope.fileItems = $scope.fileItems.concat($scope.projects);
       }
+      if ($scope.documents != undefined) {
+        $scope.fileItems = $scope.fileItems.concat($scope.documents);
+      }
+    }
+
+    function mergeSettings() {
+      var finalSetting = $scope.masterSetting;
+      if (finalSetting != undefined) {
+        angular.extend(finalSetting, mappingSetting.dalToDTO($scope.organization.setting));
+        if ($scope.breadcrumbElements != undefined) {
+          $scope.breadcrumbElements.forEach(function(element) {
+            angular.extend(finalSetting, mappingSetting.dalToDTO(element.setting));
+          });
+        }
+      }
+
+      return finalSetting;
     }
 
     function loadCurrentSetting() {
@@ -61,8 +74,7 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
             if ($scope.organization.setting == undefined) {
               $scope.setting = $scope.masterSetting
             } else {
-              $scope.setting =
-                angular.extend({}, $scope.masterSetting, mappingSetting.dalToDTO($scope.organization.setting));
+              $scope.setting = mergeSettings();
             }
           }
         }, function (err) {
