@@ -117,9 +117,8 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
 
       modalInstance.result.then(function (res) {
         var orga = res.organization;
-        console.log(res);
-        $scope.setting = mappingSetting.dalToDTO(res.setting);
         changeCurrentOrganization(orga);
+        changeCurrentIdNode(objectId);
       });
     };
 
@@ -160,6 +159,7 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
         } else {
           $scope.documents = orga.documents;
           $scope.projects = orga.projects;
+          $scope.expandAll();
         }
         mergeFileItems();
       });
@@ -228,9 +228,10 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
     };
 
     function addExpandedNode(id) {
+      $scope.expandedNodes = $scope.expandedNodes || [];
+      var expendedIds = $scope.expandedNodes.map(function(obj) { return obj._id; });
       recursiveTool.findRecursivelyById($scope.items, 'children', id, true, function (element) {
-        $scope.expandedNodes = $scope.expandedNodes || [];
-        if (element !== undefined) {
+        if (element !== undefined && expendedIds.indexOf(element._id) == -1) {
           $scope.expandedNodes.push(element);
         }
       }, true);
