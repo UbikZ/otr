@@ -1,4 +1,4 @@
-<div class="form-group">
+<div class="form-group" ng-if="!modal">
     <small class="text-navy">
         {{ (ns + ".date.descriptions.show") | translate }}
     </small>
@@ -7,8 +7,7 @@
     <div class="checkbox m-r-xs">
         <input type="checkbox" id="date-show"
                ng-model="setting.showDate">
-        <label for="date-show">
-            {{ (ns + ".form.date.label") | translate }}
-        </label>
+        <label for="date-show" ng-if="!modal">{{ (ns + ".form.date.label") | translate }}</label>
+        <label for="date-show" ng-if="modal">{{ (ns + ".form.date.resume") | translate }}</label>
     </div>
 </div>

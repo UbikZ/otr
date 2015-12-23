@@ -1,10 +1,11 @@
-<div class="form-group">
+<div class="form-group" ng-if="!modal">
     <small class="text-navy">
         {{ (ns + ".billing.descriptions.rate_multiplier") | translate }}
     </small>
 </div>
 <div class="form-group">
-    <label>{{ (ns+'.form.rate_multiplier.label') | translate }} *</label>
+    <label ng-if="!modal">{{ (ns+'.form.rate_multiplier.label') | translate }} *</label>
+    <label ng-if="modal">{{ (ns+'.form.rate_multiplier.resume') | translate }}</label>
 
     <div class="input-group">
         <span class="input-group-addon"><i class="fa fa-percent"></i></span>
@@ -29,7 +30,7 @@
         </small>
     </div>
 </div>
-<div class="form-group">
+<div class="form-group" ng-if="!modal">
     <small class="text-navy">
         {{ (ns + ".billing.descriptions.show_dev_price") | translate }}
     </small>
@@ -37,12 +38,11 @@
 <div class="form-group">
     <div class="checkbox m-r-xs">
         <input type="checkbox" id="billing-show-dev" ng-model="setting.showDev">
-        <label for="billing-show-dev">
-            {{ (ns + ".form.show_dev_price.label") | translate }}
-        </label>
+        <label for="billing-show-dev" ng-if="!modal">{{ (ns + ".form.show_dev_price.label") | translate }}</label>
+        <label for="billing-show-dev" ng-if="modal">{{ (ns + ".form.show_dev_price.resume") | translate }}</label>
     </div>
 </div>
-<div class="form-group">
+<div class="form-group" ng-if="!modal">
     <small class="text-navy">
         {{ (ns + ".billing.descriptions.show_management_price") | translate }}
     </small>
@@ -51,8 +51,7 @@
     <div class="checkbox m-r-xs">
         <input type="checkbox" id="billing-show-management"
                ng-model="setting.showManagement">
-        <label for="billing-show-management">
-            {{ (ns + ".form.show_management_price.label") | translate }}
-        </label>
+        <label for="billing-show-management" ng-if="!modal">{{ (ns + ".form.show_management_price.label") | translate }}</label>
+        <label for="billing-show-management" ng-if="modal">{{ (ns + ".form.show_management_price.label") | translate }}</label>
     </div>
 </div>

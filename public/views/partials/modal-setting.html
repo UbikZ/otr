@@ -1,1 +1,41 @@
-pouet
+<form class="form-horizontal" role="form" name="form" novalidate ng-submit="update(setting)" ng-init="ns='setting'">
+    <div class="modal-header">
+        <h3 ng-if="!identifier" class="modal-title">{{ (ns+'.title.create') | translate }}</h3>
+
+        <h3 ng-if="identifier" class="modal-title">{{ (ns+'.title.edit') | translate }}</h3>
+    </div>
+    <div class="modal-body" ng-init="modal=true">
+        <div class="row">
+            <div class="col-lg-5 m-l-md">
+                <div ng-include="'views/settings/partials/project-dev.html'"></div>
+            </div>
+            <div class="col-lg-5 m-l-lg">
+                <div ng-include="'views/settings/partials/project-management.html'"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-5 m-l-md">
+                <div ng-include="'views/settings/partials/iteration.html'"></div>
+                <div ng-include="'views/settings/partials/date.html'"></div>
+            </div>
+            <div class="col-lg-5 m-l-lg">
+                <div ng-include="'views/settings/partials/unit.html'"></div>
+                <div ng-include="'views/settings/partials/billing.html'"></div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="row">
+            <div class="col-lg-12">
+                <a ui-sref="{{ $root.routes.APP_HOME }}"
+                   class="btn btn-sm btn-success pull-right m-l-lg" ng-disabled="loading">
+                    <i class="fa fa-reply"></i> <strong>{{ (ns+'.form.quit') | translate }}</strong>
+                </a>
+                <button class="btn btn-sm btn-primary pull-right" type="submit"
+                        ng-disabled="loading">
+                    <i class="fa fa-save"></i> <strong>{{ (ns+'.form.submit') | translate }}</strong>
+                </button>
+            </div>
+        </div>
+    </div>
+</form>

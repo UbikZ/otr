@@ -1,9 +1,10 @@
-<div class="form-group">
+<div class="form-group" ng-if="!modal">
     <small class="text-navy">{{ (ns + ".unit.descriptions.estimate_type") | translate }}
     </small>
 </div>
 <div class="form-group">
-    <label>{{ (ns+'.form.estimate_type.label') | translate }} *</label>
+    <label ng-if="!modal">{{ (ns+'.form.estimate_type.label') | translate }} *</label>
+    <label ng-if="modal">{{ (ns+'.form.estimate_type.resume') | translate }}</label>
 
     <div class="m-t-xs">
         <select class="form-control" name="estimate_type" ng-model="setting.estimateType"
@@ -23,13 +24,14 @@
     </div>
 </div>
 <div ng-if="setting.estimateType == 'range'">
-    <div class="form-group">
+    <div class="form-group" ng-if="!modal">
         <small class="text-navy">
             {{ (ns + ".unit.descriptions.range_estimate_unit") | translate }}
         </small>
     </div>
     <div class="form-group">
-        <label>{{ (ns+'.form.range_estimate_unit.label') | translate }} *</label>
+        <label ng-if="!modal">{{ (ns+'.form.range_estimate_unit.label') | translate }} *</label>
+        <label ng-if="modal">{{ (ns+'.form.range_estimate_unit.resume') | translate }}</label>
 
         <div class="m-t-xs">
             <select class="form-control" name="range_estimate_unit"
@@ -57,13 +59,15 @@
         </div>
     </div>
 </div>
-<div class="form-group">
+<div class="form-group" ng-if="!modal">
     <small class="text-navy">
         {{ (ns + ".unit.descriptions.label") | translate }}
     </small>
 </div>
 <div class="form-group">
-    <label>{{ (ns+'.form.label.label') | translate }} *</label>
+    <label ng-if="!modal">{{ (ns+'.form.label.label') | translate }} *</label>
+    <label ng-if="modal">{{ (ns+'.form.label.resume') | translate }}</label>
+
     <input type="text"
            placeholder="{{ (ns+'.form.label.placeholder') | translate }}"
            class="form-control" name="label"
