@@ -10,7 +10,7 @@ module.exports = ['$rootScope', '$scope', 'identifier', 'organizationId', 'setti
     $scope.organizationId = organizationId;
 
     if ($scope.identifier) {
-      settingService.get({organizationId: organizationId, itemId: $scope.identifier}, function (res) {
+      settingService.getSub({organizationId: organizationId, itemId: $scope.identifier}, function (res) {
         if (res.setting != undefined) {
           $scope.setting = mappingSetting.dalToDTO(res.setting);
         } else {

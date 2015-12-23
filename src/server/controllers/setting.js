@@ -14,7 +14,7 @@ module.exports.controller = function (app, config) {
    * Get setting (by filtering)
    */
   app.get(prefix, http.ensureAuthorized, function (req, res) {
-    var data = req.body;
+    var data = req.query;
     http.checkAuthorized(req, res, function() {
       var criteria = {};
       if (data.id) {
@@ -29,6 +29,42 @@ module.exports.controller = function (app, config) {
           http.response(res, 404, {}, "User not found.", err);
         }
       });
+    });
+  });
+
+  /*
+   * Get sub setting from organization, project or document
+   */
+  app.get(prefix + '/sub', http.ensureAuthorized, function (req, res) {
+    var data = req.query;
+    http.checkAuthorized(req, res, function () {
+      if (data.organizationId != undefined) {
+        Organization.findById(data.organizationId, function (err, organization) {
+          if (err) {
+            http.response(res, 500, "An error occurred.", err);
+          } else if (organization) {
+            var modelItem;
+            if (data.itemId != undefined && data.itemId != data.organizationId) {
+              organization.findDeepAttributeById(data.itemId, function (element) {
+                if (element != undefined) {
+                  modelItem = element.setting;
+                } else {
+                  http.response(res, 404, {}, "Impossible to retrieve element.", err);
+                }
+              });
+            } else {
+              modelItem = organization.setting;
+            }
+
+            http.response(res, 200, {setting: modelItem});
+
+          } else {
+            http.response(res, 404, {}, "Organization not found.", err);
+          }
+        });
+      } else {
+        http.response(res, 404, {}, "Wrong parameters.");
+      }
     });
   });
 

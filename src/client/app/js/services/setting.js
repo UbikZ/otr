@@ -18,6 +18,10 @@ module.exports = ['$http',
       get: function(data, success, error) {
         var url = baseUrl + '/setting?' + jquery.param(data);
         $http.get(url).success(success).error(error)
+      },
+      getSub: function(data, success, error) {
+        var url = baseUrl + '/setting/sub?' + jquery.param(data);
+        $http.get(url).success(success).error(error)
       }
     };
   }
