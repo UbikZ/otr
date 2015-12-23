@@ -3,6 +3,7 @@
 var toastr = require('toastr');
 var recursiveTool = require('../../helpers/recursive');
 var mappingSetting = require('../../helpers/mapping/setting');
+var angular = require('angular');
 
 module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uibModal', '_CONST',
   function ($scope, $rootScope, itemService, settingService, $uibModal, _CONST) {
@@ -18,13 +19,15 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
       $scope.currentIdNode = id;
       if ($scope.currentIdNode == undefined) {
         $scope.currentItem = $scope.organization;
-        $scope.setting = $scope.organization.setting || $scope.masterSetting;
+        $scope.setting =
+          angular.extend({}, $scope.masterSetting, mappingSetting.dalToDTO($scope.organization.setting));
         $scope.documents = [];
         $scope.projects = $scope.organization.projects;
       } else {
         recursiveTool.findSpecificRecursivelyById($scope.organization, $scope.currentIdNode, function (item) {
           $scope.currentItem = item;
-          $scope.setting = item.setting || $scope.masterSetting;
+          $scope.setting =
+            angular.extend({}, $scope.masterSetting, mappingSetting.dalToDTO(item.setting));
           $scope.projects = item.projects;
           $scope.documents = item.documents;
         });
@@ -56,9 +59,10 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
           if (res.setting != undefined) {
             $scope.masterSetting = mappingSetting.dalToDTO(res.setting);
             if ($scope.organization.setting == undefined) {
-              $scope.setting = $scope.organization.setting = $scope.masterSetting
+              $scope.setting = $scope.masterSetting
             } else {
-              $scope.setting = $scope.organization.setting = Object.assign($scope.organization.setting, $scope.masterSetting);
+              $scope.setting =
+                angular.extend({}, $scope.masterSetting, mappingSetting.dalToDTO($scope.organization.setting));
             }
           }
         }, function (err) {
@@ -100,7 +104,8 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
 
       modalInstance.result.then(function (res) {
         var orga = res.organization;
-        $scope.setting = res.setting;
+        console.log(res);
+        $scope.setting = mappingSetting.dalToDTO(res.setting);
         changeCurrentOrganization(orga);
       });
     };

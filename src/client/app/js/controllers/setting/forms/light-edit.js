@@ -27,6 +27,9 @@ module.exports = ['$rootScope', '$scope', 'identifier', 'organizationId', 'setti
       if ($scope.organizationId) {
         setting = Object.assign(setting, {organizationId: $scope.organizationId});
       }
+      if ($scope.identifier) {
+        setting = Object.assign(setting, {itemId: $scope.identifier});
+      }
 
       settingService.edit(setting, function (res) {
         $scope.loading = false;
