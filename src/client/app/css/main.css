@@ -3629,7 +3629,7 @@ img.circle-border {
     margin-bottom: 0;
 }
 .breadcrumb > li a {
-    color: inherit;
+    /* color: inherit; */
 }
 .breadcrumb > .active {
     color: inherit;

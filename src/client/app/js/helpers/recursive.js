@@ -65,6 +65,7 @@ function findPathRecursivelyById(elements, elementId, attributeName) {
     props.forEach(function(property) {
       result[property] = object[property];
     });
+    result.hasChildren = object.children != undefined;
 
     return result;
   }
@@ -72,9 +73,9 @@ function findPathRecursivelyById(elements, elementId, attributeName) {
   if (elements != undefined) {
     for (index = 0; index < elements.length ; index++) {
       if (elements[index]._id === elementId) {
-        return [slice(elements[index], ['_id', 'name', 'setting'])];
+        return [slice(elements[index], ['_id', 'name'])];
       } else if (sub = findPathRecursivelyById(elements[index][attributeName], elementId, attributeName)) {
-        return [slice(elements[index], ['_id', 'name', 'setting'])].concat(sub);
+        return [slice(elements[index], ['_id', 'name'])].concat(sub);
       }
     }
   }

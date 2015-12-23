@@ -56,12 +56,15 @@
                             <h5>{{ (ns+'.breadcrumb') | translate }}</h5>
                             <ol class="breadcrumb">
                                 <li>
-                                    <a ng-click="clearSelected()"><i class="fa fa-home"></i>
-                                        <strong>{{ organization.name }}</strong>
+                                    <a ng-click="clearSelected()"><i class="fa fa-home text-muted"></i>
+                                        <strong class="text-warning">{{ organization.name }}</strong>
                                     </a>
                                 </li>
                                 <li ng-repeat="element in breadcrumbElements">
-                                    <a ng-click="open(element._id)">{{ element.name }}</a>
+                                    <a ng-click="open(element._id)"
+                                       ng-class="element.hasChildren ? 'text-success' : 'text-navy';">
+                                        <strong>{{ element.name }}</strong>
+                                    </a>
                                 </li>
                             </ol>
                         </div>
