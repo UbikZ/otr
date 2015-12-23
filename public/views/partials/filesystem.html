@@ -27,6 +27,10 @@
                     <div class="hr-line-dashed"></div>
                     <h5>{{ (ns+'.control.tree') | translate }}</h5>
 
+                    <a ng-click="clearSelected()">
+                        <i class="fa fa-diamond text-muted"></i>
+                        <strong class="text-warning">{{ organization.name }}</strong>
+                    </a>
                     <div treecontrol class="tree-light"
                          tree-model="items"
                          options="treeOptions"
