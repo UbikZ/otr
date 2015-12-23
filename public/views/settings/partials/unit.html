@@ -8,7 +8,7 @@
 
     <div class="m-t-xs">
         <select class="form-control" name="estimate_type" ng-model="setting.estimateType"
-                required>
+                ng-required="!modal">
             <option value="">{{ (ns+'.form.estimate_type.select') | translate }}</option>
             <option value="final">{{ (ns+'.form.estimate_type.items.final') | translate }}
             </option>
@@ -35,7 +35,7 @@
 
         <div class="m-t-xs">
             <select class="form-control" name="range_estimate_unit"
-                    ng-model="setting.rangeEstimateUnit" required>
+                    ng-model="setting.rangeEstimateUnit" ng-required="!modal">
                 <option value="">
                     {{ (ns+'.form.range_estimate_unit.select') | translate }}
                 </option>
@@ -71,7 +71,7 @@
     <input type="text"
            placeholder="{{ (ns+'.form.label.placeholder') | translate }}"
            class="form-control" name="label"
-           ng-model="setting.label" required>
+           ng-model="setting.label" ng-required="!modal">
 
     <div class="m-t-xs"
          ng-show="form.label.$invalid && form.label.$dirty">

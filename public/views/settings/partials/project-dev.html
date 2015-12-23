@@ -12,7 +12,7 @@
         <input type="number" min="0"
                placeholder="{{ (ns+'.form.contributor_price.placeholder') | translate }}"
                class="form-control" name="contributor_price"
-               ng-model="setting.contributorPrice" required>
+               ng-model="setting.contributorPrice" ng-required="!modal">
     </div>
     <div class="m-t-xs"
          ng-show="form.contributor_price.$invalid && form.contributor_price.$dirty">
@@ -44,7 +44,7 @@
         <input type="number" min="0" max="100"
                placeholder="{{ (ns+'.form.contributor_occupation.placeholder') | translate }}"
                class="form-control" name="contributor_occupation"
-               ng-model="setting.contributorOccupation" required>
+               ng-model="setting.contributorOccupation" ng-required="!modal">
     </div>
     <div class="m-t-xs"
          ng-show="form.contributor_occupation.$invalid && form.contributor_occupation.$dirty">

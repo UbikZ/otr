@@ -12,7 +12,7 @@
         <input type="number" min="0"
                placeholder="{{ (ns+'.form.rate_multiplier.placeholder') | translate }}"
                class="form-control" name="rate_multiplier"
-               ng-model="setting.rateMultiplier" required>
+               ng-model="setting.rateMultiplier" ng-required="!modal">
     </div>
     <div class="m-t-xs"
          ng-show="form.rate_multiplier.$invalid && form.rate_multiplier.$dirty">
