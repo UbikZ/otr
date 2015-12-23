@@ -1,0 +1,122 @@
+<div class="form-group">
+    <label>{{ (ns+'.form.contributor_available.label') | translate }} *</label>
+
+    <div class="input-group">
+        <input type="number" min="0"
+               placeholder="{{ (ns+'.form.contributor_available.placeholder') | translate }}"
+               class="form-control" name="contributor_available"
+               ng-model="setting.contributorAvailable" required>
+                                    <span class="input-group-addon">
+                                        {{ (ns+'.form.contributor_available.suffix') | translate }}
+                                    </span>
+    </div>
+    <div class="m-t-xs"
+         ng-show="form.contributor_available.$invalid && form.contributor_available.$dirty">
+        <small class="text-danger help-block"
+               ng-show="form.contributor_available.$error.required">
+            {{ (ns+'.form.contributor_available.errors.required') | translate }}
+        </small>
+        <small class="text-danger help-block"
+               ng-show="form.contributor_available.$error.number">
+            {{ (ns+'.form.contributor_available.errors.number') | translate }}
+        </small>
+        <small class="text-danger help-block"
+               ng-show="form.contributor_available.$error.min">
+            {{ (ns+'.form.contributor_available.errors.min') | translate }}
+        </small>
+    </div>
+</div>
+<div class="form-group">
+    <small class="text-navy">
+        {{ (ns + ".iteration.descriptions.hour_per_day") | translate }}
+    </small>
+</div>
+<div class="form-group">
+    <label>{{ (ns+'.form.hour_per_day.label') | translate }} *</label>
+
+    <div class="input-group">
+        <input type="number" min="0"
+               placeholder="{{ (ns+'.form.hour_per_day.placeholder') | translate }}"
+               class="form-control" name="hour_per_day"
+               ng-model="setting.hourPerDay" required>
+                                    <span class="input-group-addon">
+                                        {{ (ns+'.form.hour_per_day.suffix') | translate }}
+                                    </span>
+    </div>
+    <div class="m-t-xs"
+         ng-show="form.hour_per_day.$invalid && form.hour_per_day.$dirty">
+        <small class="text-danger help-block"
+               ng-show="form.hour_per_day.$error.required">
+            {{ (ns+'.form.hour_per_day.errors.required') | translate }}
+        </small>
+        <small class="text-danger help-block"
+               ng-show="form.hour_per_day.$error.number">
+            {{ (ns+'.form.hour_per_day.errors.number') | translate }}
+        </small>
+        <small class="text-danger help-block"
+               ng-show="form.hour_per_day.$error.min">
+            {{ (ns+'.form.hour_per_day.errors.min') | translate }}
+        </small>
+    </div>
+</div>
+<div class="form-group">
+    <small class="text-navy">
+        {{ (ns + ".iteration.descriptions.day_per_week") | translate }}
+    </small>
+</div>
+<div class="form-group">
+    <label>{{ (ns+'.form.day_per_week.label') | translate }} *</label>
+
+    <div class="input-group">
+        <input type="number" min="0"
+               placeholder="{{ (ns+'.form.day_per_week.placeholder') | translate }}"
+               class="form-control" name="day_per_week"
+               ng-model="setting.dayPerWeek" required>
+                                    <span class="input-group-addon">
+                                        {{ (ns+'.form.day_per_week.suffix') | translate }}
+                                    </span>
+    </div>
+    <div class="m-t-xs"
+         ng-show="form.day_per_week.$invalid && form.day_per_week.$dirty">
+        <small class="text-danger help-block"
+               ng-show="form.day_per_week.$error.required">
+            {{ (ns+'.form.day_per_week.errors.required') | translate }}
+        </small>
+        <small class="text-danger help-block"
+               ng-show="form.day_per_week.$error.number">
+            {{ (ns+'.form.day_per_week.errors.number') | translate }}
+        </small>
+        <small class="text-danger help-block"
+               ng-show="form.day_per_week.$error.min">
+            {{ (ns+'.form.day_per_week.errors.min') | translate }}
+        </small>
+    </div>
+</div>
+<div class="form-group">
+    <label>{{ (ns+'.form.week_per_iteration.label') | translate }} *</label>
+
+    <div class="input-group">
+        <input type="number" min="0"
+               placeholder="{{ (ns+'.form.week_per_iteration.placeholder') | translate }}"
+               class="form-control" name="week_per_iteration"
+               ng-model="setting.weekPerIteration" required>
+                                    <span class="input-group-addon">
+                                        {{ (ns+'.form.week_per_iteration.suffix') | translate }}
+                                    </span>
+    </div>
+    <div class="m-t-xs"
+         ng-show="form.week_per_iteration.$invalid && form.week_per_iteration.$dirty">
+        <small class="text-danger help-block"
+               ng-show="form.week_per_iteration.$error.required">
+            {{ (ns+'.form.week_per_iteration.errors.required') | translate }}
+        </small>
+        <small class="text-danger help-block"
+               ng-show="form.week_per_iteration.$error.number">
+            {{ (ns+'.form.week_per_iteration.errors.number') | translate }}
+        </small>
+        <small class="text-danger help-block"
+               ng-show="form.week_per_iteration.$error.min">
+            {{ (ns+'.form.week_per_iteration.errors.min') | translate }}
+        </small>
+    </div>
+</div>

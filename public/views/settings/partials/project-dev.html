@@ -1,0 +1,66 @@
+<div class="form-group">
+    <small class="text-navy">
+        {{ (ns + ".project_dev.descriptions.contributor_price") | translate }}
+    </small>
+</div>
+<div class="form-group">
+    <label>{{ (ns+'.form.contributor_price.label') | translate }} *</label>
+
+    <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-euro"></i></span>
+        <input type="number" min="0"
+               placeholder="{{ (ns+'.form.contributor_price.placeholder') | translate }}"
+               class="form-control" name="contributor_price"
+               ng-model="setting.contributorPrice" required>
+    </div>
+    <div class="m-t-xs"
+         ng-show="form.contributor_price.$invalid && form.contributor_price.$dirty">
+        <small class="text-danger help-block"
+               ng-show="form.contributor_price.$error.required">
+            {{ (ns+'.form.contributor_price.errors.required') | translate }}
+        </small>
+        <small class="text-danger help-block"
+               ng-show="form.contributor_price.$error.number">
+            {{ (ns+'.form.contributor_price.errors.number') | translate }}
+        </small>
+        <small class="text-danger help-block"
+               ng-show="form.contributor_price.$error.min">
+            {{ (ns+'.form.contributor_price.errors.min') | translate }}
+        </small>
+    </div>
+</div>
+<div class="form-group">
+    <small class="text-navy">
+        {{ (ns + ".project_dev.descriptions.contributor_occupation") | translate }}
+    </small>
+</div>
+<div class="form-group">
+    <label>{{ (ns+'.form.contributor_occupation.label') | translate }} *</label>
+
+    <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-percent"></i></span>
+        <input type="number" min="0" max="100"
+               placeholder="{{ (ns+'.form.contributor_occupation.placeholder') | translate }}"
+               class="form-control" name="contributor_occupation"
+               ng-model="setting.contributorOccupation" required>
+    </div>
+    <div class="m-t-xs"
+         ng-show="form.contributor_occupation.$invalid && form.contributor_occupation.$dirty">
+        <small class="text-danger help-block"
+               ng-show="form.contributor_occupation.$error.required">
+            {{ (ns+'.form.contributor_occupation.errors.required') | translate }}
+        </small>
+        <small class="text-danger help-block"
+               ng-show="form.contributor_occupation.$error.number">
+            {{ (ns+'.form.contributor_occupation.errors.number') | translate }}
+        </small>
+        <small class="text-danger help-block"
+               ng-show="form.contributor_occupation.$error.min">
+            {{ (ns+'.form.contributor_occupation.errors.min') | translate }}
+        </small>
+        <small class="text-danger help-block"
+               ng-show="form.contributor_occupation.$error.max">
+            {{ (ns+'.form.contributor_occupation.errors.max') | translate }}
+        </small>
+    </div>
+</div>

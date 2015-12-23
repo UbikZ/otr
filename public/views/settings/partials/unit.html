@@ -1,0 +1,79 @@
+<div class="form-group">
+    <small class="text-navy">{{ (ns + ".unit.descriptions.estimate_type") | translate }}
+    </small>
+</div>
+<div class="form-group">
+    <label>{{ (ns+'.form.estimate_type.label') | translate }} *</label>
+
+    <div class="m-t-xs">
+        <select class="form-control" name="estimate_type" ng-model="setting.estimateType"
+                required>
+            <option value="">{{ (ns+'.form.estimate_type.select') | translate }}</option>
+            <option value="final">{{ (ns+'.form.estimate_type.items.final') | translate }}
+            </option>
+            <option value="range">{{ (ns+'.form.estimate_type.items.range') | translate }}
+            </option>
+        </select>
+    </div>
+    <div class="m-t-xs"
+         ng-show="form.estimate_type.$invalid && form.estimate_type.$dirty">
+        <small class="text-danger help-block" ng-show="form.estimate_type.$error.required">
+            {{ (ns+'.form.estimate_type.errors.required') | translate }}
+        </small>
+    </div>
+</div>
+<div ng-if="setting.estimateType == 'range'">
+    <div class="form-group">
+        <small class="text-navy">
+            {{ (ns + ".unit.descriptions.range_estimate_unit") | translate }}
+        </small>
+    </div>
+    <div class="form-group">
+        <label>{{ (ns+'.form.range_estimate_unit.label') | translate }} *</label>
+
+        <div class="m-t-xs">
+            <select class="form-control" name="range_estimate_unit"
+                    ng-model="setting.rangeEstimateUnit" required>
+                <option value="">
+                    {{ (ns+'.form.range_estimate_unit.select') | translate }}
+                </option>
+                <option value="minute">
+                    {{ (ns+'.form.range_estimate_unit.items.minute') | translate }}
+                </option>
+                <option value="hour">
+                    {{ (ns+'.form.range_estimate_unit.items.hour') | translate }}
+                </option>
+                <option value="day">
+                    {{ (ns+'.form.range_estimate_unit.items.day') | translate }}
+                </option>
+            </select>
+        </div>
+        <div class="m-t-xs"
+             ng-show="form.range_estimate_unit.$invalid && form.range_estimate_unit.$dirty">
+            <small class="text-danger help-block"
+                   ng-show="form.range_estimate_unit.$error.required">
+                {{ (ns+'.form.range_estimate_unit.errors.required') | translate }}
+            </small>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <small class="text-navy">
+        {{ (ns + ".unit.descriptions.label") | translate }}
+    </small>
+</div>
+<div class="form-group">
+    <label>{{ (ns+'.form.label.label') | translate }} *</label>
+    <input type="text"
+           placeholder="{{ (ns+'.form.label.placeholder') | translate }}"
+           class="form-control" name="label"
+           ng-model="setting.label" required>
+
+    <div class="m-t-xs"
+         ng-show="form.label.$invalid && form.label.$dirty">
+        <small class="text-danger help-block"
+               ng-show="form.label.$error.required">
+            {{ (ns+'.form.label.errors.required') | translate }}
+        </small>
+    </div>
+</div>

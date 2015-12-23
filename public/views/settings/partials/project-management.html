@@ -1,0 +1,66 @@
+<div class="form-group">
+    <small class="text-navy">
+        {{ (ns + ".project_management.descriptions.scrummaster_price") | translate }}
+    </small>
+</div>
+<div class="form-group">
+    <label>{{ (ns+'.form.scrummaster_price.label') | translate }} *</label>
+
+    <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-euro"></i></span>
+        <input type="number" min="0"
+               placeholder="{{ (ns+'.form.scrummaster_price.placeholder') | translate }}"
+               class="form-control" name="scrummaster_price"
+               ng-model="setting.scrummasterPrice" required>
+    </div>
+    <div class="m-t-xs"
+         ng-show="form.scrummaster_price.$invalid && form.scrummaster_price.$dirty">
+        <small class="text-danger help-block"
+               ng-show="form.scrummaster_price.$error.required">
+            {{ (ns+'.form.scrummaster_price.errors.required') | translate }}
+        </small>
+        <small class="text-danger help-block"
+               ng-show="form.scrummaster_price.$error.number">
+            {{ (ns+'.form.scrummaster_price.errors.number') | translate }}
+        </small>
+        <small class="text-danger help-block"
+               ng-show="form.scrummaster_price.$error.min">
+            {{ (ns+'.form.scrummaster_price.errors.min') | translate }}
+        </small>
+    </div>
+</div>
+<div class="form-group">
+    <small class="text-navy">
+        {{ (ns + ".project_management.descriptions.scrummaster_occupation") | translate }}
+    </small>
+</div>
+<div class="form-group">
+    <label>{{ (ns+'.form.scrummaster_occupation.label') | translate }} *</label>
+
+    <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-percent"></i></span>
+        <input type="number" min="0" max="100"
+               placeholder="{{ (ns+'.form.scrummaster_occupation.placeholder') | translate }}"
+               class="form-control" name="scrummaster_occupation"
+               ng-model="setting.scrummasterOccupation" required>
+    </div>
+    <div class="m-t-xs"
+         ng-show="form.scrummaster_occupation.$invalid && form.scrummaster_occupation.$dirty">
+        <small class="text-danger help-block"
+               ng-show="form.scrummaster_occupation.$error.required">
+            {{ (ns+'.form.scrummaster_occupation.errors.required') | translate }}
+        </small>
+        <small class="text-danger help-block"
+               ng-show="form.scrummaster_occupation.$error.number">
+            {{ (ns+'.form.scrummaster_occupation.errors.number') | translate }}
+        </small>
+        <small class="text-danger help-block"
+               ng-show="form.scrummaster_occupation.$error.min">
+            {{ (ns+'.form.scrummaster_occupation.errors.min') | translate }}
+        </small>
+        <small class="text-danger help-block"
+               ng-show="form.scrummaster_occupation.$error.max">
+            {{ (ns+'.form.scrummaster_occupation.errors.max') | translate }}
+        </small>
+    </div>
+</div>
