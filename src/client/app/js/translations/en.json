@@ -116,7 +116,10 @@
       "form": {
         "name": {
           "label": "Nom",
-          "placeholder": "Raison sociale de la société"
+          "placeholder": "Raison sociale de la société",
+          "errors": {
+            "required": "Veuillez renseigner le nom de la société."
+          }
         },
         "logo": {
           "label": "Enseigne",
