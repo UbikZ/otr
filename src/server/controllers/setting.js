@@ -153,63 +153,63 @@ module.exports.controller = function (app, config) {
   function parseData(object, data) {
     var result = object || {};
 
-    if (data.contributorPrice != undefined) {
+    if (typeof data.contributorPrice != 'undefined') {
       result.project_dev = result.project_dev || {};
       result.project_dev.contributor_price = data.contributorPrice;
     }
-    if (data.contributorOccupation != undefined) {
+    if (typeof data.contributorOccupation != 'undefined') {
       result.project_dev = result.project_dev || {};
       result.project_dev.contributor_occupation = data.contributorOccupation;
     }
-    if (data.scrummasterPrice != undefined) {
+    if (typeof data.scrummasterPrice != 'undefined') {
       result.project_management = result.project_management || {};
       result.project_management.scrummaster_price = data.scrummasterPrice;
     }
-    if (data.scrummasterOccupation != undefined) {
+    if (typeof data.scrummasterOccupation != 'undefined') {
       result.project_management = result.project_management || {};
       result.project_management.scrummaster_occupation = data.scrummasterOccupation;
     }
-    if (data.showDev != undefined) {
+    if (typeof data.showDev != 'undefined') {
       result.billing = result.billing || {};
       result.billing.show_dev_price = data.showDev;
     }
-    if (data.rateMultiplier != undefined) {
+    if (typeof data.rateMultiplier != 'undefined') {
       result.billing = result.billing || {};
       result.billing.rate_multiplier = data.rateMultiplier;
     }
-    if (data.showManagement != undefined) {
+    if (typeof data.showManagement != 'undefined') {
       result.billing = result.billing || {};
       result.billing.show_management_price = data.showManagement;
     }
-    if (data.estimateType != undefined) {
+    if (typeof data.estimateType != 'undefined') {
       result.unit = result.unit || {};
       result.unit.estimate_type = data.estimateType;
     }
-    if (data.rangeEstimateUnit != undefined) {
+    if (typeof data.rangeEstimateUnit != 'undefined') {
       result.unit = result.unit || {};
       result.unit.range_estimate_unit = data.rangeEstimateUnit;
     }
-    if (data.label != undefined) {
+    if (typeof data.label != 'undefined') {
       result.unit = result.unit || {};
       result.unit.label = data.label;
     }
-    if (data.showDate != undefined) {
+    if (typeof data.showDate != 'undefined') {
       result.date = result.date || {};
       result.date.show = data.showDate;
     }
-    if (data.contributorAvailable != undefined) {
+    if (typeof data.contributorAvailable != 'undefined') {
       result.iteration = result.iteration || {};
       result.iteration.contributor_available = data.contributorAvailable;
     }
-    if (data.hourPerDay != undefined) {
+    if (typeof data.hourPerDay != 'undefined') {
       result.iteration = result.iteration || {};
       result.iteration.hour_per_day = data.hourPerDay;
     }
-    if (data.dayPerWeek != undefined) {
+    if (typeof data.dayPerWeek != 'undefined') {
       result.iteration = result.iteration || {};
       result.iteration.day_per_week = data.dayPerWeek;
     }
-    if (data.weekPerIteration != undefined) {
+    if (typeof data.weekPerIteration != 'undefined') {
       result.iteration = result.iteration || {};
       result.iteration.week_per_iteration = data.weekPerIteration;
     }
