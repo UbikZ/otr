@@ -18,8 +18,8 @@ Project.add({
     date: {type: Date, default: Date.now},
   },
   documents: [Document],
-  projects: [Project],
   setting: Setting,
+  projects: [Project],
 });
 
 module.exports = mongoose.model('Project', Project);
