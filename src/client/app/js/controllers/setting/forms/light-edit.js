@@ -11,11 +11,7 @@ module.exports = ['$rootScope', '$scope', 'identifier', 'organizationId', 'setti
 
     if ($scope.identifier) {
       settingService.getSub({organizationId: organizationId, itemId: $scope.identifier}, function (res) {
-        if (res.setting != undefined) {
-          $scope.setting = mappingSetting.dalToDTO(res.setting);
-        } else {
-          toastr.error('Error loading current item.');
-        }
+        $scope.setting = mappingSetting.dalToDTO(res.setting);
       }, function (err) {
         toastr.error(err.message);
       });

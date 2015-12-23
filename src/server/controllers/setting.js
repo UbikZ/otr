@@ -46,11 +46,7 @@ module.exports.controller = function (app, config) {
             var modelItem;
             if (data.itemId != undefined && data.itemId != data.organizationId) {
               organization.findDeepAttributeById(data.itemId, function (element) {
-                if (element != undefined) {
-                  modelItem = element.setting;
-                } else {
-                  http.response(res, 404, {}, "Impossible to retrieve element.", err);
-                }
+                modelItem = element.setting;
               });
             } else {
               modelItem = organization.setting;
