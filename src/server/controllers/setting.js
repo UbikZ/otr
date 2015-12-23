@@ -83,20 +83,20 @@ module.exports.controller = function (app, config) {
             http.response(res, 500, "An error occurred.", err);
           } else if (organization) {
             var modelItem;
-
-            if (data.itemId != undefined) {
-              organization.findDeepAttributeById(data._id, function (element) {
+            if (data.itemId != undefined && data.itemId != data.organizationId) {
+              organization.findDeepAttributeById(data.itemId, function (element) {
                 if (element != undefined) {
-                  modelItem = parseData(element.setting, data);
-                  modelItem.setting.update = {user: user._id, date: new Date()};
-                  element = modelItem;
+                  modelItem = new Setting(parseData(element.setting, data));
+                  modelItem.update = {user: user._id, date: new Date()};
+                  element.setting = modelItem;
                 } else {
                   http.response(res, 404, {}, "Impossible to retrieve element.", err);
                 }
               });
             } else {
-              organization.setting = parseData(organization.setting, data);
-              organization.setting.update = {user: user._id, date: new Date()};
+              modelItem = parseData(organization.setting, data);
+              modelItem.update = {user: user._id, date: new Date()};
+              organization.setting = modelItem;
             }
 
             organization.save(function (err, newOrganization) {
