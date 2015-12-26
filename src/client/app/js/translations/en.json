@@ -1,4 +1,20 @@
 {
+  "messages": {
+    "info": {},
+    "success": {
+      "1": "Bienvenue sur OnTime Reader version 3",
+      "2": ""
+    },
+    "warning": {},
+    "error": {
+      "-1": "Une erreur interne s'est produite.",
+      "-2": "Le jeton utilisé n'est pas valide.",
+      "-3": "Une erreur s'est produite lors de la connexion à OnTime",
+      "-4": "L'utilisateur n'a pas été trouvé",
+      "-5": "La société sélectionnée n'a pas été trouvée",
+      "-6": ""
+    }
+  },
   "login": {
     "welcome": "Bienvenue sur la version 3 d'OnTime Reader",
     "description": "",

@@ -13,24 +13,30 @@ module.exports.controller = function (app, config) {
   var prefix = '/api/v' + config.api.version + '/item';
 
   /*
-   * Get users (by filtering)
+   * Get Organization (by filtering)
    */
   app.get(prefix, http.ensureAuthorized, function (req, res) {
     var data = req.query;
     http.checkAuthorized(req, res, function () {
       Organization.findById(data.organizationId, function (err, organization) {
         if (err) {
-          http.response(res, 500, "An error occurred.", err);
+          http.response(res, 500, {}, "-1", err);
+          http.log(req, 'Internal error: get organization', err);
         } else if (organization) {
           organization.findDeepAttributeById(data.itemId, function (element) {
             if (element != undefined) {
               http.response(res, 200, {item: element});
             } else {
               http.response(res, 404, {}, "Impossible to retrieve attached project.", err);
+              http.response(res, 404, {}, "-6", err);
+              http.log(req, 'Error: token provided is not associated with an account.', err);
+
             }
           });
         } else {
-          http.response(res, 404, {}, "Organization for item loading not found.", err);
+          http.response(res, 404, {}, "Organization for item loading not found.");
+          http.response(res, 404, {}, "-3");
+          http.log(req, 'Error: organization with id (' + data.organizationId + ') not found.');
         }
       });
     });
