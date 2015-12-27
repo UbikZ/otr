@@ -172,7 +172,7 @@
                                     <tr ng-if="currentItem.versions.length == 0">
                                         <td colspan="3" class="text-center">
                                             <strong class="text-muted">{{ (ns+'.document.item.no_version') | translate }}</strong><br/>
-                                            <button type="button" ng-click="" class="btn btn-primary btn-xs m-xs">
+                                            <button type="button" ng-click="editVersion()" class="btn btn-primary btn-xs m-xs">
                                                 {{ (ns + ".document.create") | translate }}
                                             </button>
                                         </td>

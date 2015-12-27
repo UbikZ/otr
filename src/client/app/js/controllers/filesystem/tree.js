@@ -128,6 +128,33 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
     };
 
     /*
+     * Modal Version Edition
+     */
+
+    $scope.editVersion = function (objectId) {
+      var modalInstance = $uibModal.open({
+        animation: true,
+        templateUrl: 'views/partials/modal-version.html',
+        controller: 'form.version.controller',
+        resolve: {
+          organizationId: function () {
+            return $scope.organization._id;
+          },
+          identifier: function () {
+            return {id: objectId};
+          },
+        }
+      });
+
+      modalInstance.result.then(function (res) {
+        var orga = res.organization;
+        console.log(res);
+        changeCurrentOrganization(orga);
+        changeCurrentIdNode(objectId);
+      });
+    };
+
+    /*
      * Modal Item Edition
      */
 
