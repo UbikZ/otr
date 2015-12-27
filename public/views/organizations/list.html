@@ -41,7 +41,7 @@
                                 <tbody>
                                 <tr ng-repeat="(id,organization) in organizations | orderBy:'name' | filter:search">
                                     <td class="col-md-2">
-                                        <a href="{{ organization.url }}" >
+                                        <a ui-sref="{{ $root.routes.ORGANIZATIONS_DETAIL }}({id: organization._id})">
                                             <img ng-src="{{ organization.logo }}" class="img-responsive height-fix-md">
                                         </a>
                                     </td>
