@@ -5,7 +5,7 @@
                 <div class="ibox-title">
                     <h5>{{ (ns + ".title") | translate }}</h5>
 
-                    <div class="ibox-tools">
+                    <div class="ibox-tools" ng-if="organizations.length > 0">
                         <button type="button" ng-click="edit()" class="btn btn-primary btn-xs">
                             {{ (ns + ".create") | translate }}
                         </button>
@@ -20,7 +20,7 @@
                             </span>
                             <input type="text" ng-model="search.name"
                                    placeholder="{{ (ns+'.search.placeholder') | translate }}"
-                                   class=" form-control">
+                                   class="form-control">
                         </div>
                     </div>
                     <div ng-if="loading">
@@ -38,8 +38,26 @@
                     <div ng-if="!loading">
                         <div class="project-list">
                             <table class="table table-hover">
+                                <thead>
+                                <tr class="text-center">
+                                    <th>{{ (ns+'.items.head.logo') | translate }}</th>
+                                    <th>{{ (ns+'.items.head.state') | translate }}</th>
+                                    <th>{{ (ns+'.items.head.name') | translate }}</th>
+                                    <th>{{ (ns+'.items.head.creator') | translate }}</th>
+                                    <th>{{ (ns+'.items.head.actions') | translate }}</th>
+                                </tr>
+                                </thead>
                                 <tbody>
-                                <tr ng-repeat="(id,organization) in organizations | orderBy:'name' | filter:search">
+                                <tr ng-if="organizations.length == 0">
+                                    <td colspan="5" class="text-center">
+                                        {{ (ns+'.item.no_organization') | translate }}<br/>
+                                        <button type="button" ng-click="edit()" class="btn btn-primary m-sm">
+                                            {{ (ns + ".create") | translate }}
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr ng-if="organizations.length > 0"
+                                    ng-repeat="(id,organization) in organizations | orderBy:'name' | filter:search">
                                     <td class="col-md-2">
                                         <a ui-sref="{{ $root.routes.ORGANIZATIONS_DETAIL }}({id: organization._id})">
                                             <img ng-src="{{ organization.logo }}" class="img-responsive height-fix-md">

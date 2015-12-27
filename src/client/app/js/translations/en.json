@@ -129,7 +129,17 @@
         "title": "Recherche",
         "placeholder": "Nom de sociétés"
       },
+      "items": {
+        "head": {
+          "logo": "Logo",
+          "state": "Etat",
+          "name": "Nom",
+          "creator": "Créateur / Date de création",
+          "actions": "Actions possilbles"
+        }
+      },
       "item": {
+        "no_organization": "Aucune organization n'est encore créée. Veuillez en créer une afin de pouvoir gérer vos projets",
         "active": "Active",
         "unactive": "Désactivée",
         "create": "Créée le",
