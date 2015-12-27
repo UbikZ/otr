@@ -248,7 +248,10 @@
         "form": {
           "name": {
             "label": "Nom",
-            "placeholder": "Nom du projet ou du document"
+            "placeholder": "Nom du projet ou du document",
+            "errors": {
+              "required": "Veuillez renseigner le nom de l'élément."
+            }
           },
           "type": {
             "label": "Type d'élément (project ou document)",
@@ -256,6 +259,9 @@
             "items": {
               "project": "Projet",
               "document": "Document"
+            },
+            "errors": {
+              "required": "Veuillez renseigner le type de l'élément."
             }
           },
           "description": {

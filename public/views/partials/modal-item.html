@@ -15,7 +15,7 @@
             <div class="m-t-xs"
                  ng-show="formItem.name.$invalid && formItem.name.$dirty">
                 <small class="text-danger help-block" ng-show="formItem.name.$error.required">
-                    {{ (ns+'.form.name.error.required') | translate }}
+                    {{ (ns+'.form.name.errors.required') | translate }}
                 </small>
             </div>
         </div>
@@ -31,7 +31,7 @@
             <div class="m-t-xs"
                  ng-show="formItem.type.$invalid && formItem.type.$dirty">
                 <small class="text-danger help-block" ng-show="formItem.type.$error.required">
-                    {{ (ns+'.form.type.error.required') | translate }}
+                    {{ (ns+'.form.type.errors.required') | translate }}
                 </small>
             </div>
         </div>
