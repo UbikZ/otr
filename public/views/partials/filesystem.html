@@ -15,7 +15,8 @@
                     </a>
 
                     <div class="hr-line-dashed"></div>
-                    <button class="btn btn-primary btn-block btn-sm" ng-click="editItem()">
+                    <button class="btn btn-primary btn-block btn-sm" ng-click="editItem()"
+                            ng-disabled="currentItem.type == 'document'">
                         <strong>{{ (ns+'.control.actions.create') | translate }}</strong>
                     </button>
                     <div class="hr-line-dashed"></div>
