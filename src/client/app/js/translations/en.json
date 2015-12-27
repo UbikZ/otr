@@ -3,7 +3,15 @@
     "info": {},
     "success": {
       "1": "Bienvenue sur OnTime Reader version 3",
-      "2": ""
+      "2": "La création du nouvel élément a bien été effectuée",
+      "3": "La mise à jour de l'élément a bien été effectuée",
+      "4": "La suppression de l'élément a bien été effectuée",
+      "5": "La création de la nouvelle société a bien été effectuée",
+      "6": "La mise à jour de la nouvelle société a bien été effectuée",
+      "7": "La suppression de la société a bien été effectuée",
+      "8": "La création de votre paramétrage global a bien été effectué",
+      "9": "La mise à jour de votre paramétrage global a bien été effectué",
+      "10": "La mise à jour de votre profile a bien été effectuée"
     },
     "warning": {},
     "error": {
@@ -11,8 +19,14 @@
       "-2": "Le jeton utilisé n'est pas valide.",
       "-3": "Une erreur s'est produite lors de la connexion à OnTime",
       "-4": "L'utilisateur n'a pas été trouvé",
-      "-5": "La société sélectionnée n'a pas été trouvée",
-      "-6": ""
+      "-5": "La société n'a pas été trouvée",
+      "-6": "L'élément n'a pas été trouvé",
+      "-7": "Une erreur s'est produite lors de la création d'un élément.",
+      "-8": "Une erreur s'est produite lors de la mise à jour d'un élément",
+      "-9": "Une erreur s'est produite lors de la récupération des sociétés",
+      "-10": "Une erreur s'est produite lors de la récupération des paramètres",
+      "-11": "Une erreur s'est produite lors de la mise à jour des paramètres",
+      "-12": "Une erreur s'est produite lors de la récupération des utilisateurs"
     }
   },
   "login": {

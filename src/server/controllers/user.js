@@ -16,11 +16,13 @@ module.exports.controller = function (app, config) {
     http.checkAuthorized(req, res, function() {
       User.find({}, function (err, users) {
         if (err) {
-          http.response(res, 500, "An error occurred.", err);
+          http.log(req, 'Internal error: get users', err);
+          http.response(res, 500, {}, "-1", err);
         } else if (users) {
           http.response(res, 200, {users: users});
         } else {
-          http.response(res, 404, {}, "User not found.", err);
+          http.log(req, 'Error: users is undefined (criteria = ' + {} + ').');
+          http.response(res, 404, {}, "-12");
         }
       });
     });
@@ -33,7 +35,8 @@ module.exports.controller = function (app, config) {
     var data = req.body;
     User.findOne({"identity.token": req.token}, function (err, user) {
       if (err) {
-        http.response(res, 500, "An error occurred.", err);
+        http.log(req, 'Internal error: update user', err);
+        http.response(res, 500, {}, "-1", err);
       } else if (user) {
         if (data.firstname) {
           user.name.firstname = data.firstname;
@@ -52,9 +55,10 @@ module.exports.controller = function (app, config) {
         }
         user.save(function (err, newUser) {
           if (err) {
-            http.response(res, 500, {}, "An error occurred.", err);
+            http.log(req, 'Internal error: update user -> save user', err);
+            http.response(res, 500, {}, "-1", err);
           } else {
-            http.response(res, 200, {user: newUser});
+            http.response(res, 200, {user: newUser}, "10");
           }
         });
       } else {

@@ -25,7 +25,7 @@ module.exports = ['$http',
         }).error(error)
       },
       update: function(data, success, error) {
-        $http.post(baseUrl + '/organization/update', data).success(success).error(error);
+        $http.post(baseUrl + '/organization/edit', data).success(success).error(error);
       },
       delete: function(data, success, error) {
         $http.post(baseUrl + '/organization/delete', data).success(success).error(error);

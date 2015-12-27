@@ -10,7 +10,7 @@ module.exports.controller = function (app, config) {
   var prefix = '/api/v' + config.api.version + '/organization';
 
   /*
-   * Get users (by filtering)
+   * Get organizations (by filtering)
    */
   app.get(prefix, http.ensureAuthorized, function (req, res) {
     var data = req.query;
@@ -24,11 +24,13 @@ module.exports.controller = function (app, config) {
 
       query.exec(function (err, organizations) {
           if (err) {
-            http.response(res, 500, "An error occurred.", err);
+            http.log(req, 'Internal error: get organizations', err);
+            http.response(res, 500, {}, "-1", err);
           } else if (organizations) {
             http.response(res, 200, {organizations: organizations});
           } else {
-            http.response(res, 404, {}, "User not found.", err);
+            http.log(req, 'Error: organizations is undefined (criteria = ' + criteria + ').');
+            http.response(res, 404, {}, "-9");
           }
         });
     });
@@ -40,21 +42,23 @@ module.exports.controller = function (app, config) {
     http.checkAuthorized(req, res, function () {
       Organization.findByIdAndRemove(data.id, function(err) {
         if (err) {
-          http.response(res, 500, "An error occurred.", err);
+          http.log(req, 'Internal error: delete organization', err);
+          http.response(res, 500, {}, "-1", err);
         } else {
-          http.response(res, 200, {id: data.id}, 'Your organization has been remove.');
+          http.response(res, 200, {id: data.id}, "7");
         }
       });
     });
   });
 
-  app.post(prefix + '/update', http.ensureAuthorized, function (req, res) {
+  app.post(prefix + '/edit', http.ensureAuthorized, function (req, res) {
     var data = req.body;
 
     http.checkAuthorized(req, res, function (user) {
       Organization.findById(data._id, function (err, organization) {
         if (err) {
-          http.response(res, 500, "An error occurred.", err);
+          http.log(req, 'Internal error: update organization', err);
+          http.response(res, 500, {}, "-1", err);
         } else if (organization) {
           if (data.name) {
             organization.name = data.name;
@@ -74,10 +78,11 @@ module.exports.controller = function (app, config) {
           organization.update = {user: user._id, date: new Date()};
           organization.save(function (err, newOrganization) {
             if (err) {
-              http.response(res, 500, {}, "An error occurred.", err);
+              http.log(req, 'Internal error: update organization -> save organization', err);
+              http.response(res, 500, {}, "-1", err);
             } else {
               newOrganization.populate('creation.user', function(err, newOrg) {
-                http.response(res, 200, {organization: newOrg});
+                http.response(res, 200, {organization: newOrg}, "6");
               });
             }
           });
@@ -103,10 +108,11 @@ module.exports.controller = function (app, config) {
 
           org.save(function (err, newOrganization) {
             if (err) {
-              http.response(res, 500, {}, "An error occurred.", err);
+              http.log(req, 'Internal error: create organization -> save organization', err);
+              http.response(res, 500, {}, "-1", err);
             } else {
               newOrganization.populate('creation.user', function(err, newOrg) {
-                http.response(res, 200, {organization: newOrg});
+                http.response(res, 200, {organization: newOrg}, "5");
               });
             }
           });

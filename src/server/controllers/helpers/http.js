@@ -47,13 +47,13 @@ function ensureAuthorized(req, res, next) {
 function checkAuthorized(req, res, cb) {
   User.findOne({"identity.token": req.token}, function (err, user) {
     if (err) {
-      response(res, 500, {}, "-1", err);
       log(req, 'Internal error: check authorization.', err);
+      response(res, 500, {}, "-1", err);
     } else if (user) {
       cb(user);
     } else {
-      response(res, 404, {}, "-2", err);
       log(req, 'Error: token provided is not associated with an account.', err);
+      response(res, 404, {}, "-2", err);
     }
   });
 }
@@ -62,13 +62,13 @@ function ontimeRequestToken(req, res, cb) {
   ontimeRequester.requestToken({username: req.body.username, password: req.body.password}, function (result) {
     result = JSON.parse(result);
     if (result.error) {
-      response(res, 403, {error: result}, "-3", result.error);
       log(req, 'Ontime Error: ' + result.error_description);
+      response(res, 403, {error: result}, "-3", result.error);
     } else if (result.access_token) {
       cb(merge(result.data, {access_token: result.access_token}));
     } else {
-      response(res, 500, {}, "-1");
       log(req, 'Ontime Error: issue during OnTime "/authenticate" request');
+      response(res, 500, {}, "-1");
     }
   });
 }
@@ -77,13 +77,13 @@ function ontimeMe(req, res, cb) {
   ontimeRequester.me(req.ot_token, function (result) {
     result = JSON.parse(result);
     if (result.error) {
-      response(res, 403, {error: result}, "-3", result.error);
       log(req, 'Ontime Error: ' + result.error_description);
+      response(res, 403, {error: result}, "-3", result.error);
     } else if (result.data) {
       cb(result.data);
     } else {
-      response(res, 500, {}, "-1");
       log(req, 'Ontime Error: issue during OnTime "/me" request');
+      response(res, 500, {}, "-1");
     }
   });
 }

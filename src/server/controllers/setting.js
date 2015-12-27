@@ -22,11 +22,13 @@ module.exports.controller = function (app, config) {
       }
       Setting.find(criteria, function (err, settings) {
         if (err) {
-          http.response(res, 500, "An error occurred.", err);
+          http.log(req, 'Internal error: get setting', err);
+          http.response(res, 500, {}, "-1", err);
         } else if (settings) {
           http.response(res, 200, {setting: settings[0]});
         } else {
-          http.response(res, 404, {}, "User not found.", err);
+          http.log(req, 'Error: settings is undefined (criteria = ' + criteria + ').');
+          http.response(res, 404, {}, "-10");
         }
       });
     });
@@ -41,7 +43,8 @@ module.exports.controller = function (app, config) {
       if (data.organizationId != undefined) {
         Organization.findById(data.organizationId, function (err, organization) {
           if (err) {
-            http.response(res, 500, "An error occurred.", err);
+            http.log(req, 'Internal error: get setting', err);
+            http.response(res, 500, {}, "-1", err);
           } else if (organization) {
             var modelItem;
             if (data.itemId != undefined && data.itemId != data.organizationId) {
@@ -57,13 +60,14 @@ module.exports.controller = function (app, config) {
             }
 
             http.response(res, 200, {setting: modelItem});
-
           } else {
-            http.response(res, 404, {}, "Organization not found.", err);
+            http.log(req, 'Error: organization with id (' + data.organizationId + ') not found.');
+            http.response(res, 404, {}, "-5");
           }
         });
       } else {
-        http.response(res, 404, {}, "Wrong parameters.");
+        http.log(req, 'Internal error: wrong parameters in "settings/sub"');
+        http.response(res, 404, {}, "-1");
       }
     });
   });
@@ -80,16 +84,18 @@ module.exports.controller = function (app, config) {
       }
       Setting.findOne(criteria, function (err, setting) {
         if (err) {
-          http.response(res, 500, "An error occurred.", err);
+          http.log(req, 'Internal error: update setting (in collection)', err);
+          http.response(res, 500, {}, "-1", err);
         } else if (setting) {
           setting = parseData(setting, data);
           setting.update = {user: user._id, date: new Date()};
 
           setting.save(function (err, newSetting) {
             if (err) {
-              http.response(res, 500, {}, "An error occurred.", err);
+              http.log(req, 'Internal error: update setting (in collection) -> save setting', err);
+              http.response(res, 500, {}, "-1", err);
             } else {
-              http.response(res, 200, {setting: newSetting});
+              http.response(res, 200, {setting: newSetting}, "9");
             }
           });
         } else {
@@ -97,9 +103,10 @@ module.exports.controller = function (app, config) {
           newSetting.id = 42; // We force ONLY ONE setting on the collection
           newSetting.save(function (err, setting) {
             if (err) {
-              http.response(res, 500, {}, "An error occurred.", err);
+              http.log(req, 'Internal error: create setting (in collection)', err);
+              http.response(res, 500, {}, "-1", err);
             } else {
-              http.response(res, 200, {setting: setting});
+              http.response(res, 200, {setting: setting}, "8");
             }
           })
         }
@@ -116,7 +123,8 @@ module.exports.controller = function (app, config) {
       if (data.organizationId != undefined) {
         Organization.findById(data.organizationId, function (err, organization) {
           if (err) {
-            http.response(res, 500, "An error occurred.", err);
+            http.log(req, 'Internal error: edit setting (in organization)', err);
+            http.response(res, 500, {}, "-1", err);
           } else if (organization) {
             var modelItem;
             if (data.itemId != undefined && data.itemId != data.organizationId) {
@@ -126,7 +134,8 @@ module.exports.controller = function (app, config) {
                   modelItem.update = {user: user._id, date: new Date()};
                   element.setting = modelItem;
                 } else {
-                  http.response(res, 404, {}, "Impossible to retrieve element.", err);
+                  http.log(req, 'Error: setting not found in organization (data.itemId = ' + data.itemId + ').');
+                  http.response(res, 404, {}, "-11");
                 }
               });
             } else {
@@ -137,7 +146,8 @@ module.exports.controller = function (app, config) {
 
             organization.save(function (err, newOrganization) {
               if (err) {
-                http.response(res, 500, {}, "An error occurred.", err);
+                http.log(req, 'Internal error: edit setting (in organization) -> save organization', err);
+                http.response(res, 500, {}, "-1", err);
               } else {
                 newOrganization.populate('creation.user', function (err, newOrg) {
                   http.response(res, 200, {organization: newOrg, setting: modelItem});
@@ -145,11 +155,13 @@ module.exports.controller = function (app, config) {
               }
             });
           } else {
-            http.response(res, 404, {}, "Organization not found.", err);
+            http.log(req, 'Error: organization with id (' + data.organizationId + ') not found.');
+            http.response(res, 404, {}, "-5");
           }
         });
       } else {
-        http.response(res, 404, {}, "Wrong parameters.");
+        http.log(req, 'Internal error: wrong parameters in "setting/edit"');
+        http.response(res, 404, {}, "-1");
       }
     });
   });
