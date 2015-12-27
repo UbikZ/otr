@@ -2,18 +2,12 @@
 
 var angular = require('angular');
 var env = require('../env');
-var jquery = require('jquery');
 
 var callbacks = require('../helpers/callback');
 
 module.exports = ['$http', '$translate',
   function($http, $translate) {
     var baseUrl = env.apiUrl, currentOrganization;
-
-    function ok(res, cb) {
-      callbacks.success(res, $translate);
-      cb(res);
-    }
 
     return {
       setCurrentOrganization: function(organization) {
@@ -22,30 +16,19 @@ module.exports = ['$http', '$translate',
       getCurrentOrganization: function() {
         return currentOrganization;
       },
-      get: function(data, success) {
-        var url = baseUrl + '/organization?' + jquery.param(data);
-        $http.get(url).success(function (result) {
+      get: function(data, success, error) {
+        callbacks.get(baseUrl + '/organization', data, $http, $translate, function(result) {
           if (result.organizations.length == 1) {
             currentOrganization = result.organizations[0];
           }
-          ok(result, success);
-        }).error(function (err) {
-          callbacks.error(err, $translate);
-        });
+          success(result);
+        }, error);
       },
-      update: function(data, success) {
-        $http.post(baseUrl + '/organization/edit', data).success(function(res) {
-          ok(res, success);
-        }).error(function (err) {
-          callbacks.error(err, $translate);
-        });
+      update: function(data, success, error) {
+        callbacks.post(baseUrl + '/organization/edit', data, $http, $translate, success, error);
       },
-      delete: function(data, success) {
-        $http.post(baseUrl + '/organization/delete', data).success(function(res) {
-          ok(res, success);
-        }).error(function (err) {
-          callbacks.error(err, $translate);
-        });
+      delete: function(data, success, error) {
+        callbacks.post(baseUrl + '/organization/delete', data, $http, $translate, success, error);
       }
     };
   }

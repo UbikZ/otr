@@ -8,39 +8,18 @@ module.exports = ['$http', '$translate',
   function ($http, $translate) {
     var baseUrl = env.apiUrl;
 
-    function ok(res, cb) {
-      callbacks.success(res, $translate);
-      cb(res);
-    }
-
     return {
-      authenticate: function (data, success) {
-        $http.post(baseUrl + '/authenticate', data).success(function(res) {
-          ok(res, success);
-        }).error(function (err) {
-          callbacks.error(err, $translate);
-        });
+      authenticate: function (data, success, error) {
+        callbacks.post(baseUrl + '/authenticate', data, $http, $translate, success, error);
       },
-      login: function (data, success) {
-        $http.post(baseUrl + '/sign-up', data).success(function(res) {
-          ok(res, success);
-        }).error(function (err) {
-          callbacks.error(err, $translate);
-        });
+      login: function (data, success, error) {
+        callbacks.post(baseUrl + '/sign-up', data, $http, $translate, success, error);
       },
-      me: function (success) {
-        $http.get(baseUrl + '/me/').success(function(res) {
-          ok(res, success);
-        }).error(function (err) {
-          callbacks.error(err, $translate);
-        });
+      me: function (data, success, error) {
+        callbacks.get(baseUrl + '/me', data, $http, $translate, success, error);
       },
-      meOntime: function (success) {
-        $http.get(baseUrl + '/me-ontime/').success(function(res) {
-          ok(res, success);
-        }).error(function (err) {
-          callbacks.error(err, $translate);
-        });
+      meOntime: function (data, success, error) {
+        callbacks.get(baseUrl + '/me-ontime', data, $http, $translate, success, error);
       },
     };
   }
