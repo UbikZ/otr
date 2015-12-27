@@ -62,7 +62,7 @@
                                         </button>
                                     </td>
                                 </tr>
-                                <tr ng-if="organizationsFiltered.length == 0">
+                                <tr ng-if="organizations.length > 0 && organizationsFiltered.length == 0">
                                     <td colspan="5" class="text-center">
                                         <strong class="text-warning">{{ (ns+'.item.no_organization_filter') | translate }}</strong>
                                     </td>
