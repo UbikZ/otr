@@ -12,6 +12,8 @@ module.exports = ['$rootScope', '$scope', 'settingService', '_CONST',
       $scope.loading = false;
       if (res.setting != undefined) {
         $scope.setting = mappingSetting.dalToDTO(res.setting);
+      } else {
+        $scope.setting = {};
       }
     });
 

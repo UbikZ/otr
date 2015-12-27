@@ -162,13 +162,20 @@
                     </span>
                 </h4>
                 <div ng-include="'views/settings/partials/resume.html'"></div>
-                <div class="row">
+                <div class="row" ng-if="setting != undefined">
                     <div class="col-lg-12">
                         <button class="col-lg-12 btn btn-success btn-xs" ng-click="editSetting(currentItem._id)">
                             <i class="fa fa-pencil m-r-sm"></i>
                             {{ (ns+'.setting.form.edit') | translate }}
                             <strong>{{ currentItem.name }}</strong>
                         </button>
+                    </div>
+                </div>
+                <div class="row" ng-if="setting == undefined">
+                    <div class="col-lg-12">
+                        <a ui-sref="{{ $root.routes.ORGANIZATIONS_SETTINGS }}" class="col-lg-12 btn btn-danger btn-xs">
+                            <strong>{{ (ns+'.setting.global_setting') | translate }}</strong>
+                        </a>
                     </div>
                 </div>
             </div>
