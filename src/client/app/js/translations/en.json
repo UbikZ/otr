@@ -284,6 +284,23 @@
           "quit": "Annuler"
         }
       }
+    },
+    "document": {
+      "create": "Nouvelle version",
+      "search": {
+        "title": "Recherche",
+        "placeholder": "Nom d'une version"
+      },
+      "versions_found": "versions trouvées",
+      "head": {
+        "name": "Nom",
+        "creator": "Créateur",
+        "actions": "Actions"
+      },
+      "item": {
+        "no_version": "Aucune version trouvée. Veuillez en créer une.",
+        "no_version_filter": "Aucune version n'est associée à votre recherche."
+      }
     }
   },
   "setting": {
