@@ -221,7 +221,7 @@
     "breadcrumb": "Fil d'Arianne",
     "setting": {
       "title": "Paramétrage",
-      "global_setting": "Créer d'abord une paramétrage global",
+      "global_setting": "Créer d'abord un paramétrage global",
       "type": {
         "own": "Paramètre courant",
         "inherit": "Paramètre hérité"
