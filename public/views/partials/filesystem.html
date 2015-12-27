@@ -15,14 +15,14 @@
                     </a>
 
                     <div class="hr-line-dashed"></div>
-                    <button class="btn btn-primary btn-block" ng-click="editItem()">
-                        {{ (ns+'.control.actions.create') | translate }}
+                    <button class="btn btn-primary btn-block btn-sm" ng-click="editItem()">
+                        <strong>{{ (ns+'.control.actions.create') | translate }}</strong>
                     </button>
                     <div class="hr-line-dashed"></div>
 
                     <input type="text" ng-model="nodeSearch"
                            placeholder="{{ (ns+'.control.search.placeholder') | translate }}"
-                           class=" form-control">
+                           class="form-control input-sm">
 
                     <div class="hr-line-dashed"></div>
                     <h5>{{ (ns+'.control.tree') | translate }}</h5>
@@ -147,7 +147,7 @@
                                             </span>
                                             <input type="text" ng-model="search.name"
                                                    placeholder="{{ (ns+'.document.search.placeholder') | translate }}"
-                                                   class="form-control">
+                                                   class="form-control input-sm">
                                         </div>
                                     </div>
                                 </div>
