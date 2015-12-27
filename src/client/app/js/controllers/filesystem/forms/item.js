@@ -5,7 +5,7 @@ var toastr = require('toastr');
 module.exports = ['$rootScope', '$scope', 'identifier', 'organizationId', 'itemService', '$uibModalInstance',
   function ($rootScope, $scope, identifier, organizationId, itemService, $uibModalInstance) {
     $scope.identifier = identifier.id;
-    $scope.isProject = identifier.projectId !== undefined;
+    $scope.isProject = identifier.parentId !== undefined;
     $scope.organizationId = organizationId;
 
     if ($scope.identifier) {
@@ -21,8 +21,8 @@ module.exports = ['$rootScope', '$scope', 'identifier', 'organizationId', 'itemS
         item = Object.assign(item, {organizationId: $scope.organizationId});
       }
       if (item._id == undefined) {
-        if (identifier.projectId) {
-          item = Object.assign(item, {projectId: identifier.projectId});
+        if (identifier.parentId) {
+          item = Object.assign(item, {parentId: identifier.parentId});
         }
       }
 

@@ -3,7 +3,6 @@
 var Setting = require('../models/setting');
 var Organization = require('../models/organization');
 var http = require('./helpers/http');
-var jwt = require("jsonwebtoken");
 var merge = require('merge');
 
 module.exports.controller = function (app, config) {

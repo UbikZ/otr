@@ -19,6 +19,9 @@ function findSpecificRecursivelyById(parentElement, elementId, cb) {
     if (element == undefined && parentElement.documents !== undefined) {
       element = parentElement.documents.id(elementId);
     }
+    if (element == undefined && parentElement.versions !== undefined) {
+      element = parentElement.versions.id(elementId);
+    }
     if (element == undefined) {
       parentElement.projects.forEach(function (subElement) {
         findSpecificRecursivelyById(subElement, elementId, cb);

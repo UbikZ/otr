@@ -135,13 +135,13 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
       var modalInstance = $uibModal.open({
         animation: true,
         templateUrl: 'views/partials/modal-version.html',
-        controller: 'form.version.controller',
+        controller: 'form.item.controller',
         resolve: {
           organizationId: function () {
             return $scope.organization._id;
           },
           identifier: function () {
-            return {id: objectId};
+            return {id: objectId, parentId: $scope.currentIdNode};
           },
         }
       });
@@ -168,7 +168,7 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
             return $scope.organization._id;
           },
           identifier: function () {
-            return {id: objectId, projectId: $scope.currentIdNode};
+            return {id: objectId, parentId: $scope.currentIdNode};
           },
         }
       });

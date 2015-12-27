@@ -1,1 +1,35 @@
-test
+<form id="modal-versions" class="form-horizontal" role="form" name="form"
+      novalidate ng-submit="submit(version)" ng-init="ns='version'; version.type='version';">
+    <div class="modal-header">
+        <h3 ng-if="!identifier" class="modal-title">{{ (ns+'.title.create') | translate }}</h3>
+        <h3 ng-if="identifier" class="modal-title">{{ (ns+'.title.update') | translate }}</h3>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label>{{ (ns+'.form.name.label') | translate }} *</label>
+            <input type="text" placeholder="{{ (ns+'.form.name.placeholder') | translate }}"
+                   class="form-control" name="name"
+                   ng-model="version.name" required>
+            <div class="m-t-xs"
+                 ng-show="form.name.$invalid && form.name.$dirty">
+                <small class="text-danger help-block" ng-show="form.name.$error.required">
+                    {{ (ns+'.form.name.errors.required') | translate }}
+                </small>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="row">
+            <div class="col-lg-12">
+                <a ng-click="cancel()"
+                   class="btn btn-sm btn-success pull-right m-l-lg" ng-disabled="loading">
+                    <i class="fa fa-reply"></i> <strong>{{ (ns+'.form.quit') | translate }}</strong>
+                </a>
+                <button class="btn btn-sm btn-primary pull-right" type="submit"
+                        ng-disabled="loading">
+                    <i class="fa fa-save"></i> <strong>{{ (ns+'.form.submit') | translate }}</strong>
+                </button>
+            </div>
+        </div>
+    </div>
+</form>

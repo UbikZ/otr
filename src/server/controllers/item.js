@@ -3,6 +3,7 @@
 var Organization = require('../models/organization');
 var Project = require('../models/project');
 var Document = require('../models/document');
+var Version = require('../models/version');
 var User = require('../models/user');
 var mongoose = require('mongoose');
 var http = require('./helpers/http');
@@ -105,8 +106,8 @@ module.exports.controller = function (app, config) {
               creation: {user: user._id, date: new Date()},
             };
 
-            if (data.projectId != undefined) {
-              organization.findDeepAttributeById(data.projectId, function (element) {
+            if (data.parentId != undefined) {
+              organization.findDeepAttributeById(data.parentId, function (element) {
                 if (element != undefined) {
                   if (data.type == "project") {
                     modelItem = new Project(item);
@@ -114,12 +115,15 @@ module.exports.controller = function (app, config) {
                   } else if (data.type == "document") {
                     modelItem = new Document(item);
                     element.documents.push(modelItem);
+                  } else if (data.type == "version") {
+                    modelItem = new Version(item);
+                    element.versions.push(modelItem);
                   } else {
                     http.log(req, 'Error: item creation failed (data.type is undefined).');
                     http.response(res, 404, {}, "-7");
                   }
                 } else {
-                  http.log(req, 'Error: project not found (data.projectId = ' + data.projectId + ').');
+                  http.log(req, 'Error: project not found (data.parentId = ' + data.parentId + ').');
                   http.response(res, 404, {}, "-7");
                 }
               });
@@ -127,7 +131,7 @@ module.exports.controller = function (app, config) {
               modelItem = new Project(item);
               organization.projects.push(modelItem);
             } else {
-              http.log(req, 'Error: item creation failed (data.projectId is undefined).');
+              http.log(req, 'Error: item creation failed (data.parentId is undefined).');
               http.response(res, 404, {}, "-7");
             }
 
@@ -177,7 +181,7 @@ module.exports.controller = function (app, config) {
                 if (element != undefined) {
                   element = modelItem = Object.assign(element, item);
                 } else {
-                  http.log(req, 'Error: project not found (data.projectId = ' + data.projectId + ').');
+                  http.log(req, 'Error: item not found (data._id = ' + data._id + ').');
                   http.response(res, 404, {}, "-8");
                 }
               });
