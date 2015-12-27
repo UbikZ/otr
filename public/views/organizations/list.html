@@ -37,6 +37,12 @@
                     </div>
                     <div ng-if="!loading">
                         <div class="project-list">
+                            <div class="pull-rigth">
+                                <span class="pull-right small text-muted">
+                                    {{ organizationsFiltered.length }}
+                                    {{ (ns + ".organizations_found") | translate }}
+                                </span>
+                            </div>
                             <table class="table table-hover">
                                 <thead>
                                 <tr class="text-center">
@@ -50,14 +56,19 @@
                                 <tbody>
                                 <tr ng-if="organizations.length == 0">
                                     <td colspan="5" class="text-center">
-                                        {{ (ns+'.item.no_organization') | translate }}<br/>
+                                        <strong class="text-muted">{{ (ns+'.item.no_organization') | translate }}</strong><br/>
                                         <button type="button" ng-click="edit()" class="btn btn-primary m-sm">
                                             {{ (ns + ".create") | translate }}
                                         </button>
                                     </td>
                                 </tr>
+                                <tr ng-if="organizationsFiltered.length == 0">
+                                    <td colspan="5" class="text-center">
+                                        <strong class="text-warning">{{ (ns+'.item.no_organization_filter') | translate }}</strong>
+                                    </td>
+                                </tr>
                                 <tr ng-if="organizations.length > 0"
-                                    ng-repeat="(id,organization) in organizations | orderBy:'name' | filter:search">
+                                    ng-repeat="(id,organization) in organizationsFiltered = (organizations | orderBy:'name' | filter:search)">
                                     <td class="col-md-2">
                                         <a ui-sref="{{ $root.routes.ORGANIZATIONS_DETAIL }}({id: organization._id})">
                                             <img ng-src="{{ organization.logo }}" class="img-responsive height-fix-md">

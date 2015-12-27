@@ -124,6 +124,7 @@
   "organization": {
     "list": {
       "title": "Liste de toutes les sociétés",
+      "organizations_found": "sociétés trouvées",
       "create": "Nouvelle société",
       "search": {
         "title": "Recherche",
@@ -140,6 +141,7 @@
       },
       "item": {
         "no_organization": "Aucune organization n'est encore créée. Veuillez en créer une afin de pouvoir gérer vos projets",
+        "no_organization_filter": "Aucune organization n'est associée à votre recherche.",
         "active": "Active",
         "unactive": "Désactivée",
         "create": "Créée le",
