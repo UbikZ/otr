@@ -58,7 +58,7 @@ module.exports.controller = function (app, config) {
             http.log(req, 'Internal error: update user -> save user', err);
             http.response(res, 500, {}, "-1", err);
           } else {
-            http.response(res, 200, {user: newUser}, "10");
+            http.response(res, 200, {user: newUser}, "11");
           }
         });
       } else {

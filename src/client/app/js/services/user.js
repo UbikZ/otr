@@ -14,7 +14,7 @@ module.exports = ['$http', '$translate',
       callbacks.success(res, $translate);
       cb(res);
     }
-    
+
     return {
       update: function(data, success) {
         $http.post(baseUrl + '/user/update', data).success(function(res) {

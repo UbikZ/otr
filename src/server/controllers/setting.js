@@ -150,7 +150,7 @@ module.exports.controller = function (app, config) {
                 http.response(res, 500, {}, "-1", err);
               } else {
                 newOrganization.populate('creation.user', function (err, newOrg) {
-                  http.response(res, 200, {organization: newOrg, setting: modelItem});
+                  http.response(res, 200, {organization: newOrg, setting: modelItem}, "10");
                 });
               }
             });
