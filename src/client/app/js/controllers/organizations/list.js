@@ -9,9 +9,6 @@ module.exports = ['$scope', '$rootScope', 'organizationService', '$uibModal',
     organizationService.get({}, function (res) {
       $scope.loading = false;
       $scope.organizations = res.organizations;
-    }, function (err) {
-      $scope.loading = false;
-      toastr.error(err.message);
     });
 
     $scope.edit = function (objectId) {
@@ -47,11 +44,7 @@ module.exports = ['$scope', '$rootScope', 'organizationService', '$uibModal',
             $scope.organizations.splice(index, 1);
           }
         });
-        toastr.info(res.message);
         $scope.deleteLoading = false;
-      }, function(err) {
-        $scope.deleteLoading = false;
-        toastr.error(err.message);
       });
     };
   }

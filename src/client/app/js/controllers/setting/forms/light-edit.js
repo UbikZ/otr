@@ -13,8 +13,6 @@ module.exports = ['$rootScope', '$scope', 'identifier', 'organizationId', 'setti
     if ($scope.identifier) {
       settingService.getSub({organizationId: organizationId, itemId: $scope.identifier}, function (res) {
         angular.extend($scope.setting, mappingSetting.dalToDTO(res.setting));
-      }, function (err) {
-        toastr.error(err.message);
       });
     }
 
@@ -40,9 +38,6 @@ module.exports = ['$rootScope', '$scope', 'identifier', 'organizationId', 'setti
       settingService.edit(setting, function (res) {
         $scope.loading = false;
         $uibModalInstance.close({organization: res.organization, setting: res.setting});
-      }, function (err) {
-        $scope.loading = false;
-        toastr.error(err.message);
       });
     };
 

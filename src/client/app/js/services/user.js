@@ -4,17 +4,32 @@ var angular = require('angular');
 var env = require('../env');
 var jquery = require('jquery');
 
-module.exports = ['$http',
-  function($http) {
+var callbacks = require('../helpers/callback');
+
+module.exports = ['$http', '$translate',
+  function($http, $translate) {
     var baseUrl = env.apiUrl;
 
+    function ok(res, cb) {
+      callbacks.success(res, $translate);
+      cb(res);
+    }
+    
     return {
-      update: function(data, success, error) {
-        $http.post(baseUrl + '/user/update', data).success(success).error(error)
+      update: function(data, success) {
+        $http.post(baseUrl + '/user/update', data).success(function(res) {
+          ok(res, success);
+        }).error(function (err) {
+          callbacks.error(err, $translate);
+        });
       },
-      get: function(data, success, error) {
+      get: function(data, success) {
         var url = baseUrl + '/user?' + jquery.param(data);
-        $http.get(url).success(success).error(error)
+        $http.get(url).success(function(res) {
+          ok(res, success);
+        }).error(function (err) {
+          callbacks.error(err, $translate);
+        });
       }
     };
   }

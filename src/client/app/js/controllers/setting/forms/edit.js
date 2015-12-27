@@ -13,9 +13,6 @@ module.exports = ['$rootScope', '$scope', 'settingService', '_CONST',
       if (res.setting != undefined) {
         $scope.setting = mappingSetting.dalToDTO(res.setting);
       }
-    }, function (err) {
-      $scope.loading = false;
-      toastr.error(err.message);
     });
 
     $scope.update = function (setting) {
@@ -23,9 +20,6 @@ module.exports = ['$rootScope', '$scope', 'settingService', '_CONST',
       settingService.update(setting, function (res) {
         $scope.setting = mappingSetting.dalToDTO(res.setting);
         $scope.loading = false;
-      }, function (err) {
-        $scope.loading = false;
-        toastr.error(err.message);
       });
     };
   }

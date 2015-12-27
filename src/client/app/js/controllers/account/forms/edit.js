@@ -20,9 +20,6 @@ module.exports = ['$rootScope', '$scope', '$localStorage', 'userService',
         $rootScope.user = res.user;
         $localStorage.user = JSON.stringify($rootScope.user);
         $scope.loading = false;
-      }, function (err) {
-        $scope.loading = false;
-        toastr.error(err.message);
       });
     }
   }

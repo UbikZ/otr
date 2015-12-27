@@ -90,6 +90,7 @@ function ontimeMe(req, res, cb) {
 
 module.exports = {
   response: response,
+  log: log,
   ensureAuthorized: ensureAuthorized,
   checkAuthorized: checkAuthorized,
   ontimeRequestToken: ontimeRequestToken,

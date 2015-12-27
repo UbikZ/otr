@@ -83,8 +83,6 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
               mergeSettings();
             }
           }
-        }, function (err) {
-          toastr.error(err.message);
         });
       }
     }
@@ -183,8 +181,6 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
           });
           changeCurrentOrganization(res.organization);
           mergeFileItems();
-        }, function (err) {
-          toastr.error(err.message);
         }
       );
     };

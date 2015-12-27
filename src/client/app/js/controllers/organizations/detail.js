@@ -5,16 +5,8 @@ var toastr = require('toastr');
 module.exports = ['$scope', '$rootScope', '$stateParams', 'organizationService', '$uibModal',
   function ($scope, $rootScope, $stateParams, organizationService, $uibModal) {
     organizationService.get({id: $stateParams.id}, function (res) {
-      if (res.organizations.length != 1) {
-        toastr.error('Error loading current organization.');
-      } else {
-        $scope.organization = res.organizations[0];
-        $scope.$broadcast('load-organization', {organization: $scope.organization});
-      }
-      $scope.loading = false;
-    }, function (err) {
-      $scope.loading = false;
-      toastr.error(err.message);
+      $scope.organization = res.organizations[0];
+      $scope.$broadcast('load-organization', {organization: $scope.organization});
     });
 
     $scope.edit = function (objectId) {
