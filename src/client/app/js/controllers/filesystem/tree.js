@@ -65,6 +65,8 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
             }
             finalSetting = angular.extend({}, finalSetting, mappingSetting.dalToDTO(element.setting));
           });
+        } else {
+          parentSetting = $scope.masterSetting;
         }
       }
 
@@ -173,7 +175,8 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
         {organizationId: $scope.organization._id, itemId: objectId},
         function (res) {
           ['projects', 'documents'].forEach(function (itemType) {
-            $scope[itemType].forEach(function (item, index) {
+            var elements = $scope[itemType] || [];
+            elements.forEach(function (item, index) {
               if (item._id == res.item._id) {
                 $scope[itemType].splice(index, 1);
               }
