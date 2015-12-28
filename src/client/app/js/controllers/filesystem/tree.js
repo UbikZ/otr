@@ -31,6 +31,9 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
         recursiveTool.findRecursivelyById($scope.items, 'children', id, false, function (element) {
           if (element._id === id) {
             $scope.currentItem.type = element.type;
+            if ($scope.currentItem.type == 'document') {
+              $scope.versions = $scope.currentItem.versions;
+            }
             $scope.selected = element;
             $scope.expandedNodes.push(element);
           }
@@ -148,9 +151,18 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
 
       modalInstance.result.then(function (res) {
         var orga = res.organization;
+        var lastItem = res.item;
         console.log(res);
         changeCurrentOrganization(orga);
-        changeCurrentIdNode(objectId);
+        var currentIds = $scope.versions.map(function (object) {
+          return object._id;
+        });
+        var index = currentIds.indexOf(lastItem._id);
+        if (index === -1) {
+          $scope.versions.push(lastItem);
+        } else {
+          $scope.versions[index] = lastItem;
+        }
       });
     };
 
@@ -201,7 +213,7 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
       itemService.delete(
         {organizationId: $scope.organization._id, itemId: objectId},
         function (res) {
-          ['projects', 'documents'].forEach(function (itemType) {
+          ['projects', 'documents', 'versions'].forEach(function (itemType) {
             var elements = $scope[itemType] || [];
             elements.forEach(function (item, index) {
               if (item._id == res.item._id) {
