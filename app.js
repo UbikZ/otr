@@ -21,6 +21,16 @@ app.use(function (req, res, next) {
   next();
 });
 app.use(express.static(config.path.public));
+app.use(function (req, res, next) {
+  var _send = res.send;
+  var sent = false;
+  res.send = function (data) {
+    if (sent) return;
+    _send.bind(res)(data);
+    sent = true;
+  };
+  next();
+});
 
 // db
 mongoose.connect(config.mongo.uri);
