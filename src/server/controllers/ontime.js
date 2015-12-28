@@ -25,22 +25,18 @@ module.exports.controller = function (app, config) {
     });
   });
 
-  app.get(prefix, http.ensureAuthorized, function (req, res) {
-    var data = req.query;
+  app.get(prefix + '/tree', http.ensureAuthorized, function (req, res) {
     http.checkAuthorized(req, res, function() {
-      var criteria = {};
-      if (data.id) {
-        criteria.id = data.id;
-      }
-      Setting.find(criteria, function (err, settings) {
-        if (err) {
-          http.log(req, 'Internal error: get setting', err);
-          http.response(res, 500, {}, "-1", err);
-        } else if (settings) {
-          http.response(res, 200, {setting: settings[0]});
+      ontimeRequester.tree(req.ot_token, function (result) {
+        result = JSON.parse(result);
+        if (result.error) {
+          http.log(req, 'Ontime Error: ' + result.error_description);
+          http.response(res, 403, {error: result}, "-3", result.error);
+        } else if (result.data) {
+          http.response(res, 200, {tree: result.data});
         } else {
-          http.log(req, 'Error: settings is undefined (criteria = ' + criteria + ').');
-          http.response(res, 404, {}, "-10");
+          http.log(req, 'Ontime Error: issue during OnTime "/tree" request');
+          http.response(res, 500, {}, "-1");
         }
       });
     });

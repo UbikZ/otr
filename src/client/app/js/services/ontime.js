@@ -6,14 +6,14 @@ var callbacks = require('../helpers/callback');
 
 module.exports = ['$http', '$translate',
   function ($http, $translate) {
-    var baseUrl = env.apiUrl;
+    var baseUrl = env.apiUrl + '/ontime';
 
     return {
-      login: function (data, success, error) {
-        callbacks.post(baseUrl + '/sign-up', data, $http, $translate, success, error);
-      },
-      me: function (data, success, error) {
+      meOntime: function (data, success, error) {
         callbacks.get(baseUrl + '/me', data, $http, $translate, success, error);
+      },
+      tree: function (data, success, error) {
+        callbacks.get(baseUrl + '/tree', data, $http, $translate, success, error);
       },
     };
   }
