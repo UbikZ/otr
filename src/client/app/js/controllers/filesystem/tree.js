@@ -5,8 +5,8 @@ var recursiveTool = require('../../helpers/recursive');
 var mappingSetting = require('../../helpers/mapping/setting');
 var angular = require('angular');
 
-module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uibModal', '_CONST',
-  function ($scope, $rootScope, itemService, settingService, $uibModal, _CONST) {
+module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uibModal', '$location', '_CONST',
+  function ($scope, $rootScope, itemService, settingService, $uibModal, $location, _CONST) {
 
     function changeCurrentOrganization(organization) {
       $scope.organization = organization;
@@ -17,6 +17,8 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
 
     function changeCurrentIdNode(id) {
       $scope.currentIdNode = id;
+      $scope.expandedNodes = $scope.expandedNodes || [];
+      $location.hash(id == undefined ? "" : $scope.currentIdNode);
       if ($scope.currentIdNode == undefined) {
         $scope.breadcrumbElements = undefined;
         $scope.currentItem = $scope.organization;
@@ -94,7 +96,7 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
 
     $scope.$on('load-organization', function (event, data) {
       changeCurrentOrganization(data.organization);
-      changeCurrentIdNode();
+      changeCurrentIdNode($location.hash() == "" ? undefined : $location.hash());
       loadCurrentSetting();
       $scope.expandAll();
     });
