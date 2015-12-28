@@ -122,7 +122,7 @@
                                           <br>
                                           <small>
                                               {{ (ns+'.item.added') | translate }}
-                                              {{ fileItem.creation.date | date:'dd-MM-yyyy' }}
+                                              {{ fileItem.creation.date | date: $root.const.FORMATS.DATE }}
                                           </small>
                                       </div>
                                   </div>
@@ -161,12 +161,12 @@
                                     <thead>
                                     <tr>
                                         <th>{{ (ns+'.document.head.name') | translate }}</th>
-                                        <th>{{ (ns+'.document.head.creator') | translate }}</th>
+                                        <th>{{ (ns+'.document.head.date') | translate }}</th>
                                         <th>{{ (ns+'.document.head.actions') | translate }}</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr ng-if="currentItem.versions.length == 0">
+                                    <tr ng-if="versions.length == 0">
                                         <td colspan="3" class="text-center">
                                             <strong class="text-muted">{{ (ns+'.document.item.no_version') | translate }}</strong><br/>
                                             <button type="button" ng-click="editVersion()" class="btn btn-primary btn-xs m-xs">
@@ -174,14 +174,19 @@
                                             </button>
                                         </td>
                                     </tr>
-                                    <tr ng-if="currentItem.versions.length > 0 && versionsFiltered.length == 0">
+                                    <tr ng-if="versions.length > 0 && versionsFiltered.length == 0">
                                         <td colspan="3" class="text-center">
                                             <strong class="text-warning">{{ (ns+'.document.item.no_version_filter') | translate }}</strong>
                                         </td>
                                     </tr>
-                                    <tr ng-if="currentItem.versions.length > 0"
-                                        ng-repeat="(id,version) in versionsFiltered = (currentItem.versions | orderBy:'name' | filter:search)">
-
+                                    <tr ng-if="versions.length > 0"
+                                        ng-repeat="(id,version) in versionsFiltered = (versions | orderBy:'name' | filter:search)">
+                                        <td class="col-lg-4">{{ version.name }}</td>
+                                        <td class="col-lg-4">{{ version.creation.date | date: $root.const.FORMATS.DATE_TIME }}</td>
+                                        <td class="col-lg-4">
+                                            <a ng-click="editVersion(version._id)" class="btn btn-success btn-xs"><i class="fa fa-pencil"></i> {{ (ns+'.item.edit') | translate }}</a>
+                                            <a ng-click="delete(version._id)" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> {{ (ns+'.item.delete') | translate }}</a>
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>

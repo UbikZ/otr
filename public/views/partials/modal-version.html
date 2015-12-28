@@ -1,5 +1,5 @@
 <form id="modal-versions" class="form-horizontal" role="form" name="form"
-      novalidate ng-submit="submit(version)" ng-init="ns='version'; version.type='version';">
+      novalidate ng-submit="submit(item)" ng-init="ns='version'; version.type='version';">
     <div class="modal-header">
         <h3 ng-if="!identifier" class="modal-title">{{ (ns+'.title.create') | translate }}</h3>
         <h3 ng-if="identifier" class="modal-title">{{ (ns+'.title.update') | translate }}</h3>
@@ -9,7 +9,7 @@
             <label>{{ (ns+'.form.name.label') | translate }} *</label>
             <input type="text" placeholder="{{ (ns+'.form.name.placeholder') | translate }}"
                    class="form-control" name="name"
-                   ng-model="version.name" required>
+                   ng-model="item.name" required>
             <div class="m-t-xs"
                  ng-show="form.name.$invalid && form.name.$dirty">
                 <small class="text-danger help-block" ng-show="form.name.$error.required">
