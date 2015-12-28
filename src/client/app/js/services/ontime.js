@@ -15,6 +15,12 @@ module.exports = ['$http', '$translate',
       tree: function (data, success, error) {
         callbacks.get(baseUrl + '/tree', data, $http, $translate, success, error);
       },
+      project: function (data, success, error) {
+        callbacks.get(baseUrl + '/project', data, $http, $translate, success, error);
+      },
+      items: function (data, success, error) {
+        callbacks.get(baseUrl + '/items', data, $http, $translate, success, error);
+      },
     };
   }
 ];

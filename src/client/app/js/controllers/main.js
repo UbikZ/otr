@@ -1,7 +1,9 @@
 'use strict';
 
-module.exports = ['$scope', '$rootScope',
+module.exports = ['$scope', '$rootScope', 'ontimeService',
   function ($scope, $rootScope, ontimeService) {
-    // global
+    ontimeService.items({projectId: 2161}, function(res) {
+      console.log(res);
+    });
   }
 ];
