@@ -1,6 +1,5 @@
 'use strict';
 
-var toastr = require('toastr');
 var mappingSetting = require('../../../helpers/mapping/setting');
 var angular = require('angular');
 

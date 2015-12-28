@@ -1,7 +1,5 @@
 'use strict';
 
-var toastr = require('toastr');
-
 module.exports = ['$rootScope', '$scope', '$localStorage', 'userService',
   function ($rootScope, $scope, $localStorage, userService) {
     $scope.loading = false;

@@ -1,7 +1,5 @@
 'use strict';
 
-var toastr = require('toastr');
-
 module.exports = ['$scope', '$rootScope', '$stateParams', 'organizationService', '$uibModal', '$location',
   function ($scope, $rootScope, $stateParams, organizationService, $uibModal, $location) {
     organizationService.get({id: $stateParams.id}, function (res) {

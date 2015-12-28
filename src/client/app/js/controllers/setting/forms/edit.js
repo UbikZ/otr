@@ -1,6 +1,5 @@
 'use strict';
 
-var toastr = require('toastr');
 var mappingSetting = require('../../../helpers/mapping/setting');
 
 module.exports = ['$rootScope', '$scope', 'settingService', '_CONST',

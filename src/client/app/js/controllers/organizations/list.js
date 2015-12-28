@@ -1,7 +1,5 @@
 'use strict';
 
-var toastr = require('toastr');
-
 module.exports = ['$scope', '$rootScope', 'organizationService', '$uibModal',
   function ($scope, $rootScope, organizationService, $uibModal) {
     $scope.loading = true;

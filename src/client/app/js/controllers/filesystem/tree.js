@@ -1,6 +1,5 @@
 'use strict';
 
-var toastr = require('toastr');
 var recursiveTool = require('../../helpers/recursive');
 var mappingSetting = require('../../helpers/mapping/setting');
 var angular = require('angular');

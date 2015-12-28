@@ -1,7 +1,5 @@
 'use strict';
 
-var toastr = require('toastr');
-
 module.exports = ['$rootScope', '$scope', 'identifier', 'organizationService', '$uibModalInstance',
   function ($rootScope, $scope, identifier, organizationService, $uibModalInstance) {
     $scope.identifier = identifier;
