@@ -1,5 +1,5 @@
 <form id="modal-versions" class="form-horizontal" role="form" name="form"
-      novalidate ng-submit="submit(item)" ng-init="ns='version'; version.type='version';">
+      novalidate ng-submit="submit(item)" ng-init="ns='version'; item.type='version';">
     <div class="modal-header">
         <h3 ng-if="!identifier" class="modal-title">{{ (ns+'.title.create') | translate }}</h3>
         <h3 ng-if="identifier" class="modal-title">{{ (ns+'.title.update') | translate }}</h3>
