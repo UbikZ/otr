@@ -151,11 +151,14 @@
                                 </div>
                             </div>
                             <div class="table-responsive">
-                                <div class="pull-rigth">
-                                <span class="pull-right small text-muted">
-                                    {{ versionsFiltered.length }}
-                                    {{ (ns + ".document.versions_found") | translate }}
-                                </span>
+                                <div>
+                                    <button ng-if="versions.length > 0" type="button" ng-click="editVersion()" class="btn btn-primary btn-xs m-xs">
+                                        {{ (ns + ".document.add") | translate }}
+                                    </button>
+                                    <span class="pull-right small text-muted m-t-sm">
+                                        {{ versionsFiltered.length }}
+                                        {{ (ns + ".document.versions_found") | translate }}
+                                    </span>
                                 </div>
                                 <table class="table table-striped">
                                     <thead>
