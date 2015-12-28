@@ -145,7 +145,7 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
             return $scope.organization._id;
           },
           identifier: function () {
-            return {id: objectId, parentId: $scope.currentIdNode};
+            return {id: objectId, parentId: $scope.currentIdNode, isVersion: true};
           },
         }
       });

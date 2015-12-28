@@ -17,6 +17,48 @@
                 </small>
             </div>
         </div>
+        <div class="social-feed-box m-t-lg">
+            <div class="pull-right social-action">
+                <a class="btn btn-primary btn-sm" ng-click="refresh()">
+                    <i class="fa fa-refresh"></i>
+                </a>
+            </div>
+            <div class="social-avatar">
+                <span class="col-lg-3 pull-left">
+                    <img alt="image" ng-src="img/ontime.png" class="img-responsive">
+                </span>
+                <div class="media-body">
+                    <strong>{{ (ns+'.ontime.title') | translate }}</strong><br/>
+                    <small class="text-muted">{{ (ns+'.ontime.description') | translate }}</small>
+                </div>
+            </div>
+            <div class="social-body">
+                <strong>
+                    <span class="text-muted">{{ (ns+'.ontime.selected') | translate }}:</span>
+                    <span ng-if="selected != undefined" class="text-navy">
+                        {{ selected.name }}
+                    </span>
+                    <span ng-if="selected == undefined" class="text-danger">
+                        {{ (ns+'.ontime.no_selection') | translate }}
+                    </span>
+                </strong>
+            </div>
+            <div class="social-footer">
+                <div ng-if="loadingOntime" ng-include="'views/partials/spinner.html'"></div>
+                <div ng-if="!loadingOntime">
+                    <div treecontrol class="tree-light"
+                         tree-model="ontimeItems"
+                         options="treeOptions"
+                         on-selection="onSelect(node, selected, $parentNode, $index)"
+                         selected-node="selected"
+                         expanded-nodes="expandedNodes"
+                         order-by="name">
+                        <span class="fa fa-folder text-success" aria-hidden="true"></span>
+                        {{node.name}}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="modal-footer">
         <div class="row">
@@ -26,7 +68,7 @@
                     <i class="fa fa-reply"></i> <strong>{{ (ns+'.form.quit') | translate }}</strong>
                 </a>
                 <button class="btn btn-sm btn-primary pull-right" type="submit"
-                        ng-disabled="loading">
+                        ng-if="item.ontimeId != undefined" ng-disabled="form.$invalid || loading">
                     <i class="fa fa-save"></i> <strong>{{ (ns+'.form.submit') | translate }}</strong>
                 </button>
             </div>

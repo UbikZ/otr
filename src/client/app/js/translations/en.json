@@ -516,6 +516,12 @@
       "create": "Création d'un nouvelle version",
       "update": "Mise à jour de la version"
     },
+    "ontime": {
+      "title": "Liste des projets issus d'OnTime",
+      "description": "Sélectionner un projet afin de l'importer.",
+      "selected": "Projet sélectionné",
+      "no_selection": "Veuillez sélectionner un projet"
+    },
     "form": {
       "name": {
         "label": "Nom",

@@ -5219,8 +5219,6 @@ del {
     padding: 0;
 }
 .social-feed-separated .social-avatar img {
-    width: 52px;
-    height: 52px;
     border: 1px solid #e7eaec;
 }
 .social-feed-separated .social-feed-box .social-avatar {
@@ -5255,8 +5253,6 @@ del {
     margin-left: 45px;
 }
 .social-avatar img {
-    height: 40px;
-    width: 40px;
     margin-right: 10px;
 }
 .social-avatar .media-body a {
