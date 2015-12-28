@@ -14,8 +14,7 @@ function response(res, status, data, message, err) {
     data: {},
   }, data);
 
-  res.status(status);
-  res.json(dat);
+  res.status(status).json(dat);
 }
 
 function log(req, message, err) {
