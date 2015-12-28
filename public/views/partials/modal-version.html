@@ -17,7 +17,7 @@
                 </small>
             </div>
         </div>
-        <div class="social-feed-box m-t-lg">
+        <div class="social-feed-box m-t-lg" ng-if="!identifier">
             <div class="pull-right social-action">
                 <a class="btn btn-primary btn-sm" ng-click="refresh()">
                     <i class="fa fa-refresh"></i>
@@ -68,7 +68,7 @@
                     <i class="fa fa-reply"></i> <strong>{{ (ns+'.form.quit') | translate }}</strong>
                 </a>
                 <button class="btn btn-sm btn-primary pull-right" type="submit"
-                        ng-if="item.ontimeId != undefined" ng-disabled="form.$invalid || loading">
+                        ng-if="item.ontimeId != undefined || identifier" ng-disabled="form.$invalid || loading">
                     <i class="fa fa-save"></i> <strong>{{ (ns+'.form.submit') | translate }}</strong>
                 </button>
             </div>
