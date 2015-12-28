@@ -67,13 +67,4 @@ module.exports.controller = function (app, config) {
       }
     });
   });
-
-  /*
-   * Ontime Me
-   */
-  app.get(prefix + '/me-ontime', http.ensureAuthorized, function (req, res) {
-    http.ontimeMe(req, res, function (userData) {
-      http.response(res, 200, {ontime_user: userData});
-    });
-  });
 };

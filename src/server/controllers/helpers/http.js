@@ -72,26 +72,10 @@ function ontimeRequestToken(req, res, cb) {
   });
 }
 
-function ontimeMe(req, res, cb) {
-  ontimeRequester.me(req.ot_token, function (result) {
-    result = JSON.parse(result);
-    if (result.error) {
-      log(req, 'Ontime Error: ' + result.error_description);
-      response(res, 403, {error: result}, "-3", result.error);
-    } else if (result.data) {
-      cb(result.data);
-    } else {
-      log(req, 'Ontime Error: issue during OnTime "/me" request');
-      response(res, 500, {}, "-1");
-    }
-  });
-}
-
 module.exports = {
   response: response,
   log: log,
   ensureAuthorized: ensureAuthorized,
   checkAuthorized: checkAuthorized,
   ontimeRequestToken: ontimeRequestToken,
-  ontimeMe: ontimeMe,
 };

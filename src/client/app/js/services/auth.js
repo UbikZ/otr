@@ -19,7 +19,7 @@ module.exports = ['$http', '$translate',
         callbacks.get(baseUrl + '/me', data, $http, $translate, success, error);
       },
       meOntime: function (data, success, error) {
-        callbacks.get(baseUrl + '/me-ontime', data, $http, $translate, success, error);
+        callbacks.get(baseUrl + '/ontime/me', data, $http, $translate, success, error);
       },
     };
   }
