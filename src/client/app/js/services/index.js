@@ -8,4 +8,3 @@ app.factory('userService', require('./user'));
 app.factory('organizationService', require('./organization'));
 app.factory('itemService', require('./item'));
 app.factory('settingService', require('./setting'));
-app.factory('versionService', require('./version'));
