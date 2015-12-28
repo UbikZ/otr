@@ -49,4 +49,5 @@ function tree(accessToken, cb) {
 module.exports = {
   requestToken: requestToken,
   me: me,
+  tree: tree,
 };
