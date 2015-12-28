@@ -85,7 +85,7 @@
                                     <td class="project-title">
                                         <strong>{{ organization.name }}</strong>
                                         <br>
-                                        <small>{{ (ns+'.item.create') | translate }} {{ organization.creation.date | date:'dd-MM-yyyy HH:mm:ss'}}</small>
+                                        <small>{{ (ns+'.item.create') | translate }} {{ organization.creation.date | date: $root.const.FORMATS.DATE_TIME }}</small>
                                     </td>
                                     <td>
                                         <small>

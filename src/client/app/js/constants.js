@@ -1,6 +1,10 @@
 'use strict';
 
 module.exports = {
+  'FORMATS': {
+    'DATE_TIME': 'dd-MM-yyyy HH:mm:ss',
+    'DATE': 'dd-MM-yyyy',
+  },
   'ROUTES': {
     'LOGIN': 'login',
     'APP': 'app',

@@ -60,9 +60,9 @@
                             <div class="col-lg-7" id="date_info">
                                 <dl class="dl-horizontal">
                                     <dt>{{ (ns+'.organization.creation_date') | translate }}:</dt>
-                                    <dd>{{ organization.creation.date | date:'dd-MM-yyyy HH:mm:ss'}}</dd>
+                                    <dd>{{ organization.creation.date | date: $root.const.FORMATS.DATE_TIME }}</dd>
                                     <dt>{{ (ns+'.organization.update_date') | translate }}:</dt>
-                                    <dd>{{ organization.update.date | date:'dd-MM-yyyy HH:mm:ss'}}</dd>
+                                    <dd>{{ organization.update.date | date: $root.const.FORMATS.DATE_TIME }}</dd>
                                 </dl>
                             </div>
                         </div>
