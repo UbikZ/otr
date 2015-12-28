@@ -5,14 +5,7 @@
                 <div class="ibox-content">
                     <h4>{{ (ns+'.title') | translate }}</h4>
 
-                    <div ng-if="loading">
-                        <div class="sk-folding-cube">
-                            <div class="sk-cube1 sk-cube"></div>
-                            <div class="sk-cube2 sk-cube"></div>
-                            <div class="sk-cube4 sk-cube"></div>
-                            <div class="sk-cube3 sk-cube"></div>
-                        </div>
-                    </div>
+                    <div ng-if="loading" ng-include="'views/partials/spinner.html'"></div>
                     <div ng-if="!loading">
                         <form role="form">
                             <pre>{{ json }}</pre>

@@ -1,6 +1,8 @@
 {
   "messages": {
-    "info": {},
+    "info": {
+      "waiting": "Veuillez patienter"
+    },
     "success": {
       "1": "Bienvenue sur OnTime Reader v3",
       "2": "La création du nouvel élément a bien été effectuée",
