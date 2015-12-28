@@ -18,9 +18,13 @@ function findSpecificRecursivelyById(parentElement, elementId, cb) {
     var element = parentElement.projects.id(elementId);
     if (element == undefined && parentElement.documents !== undefined) {
       element = parentElement.documents.id(elementId);
-    }
-    if (element == undefined && parentElement.versions !== undefined) {
-      element = parentElement.versions.id(elementId);
+      if (element == undefined) {
+        parentElement.documents.forEach(function(document) {
+          if (document.versions != undefined) {
+            element = document.versions.id(elementId);
+          }
+        });
+      }
     }
     if (element == undefined) {
       parentElement.projects.forEach(function (subElement) {
