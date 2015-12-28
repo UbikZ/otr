@@ -297,7 +297,7 @@
       "versions_found": "versions trouvées",
       "head": {
         "name": "Nom",
-        "creator": "Créateur",
+        "date": "Date de création",
         "actions": "Actions"
       },
       "item": {
