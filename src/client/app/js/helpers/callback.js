@@ -21,19 +21,19 @@ function ko(res, $translate) {
 
 function requestResult($http, $translate, success, error) {
   $http
-    .then(function (res) {
+    .success(function (res) {
       if (res != undefined) {
-        ok(res.data, $translate);
+        ok(res, $translate);
         if (success != undefined) {
-          success(res.data);
+          success(res);
         }
       }
     })
-    .then(function (res) {
+    .error(function (res) {
       if (res != undefined) {
-        ko(res.data, $translate);
+        ko(res, $translate);
         if (error != undefined) {
-          error(res.data);
+          error(res);
         }
       }
     });
