@@ -289,6 +289,7 @@
       }
     },
     "document": {
+      "add": "Ajouter une version",
       "create": "Nouvelle version",
       "search": {
         "title": "Recherche",
@@ -512,6 +513,17 @@
     "title": {
       "create": "Création d'un nouvelle version",
       "update": "Mise à jour de la version"
+    },
+    "form": {
+      "name": {
+        "label": "Nom",
+        "placeholder": "Nom de la version",
+        "errors": {
+          "required": "Veuillez renseigner le nom de la version."
+        }
+      },
+      "submit": "Enregistrer",
+      "quit": "Annuler"
     }
   }
 }
