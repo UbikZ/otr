@@ -116,8 +116,16 @@ module.exports.controller = function (app, config) {
                     modelItem = new Document(item);
                     element.documents.push(modelItem);
                   } else if (data.type == "version") {
-                    modelItem = new Version(item);
-                    element.versions.push(modelItem);
+                    if (data.ontimeId != undefined) {
+                      modelItem = new Version(item);
+                      element.versions.push(modelItem);
+                      // todo : call request (from "data.ontimeId")
+                      // todo : parse JSON to create array of entries
+                      // todo : create entries
+                    } else {
+                      http.log(req, 'Error: item creation (version one) failed (data.ontimeId is undefined).');
+                      http.response(res, 404, {}, "-7");
+                    }
                   } else {
                     http.log(req, 'Error: item creation failed (data.type is undefined).');
                     http.response(res, 404, {}, "-7");
