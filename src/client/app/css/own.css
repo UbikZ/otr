@@ -73,3 +73,8 @@
 #modal-settings .form-control:-ms-input-placeholder {
     color: #ed5565;
 }
+
+.social-footer.ontime {
+    height: 350px;
+    overflow-x: scroll;
+}
