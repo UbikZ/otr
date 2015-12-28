@@ -185,10 +185,19 @@
                                     <tr ng-if="versions.length > 0"
                                         ng-repeat="(id,version) in versionsFiltered = (versions | orderBy:'name' | filter:search)">
                                         <td class="col-lg-4">{{ version.name }}</td>
-                                        <td class="col-lg-4">{{ version.creation.date | date: $root.const.FORMATS.DATE_TIME }}</td>
-                                        <td class="col-lg-4">
-                                            <a ng-click="editVersion(version._id)" class="btn btn-success btn-xs"><i class="fa fa-pencil"></i> {{ (ns+'.item.edit') | translate }}</a>
-                                            <a ng-click="delete(version._id)" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> {{ (ns+'.item.delete') | translate }}</a>
+                                        <td class="col-lg-3">{{ version.creation.date | date: $root.const.FORMATS.DATE_TIME }}</td>
+                                        <td class="col-lg-5">
+                                            <a ui-sref="{{ $root.routes.ORGANIZATIONS_DETAIL }}({id: organization._id})"
+                                               class="btn btn-primary btn-xs">
+                                                <i class="fa fa-folder-open"></i>
+                                                {{ (ns+'.item.open') | translate }}
+                                            </a>
+                                            <a ng-click="editVersion(version._id)" class="btn btn-success btn-xs">
+                                                <i class="fa fa-pencil"></i> {{ (ns+'.item.edit') | translate }}
+                                            </a>
+                                            <a ng-click="delete(version._id)" class="btn btn-danger btn-xs">
+                                                <i class="fa fa-trash"></i> {{ (ns+'.item.delete') | translate }}
+                                            </a>
                                         </td>
                                     </tr>
                                     </tbody>
