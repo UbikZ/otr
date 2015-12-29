@@ -4,10 +4,12 @@ var Organization = require('../models/organization');
 var Project = require('../models/project');
 var Document = require('../models/document');
 var Version = require('../models/version');
+var Entry = require('../models/entry');
 var User = require('../models/user');
 var mongoose = require('mongoose');
 var http = require('./helpers/http');
 var merge = require('merge');
+var ontimeRequester = require('./helpers/ontime');
 
 module.exports.controller = function (app, config) {
 
@@ -118,10 +120,53 @@ module.exports.controller = function (app, config) {
                   } else if (data.type == "version") {
                     if (data.ontimeId != undefined) {
                       modelItem = new Version(item);
-                      element.versions.push(modelItem);
+                      modelItem.update = modelItem.creation = {user: user._id, date: new Date()};
                       // todo : call request (from "data.ontimeId")
-                      // todo : parse JSON to create array of entries
-                      // todo : create entries
+                      ontimeRequester.items(req.ot_token, data.ontimeId, function (result) {
+                        result = JSON.parse(result);
+                        if (result.error) {
+                          http.log(req, 'Ontime Error: ' + result.error_description);
+                          http.response(res, 403, {error: result}, "-3", result.error);
+                        } else if (result.data) {
+                          result.data.forEach(function (entry) {
+                            var item = new Entry();
+                            item.parent_project.name = entry.parent_project.name;
+                            item.parent_project.path = entry.parent_project.path;
+                            item.parent_project.ontime_id = entry.parent_project.id;
+                            item.project.name = entry.project.name;
+                            item.project.path = entry.project.path;
+                            item.project.ontime_id = entry.project.id;
+                            item.name = entry.name;
+                            item.ontime_id = entry.id;
+                            item.update = {user: user._id, date: new Date()};
+                            item.estimate = {
+                              duration_minutes: entry.estimated_duration.duration_minutes,
+                              otr_low: entry.custom_fields.custom_257,
+                              otr_high: entry.custom_fields.custom_259,
+                              otr_isEstimated: entry.custom_fields.custom_262,
+                            };
+
+                            modelItem.entries.push(item);
+                          });
+                          // todo : create setting from parent
+                          console.log(modelItem);
+                          element.versions.push(modelItem);
+
+                          organization.save(function (err, newOrganization) {
+                            if (err) {
+                              http.log(req, 'Internal error: create item (version) -> save organization', err);
+                              http.response(res, 500, {}, "-1", err);
+                            } else {
+                              newOrganization.populate('creation.user', function (err, newOrg) {
+                                http.response(res, 200, {organization: newOrg, item: modelItem, type: data.type + 's'}, "2");
+                              });
+                            }
+                          });
+                        } else {
+                          http.log(req, 'Ontime Error: issue during OnTime "/items" request');
+                          http.response(res, 500, {}, "-1");
+                        }
+                      });
                     } else {
                       http.log(req, 'Error: item creation (version one) failed (data.ontimeId is undefined).');
                       http.response(res, 404, {}, "-7");

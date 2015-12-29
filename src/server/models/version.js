@@ -2,6 +2,7 @@
 
 var mongoose = require('mongoose');
 var Setting = require('./setting').schema;
+var Entry = require('./entry').schema;
 
 var Version = new mongoose.Schema();
 Version.add({
@@ -15,7 +16,7 @@ Version.add({
     date: {type: Date, default: Date.now},
   },
   setting: Setting,
-  // todo: add entry here
+  entries: [Entry],
 });
 
 module.exports = mongoose.model('Version', Version);
