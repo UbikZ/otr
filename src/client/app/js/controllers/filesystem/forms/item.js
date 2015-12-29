@@ -68,6 +68,9 @@ module.exports = ['$rootScope', '$scope', 'identifier', 'organizationId', 'itemS
         if (identifier.parentId) {
           item = Object.assign(item, {parentId: identifier.parentId});
         }
+        if (identifier.isVersion === true) {
+          item.setting = identifier.setting;
+        }
       }
       if (identifier.isVersion === true) {
         item.entries = {};
