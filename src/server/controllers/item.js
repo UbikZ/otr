@@ -132,10 +132,10 @@ module.exports.controller = function (app, config) {
                           result.data.forEach(function (entry) {
                             var item = new Entry();
                             item.parent_project.name = entry.parent_project.name;
-                            item.parent_project.path = entry.parent_project.path;
+                            item.parent_project.path = entry.parent_project.path.split('\\');
                             item.parent_project.ontime_id = entry.parent_project.id;
                             item.project.name = entry.project.name;
-                            item.project.path = entry.project.path;
+                            item.project.path = entry.project.path.split('\\');
                             item.project.ontime_id = entry.project.id;
                             item.name = entry.name;
                             item.ontime_id = entry.id;

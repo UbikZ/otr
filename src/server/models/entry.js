@@ -8,12 +8,12 @@ var schema = new mongoose.Schema({
   project: {
     name: {type: String, trim: true, require: true},
     ontime_id: {type: Number, index: true},
-    path: {type: String, trim: true},
+    path: [{type: String, trim: true}],
   },
   parent_project: {
     name: {type: String, trim: true, require: true},
     ontime_id: {type: Number, index: true},
-    path: {type: String, trim: true},
+    path: [{type: String, trim: true}],
   },
   update: {
     user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
