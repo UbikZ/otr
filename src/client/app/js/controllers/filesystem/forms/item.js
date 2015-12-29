@@ -1,6 +1,7 @@
 'use strict';
 
 var recursiveTool = require('../../../helpers/recursive');
+var angular = require('angular');
 
 module.exports = ['$rootScope', '$scope', 'identifier', 'organizationId', 'itemService', 'ontimeService', '$uibModalInstance',
   function ($rootScope, $scope, identifier, organizationId, itemService, ontimeService, $uibModalInstance) {
@@ -10,7 +11,7 @@ module.exports = ['$rootScope', '$scope', 'identifier', 'organizationId', 'itemS
 
     if ($scope.identifier) {
       itemService.get({organizationId: organizationId, itemId: $scope.identifier}, function (res) {
-        $scope.item = res.item;
+        $scope.item = angular.extend({}, $scope.item || {}, res.item);
       });
     }
 
@@ -23,7 +24,9 @@ module.exports = ['$rootScope', '$scope', 'identifier', 'organizationId', 'itemS
         });
       };
 
-      $scope.refresh();
+      if ($scope.identifier == undefined) {
+        $scope.refresh();
+      }
 
       $scope.selected = undefined;
       $scope.treeOptions = {
@@ -65,6 +68,9 @@ module.exports = ['$rootScope', '$scope', 'identifier', 'organizationId', 'itemS
         if (identifier.parentId) {
           item = Object.assign(item, {parentId: identifier.parentId});
         }
+      }
+      if (identifier.isVersion === true) {
+        item.entries = {};
       }
 
       itemService.edit(item, function (res) {

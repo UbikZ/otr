@@ -26,6 +26,7 @@ module.exports.controller = function (app, config) {
           http.log(req, 'Internal error: get organization', err);
           http.response(res, 500, {}, "-1", err);
         } else if (organization) {
+          // todo: optimize with lazy loading for 'version' (do not load 'entries' attribute)
           organization.findDeepAttributeById(data.itemId, function (element) {
             if (element != undefined) {
               http.response(res, 200, {item: element});
@@ -141,15 +142,14 @@ module.exports.controller = function (app, config) {
                             item.update = {user: user._id, date: new Date()};
                             item.estimate = {
                               duration_minutes: entry.estimated_duration.duration_minutes,
-                              otr_low: entry.custom_fields.custom_257,
-                              otr_high: entry.custom_fields.custom_259,
-                              otr_isEstimated: entry.custom_fields.custom_262,
+                              otr_low: entry.custom_fields != undefined ? entry.custom_fields.custom_257 : null,
+                              otr_high: entry.custom_fields != undefined ? entry.custom_fields.custom_259 : null,
+                              otr_isEstimated: entry.custom_fields != undefined ? entry.custom_fields.custom_262 : null,
                             };
 
                             modelItem.entries.push(item);
                           });
                           // todo : create setting from parent
-                          console.log(modelItem);
                           element.versions.push(modelItem);
 
                           organization.save(function (err, newOrganization) {
