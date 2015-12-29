@@ -1,6 +1,7 @@
 'use strict';
 
 var Organization = require('../models/organization');
+var Setting = require('../models/setting');
 var Project = require('../models/project');
 var Document = require('../models/document');
 var Version = require('../models/version');
@@ -10,6 +11,7 @@ var mongoose = require('mongoose');
 var http = require('./helpers/http');
 var merge = require('merge');
 var ontimeRequester = require('./helpers/ontime');
+var mapping = require('../models/helpers/mapping');
 
 module.exports.controller = function (app, config) {
 
@@ -149,7 +151,7 @@ module.exports.controller = function (app, config) {
 
                             modelItem.entries.push(item);
                           });
-                          // todo : create setting from parent
+                          modelItem.setting = new Setting(mapping.settingDtoToDal(undefined, data.setting));
                           element.versions.push(modelItem);
 
                           organization.save(function (err, newOrganization) {
