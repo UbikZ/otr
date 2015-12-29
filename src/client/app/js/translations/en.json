@@ -254,6 +254,7 @@
     },
     "item": {
       "open": "Ouvrir",
+      "preview": "Prévisualiser",
       "edit": "Editer",
       "delete": "Supprimer",
       "added": "Ajouté le",
