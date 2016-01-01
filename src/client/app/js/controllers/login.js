@@ -13,7 +13,7 @@ module.exports = ['$scope', '$rootScope', 'authService', '$location', '$localSto
         $rootScope.user = res.user;
         $rootScope.isAuthenticated = true;
         $location.path('/');
-      }, function(err) {
+      }, function() {
         $scope.loading = false;
       });
     };

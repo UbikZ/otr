@@ -13,7 +13,7 @@ module.exports = ['$http', '$translate',
       update: function(data, success, error) {
         callbacks.post(baseUrl + '/user/update', data, $http, $translate, success, error);
       },
-      get: function(data, success) {
+      get: function(data, success, error) {
         callbacks.get(baseUrl + '/user', data, $http, $translate, success, error);
       }
     };
