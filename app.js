@@ -55,6 +55,12 @@ fs.readdirSync(config.path.server.controller).forEach(function (file) {
   }
 });
 
+// Add extend prototypes for helper utilities
+fs.readdirSync(config.path.server.prototype).forEach(function (file) {
+  if (file.substr(-3) == '.js') {
+    require(config.path.server.prototype + '/' + file);
+  }
+});
 
 app.listen(port, function () {
   console.log('Express server started on port %s', port);

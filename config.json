@@ -17,7 +17,8 @@
     "server": {
       "controller": "./src/server/controllers",
       "socket": "./src/server/sockets",
-      "model": "./src/server/models"
+      "model": "./src/server/models",
+      "prototype": "./src/server/prototypes"
     }
   },
   "particularities": {

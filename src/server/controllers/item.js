@@ -6,6 +6,7 @@ var Project = require('../models/project');
 var Document = require('../models/document');
 var Version = require('../models/version');
 var Entry = require('../models/entry');
+var ProjectEntry = require('../models/projectEntry');
 var User = require('../models/user');
 var mongoose = require('mongoose');
 var http = require('./helpers/http');
@@ -124,33 +125,50 @@ module.exports.controller = function (app, config) {
                     if (data.ontimeId != undefined) {
                       modelItem = new Version(item);
                       modelItem.update = modelItem.creation = {user: user._id, date: new Date()};
-                      // todo : call request (from "data.ontimeId")
                       ontimeRequester.items(req.ot_token, data.ontimeId, function (result) {
                         result = JSON.parse(result);
                         if (result.error) {
                           http.log(req, 'Ontime Error: ' + result.error_description);
                           http.response(res, 403, {error: result}, "-3", result.error);
                         } else if (result.data) {
-                          result.data.forEach(function (entry) {
-                            var item = new Entry();
-                            item.parent_project.name = entry.parent_project.name;
-                            item.parent_project.path = entry.parent_project.path.split('\\');
-                            item.parent_project.ontime_id = entry.parent_project.id;
-                            item.project.name = entry.project.name;
-                            item.project.path = entry.project.path.split('\\');
-                            item.project.ontime_id = entry.project.id;
-                            item.name = entry.name;
-                            item.ontime_id = entry.id;
-                            item.update = {user: user._id, date: new Date()};
-                            item.estimate = {
-                              duration_minutes: entry.estimated_duration.duration_minutes,
-                              otr_low: entry.custom_fields != undefined ? entry.custom_fields.custom_257 : null,
-                              otr_high: entry.custom_fields != undefined ? entry.custom_fields.custom_259 : null,
-                              otr_isEstimated: entry.custom_fields != undefined ? entry.custom_fields.custom_262 : null,
-                            };
+                          var elements = [];
+                          result.data.forEach(function(item) {
+                            var indexOfParentProject = elements.pluck('ontime_id').indexOf(item.parent_project.id);
+                            if (indexOfParentProject == -1) {
+                              elements.push(new ProjectEntry({
+                                name: item.parent_project.name,
+                                ontime_id: item.parent_project.id,
+                                path: item.parent_project.path.split('\\'),
+                                children: [],
+                              }));
+                              indexOfParentProject = elements.length - 1;
+                            }
 
-                            modelItem.entries.push(item);
+                            var indexOfProject =
+                              elements[indexOfParentProject].children.pluck('ontime_id').indexOf(item.project.id);
+                            if (indexOfProject == -1) {
+                              elements[indexOfParentProject].children.push(new ProjectEntry({
+                                name: item.project.name,
+                                ontime_id: item.project.id,
+                                path: item.project.path.split('\\'),
+                                entries: [],
+                              }));
+                              indexOfProject = elements[indexOfParentProject].children.length - 1;
+                            }
+
+                            elements[indexOfParentProject].children[indexOfProject].entries.push(new Entry({
+                              name: item.name,
+                              ontime_id: item.id,
+                              estimate: {
+                                duration_minutes: item.estimated_duration.duration_minutes,
+                                otr_low: item.custom_fields != undefined ? item.custom_fields.custom_257 : null,
+                                otr_high: item.custom_fields != undefined ? item.custom_fields.custom_259 : null,
+                                otr_isEstimated: item.custom_fields != undefined ? item.custom_fields.custom_262 : null,
+                              },
+                            }));
                           });
+
+                          modelItem.entries = elements;
                           modelItem.setting = new Setting(mapping.settingDtoToDal(undefined, data.setting));
                           element.versions.push(modelItem);
 
