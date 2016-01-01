@@ -169,7 +169,7 @@ module.exports.controller = function (app, config) {
                           });
 
                           modelItem.entries = elements;
-                          modelItem.setting = new Setting(mapping.settingDtoToDal(undefined, data.setting));
+                          modelItem.settings.push(new Setting(mapping.settingDtoToDal(undefined, data.setting)));
                           element.versions.push(modelItem);
 
                           organization.save(function (err, newOrganization) {
