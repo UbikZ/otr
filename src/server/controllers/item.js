@@ -138,7 +138,7 @@ module.exports.controller = function (app, config) {
                               elements.push(new ProjectEntry({
                                 name: item.parent_project.name,
                                 ontime_id: item.parent_project.id,
-                                path: item.parent_project.path.split('\\'),
+                                path: item.parent_project.path ? item.parent_project.path.split('\\') : [],
                                 children: [],
                               }));
                               indexOfParentProject = elements.length - 1;
@@ -150,7 +150,7 @@ module.exports.controller = function (app, config) {
                               elements[indexOfParentProject].children.push(new ProjectEntry({
                                 name: item.project.name,
                                 ontime_id: item.project.id,
-                                path: item.project.path.split('\\'),
+                                path: item.project.path ? item.project.path.split('\\') : [],
                                 entries: [],
                               }));
                               indexOfProject = elements[indexOfParentProject].children.length - 1;
