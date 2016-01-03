@@ -376,6 +376,7 @@
     },
     "form": {
       "submit": "Save",
+      "reset": "Restore",
       "quit": "Cancel",
       "contributor_price": {
         "label": "Price day / collaborator",

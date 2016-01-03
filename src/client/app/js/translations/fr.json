@@ -376,6 +376,7 @@
     },
     "form": {
       "submit": "Enregistrer",
+      "reset": "Restorer",
       "quit": "Annuler",
       "contributor_price": {
         "label": "Prix jour / collaborateur",
