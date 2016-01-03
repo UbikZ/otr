@@ -1,13 +1,17 @@
 'use strict';
 
-module.exports = ['$scope', '$rootScope', '$stateParams', 'itemService',
-  function ($scope, $rootScope, $stateParams, itemService, $uibModal) {
+module.exports = ['$scope', '$rootScope', '$stateParams', 'itemService', '$location'
+  function ($scope, $rootScope, $stateParams, itemService, $location) {
     itemService.get({
       organizationId: $stateParams.organizationId,
       itemId: $stateParams.itemId,
     }, function (res) {
-      console.log(res.organization);
-      console.log(res.item);
+      if (res.organization == undefined || res.item == undefined) {
+        $location.path('/');
+      } else {
+        console.log(res.organization);
+        console.log(res.item);
+      }
     });
   }
 ];
