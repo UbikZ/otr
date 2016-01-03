@@ -19,7 +19,7 @@ module.exports.controller = function (app, config) {
   var prefix = '/api/v' + config.api.version + '/item';
 
   /*
-   * Get Organization (by filtering)
+   * Get Item (by filtering)
    */
   app.get(prefix, http.ensureAuthorized, function (req, res) {
     var data = req.query;
@@ -32,7 +32,7 @@ module.exports.controller = function (app, config) {
           // todo: optimize with lazy loading for 'version' (do not load 'entries' attribute)
           organization.findDeepAttributeById(data.itemId, function (element) {
             if (element != undefined) {
-              http.response(res, 200, {item: element});
+              http.response(res, 200, {organization: organization, item: element});
             } else {
               http.log(req, 'Error: item with id (' + data.itemId + ') for "get request" not found.');
               http.response(res, 404, {}, "-6");
