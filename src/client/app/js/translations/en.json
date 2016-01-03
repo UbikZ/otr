@@ -1,112 +1,119 @@
 {
   "messages": {
     "info": {
-      "waiting": "Veuillez patienter"
+      "waiting": "Please wait"
     },
     "success": {
-      "1": "Bienvenue sur OnTime Reader v3",
-      "2": "La création du nouvel élément a bien été effectuée",
-      "3": "La mise à jour de l'élément a bien été effectuée",
-      "4": "La suppression de l'élément a bien été effectuée",
-      "5": "La création de la nouvelle société a bien été effectuée",
-      "6": "La mise à jour de la société a bien été effectuée",
-      "7": "La suppression de la société a bien été effectuée",
-      "8": "La création de votre paramétrage global a bien été effectuée",
-      "9": "La mise à jour de votre paramétrage global a bien été effectuée",
-      "10": "La mise à jour des paramètres a bien été effectuée",
-      "11": "La mise à jour de votre profile a bien été effectuée"
+      "1": "Welcome to OnTime Reader v3",
+      "2": "The creation of the new element is successful",
+      "3": "The update of the element is successful",
+      "4": "The removal of the element is successful",
+      "5": "The creation of the new company is successful",
+      "6": "The upgrade of the company is successful",
+      "7": "The removal of the company is successful",
+      "8": "The creation of your overall settings is successful",
+      "9": "The upgrade of your overall settings is successful",
+      "10": "The update of the setting parameters is successful",
+      "11": "The update your profile is successful"
     },
     "warning": {},
     "error": {
-      "-1": "Une erreur interne s'est produite.",
-      "-2": "Le jeton utilisé n'est pas valide.",
-      "-3": "Une erreur s'est produite lors de la connexion à OnTime",
-      "-4": "L'utilisateur n'a pas été trouvé",
-      "-5": "La société n'a pas été trouvée",
-      "-6": "L'élément n'a pas été trouvé",
-      "-7": "Une erreur s'est produite lors de la création d'un nouvel élément.",
-      "-8": "Une erreur s'est produite lors de la mise à jour d'un élément",
-      "-9": "Une erreur s'est produite lors de la récupération des sociétés",
-      "-10": "Une erreur s'est produite lors de la récupération des paramètres",
-      "-11": "Une erreur s'est produite lors de la mise à jour des paramètres",
-      "-12": "Une erreur s'est produite lors de la récupération des utilisateurs",
-      "-13": "Une erreur s'est produite lors de la création d'une nouvelle version",
-      "-14": "Une erreur s'est produite lors de la mise à jour de la version",
-      "-15": "Une erreur s'est produite lors de la mise à jour de la version"
+      "-1": "An internal error occurred.",
+      "-2": "The token used is invalid.",
+      "-3": "An error occurred while connecting to OnTime",
+      "-4": "The user was not found",
+      "-5": "The company was not found",
+      "-6": "The item was not found",
+      "-7": "An error occurred while creating a new element.",
+      "-8": "An error occurred while updating an item",
+      "-9": "An error occurred while retrieving companies",
+      "-10": "An error occurred while retrieving settings",
+      "-11": "An error occurred while updating the settings",
+      "-12": "An error occurred when retrieving users",
+      "-13": "An error occurred when creating a new version",
+      "-14": "An error occurred while updating the version",
+      "-15": "An error occurred while updating the version"
     }
   },
   "login": {
-    "welcome": "Bienvenue sur la version 3 d'OnTime Reader",
+    "welcome": "Welcome to version 3 OnTime Reader",
     "description": "",
-    "login": "Veuillez utiliser votre nom d'utilisateur et mot de passe d'OnTime",
+    "login": "Please use your username and password OnTime",
     "form": {
       "username": {
-        "placeholder": "Nom d'utilisateur",
+        "placeholder": "Username",
         "errors": {
-          "required": "Veuillez renseigner votre nom d'utilisateur (celui de votre compte OnTime)."
+          "required": "Please enter your user name (for your OnTime account)."
         }
       },
       "password": {
-        "placeholder": "Mot de passe",
+        "placeholder": "Password",
         "errors": {
-          "required": "Veuillez renseigner votre mot de passe (celui de compte OnTime)."
+          "required": "Please enter your password (the one OnTime account)."
         }
       },
-      "submit": "Se connecter"
+      "submit": "Connect"
     }
   },
   "base": {
     "header": {
-      "logout": "Se déconnecter"
+      "logout": "Logout",
+      "language": {
+        "title": "Languages",
+        "items": {
+          "english": "English",
+          "french": "French"
+        }
+      }
     },
     "left-sidebar": {
-      "home": "Accueil",
-      "organizations": "Sociétés",
+      "home": "Home",
+      "organizations": "Companies",
       "organization": {
-        "list": "Liste",
-        "settings": "Paramétrage"
+        "list": "List",
+        "settings": "Setting"
       },
-      "accounts": "Compte",
+      "accounts": "Account",
       "account": {
         "manage": "Profile OTR",
         "ontime": "Profile Ontime"
       },
-      "users": "Utilisateurs"
+      "users": "Users"
     }
   },
   "user": {
     "search": {
-      "title": "Rechercher",
-      "placeholder": "Nom d'uilisateurs"
+      "title": "Search",
+      "placeholder": "Users first names / last names"
     }
   },
   "account": {
     "ontime": {
-      "title": "Données (brutes) issues d'OnTime concernant votre compte"
+      "title": "Data (gross) from your OnTime account"
     },
     "manage": {
-      "title": "Edition de votre profile utilisateur",
+      "title": "Edit your user profile",
       "identity": {
-        "email": "Votre email OnTime (non modifiable)",
-        "username": "Votre nom d'utilisateur Ontime (non modifiable)"
+        "email": "OnTime Email (not editable)",
+        "username": "Your OnTime username (not editable)"
       },
       "form": {
         "firstname": {
-          "label": "Prénom",
+          "label": "First Name",
           "placeholder": "",
           "errors": {
-            "required": "Veuillez renseigner votre prénom."
+            "required": "Please enter your first name."
           }
         },
         "lastname": {
-          "label": "Nom",
+          "label": "Last Name",
           "placeholder": "",
           "errors": {
-            "required": "Veuillez renseigner votre nom."
+            "required": "Please enter your last name."
           }
         },
         "job": {
-          "label": "Métier / Fonction",
+          "label": "Job",
           "placeholder": ""
         },
         "skype": {
@@ -114,425 +121,425 @@
           "placeholder": ""
         },
         "location": {
-          "label": "Lieu",
+          "label": "Location",
           "placeholder": ""
         },
-        "submit": "Enregistrer",
-        "quit": "Annuler"
+        "submit": "Save",
+        "quit": "Cancel"
       },
       "avatar": {
-        "title": "Image de profile",
-        "gravatar": "permet de modifier votre avatar"
+        "title": "Profile Picture",
+        "gravatar": "can change your avatar"
       }
     }
   },
   "organization": {
     "list": {
-      "title": "Liste de toutes les sociétés",
-      "organizations_found": "sociétés trouvées",
-      "create": "Nouvelle société",
+      "title": "List of all companies",
+      "organizations_found": "companies found",
+      "create": "New company",
       "search": {
-        "title": "Recherche",
-        "placeholder": "Nom de sociétés"
+        "title": "Search",
+        "placeholder": "Company name"
       },
       "items": {
         "head": {
           "logo": "Logo",
-          "state": "Etat",
-          "name": "Nom",
-          "creator": "Créateur / Date de création",
-          "actions": "Actions possilbles"
+          "state": "Status",
+          "name": "Name",
+          "creator": "Creator / Creation date",
+          "actions": "Actions"
         }
       },
       "item": {
-        "no_organization": "Aucune organization n'est encore créée. Veuillez en créer une afin de pouvoir gérer vos projets",
-        "no_organization_filter": "Aucune organization n'est associée à votre recherche.",
-        "active": "Active",
-        "unactive": "Désactivée",
-        "create": "Créée le",
-        "created_by": "Créée par",
-        "open": "Ouvrir",
-        "edit": "Editer",
-        "delete": "Supprimer"
+        "no_organization": "No organization has yet been created. Please add one in order to manage your projects.",
+        "no_organization_filter": "No organization is associated with your search.",
+        "active": "Enable",
+        "unactive": "Disable",
+        "create": "Created",
+        "created_by": "Created by",
+        "open": "Open",
+        "edit": "Edit",
+        "delete": "Delete"
       }
     },
     "edit": {
       "title": {
-        "edit": "Edition d'une société",
-        "create": "Création d'une société"
+        "edit": "Editing a company",
+        "create": "Creating a company"
       },
       "form": {
         "name": {
-          "label": "Nom",
-          "placeholder": "Raison sociale de la société",
+          "label": "Name",
+          "placeholder": "Corporate name of the company",
           "errors": {
-            "required": "Veuillez renseigner le nom de la société."
+            "required": "Please enter the name of the company."
           }
         },
         "logo": {
-          "label": "Enseigne",
-          "placeholder": "Url d'une image",
+          "label": "Logo",
+          "placeholder": "Image URL",
           "errors": {
-            "url": "Le format de l'url est invalide."
+            "url": "The url is invalid."
           }
         },
         "url": {
-          "label": "Site web",
-          "placeholder": "Url du site web",
+          "label": "Website",
+          "placeholder": "Website URL",
           "errors": {
-            "url": "Le format de l'url est invalide."
+            "url": "The url is invalid."
           }
         },
         "description": {
-          "label": "Informations complémentaires",
-          "placeholder": "Description de l'activité de la société..."
+          "label": "Additional information",
+          "placeholder": "Company description..."
         },
         "active": {
-          "label": "Société active"
+          "label": "Enabled company"
         },
-        "submit": "Enregistrer",
-        "quit": "Annuler"
+        "submit": "Save",
+        "quit": "Cancel"
       }
     },
     "detail": {
-      "title": "Informations",
-      "list": "Liste des sociétés",
+      "title": "Information",
+      "list": "List of companies",
       "actions": {
-        "back": "Retour",
-        "edit": "Editer"
+        "back": "Back",
+        "edit": "Edit"
       },
       "organization": {
         "state": "Status",
         "states": {
-          "active": "Activé",
-          "unactive": "Désactivé"
+          "active": "Enabled",
+          "unactive": "Off"
         },
-        "created_by": "Créée par",
-        "projects_number": "Nb. de projects",
-        "website": "Site web",
-        "creation_date": "Créée le",
-        "update_date": "Mise à jour le",
+        "created_by": "Created by",
+        "projects_number": "Number of projects.",
+        "website": "Website",
+        "creation_date": "Created",
+        "update_date": "Updated",
         "description": {
-          "title": "Informations complémentaires"
+          "title": "Additional information"
         }
       }
     }
   },
   "filesystem": {
     "control": {
-      "title": "Vision globale",
-      "filter": "Filtres",
+      "title": "Global Vision",
+      "filter": "Filters",
       "filters": {
-        "unselect": "Tout désélectionner",
-        "expand": "Tout déplier",
-        "collapse": "Tout replier"
+        "unselect": "Deselect",
+        "expand": "Expand all",
+        "collapse": "Collapse"
       },
       "actions": {
-        "create": "Ajouter"
+        "create": "Add"
       },
       "search": {
-        "placeholder": "Rechercher un élément"
+        "placeholder": "Search for item"
       },
-      "tree": "Arborescence"
+      "tree": "Tree"
     },
     "breadcrumb": "Fil d'Arianne",
     "setting": {
-      "title": "Paramétrage",
-      "global_setting": "Créer d'abord un paramétrage global",
+      "title": "Settings",
+      "global_setting": "First create a global setting",
       "type": {
-        "own": "Paramètre courant",
-        "inherit": "Paramètre hérité"
+        "own": "current data",
+        "inherit": "Parameter inherited"
       },
       "items": {
-        "project": "du projet",
-        "document": "du document",
-        "default": "de la société"
+        "project": "project",
+        "document": "document",
+        "default": "the Company"
       },
       "form": {
-        "edit": "Editer les paramètres de"
+        "edit": "Edit settings"
       }
     },
     "item": {
-      "open": "Ouvrir",
-      "preview": "Prévisualiser",
-      "edit": "Editer",
-      "delete": "Supprimer",
-      "added": "Ajouté le",
+      "open": "Open",
+      "preview": "Preview",
+      "edit": "Edit",
+      "delete": "Delete",
+      "added": "Added",
       "edition": {
         "title": {
-          "edit": "Edition d'un project/document",
-          "create": "Création d'un project/document"
+          "edit": "Editing a project / document",
+          "create": "Creating a project / document"
         },
         "form": {
           "name": {
-            "label": "Nom",
-            "placeholder": "Nom du projet ou du document",
+            "label": "Name",
+            "placeholder": "Name of project or document",
             "errors": {
-              "required": "Veuillez renseigner le nom de l'élément."
+              "required": "Please enter the name of the element."
             }
           },
           "type": {
-            "label": "Type d'élément (project ou document)",
-            "select": "Veuillez choisir un type d'élément",
+            "label": "Element type (project or document)",
+            "select": "Please select an item type",
             "items": {
-              "project": "Projet",
+              "project": "Project",
               "document": "Document"
             },
             "errors": {
-              "required": "Veuillez renseigner le type de l'élément."
+              "required": "Please enter the type of the element."
             }
           },
           "description": {
-            "label": "Description du projet",
+            "label": "Project Description",
             "placeholder": ""
           },
-          "submit": "Enregistrer",
-          "quit": "Annuler"
+          "submit": "Save",
+          "quit": "Cancel"
         }
       }
     },
     "document": {
-      "add": "Ajouter une version",
-      "create": "Nouvelle version",
+      "add": "Add Version",
+      "create": "New version",
       "search": {
-        "title": "Recherche",
-        "placeholder": "Nom d'une version"
+        "title": "Search",
+        "placeholder": "Name a version"
       },
-      "versions_found": "versions trouvées",
+      "versions_found": "Found versions",
       "head": {
-        "name": "Nom",
-        "date": "Date de création",
+        "name": "Name",
+        "Date": "Creation date",
         "actions": "Actions"
       },
       "item": {
-        "no_version": "Aucune version trouvée. Veuillez en créer une.",
-        "no_version_filter": "Aucune version n'est associée à votre recherche."
+        "no_version": "No Results Found Version Please create one..",
+        "no_version_filter": "No version is associated with your search."
       }
     }
   },
   "setting": {
-    "title": "Edition des paramètres",
+    "title": "Edit settings",
     "legend": {
-      "inherit": "Valeur héritée des parents",
-      "base": "Valeur de l'élément"
+      "inherit": "value inherited from the parents,",
+      "base": "Value of the item"
     },
-    "info": {
-      "description": "Cette configuration est le paramétrage par défaut appliqué à l'ensemble des sociétés et des projets/documents inhérents. ",
-      "schema": "Paramètrage par défaut > Société > Projet > ... > Projet > Document"
+    "Info": {
+      "description": "This configuration is the default setting applied to all companies and projects / associated documents.",
+      "scheme": "Parameter setting Default > Company > Project > ... > Project > Document"
     },
     "project_dev": {
-      "title": "Équipe de réalisation",
-      "descriptions": {
-        "contributor_price": "Le prix jour par collaborateur correspond à la valeur en euro du taux journalier moyen facturable.",
-        "contributor_occupation": "La concentration collaborateurs correspond au pourcentage d'occupation du collaborateur durant un sprint."
+      "title": "Production Team",
+      "description": {
+        "contributor_price": "The day price per employee corresponds to the value in euros of the average daily rates billable.",
+        "contributor_occupation": "The staff is the percentage concentration of occupation of the employee during a sprint."
       }
     },
     "project_management": {
-      "title": "Conduite de projet",
-      "descriptions": {
-        "scrummaster_price": "Le prix jour par scrum-master correspond à la valeur en euro du taux journalier moyen facturable.",
-        "scrummaster_occupation": "La concentration scrum-masters correspond au pourcentage d'occupation du collaborateur durant un sprint."
+      "title": "Project management",
+      "description": {
+        "scrummaster_price": "The price per day scrum-master is the value in euros of the average daily rates billable.",
+        "scrummaster_occupation": "The scrum-masters concentration is the percentage of occupation of the employee during a sprint."
       }
     },
     "billing": {
-      "title": "Facturation",
-      "descriptions": {
-        "rate_multiplier": "Le coefficient multiplicateur permet de marger la prestation pour y faire rentrer des tâches non comprises dans les estimations (Tests unitaires, Documentation etc.)",
+      "title": "Billing",
+      "description": {
+        "rate_multiplier": "The multiplier allows marger Benefit will bring back that are not included in the estimates tasks (unit tests, documentation etc.)",
         "show_dev_price": "",
         "show_management_price": ""
       }
     },
     "unit": {
-      "title": "Unités",
-      "descriptions": {
-        "estimate_type": "Le type d'estimation permet d'afficher visuellement soit des estimations hautes / basses, soit des estimations finales.",
-        "range_estimate_unit": "L'unité de temps pour les estimations hautes/basses renseignés dans OnTime.",
+      "title": "Units",
+      "description": {
+        "estimate_type": "The type of estimate can display visually or high / low estimates or final estimates.",
+        "range_estimate_unit": "The time unit for high / low estimates entered in OnTime.",
         "label": ""
       }
     },
-    "date": {
+    "dated": {
       "title": "Dates",
-      "descriptions": {
-        "show": "Permet de définir si le compte rendu final doit avoir des visuels relatifs aux dates."
+      "description": {
+        "show": "Sets whether the final report should have visual on the dates."
       }
     },
     "iteration": {
-      "title": "Itération",
-      "descriptions": {
-        "hour_per_day": "Nombre d'heures travaillées théoriques par jour.",
-        "day_per_week": "Nombre de jours travaillés théoriques (heures ouvrées) par semaine."
+      "title": "Iteration",
+      "description": {
+        "hour_per_day": "theoretical number of hours worked per day.",
+        "day_per_week": "theoretical number of days worked (business hours) a week."
       }
     },
-    "resume": {
-      "title": "Résumé des informations renseignées"
+    "abstract": {
+      "title": "Summary of information indicated"
     },
     "form": {
-      "submit": "Enregistrer",
-      "quit": "Annuler",
+      "submit": "Save",
+      "quit": "Cancel",
       "contributor_price": {
-        "label": "Prix jour / collaborateur",
-        "resume": "Prix dev",
+        "label": "Price day / collaborator",
+        "resume": "Price dev",
         "placeholder": "",
         "errors": {
-          "required": "Veuillez renseigner le prix.",
-          "number": "La valeur renseignée n'est pas un nombre.",
-          "min": "La valeur renseignée doit être supérieure ou égale à 0."
+          "required": "Please correct the price.",
+          "number": "The value entered is not a number.",
+          "Min": "The value entered must be greater or equal to 0."
         }
       },
       "contributor_occupation": {
-        "label": "Concentration collaborateurs",
-        "resume": "Occupation dev",
+        "label": "collaborators Concentration",
+        "resume": "dev Occupation",
         "placeholder": "",
         "errors": {
-          "required": "Veuillez renseigner le pourcentage.",
-          "number": "La valeur renseignée n'est pas un nombre.",
-          "min": "La valeur renseignée doit être supérieure ou égale à 0.",
-          "max": "La valeur renseignée doit être inférieure ou égale à 100."
+          "required": "Please enter the percentage.",
+          "number": "The value entered is not a number.",
+          "Min": "The value entered must be greater or equal to 0.",
+          "Max": "The value entered must be less than or equal to 100."
         }
       },
       "scrummaster_price": {
-        "label": "Prix jour / scrum-master",
-        "resume": "Prix SM",
+        "label": "day Price / scrum-master",
+        "resume": "SM Price",
         "placeholder": "",
         "errors": {
-          "required": "Veuillez renseigner le prix.",
-          "number": "La valeur renseignée n'est pas un nombre.",
-          "min": "La valeur renseignée doit être supérieure ou égale à 0."
+          "required": "Please correct the price.",
+          "number": "The value entered is not a number.",
+          "Min": "The value entered must be greater or equal to 0."
         }
       },
       "scrummaster_occupation": {
-        "label": "Concentration scrum-masters",
+        "label": "Scrum-masters Concentration",
         "resume": "Occuptation SM",
         "placeholder": "",
         "errors": {
-          "required": "Veuillez renseigner le pourcentage.",
-          "number": "La valeur renseignée n'est pas un nombre.",
-          "min": "La valeur renseignée doit être supérieure ou égale à 0.",
-          "max": "La valeur renseignée doit être inférieure ou égale à 100."
+          "required": "Please enter the percentage.",
+          "number": "The value entered is not a number.",
+          "Min": "The value entered must be greater or equal to 0.",
+          "Max": "The value entered must be less than or equal to 100."
         }
       },
       "rate_multiplier": {
-        "label": "Coefficient multiplicateur",
-        "resume": "Coeff. mult.",
+        "label": "Multiplier",
+        "resume": "Coeff mult..",
         "placeholder": "",
         "errors": {
-          "required": "Veuillez renseigner le pourcentage.",
-          "number": "La valeur renseignée n'est pas un nombre.",
-          "min": "La valeur renseignée doit être supérieure ou égale à 0."
+          "required": "Please enter the percentage.",
+          "number": "The value entered is not a number.",
+          "Min": "The value entered must be greater or equal to 0."
         }
       },
       "show_dev_price": {
-        "label": "Afficher les prix (pour l'équipe de développement)",
-        "resume": "Aff. prix dev"
+        "label": "Show prices (the development team),",
+        "resume": "Aff dev price."
       },
       "show_management_price": {
-        "label": "Afficher les prix (pour le management de projet)",
-        "resume": "Aff. prix SM"
+        "label": "Show prices (for project management)",
+        "resume": "Aff SM prices."
       },
       "estimate_type": {
-        "label": "Type d'estimations",
-        "resume": "Type d'estim.",
-        "select": "Veuillez sélectionner un type",
+        "label": "Type estimates",
+        "resume": "Type est.",
+        "select": "Please select a type",
         "items": {
-          "final": "Estimations finales",
-          "range": "Estimations hautes / basses"
+          "End": "Final Estimates",
+          "range": "Estimates high / low"
         },
         "errors": {
-          "required": "Veuillez renseigner un type d'estimation."
+          "required": "Please enter a type of estimate."
         }
       },
       "range_estimate_unit": {
-        "label": "Estimations hautes et basses",
-        "resume": "Est. hautes/basses",
-        "select": "Veuillez sélectionner une unité",
+        "label": "High and Low Estimates",
+        "resume": "Is high / low.",
+        "select": "Please select unit",
         "items": {
-          "minute": "Minutes",
-          "hour": "Heures",
-          "day": "Jours"
+          "minute": "Minute",
+          "hour": "Hours",
+          "Day": "Days"
         },
         "errors": {
-          "required": "Veuillez renseigner une unité."
+          "required": "Please enter a unit."
         }
       },
       "label": {
-        "label": "Format d'affichage de l'unité",
-        "resume": "Format unité",
+        "label": "Display Format of the unit",
+        "resume": "Format unit",
         "placeholder": "",
         "errors": {
-          "required": "Veuillez renseigner le champs texte."
+          "required": "Please enter the text fields."
         }
       },
-      "date": {
-        "label": "Afficher les dates",
-        "resume": "Aff. dates"
+      "dated": {
+        "label": "Show dates",
+        "resume": "Aff dates."
       },
       "contributor_available": {
-        "label": "Nombre de collaborateurs disponibles",
-        "resume": "Nb. dev dispo.",
+        "label": "Number of employees available",
+        "resume": "Number dev available..",
         "placeholder": "",
-        "suffix": "collab(s)",
+        "suffix": "collab (s)",
         "errors": {
-          "required": "Veuillez renseigner le nombre de collaborateurs.",
-          "number": "La valeur renseignée n'est pas un nombre.",
-          "min": "La valeur renseignée doit être supérieure ou égale à 0."
+          "required": "Please enter the number of employees.",
+          "number": "The value entered is not a number.",
+          "Min": "The value entered must be greater or equal to 0."
         }
       },
       "hour_per_day": {
-        "label": "Nombre d'heures par jour",
-        "resume": "Nb. h/jour",
+        "label": "Number of hours per day",
+        "resume": "No. h / day.",
         "placeholder": "",
         "suffix": "h.",
         "errors": {
-          "required": "Veuillez renseigner le nombre d'heures par jour.",
-          "number": "La valeur renseignée n'est pas un nombre.",
-          "min": "La valeur renseignée doit être supérieure ou égale à 0."
+          "required": "Please enter the number of hours per day.",
+          "number": "The value entered is not a number.",
+          "Min": "The value entered must be greater or equal to 0."
         }
       },
       "day_per_week": {
-        "label": "Nombre de jours par semaine",
-        "resume": "Nb. j/semaine",
+        "label": "Number of days per week",
+        "resume": "Nb days / week.",
         "placeholder": "",
         "suffix": "j.",
         "errors": {
-          "required": "Veuillez renseigner le nombre de jours par semaine.",
-          "number": "La valeur renseignée n'est pas un nombre.",
-          "min": "La valeur renseignée doit être supérieure ou égale à 0."
+          "required": "Please enter the number of days per week.",
+          "number": "The value entered is not a number.",
+          "Min": "The value entered must be greater or equal to 0."
         }
       },
       "week_per_iteration": {
-        "label": "Nombre de semaines par itération",
-        "resume": "Nb. s/itération",
+        "label": "Number of weeks per iteration",
+        "resume": "Nb s / iteration.",
         "placeholder": "",
         "suffix": "sem.",
         "errors": {
-          "required": "Veuillez renseigner le nombre de semaines par itération.",
-          "number": "La valeur renseignée n'est pas un nombre.",
-          "min": "La valeur renseignée doit être supérieure ou égale à 0."
+          "required": "Please enter the number of weeks per iteration.",
+          "number": "The value entered is not a number.",
+          "Min": "The value entered must be greater or equal to 0."
         }
       }
     }
   },
   "version": {
     "title": {
-      "create": "Création d'un nouvelle version",
-      "update": "Mise à jour de la version"
+      "create": "Creating a new version",
+      "update": "Upgrade version"
     },
     "ontime": {
-      "title": "Liste des projets issus d'OnTime",
-      "description": "Sélectionner un projet afin de l'importer.",
-      "selected": "Projet sélectionné",
-      "no_selection": "Veuillez sélectionner un projet"
+      "title": "List of projects from OnTime",
+      "description": "Select a project to import it.",
+      "selected": "Selected project",
+      "no_selection": "Please select a project"
     },
     "form": {
       "name": {
-        "label": "Nom",
-        "placeholder": "Nom de la version",
+        "label": "Name",
+        "placeholder": "Version name",
         "errors": {
-          "required": "Veuillez renseigner le nom de la version."
+          "required": "Please enter the name of the version."
         }
       },
-      "submit": "Enregistrer",
-      "quit": "Annuler"
+      "submit": "Save",
+      "quit": "Cancel"
     }
   }
 }
