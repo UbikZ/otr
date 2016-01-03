@@ -56,13 +56,23 @@ module.exports = [
         url: '/list',
         templateUrl: env.templatePath('organizations/list.html'),
       })
-      .state(routes.ORGANIZATIONS_SETTINGS, {
-        url: '/settings',
-        templateUrl: env.templatePath('settings/forms/edit.html'),
-      })
       .state(routes.ORGANIZATIONS_DETAIL, {
         url: '/detail/:id',
         templateUrl: env.templatePath('organizations/detail.html'),
+      })
+      .state(routes.VERSIONS, {
+        abstract: true,
+        url: '/versions',
+        templateUrl: env.templatePath('common/content.html'),
+        data: {includes: true, requiresLogin: true},
+      })
+      .state(routes.VERSIONS_PREVIEW, {
+        url: '/preview/:organizationId/:itemId',
+        templateUrl: env.templatePath('versions/preview.html'),
+      })
+      .state(routes.ORGANIZATIONS_SETTINGS, {
+        url: '/settings',
+        templateUrl: env.templatePath('settings/forms/edit.html'),
       })
       .state(routes.LOGIN, {
         url: '/login',

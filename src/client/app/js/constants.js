@@ -17,6 +17,8 @@ module.exports = {
     'ORGANIZATIONS_LIST': 'organizations.list',
     'ORGANIZATIONS_SETTINGS': 'organizations.settings',
     'ORGANIZATIONS_DETAIL': 'organizations.detail',
+    'VERSIONS': 'versions',
+    'VERSIONS_PREVIEW': 'versions.preview',
   },
   'DATAMODEL': {
     'ID_SETTING': 42,
