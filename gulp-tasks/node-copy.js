@@ -12,6 +12,8 @@ module.exports = function(gulp, plugins, npmPackages, config) {
         nodePath + '/bootstrap/less/!(variables).less',
         nodePath + '/bootstrap/less/mixins/*.less',
         nodePath + '/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css',
+        // Flags
+        nodePath + '/flag-icon-css/less/!(variabless).less',
         // TreeControl
         nodePath + 'angular-tree-control/css/tree-control-attribute.css',
         // Font Awesome
@@ -24,6 +26,8 @@ module.exports = function(gulp, plugins, npmPackages, config) {
         nodePath + '/toastr/build/toastr.css',
         // iHover
         nodePath + '/ihover/src/ihover.css',
+        // Flags
+        nodePath + '/flag-icon-css/css/flag-icon.css',
       ], { base: nodePath }
     ).pipe(gulp.dest(config.path.public + '/lib'));
   };
