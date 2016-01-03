@@ -73,6 +73,15 @@
                     </div>
                 </div>
                 <div ng-if="currentItem.type != 'document'">
+                    <div class="ibox" ng-if="fileItems.length == 0">
+                        <div class="ibox-content">
+                            <div class="file-manager text-center">
+                                <strong class="text-navy">
+                                    {{ (ns+'.item.no_item') | translate }}
+                                </strong>
+                            </div>
+                        </div>
+                    </div>
                     <div class="file-box" ng-repeat="fileItem in fileItems | orderBy:name">
                         <div class="file">
                             <div class="file-box">
@@ -80,7 +89,6 @@
                                 <span uib-dropdown ng-init="opened = false">
                                   <div>
                                       <span class="corner"></span>
-
                                       <div class="ih-item square effect6 from_top_and_bottom">
                                           <a ng-click="open(fileItem._id)">
                                               <div class="img">

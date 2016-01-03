@@ -262,6 +262,7 @@
     "item": {
       "open": "Ouvrir",
       "preview": "Prévisualiser",
+      "no_item": "Veuillez ajouter un élément",
       "edit": "Editer",
       "delete": "Supprimer",
       "added": "Ajouté le",

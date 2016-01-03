@@ -262,6 +262,7 @@
     "item": {
       "open": "Open",
       "preview": "Preview",
+      "no_item": "You have to add an element",
       "edit": "Edit",
       "delete": "Delete",
       "added": "Added",
