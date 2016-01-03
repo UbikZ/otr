@@ -78,3 +78,16 @@
     height: 350px;
     overflow-x: scroll;
 }
+
+.versions .skin-setttings {
+    width: 450px;
+    background: #fff;
+}
+
+.versions .theme-config-box {
+    margin-right: -450px;
+}
+
+.versions .theme-config-box.show {
+    margin-right: 0px;
+}
