@@ -1,0 +1,28 @@
+<div class="ng-scope" ng-controller="version-preview.controller" ng-init="ns='version.view'">
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-sm-12">
+            <h2>{{ (ns+'.title') | translate }}</h2>
+            <ol class="breadcrumb">
+                <li>
+                    <a ui-sref="{{ $root.routes.ORGANIZATIONS_LIST }}" class="text-muted">
+                        {{ (ns+'.list') | translate }}
+                    </a>
+                </li>
+                <li class="active">
+                    <strong>{{ organization.name }}</strong>
+                </li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="wrapper wrapper-content animated fadeIn">
+                <div class="ibox row">
+                    <div class="ibox-content">
+                        test
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
