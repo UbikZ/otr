@@ -85,9 +85,8 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
             $scope.masterSetting = mappingSetting.dalToDTO(res.setting);
             if ($scope.organization.setting == undefined) {
               $scope.setting = $scope.masterSetting
-            } else {
-              mergeSettings();
             }
+            mergeSettings();
           }
         });
       }
