@@ -30,6 +30,7 @@
     "bootstrap": "^3.3.5",
     "express": "^4.8.3",
     "express-jwt": "^3.3.0",
+    "flag-icon-css": "^1.0.0",
     "font-awesome": "^4.4.0",
     "ihover": "git://github.com/gudh/ihover.git#1.0.0",
     "jquery": "^2.1.4",
