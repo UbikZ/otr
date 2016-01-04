@@ -38,23 +38,23 @@ module.exports = ['$scope', '$rootScope', '$stateParams', 'itemService', '$locat
     };
 
     $scope.totalTasks = function () {
-      return computeEntry.computeTotal($scope.item.entries, $scope.setting, computeEntry.const.TOTAL_TASKS);
+      return computeEntry.computeTotal($scope.item.entries, $scope.setting, computeEntry.const.TASKS);
     };
 
     $scope.totalEstims = function () {
       return computeEntry.computeTotal(
         $scope.item.entries,
         $scope.setting,
-        computeEntry.const.TOTAL_ESTIM_DEV | computeEntry.const.TOTAL_ESTIM_SM
+        computeEntry.const.ESTIM_DEV | computeEntry.const.ESTIM_SM
       );
     };
 
     $scope.totalEstimsDev = function () {
-      return computeEntry.computeTotal($scope.item.entries, $scope.setting, computeEntry.const.TOTAL_ESTIM_DEV);
+      return computeEntry.computeTotal($scope.item.entries, $scope.setting, computeEntry.const.ESTIM_DEV);
     };
 
     $scope.totalEstimsSM = function () {
-      return computeEntry.computeTotal($scope.item.entries, $scope.setting, computeEntry.const.TOTAL_ESTIM_SM);
+      return computeEntry.computeTotal($scope.item.entries, $scope.setting, computeEntry.const.ESTIM_SM);
     };
 
     $scope.dayPerPersonPerIter = function() {
