@@ -166,6 +166,17 @@ module.exports.controller = function (app, config) {
                               },
                             }));
 
+                            // Count
+
+                            if (elements[indexOfParentProject].size == undefined) {
+                              elements[indexOfParentProject].size = 0;
+                            }
+                            elements[indexOfParentProject].size++;
+                            if (elements[indexOfParentProject].children[indexOfProject].size == undefined) {
+                              elements[indexOfParentProject].children[indexOfProject].size = 0;
+                            }
+                            elements[indexOfParentProject].children[indexOfProject].size++;
+                            
                             // Sum of parent project entries
 
                             if (elements[indexOfParentProject].estimate.duration_minutes == undefined) {
