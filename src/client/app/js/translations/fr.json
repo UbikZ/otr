@@ -542,6 +542,21 @@
       },
       "submit": "Enregistrer",
       "quit": "Annuler"
+    },
+    "view": {
+      "title": "Estimations",
+      "back": "Retourner sur le document",
+      "items": {
+        "macro": "Vision macro",
+        "list": "Vision liste",
+        "detail": "Vision détaillée"
+      },
+      "header": {
+        "feature": "Fonctionnalité",
+        "nb_stories": "Nombre de Stories",
+        "estimate": "Estimation",
+        "cost": "Coût"
+      }
     }
   }
 }

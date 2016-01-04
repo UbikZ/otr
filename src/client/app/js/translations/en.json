@@ -542,6 +542,21 @@
       },
       "submit": "Save",
       "quit": "Cancel"
+    },
+    "view": {
+      "title": "Estimates",
+      "back": "Return to document",
+      "items": {
+        "macro": "Global view",
+        "list": "List view",
+        "detail": "Detail view"
+      },
+      "header": {
+        "feature": "Feature",
+        "nb_stories": "Number of Stories",
+        "estimate": "Estimate",
+        "cost": "Price"
+      }
     }
   }
 }

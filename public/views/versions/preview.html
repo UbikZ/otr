@@ -47,11 +47,11 @@
                     <li>
                         <a ui-sref="{{ $root.routes.ORGANIZATIONS_DETAIL }}({id: organization._id, '#': documentId})"
                            class="text-muted">
-                            {{ (nsv+'.list') | translate }}
+                            {{ (nsv+'.back') | translate }}
                         </a>
                     </li>
                     <li class="active">
-                        <strong>{{ organization.name }}</strong>
+                        <strong>{{ item.name }}</strong>
                     </li>
                 </ol>
             </div>
@@ -64,19 +64,19 @@
                             <uib-tabset>
                                 <uib-tab>
                                     <tab-heading>
-                                        <i class="fa fa-sitemap"></i> {{ (nsv+'.view.macro') | translate }}
+                                        <i class="fa fa-sitemap"></i> {{ (nsv+'.items.macro') | translate }}
                                     </tab-heading>
                                     <span ng-include="'views/versions/partials/macro.html'"></span>
                                 </uib-tab>
                                 <uib-tab>
                                     <tab-heading>
-                                        <i class="fa fa-list"></i> {{ (nsv+'.view.macro') | translate }}
+                                        <i class="fa fa-list"></i> {{ (nsv+'.items.list') | translate }}
                                     </tab-heading>
                                     That's right.
                                 </uib-tab>
                                 <uib-tab>
                                     <tab-heading>
-                                        <i class="fa fa-files-o"></i> {{ (nsv+'.view.macro') | translate }}
+                                        <i class="fa fa-files-o"></i> {{ (nsv+'.items.detail') | translate }}
                                     </tab-heading>
                                     That's right.
                                 </uib-tab>
