@@ -165,6 +165,39 @@ module.exports.controller = function (app, config) {
                                 otr_isEstimated: item.custom_fields != undefined ? item.custom_fields.custom_262 : null,
                               },
                             }));
+
+                            // Sum of parent project entries
+
+                            if (elements[indexOfParentProject].estimate.duration_minutes == undefined) {
+                              elements[indexOfParentProject].estimate.duration_minutes = 0;
+                            }
+                            elements[indexOfParentProject].estimate.duration_minutes += item.estimated_duration.duration_minutes;
+                            if (elements[indexOfParentProject].estimate.otr_low == undefined) {
+                              elements[indexOfParentProject].estimate.otr_low = 0;
+                            }
+                            elements[indexOfParentProject].estimate.otr_low +=
+                              item.custom_fields != undefined ? item.custom_fields.custom_257 : 0;
+                            if (elements[indexOfParentProject].estimate.otr_high == undefined) {
+                              elements[indexOfParentProject].estimate.otr_high = 0;
+                            }
+                            elements[indexOfParentProject].estimate.otr_high +=
+                              item.custom_fields != undefined ? item.custom_fields.custom_259 : 0;
+
+                            // Sum of parent project entries
+                            if (elements[indexOfParentProject].children[indexOfProject].estimate.duration_minutes == undefined) {
+                              elements[indexOfParentProject].children[indexOfProject].estimate.duration_minutes = 0;
+                            }
+                            elements[indexOfParentProject].children[indexOfProject].estimate.duration_minutes += item.estimated_duration.duration_minutes;
+                            if (elements[indexOfParentProject].children[indexOfProject].estimate.otr_low == undefined) {
+                              elements[indexOfParentProject].children[indexOfProject].estimate.otr_low = 0;
+                            }
+                            elements[indexOfParentProject].children[indexOfProject].estimate.otr_low +=
+                              item.custom_fields != undefined ? item.custom_fields.custom_257 : 0;
+                            if (elements[indexOfParentProject].children[indexOfProject].estimate.otr_high == undefined) {
+                              elements[indexOfParentProject].children[indexOfProject].estimate.otr_high = 0;
+                            }
+                            elements[indexOfParentProject].children[indexOfProject].estimate.otr_high +=
+                              item.custom_fields != undefined ? item.custom_fields.custom_259 : 0;
                           });
 
                           modelItem.entries = elements;
