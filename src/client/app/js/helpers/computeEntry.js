@@ -1,14 +1,25 @@
 'use strict';
 
-function walkElement(entries, setting, id, _depth, isPrice) {
+const PRICE = 1<<0;
+const TIME = 1<<1;
+const HIGH = 1<<2;
+const LOW = 1<<3;
+const TOTAL_TASKS = 1<<4;
+const TOTAL_ESTIM = 1<<5;
+
+function walkElement(entries, setting, id, _depth, opts) {
   var result = '-';
   var depth = _depth || 1;
 
-  if (id != undefined) {
+  if (opts != undefined && id != undefined) {
     entries.forEach(function (entry) {
       entry.children.forEach(function (subEntry) {
         if (subEntry._id == id) {
-          result = isPrice == true ? computePrice(subEntry, setting) : computeTime(subEntry, setting);
+          if (opts & PRICE) {
+            result = computePrice(subEntry, setting);
+          } else if (opts & TIME) {
+            result = computeTime(subEntry, setting);
+          }
         } else if (depth > 1) {
           subEntry.children.forEach(function (element) {
             // todo
@@ -19,6 +30,24 @@ function walkElement(entries, setting, id, _depth, isPrice) {
   }
 
   return result;
+}
+
+function computeDayPerPersonPerIter(entries, setting) {
+  return setting.contributorOccupation * setting.dayPerWeek * setting.weekPerIteration / 100;
+}
+
+function computeTotal(entries, setting, opts) {
+  var total = 0;
+
+  entries.forEach(function (entry) {
+    if (opts & TOTAL_TASKS) {
+      total += entry.size;
+    } else if (opts & TOTAL_ESTIM) {
+      total += entry.estimate.duration_minutes * getRate(setting);
+    }
+  });
+
+  return total;
 }
 
 function computeTime(entry, setting) {
@@ -71,4 +100,14 @@ function computePrice(entry, setting) {
 
 module.exports = {
   walkElement: walkElement,
+  computeTotal: computeTotal,
+  computeDayPerPersonPerIter: computeDayPerPersonPerIter,
+  const: {
+    TOTAL_TASKS: TOTAL_TASKS,
+    TOTAL_ESTIM: TOTAL_ESTIM,
+    PRICE: PRICE,
+    TIME: TIME,
+    HIGH: HIGH,
+    LOW: LOW,
+  }
 };

@@ -34,12 +34,23 @@ module.exports = ['$scope', '$rootScope', '$stateParams', 'itemService', '$locat
      */
 
     $scope.cost = function (id, _depth) {
-      return computeEntry.walkElement($scope.item.entries, $scope.setting, id, _depth, true);
+      return computeEntry.walkElement($scope.item.entries, $scope.setting, id, _depth, computeEntry.const.PRICE);
     };
 
+    $scope.totalTasks = function () {
+      return computeEntry.computeTotal($scope.item.entries, $scope.setting, computeEntry.const.TOTAL_TASKS);
+    };
+
+    $scope.totalEstims = function () {
+      return computeEntry.computeTotal($scope.item.entries, $scope.setting, computeEntry.const.TOTAL_ESTIM);
+    };
+
+    $scope.dayPerPersonPerIter = function() {
+      return computeEntry.computeDayPerPersonPerIter($scope.item.entries, $scope.setting);
+    };
 
     $scope.time = function (id, _depth) {
-      return computeEntry.walkElement($scope.item.entries, $scope.setting, id, _depth);
+      return computeEntry.walkElement($scope.item.entries, $scope.setting, id, _depth, computeEntry.const.TIME);
     };
   }
 ];

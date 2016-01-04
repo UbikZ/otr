@@ -11,7 +11,7 @@
                         <div class="col-lg-8 text-right">
                             <span>{{ (nsvr+'.sizing.tasks') | translate }}</span>
 
-                            <h2 class="font-bold">40</h2>
+                            <h2 class="font-bold">{{ totalTasks() | currency:'' }}</h2>
                         </div>
                     </div>
                 </div>
@@ -25,7 +25,7 @@
                         <div class="col-lg-8 text-right">
                             <span>{{ (nsvr+'.sizing.estimates') | translate }}</span>
 
-                            <h2 class="font-bold">110,00</h2>
+                            <h2 class="font-bold">{{ totalEstims() | currency:'' }}</h2>
                         </div>
                     </div>
                 </div>
@@ -41,12 +41,12 @@
                         <div class="col-lg-4 text-right">
                             <span>{{ (nsvr+'.sizing.contributor') | translate }}</span>
 
-                            <h2 class="font-bold">1</h2>
+                            <h2 class="font-bold">{{ setting.contributorAvailable | currency:'' }}</h2>
                         </div>
                         <div class="col-lg-4 text-right">
                             <span>{{ (nsvr+'.sizing.days_per_contributor_per_iteration') | translate }}</span>
 
-                            <h2 class="font-bold">8</h2>
+                            <h2 class="font-bold">{{ dayPerPersonPerIter() | currency:'' }}</h2>
                         </div>
                     </div>
                 </div>
@@ -60,7 +60,7 @@
                         <div class="col-lg-8 text-right">
                             <span>{{ (nsvr+'.sizing.iterations') | translate }}</span>
 
-                            <h2 class="font-bold">13,75</h2>
+                            <h2 class="font-bold">t</h2>
                         </div>
                     </div>
                 </div>
