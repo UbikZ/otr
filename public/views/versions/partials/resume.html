@@ -100,7 +100,7 @@
     <div class="col-lg-6">
         <blockquote>{{ (nsvr+'.price.title') | translate }}</blockquote>
         <div class="row">
-            <div class="col-lg-6">
+            <div ng-if="setting.showDev == true" ng-class="setting.showManagement ? 'col-lg-6' : 'col-lg-12'">
                 <div class="widget red-bg">
                     <div class="row">
                         <div class="col-lg-4">
@@ -114,7 +114,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6">
+            <div ng-if="setting.showManagement == true" ng-class="setting.showDev ? 'col-lg-6' : 'col-lg-12'">
                 <div class="widget red-bg">
                     <div class="row">
                         <div class="col-lg-4">
@@ -130,7 +130,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-6">
+            <div ng-if="setting.showDev == true" ng-class="setting.showManagement ? 'col-lg-6' : 'col-lg-12'">
                 <div class="widget red-bg">
                     <div class="row">
                         <div class="col-lg-4">
@@ -143,7 +143,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6">
+            <div ng-if="setting.showManagement == true" ng-class="setting.showDev ? 'col-lg-6' : 'col-lg-12'">
                 <div class="widget red-bg">
                     <div class="row">
                         <div class="col-lg-4">
