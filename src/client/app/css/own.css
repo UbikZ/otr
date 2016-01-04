@@ -80,12 +80,12 @@
 }
 
 .versions .skin-setttings {
-    width: 450px;
+    width: 400px;
     background: #fff;
 }
 
 .versions .theme-config-box {
-    margin-right: -450px;
+    margin-right: -400px;
 }
 
 .versions .theme-config-box.show {
