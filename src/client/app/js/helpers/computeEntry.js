@@ -48,7 +48,7 @@ function getDevTime(entry, setting) {
 
 function getSMTime(entry, setting) {
   var result = 0;
-  if (setting.showDev === true) {
+  if (setting.showManagement === true) {
     var occupationSmPercentage = parseFloat(setting.scrummasterOccupation / 100);
     result += parseFloat(entry.estimate.duration_minutes * occupationSmPercentage * getRate(setting));
   }
