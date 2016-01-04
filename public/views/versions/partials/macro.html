@@ -1,11 +1,11 @@
-<table class="document table table-striped" ng-init="nsv='version.view'">
+<table class="document table table-striped" ng-init="nsvm='version.view.macro'">
     <thead>
     <tr>
         <th class="text-center col-lg-1">#</th>
-        <th class="text-center col-lg-4">{{ (nsv+'.header.feature') | translate }}</th>
-        <th class="text-center col-lg-2">{{ (nsv+'.header.nb_stories') | translate }}</th>
-        <th class="text-center col-lg-2">{{ (nsv+'.header.estimate') | translate }}</th>
-        <th class="text-center col-lg-2">{{ (nsv+'.header.cost') | translate }}</th>
+        <th class="text-center col-lg-4">{{ (nsvm+'.header.feature') | translate }}</th>
+        <th class="text-center col-lg-2">{{ (nsvm+'.header.nb_stories') | translate }}</th>
+        <th class="text-center col-lg-2">{{ (nsvm+'.header.estimate') | translate }}</th>
+        <th class="text-center col-lg-2">{{ (nsvm+'.header.cost') | translate }}</th>
     </tr>
     </thead>
     <tbody ng-if="item == undefined">
