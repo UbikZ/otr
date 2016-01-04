@@ -45,7 +45,8 @@
                 <h2>{{ (nsv+'.title') | translate }}</h2>
                 <ol class="breadcrumb">
                     <li>
-                        <a ui-sref="{{ $root.routes.ORGANIZATIONS_LIST }}" class="text-muted">
+                        <a ui-sref="{{ $root.routes.ORGANIZATIONS_DETAIL }}({id: organization._id, '#': documentId})"
+                           class="text-muted">
                             {{ (nsv+'.list') | translate }}
                         </a>
                     </li>

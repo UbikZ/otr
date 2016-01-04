@@ -16,6 +16,7 @@ module.exports = ['$scope', '$rootScope', '$stateParams', 'itemService', '$locat
       } else {
         $scope.organization = res.organization;
         $scope.item = res.item;
+        $scope.documentId = $stateParams.documentId;
         $scope.setting = mappingSetting.dalToDTO(res.item.settings[0]);
       }
     });

@@ -67,7 +67,7 @@ module.exports = [
         data: {includes: true, requiresLogin: true},
       })
       .state(routes.VERSIONS_PREVIEW, {
-        url: '/preview/:organizationId/:itemId',
+        url: '/preview/:organizationId/:documentId/:itemId',
         templateUrl: env.templatePath('versions/preview.html'),
       })
       .state(routes.ORGANIZATIONS_SETTINGS, {

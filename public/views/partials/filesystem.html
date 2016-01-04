@@ -195,7 +195,7 @@
                                         <td class="col-lg-3">{{ version.name }}</td>
                                         <td class="col-lg-3">{{ version.creation.date | date: $root.const.FORMATS.DATE_TIME }}</td>
                                         <td class="col-lg-6">
-                                            <a ui-sref="{{ $root.routes.VERSIONS_PREVIEW }}({organizationId: organization._id, itemId: version._id})"
+                                            <a ui-sref="{{ $root.routes.VERSIONS_PREVIEW }}({organizationId: organization._id, documentId: currentItem._id, itemId: version._id})"
                                                class="btn btn-primary btn-xs">
                                                 <i class="fa fa-eye"></i>
                                                 {{ (ns+'.item.preview') | translate }}
