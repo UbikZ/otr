@@ -16,7 +16,8 @@
     <tbody ng-if="item != undefined">
     <tr ng-repeat-start="(index, theme) in item.entries | orderBy:'name'">
         <td colspan="5">
-            <strong>{{ theme.name | uppercase }}</strong>
+            <strong ng-if="theme.name">{{ theme.name | uppercase }}</strong>
+            <strong ng-if="!theme.name">_</strong>
         </td>
     </tr>
     <tr ng-repeat-end ng-repeat="child in theme.children | orderBy:'name'" class="priority priority6">
