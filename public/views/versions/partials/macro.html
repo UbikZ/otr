@@ -1,0 +1,25 @@
+<table class="document table table-striped">
+    <thead>
+    <tr>
+        <th class="text-center col-lg-1">#</th>
+        <th class="text-center col-lg-4">Fonctionnalité</th>
+        <th class="text-center col-lg-2">Nombre Stories</th>
+        <th class="text-center col-lg-2">Estimation</th>
+        <th class="text-center col-lg-2">Coût</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat-start="(index, theme) in item.entries">
+        <td colspan="5">
+            <strong>{{ theme.name | uppercase }}</strong>
+        </td>
+    </tr>
+    <tr ng-repeat-end ng-repeat="child in theme.children" class="priority priority6">
+        <td><i>{{ child.ontime_id }}</i></td>
+        <td><u>{{ child.name }}</u></td>
+        <td class="text-center">{{ child.entries.length }}</td>
+        <td class="text-center"><span class="label label-info col-lg-12">a</span></td>
+        <td class="text-center"><span class="label label-success col-lg-12">a</span></td>
+    </tr>
+    </tbody>
+</table>

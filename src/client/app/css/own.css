@@ -91,3 +91,31 @@
 .versions .theme-config-box.show {
     margin-right: 0px;
 }
+
+table.document tr.priority {
+    border-left: 10px solid;
+}
+
+table.document tr.priority.priority4 {
+    border-color: #D9534F;
+}
+
+table.document tr.priority.priority5 {
+    border-color: #F0AD4E;
+}
+
+table.document tr.priority.priority6 {
+    border-color: #5BC0DE;
+}
+
+table.document tr.priority.priority7 {
+    border-color: #5CB85C;
+}
+
+table.document tr.priority.priority8 {
+    border-color: #9370db;
+}
+
+table.document tr.priority.child td:first-child {
+    text-indent: 5px;
+}

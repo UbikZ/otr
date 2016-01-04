@@ -1,10 +1,10 @@
-<div class="versions" ng-controller="version-preview.controller" ng-init="ns='version.view'">
+<div class="versions" ng-controller="version-preview.controller" ng-init="ns='setting'">
     <div class="theme-config">
         <div class="theme-config-box">
             <div class="spin-icon" ng-click="toggleSetting()">
                 <i class="fa fa-cogs fa-spin"></i>
             </div>
-            <div class="skin-setttings" ng-init="modal = true; ns='setting';">
+            <div class="skin-setttings" ng-init="modal = true;">
                 <div class="title">{{ (ns+'.title') | translate }}</div>
                 <form role="form" name="form" novalidate class="p-md" ng-submit="submit(setting)">
                     <div class="row">
@@ -39,14 +39,14 @@
             </div>
         </div>
     </div>
-    <div>
+    <div ng-init="nsv='version.view'">
         <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-sm-12">
-                <h2>{{ (ns+'.title') | translate }}</h2>
+                <h2>{{ (nsv+'.title') | translate }}</h2>
                 <ol class="breadcrumb">
                     <li>
                         <a ui-sref="{{ $root.routes.ORGANIZATIONS_LIST }}" class="text-muted">
-                            {{ (ns+'.list') | translate }}
+                            {{ (nsv+'.list') | translate }}
                         </a>
                     </li>
                     <li class="active">
@@ -60,26 +60,26 @@
                 <div class="wrapper wrapper-content animated fadeIn">
                     <div class="ibox">
                         <div class="ibox-content">
-                            <tabset>
-                                <tab>
+                            <uib-tabset>
+                                <uib-tab>
                                     <tab-heading>
-                                        <i class="fa fa-sitemap"></i> {{ (ns+'.view.macro') | translate }}
+                                        <i class="fa fa-sitemap"></i> {{ (nsv+'.view.macro') | translate }}
                                     </tab-heading>
-                                    And some content, too!
-                                </tab>
-                                <tab>
+                                    <span ng-include="'views/versions/partials/macro.html'"></span>
+                                </uib-tab>
+                                <uib-tab>
                                     <tab-heading>
-                                        <i class="fa fa-list"></i> {{ (ns+'.view.macro') | translate }}
-                                    </tab-heading>
-                                    That's right.
-                                </tab>
-                                <tab>
-                                    <tab-heading>
-                                        <i class="fa fa-files-o"></i> {{ (ns+'.view.macro') | translate }}
+                                        <i class="fa fa-list"></i> {{ (nsv+'.view.macro') | translate }}
                                     </tab-heading>
                                     That's right.
-                                </tab>
-                            </tabset>
+                                </uib-tab>
+                                <uib-tab>
+                                    <tab-heading>
+                                        <i class="fa fa-files-o"></i> {{ (nsv+'.view.macro') | translate }}
+                                    </tab-heading>
+                                    That's right.
+                                </uib-tab>
+                            </uib-tabset>
                         </div>
                     </div>
                 </div>

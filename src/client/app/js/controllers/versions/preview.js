@@ -14,14 +14,22 @@ module.exports = ['$scope', '$rootScope', '$stateParams', 'itemService', '$locat
       if (res.organization == undefined || res.item == undefined) {
         $location.path('/');
       } else {
-        console.log(res.organization);
-        console.log(res.item);
+        $scope.organization = res.organization;
+        $scope.item = res.item;
         $scope.setting = mappingSetting.dalToDTO(res.item.settings[0]);
       }
     });
 
-    $scope.toggleSetting = function() {
+    $scope.toggleSetting = function () {
       $('.theme-config-box').toggleClass('show');
-    }
+    };
+
+    $scope.cost = function (id, depth, state) {
+
+    };
+
+    $scope.time = function (id) {
+
+    };
   }
 ];
