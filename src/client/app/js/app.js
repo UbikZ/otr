@@ -29,6 +29,7 @@ var app = angular.module('otr', [
   'otr.services',
   'pascalprecht.translate',
   'ngStorage',
+  'ngLocale',
   'treeControl',
 ]);
 
