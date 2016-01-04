@@ -11,7 +11,7 @@
                         <div class="col-lg-8 text-right">
                             <span>{{ (nsvr+'.sizing.tasks') | translate }}</span>
 
-                            <h2 class="font-bold">{{ totalTasks() | currency:'' }}</h2>
+                            <h2 class="font-bold">{{ resume.totalTasks | currency:'':0 }}</h2>
                         </div>
                     </div>
                 </div>
@@ -25,7 +25,7 @@
                         <div class="col-lg-8 text-right">
                             <span>{{ (nsvr+'.sizing.estimates') | translate }}</span>
 
-                            <h2 class="font-bold">{{ totalEstims() | currency:'' }}</h2>
+                            <h2 class="font-bold">{{ resume.totalEstims | currency:'' }}</h2>
                         </div>
                     </div>
                 </div>
@@ -41,12 +41,12 @@
                         <div class="col-lg-4 text-right">
                             <span>{{ (nsvr+'.sizing.contributor') | translate }}</span>
 
-                            <h2 class="font-bold">{{ setting.contributorAvailable | currency:'' }}</h2>
+                            <h2 class="font-bold">{{ setting.contributorAvailable | currency:'':0 }}</h2>
                         </div>
                         <div class="col-lg-4 text-right">
                             <span>{{ (nsvr+'.sizing.days_per_contributor_per_iteration') | translate }}</span>
 
-                            <h2 class="font-bold">{{ dayPerPersonPerIter() | currency:'' }}</h2>
+                            <h2 class="font-bold">{{ resume.dayPerPersonPerIter | currency:'' }}</h2>
                         </div>
                     </div>
                 </div>
@@ -60,7 +60,7 @@
                         <div class="col-lg-8 text-right">
                             <span>{{ (nsvr+'.sizing.iterations') | translate }}</span>
 
-                            <h2 class="font-bold">{{ interations() | currency:'' }}</h2>
+                            <h2 class="font-bold">{{ resume.interations | currency:'' }}</h2>
                         </div>
                     </div>
                 </div>
@@ -109,7 +109,7 @@
                         <div class="col-lg-8 text-right">
                             <span>{{ (nsvr+'.price.dev_time') | translate }}</span>
 
-                            <h2 class="font-bold">{{ totalEstimsDev() | currency:'' }}</h2>
+                            <h2 class="font-bold">{{ resume.totalEstimsDev | currency:'' }}</h2>
                         </div>
                     </div>
                 </div>
@@ -123,7 +123,7 @@
                         <div class="col-lg-8 text-right">
                             <span>{{ (nsvr+'.price.sm_time') | translate }}</span>
 
-                            <h2 class="font-bold">{{ totalEstimsSM() | currency:'' }}</h2>
+                            <h2 class="font-bold">{{ resume.totalEstimsSM | currency:'' }}</h2>
                         </div>
                     </div>
                 </div>
@@ -139,7 +139,7 @@
                         <div class="col-lg-8 text-right">
                             <span>{{ (nsvr+'.price.dev_price') | translate }}</span>
 
-                            <h2 class="font-bold">71 500</h2></div>
+                            <h2 class="font-bold">{{ resume.totalPriceSM | currency:'':0 }}</h2></div>
                     </div>
                 </div>
             </div>
@@ -152,7 +152,7 @@
                         <div class="col-lg-8 text-right">
                             <span>{{ (nsvr+'.price.sm_price') | translate }}</span>
 
-                            <h2 class="font-bold">11 889</h2>
+                            <h2 class="font-bold">{{ resume.totalPriceDev | currency:'':0 }}</h2>
                         </div>
                     </div>
                 </div>

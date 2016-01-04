@@ -50,10 +50,18 @@ function computeTotal(entries, setting, opts) {
       total += entry.size;
     }
     if (opts & ESTIM_DEV) {
-      total += entry.estimate.duration_minutes * getRate(setting);
+      var totalDev = entry.estimate.duration_minutes * getRate(setting);
+      if (opts & PRICE) {
+        totalDev *= setting.contributorPrice;
+      }
+      total += totalDev;
     }
     if (opts & ESTIM_SM) {
-      total += entry.estimate.duration_minutes * (setting.scrummasterOccupation / 100) * getRate(setting);
+      var totalSm = entry.estimate.duration_minutes * (setting.scrummasterOccupation / 100) * getRate(setting);
+      if (opts & PRICE) {
+        totalSm *= setting.scrummasterPrice;
+      }
+      total += totalSm;
     }
   });
 

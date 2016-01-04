@@ -20,6 +20,21 @@ module.exports = ['$scope', '$rootScope', '$stateParams', 'itemService', '$locat
         $scope.item = res.item;
         $scope.documentId = $stateParams.documentId;
         $scope.setting = mappingSetting.dalToDTO(res.item.settings[0]);
+        $scope.resume = {
+          cost: computeEntry.computeTotal($scope.item.entries, $scope.setting, computeEntry.const.TASKS),
+          totalTasks: computeEntry.computeTotal($scope.item.entries, $scope.setting, computeEntry.const.TASKS),
+          totalEstims: computeEntry.computeTotal(
+            $scope.item.entries,
+            $scope.setting,
+            computeEntry.const.ESTIM_DEV | computeEntry.const.ESTIM_SM
+          ),
+          totalEstimsDev: computeEntry.computeTotal($scope.item.entries, $scope.setting, computeEntry.const.ESTIM_DEV),
+          totalEstimsSM: computeEntry.computeTotal($scope.item.entries, $scope.setting, computeEntry.const.ESTIM_SM),
+          totalPriceDev: computeEntry.computeTotal($scope.item.entries, $scope.setting, computeEntry.const.ESTIM_DEV | computeEntry.const.PRICE),
+          totalPriceSM: computeEntry.computeTotal($scope.item.entries, $scope.setting, computeEntry.const.ESTIM_SM | computeEntry.const.PRICE),
+          dayPerPersonPerIter: computeEntry.computeDayPerPersonPerIter($scope.item.entries, $scope.setting),
+          interations: computeEntry.interations($scope.item.entries, $scope.setting),
+        };
       }
     });
 
@@ -32,37 +47,8 @@ module.exports = ['$scope', '$rootScope', '$stateParams', 'itemService', '$locat
      * id: database _id
      * depth: depth in tree (2 levels max)
      */
-
     $scope.cost = function (id, _depth) {
       return computeEntry.walkElement($scope.item.entries, $scope.setting, id, _depth, computeEntry.const.PRICE);
-    };
-
-    $scope.totalTasks = function () {
-      return computeEntry.computeTotal($scope.item.entries, $scope.setting, computeEntry.const.TASKS);
-    };
-
-    $scope.totalEstims = function () {
-      return computeEntry.computeTotal(
-        $scope.item.entries,
-        $scope.setting,
-        computeEntry.const.ESTIM_DEV | computeEntry.const.ESTIM_SM
-      );
-    };
-
-    $scope.totalEstimsDev = function () {
-      return computeEntry.computeTotal($scope.item.entries, $scope.setting, computeEntry.const.ESTIM_DEV);
-    };
-
-    $scope.totalEstimsSM = function () {
-      return computeEntry.computeTotal($scope.item.entries, $scope.setting, computeEntry.const.ESTIM_SM);
-    };
-
-    $scope.dayPerPersonPerIter = function() {
-      return computeEntry.computeDayPerPersonPerIter($scope.item.entries, $scope.setting);
-    };
-
-    $scope.interations = function() {
-      return computeEntry.interations($scope.item.entries, $scope.setting);
     };
 
     $scope.time = function (id, _depth) {
