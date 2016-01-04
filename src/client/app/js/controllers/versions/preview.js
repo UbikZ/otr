@@ -2,6 +2,8 @@
 
 var $ = require('jquery');
 var mappingSetting = require('../../helpers/mapping/setting');
+var computeEntry = require('../../helpers/computeEntry');
+
 
 module.exports = ['$scope', '$rootScope', '$stateParams', 'itemService', '$location',
   function ($scope, $rootScope, $stateParams, itemService, $location) {
@@ -25,12 +27,18 @@ module.exports = ['$scope', '$rootScope', '$stateParams', 'itemService', '$locat
       $('.theme-config-box').toggleClass('show');
     };
 
-    $scope.cost = function (id, depth, state) {
+    /*
+     * id: database _id
+     * depth: depth in tree (2 levels max)
+     */
 
+    $scope.cost = function (id, _depth) {
+      return computeEntry.walkElement($scope.item.entries, $scope.setting, id, _depth, true);
     };
 
-    $scope.time = function (id) {
 
+    $scope.time = function (id, _depth) {
+      return computeEntry.walkElement($scope.item.entries, $scope.setting, id, _depth);
     };
   }
 ];

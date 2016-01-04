@@ -1,25 +1,29 @@
-<table class="document table table-striped">
+<table class="document table table-striped" ng-init="nsv='version.view'">
     <thead>
     <tr>
         <th class="text-center col-lg-1">#</th>
-        <th class="text-center col-lg-4">Fonctionnalité</th>
-        <th class="text-center col-lg-2">Nombre Stories</th>
-        <th class="text-center col-lg-2">Estimation</th>
-        <th class="text-center col-lg-2">Coût</th>
+        <th class="text-center col-lg-4">{{ (nsv+'.header.feature') | translate }}</th>
+        <th class="text-center col-lg-2">{{ (nsv+'.header.nb_stories') | translate }}</th>
+        <th class="text-center col-lg-2">{{ (nsv+'.header.estimate') | translate }}</th>
+        <th class="text-center col-lg-2">{{ (nsv+'.header.cost') | translate }}</th>
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat-start="(index, theme) in item.entries">
+    <tr ng-repeat-start="(index, theme) in item.entries | orderBy:'name'">
         <td colspan="5">
             <strong>{{ theme.name | uppercase }}</strong>
         </td>
     </tr>
-    <tr ng-repeat-end ng-repeat="child in theme.children" class="priority priority6">
+    <tr ng-repeat-end ng-repeat="child in theme.children | orderBy:'name'" class="priority priority6">
         <td><i>{{ child.ontime_id }}</i></td>
         <td><u>{{ child.name }}</u></td>
         <td class="text-center">{{ child.entries.length }}</td>
-        <td class="text-center"><span class="label label-info col-lg-12">a</span></td>
-        <td class="text-center"><span class="label label-success col-lg-12">a</span></td>
+        <td class="text-center"><span class="label label-info col-lg-12">
+            {{ time(child._id) | currency }}
+        </span></td>
+        <td class="text-center"><span class="label label-success col-lg-12">
+            {{ cost(child._id) | currency }}
+        </span></td>
     </tr>
     </tbody>
 </table>
