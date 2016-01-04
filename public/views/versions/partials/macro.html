@@ -17,7 +17,7 @@
     <tr ng-repeat-end ng-repeat="child in theme.children | orderBy:'name'" class="priority priority6">
         <td><i>{{ child.ontime_id }}</i></td>
         <td><u>{{ child.name }}</u></td>
-        <td class="text-center">{{ child.entries.length }}</td>
+        <td class="text-center">{{ child.children.length }}</td>
         <td class="text-center"><span class="label label-info col-lg-12">
             {{ time(child._id) | currency }}
         </span></td>
