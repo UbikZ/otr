@@ -551,11 +551,33 @@
         "list": "Vision liste",
         "detail": "Vision détaillée"
       },
-      "header": {
-        "feature": "Fonctionnalité",
-        "nb_stories": "Nombre de Stories",
-        "estimate": "Estimation",
-        "cost": "Coût"
+      "macro": {
+        "header": {
+          "feature": "Fonctionnalité",
+          "nb_stories": "Nombre de Stories",
+          "estimate": "Estimation",
+          "cost": "Coût"
+        }
+      },
+      "resume": {
+        "sizing": {
+          "title": "Dimensionnement",
+          "tasks": "Tâches",
+          "estimates": "Estim. (jr/h)",
+          "contributor": "Collab.",
+          "days_per_contributor_per_iteration": "jr/h/iter.",
+          "iterations": "Itérations",
+          "start_date": "Début prévu",
+          "end_date": "Fin prévue"
+        },
+        "price": {
+          "title": "Coût de la prestation",
+          "dev_time": "Dev. (jr/h)",
+          "sm_time": "SM (jr/h)",
+          "dev_price": "Dev.",
+          "sm_price": "SM",
+          "total": "Total"
+        }
       }
     }
   }
