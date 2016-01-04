@@ -6,7 +6,6 @@ var Project = require('../models/project');
 var Document = require('../models/document');
 var Version = require('../models/version');
 var Entry = require('../models/entry');
-var ProjectEntry = require('../models/projectEntry');
 var User = require('../models/user');
 var mongoose = require('mongoose');
 var http = require('./helpers/http');
@@ -135,7 +134,7 @@ module.exports.controller = function (app, config) {
                           result.data.forEach(function(item) {
                             var indexOfParentProject = elements.pluck('ontime_id').indexOf(item.parent_project.id);
                             if (indexOfParentProject == -1) {
-                              elements.push(new ProjectEntry({
+                              elements.push(new Entry({
                                 name: item.parent_project.name,
                                 ontime_id: item.parent_project.id,
                                 path: item.parent_project.path ? item.parent_project.path.split('\\') : [],
@@ -147,16 +146,16 @@ module.exports.controller = function (app, config) {
                             var indexOfProject =
                               elements[indexOfParentProject].children.pluck('ontime_id').indexOf(item.project.id);
                             if (indexOfProject == -1) {
-                              elements[indexOfParentProject].children.push(new ProjectEntry({
+                              elements[indexOfParentProject].children.push(new Entry({
                                 name: item.project.name,
                                 ontime_id: item.project.id,
                                 path: item.project.path ? item.project.path.split('\\') : [],
-                                entries: [],
+                                children: [],
                               }));
                               indexOfProject = elements[indexOfParentProject].children.length - 1;
                             }
 
-                            elements[indexOfParentProject].children[indexOfProject].entries.push(new Entry({
+                            elements[indexOfParentProject].children[indexOfProject].children.push(new Entry({
                               name: item.name,
                               ontime_id: item.id,
                               estimate: {

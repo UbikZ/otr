@@ -2,9 +2,12 @@
 
 var mongoose = require('mongoose');
 
-var schema = new mongoose.Schema({
+var Entry = new mongoose.Schema();
+Entry.add({
   name: {type: String, trim: true, require: true},
   ontime_id: {type: Number, index: true},
+  path: [{type: String, trim: true}],
+  children: [Entry],
   estimate: {
     duration_minutes: {type: Number, min: 0},
     otr_low: {type: Number, min: 0},
@@ -13,4 +16,4 @@ var schema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model('Entry', schema);
+module.exports = mongoose.model('Entry', Entry);
