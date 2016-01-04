@@ -66,7 +66,7 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row" ng-if="setting.showDate == true">
             <div class="col-lg-6">
                 <div class="widget lazur-bg">
                     <div class="row">
@@ -76,7 +76,7 @@
                         <div class="col-lg-8 text-right">
                             <span>{{ (nsvr+'.sizing.start_date') | translate }}</span>
 
-                            <h2 class="font-bold">29/09/2015</h2>
+                            <h2 class="font-bold">N/A</h2>
                         </div>
                     </div>
                 </div>
@@ -90,7 +90,7 @@
                         <div class="col-lg-8 text-right">
                             <span>{{ (nsvr+'.sizing.end_date') | translate }}</span>
 
-                            <h2 class="font-bold">15/04/2016</h2>
+                            <h2 class="font-bold">N/A</h2>
                         </div>
                     </div>
                 </div>
@@ -109,7 +109,7 @@
                         <div class="col-lg-8 text-right">
                             <span>{{ (nsvr+'.price.dev_time') | translate }}</span>
 
-                            <h2 class="font-bold">110</h2>
+                            <h2 class="font-bold">{{ totalEstimsDev() | currency:'' }}</h2>
                         </div>
                     </div>
                 </div>
@@ -123,7 +123,7 @@
                         <div class="col-lg-8 text-right">
                             <span>{{ (nsvr+'.price.sm_time') | translate }}</span>
 
-                            <h2 class="font-bold">13,21</h2>
+                            <h2 class="font-bold">{{ totalEstimsSM() | currency:'' }}</h2>
                         </div>
                     </div>
                 </div>

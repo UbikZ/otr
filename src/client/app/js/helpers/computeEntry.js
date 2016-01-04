@@ -5,7 +5,8 @@ const TIME = 1<<1;
 const HIGH = 1<<2;
 const LOW = 1<<3;
 const TOTAL_TASKS = 1<<4;
-const TOTAL_ESTIM = 1<<5;
+const TOTAL_ESTIM_DEV = 1<<5;
+const TOTAL_ESTIM_SM = 1<<6;
 
 function walkElement(entries, setting, id, _depth, opts) {
   var result = '-';
@@ -37,7 +38,7 @@ function computeDayPerPersonPerIter(entries, setting) {
 }
 
 function interations(entries, setting) {
-  return (computeTotal(entries, setting, TOTAL_ESTIM) / computeDayPerPersonPerIter(entries, setting))
+  return (computeTotal(entries, setting, TOTAL_ESTIM_DEV | TOTAL_ESTIM_SM) / computeDayPerPersonPerIter(entries, setting))
     / setting.contributorAvailable;
 }
 
@@ -47,8 +48,12 @@ function computeTotal(entries, setting, opts) {
   entries.forEach(function (entry) {
     if (opts & TOTAL_TASKS) {
       total += entry.size;
-    } else if (opts & TOTAL_ESTIM) {
+    }
+    if (opts & TOTAL_ESTIM_DEV) {
       total += entry.estimate.duration_minutes * getRate(setting);
+    }
+    if (opts & TOTAL_ESTIM_SM) {
+      total += entry.estimate.duration_minutes * (setting.scrummasterOccupation / 100) * getRate(setting);
     }
   });
 
@@ -110,7 +115,8 @@ module.exports = {
   interations: interations,
   const: {
     TOTAL_TASKS: TOTAL_TASKS,
-    TOTAL_ESTIM: TOTAL_ESTIM,
+    TOTAL_ESTIM_DEV: TOTAL_ESTIM_DEV,
+    TOTAL_ESTIM_SM: TOTAL_ESTIM_SM,
     PRICE: PRICE,
     TIME: TIME,
     HIGH: HIGH,

@@ -42,7 +42,19 @@ module.exports = ['$scope', '$rootScope', '$stateParams', 'itemService', '$locat
     };
 
     $scope.totalEstims = function () {
-      return computeEntry.computeTotal($scope.item.entries, $scope.setting, computeEntry.const.TOTAL_ESTIM);
+      return computeEntry.computeTotal(
+        $scope.item.entries,
+        $scope.setting,
+        computeEntry.const.TOTAL_ESTIM_DEV | computeEntry.const.TOTAL_ESTIM_SM
+      );
+    };
+
+    $scope.totalEstimsDev = function () {
+      return computeEntry.computeTotal($scope.item.entries, $scope.setting, computeEntry.const.TOTAL_ESTIM_DEV);
+    };
+
+    $scope.totalEstimsSM = function () {
+      return computeEntry.computeTotal($scope.item.entries, $scope.setting, computeEntry.const.TOTAL_ESTIM_SM);
     };
 
     $scope.dayPerPersonPerIter = function() {
