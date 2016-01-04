@@ -24,7 +24,7 @@
         <td><u>{{ child.name }}</u></td>
         <td class="text-center">{{ child.children.length }}</td>
         <td class="text-center"><span class="label label-info col-lg-12">
-            {{ time(child._id) | currency }}
+            {{ time(child._id) | currency:setting.label }}
         </span></td>
         <td class="text-center"><span class="label label-success col-lg-12">
             {{ cost(child._id) | currency }}
