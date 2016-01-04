@@ -25,6 +25,7 @@ module.exports = ['$scope', '$rootScope', '$stateParams', 'itemService', '$locat
 
     $scope.toggleSetting = function () {
       $('.theme-config-box').toggleClass('show');
+      $('#document-element').toggleClass('col-lg-8');
     };
 
     /*
