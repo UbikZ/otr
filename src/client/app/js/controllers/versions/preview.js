@@ -49,6 +49,10 @@ module.exports = ['$scope', '$rootScope', '$stateParams', 'itemService', '$locat
       return computeEntry.computeDayPerPersonPerIter($scope.item.entries, $scope.setting);
     };
 
+    $scope.interations = function() {
+      return computeEntry.interations($scope.item.entries, $scope.setting);
+    };
+
     $scope.time = function (id, _depth) {
       return computeEntry.walkElement($scope.item.entries, $scope.setting, id, _depth, computeEntry.const.TIME);
     };

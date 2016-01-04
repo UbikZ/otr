@@ -36,6 +36,11 @@ function computeDayPerPersonPerIter(entries, setting) {
   return setting.contributorOccupation * setting.dayPerWeek * setting.weekPerIteration / 100;
 }
 
+function interations(entries, setting) {
+  return (computeTotal(entries, setting, TOTAL_ESTIM) / computeDayPerPersonPerIter(entries, setting))
+    / setting.contributorAvailable;
+}
+
 function computeTotal(entries, setting, opts) {
   var total = 0;
 
@@ -102,6 +107,7 @@ module.exports = {
   walkElement: walkElement,
   computeTotal: computeTotal,
   computeDayPerPersonPerIter: computeDayPerPersonPerIter,
+  interations: interations,
   const: {
     TOTAL_TASKS: TOTAL_TASKS,
     TOTAL_ESTIM: TOTAL_ESTIM,
