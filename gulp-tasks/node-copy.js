@@ -6,6 +6,8 @@ module.exports = function(gulp, plugins, npmPackages, config) {
 
     // Font-Awesome
     gulp.src([nodePath + '/font-awesome/fonts/*.*']).pipe(gulp.dest(config.path.public + '/dist/fonts'));
+    // Flags
+    gulp.src([nodePath + '/flag-icon-css/flags/**/*.*']).pipe(gulp.dest(config.path.public + '/dist/flags'));
 
     return gulp.src([
         // Bootstrap
