@@ -81,7 +81,17 @@
 
 .versions .skin-setttings {
     width: 400px;
+    border-left: 1px solid #1ab394;
+    border-bottom: 1px solid #1ab394;
     background: #fff;
+}
+.versions .skin-setttings .title {
+    background: #f7f7f7;
+}
+
+.versions .theme-config {
+    z-index: 1;
+    position: fixed;
 }
 
 .versions .theme-config-box {
