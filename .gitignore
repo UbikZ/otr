@@ -4,3 +4,4 @@ public/dist
 public/lib
 .DS_Store
 .idea
+npm-debug.log
