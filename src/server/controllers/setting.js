@@ -35,7 +35,7 @@ module.exports.controller = function (app, config) {
   });
 
   /*
-   * Get sub setting from organization, project or document
+   * Get sub setting from organization, project, document or version
    */
   app.get(prefix + '/sub', http.ensureAuthorized, function (req, res) {
     var data = req.query;

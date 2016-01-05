@@ -15,7 +15,7 @@ Version.add({
     user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
     date: {type: Date, default: Date.now},
   },
-  settings: [Setting],
+  setting: Setting,
   entries: [Entry],
 });
 
