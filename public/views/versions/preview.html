@@ -67,6 +67,9 @@
                                     <tab-heading>
                                         <i class="fa fa-sitemap"></i> {{ (nsv+'.items.macro') | translate }}
                                     </tab-heading>
+                                    <button class="btn btn-default pull-right" ng-click="download()">
+                                        PDF
+                                    </button>
                                     <span ng-include="'views/versions/partials/macro.html'"></span>
                                     <span ng-include="'views/versions/partials/resume.html'"></span>
                                 </uib-tab>

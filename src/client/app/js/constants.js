@@ -19,6 +19,7 @@ module.exports = {
     'ORGANIZATIONS_DETAIL': 'organizations.detail',
     'VERSIONS': 'versions',
     'VERSIONS_PREVIEW': 'versions.preview',
+    'VERSIONS_PDF': 'versions.pdf',
   },
   'DATAMODEL': {
     'ID_SETTING': 42,

@@ -44,6 +44,7 @@
     "ngstorage": "^0.3.10",
     "oclazyload": "^1.0.6",
     "pace": "github:hubspot/pace",
+    "phantomjs2": "^2.0.2",
     "querystring": "^0.2.0",
     "request": "^2.67.0",
     "spinkit": "^1.2.5",

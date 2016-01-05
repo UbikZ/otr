@@ -5,8 +5,8 @@ var mappingSetting = require('../../helpers/mapping/setting');
 var computeEntry = require('../../helpers/computeEntry');
 
 
-module.exports = ['$scope', '$rootScope', '$stateParams', 'itemService', 'settingService', '$location',
-  function ($scope, $rootScope, $stateParams, itemService, settingService, $location) {
+module.exports = ['$scope', '$rootScope', '$stateParams', 'itemService', 'settingService', 'rendererService', '$location',
+  function ($scope, $rootScope, $stateParams, itemService, settingService, rendererService, $location) {
     var mainSetting = {};
     $scope.setting = {};
 
@@ -23,6 +23,10 @@ module.exports = ['$scope', '$rootScope', '$stateParams', 'itemService', 'settin
 
     $scope.restoreSetting = function() {
       $scope.setting = mainSetting;
+    };
+
+    $scope.download = function(args) {
+      rendererService.renderPdf({});
     };
 
     itemService.get({

@@ -70,6 +70,11 @@ module.exports = [
         url: '/preview/:organizationId/:documentId/:itemId',
         templateUrl: env.templatePath('versions/preview.html'),
       })
+      .state(routes.VERSIONS_PDF, {
+        url: '/pdf/:organizationId/:documentId/:itemId',
+        templateUrl: env.templatePath('versions/pdf.html'),
+        data: {includes: false}
+      })
       .state(routes.ORGANIZATIONS_SETTINGS, {
         url: '/settings',
         templateUrl: env.templatePath('settings/forms/edit.html'),
