@@ -20,9 +20,9 @@ module.exports.controller = function (app, config) {
   /*
    * Get Item (by filtering)
    */
-  app.get(prefix, http.ensureAuthorized, function (req, res) {
+  app.get(prefix, /*http.ensureAuthorized,*/ function (req, res) {
     var data = req.query;
-    http.checkAuthorized(req, res, function () {
+    //http.checkAuthorized(req, res, function () {
       Organization.findById(data.organizationId, function (err, organization) {
         if (err) {
           http.log(req, 'Internal error: get organization', err);
@@ -42,7 +42,7 @@ module.exports.controller = function (app, config) {
           http.response(res, 404, {}, "-5");
         }
       });
-    });
+    //});
   });
 
   app.post(prefix + '/delete', http.ensureAuthorized, function (req, res) {

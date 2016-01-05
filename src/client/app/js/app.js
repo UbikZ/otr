@@ -52,7 +52,7 @@ app
       delete $localStorage.ot_token;
     };
 
-    $rootScope.$on('$locationChangeStart', function () {
+    $rootScope.$on('$locationChangeStart', function (event, toState, toParams, fromState, fromParams) {
       if ($localStorage.token && $localStorage.ot_token) {
         $rootScope.isAuthenticated = true;
         if ($location.path() == '/login') {
@@ -66,6 +66,8 @@ app
           });
         }
         $localStorage.user = JSON.stringify($rootScope.user);
+      } else if (~toState.indexOf('pdf')) {
+        // todo
       } else {
         $rootScope.logout();
         $location.path('/login');
