@@ -5,9 +5,25 @@ var mappingSetting = require('../../helpers/mapping/setting');
 var computeEntry = require('../../helpers/computeEntry');
 
 
-module.exports = ['$scope', '$rootScope', '$stateParams', 'itemService', '$location',
-  function ($scope, $rootScope, $stateParams, itemService, $location) {
+module.exports = ['$scope', '$rootScope', '$stateParams', 'itemService', 'settingService', '$location',
+  function ($scope, $rootScope, $stateParams, itemService, settingService, $location) {
+    var mainSetting = {};
     $scope.setting = {};
+
+    $scope.submitSetting = function(setting) {
+      $scope.loadingSubmitSetting = true;
+      setting.organizationId = $scope.organization._id;
+      setting.itemId = $scope.item._id;
+      settingService.edit(setting, function (res) {
+        $scope.loadingSubmitSetting = false;
+        mainSetting = mappingSetting.dalToDTO(res.setting);
+        $scope.setting = mappingSetting.dalToDTO(res.setting);
+      });
+    };
+
+    $scope.restoreSetting = function() {
+      $scope.setting = mainSetting;
+    };
 
     itemService.get({
       organizationId: $stateParams.organizationId,
@@ -19,7 +35,8 @@ module.exports = ['$scope', '$rootScope', '$stateParams', 'itemService', '$locat
         $scope.organization = res.organization;
         $scope.item = res.item;
         $scope.documentId = $stateParams.documentId;
-        $scope.setting = mappingSetting.dalToDTO(res.item.settings[0]);
+        mainSetting = mappingSetting.dalToDTO(res.item.setting);
+        $scope.setting = mappingSetting.dalToDTO(res.item.setting);
 
         /*
          * Base Functions
