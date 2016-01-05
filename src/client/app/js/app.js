@@ -42,7 +42,7 @@ app
     $rootScope.routes = _CONST.ROUTES;
     $rootScope.isAuthenticated = false;
     $rootScope.user = $localStorage.user ? JSON.parse($localStorage.user) : undefined;
-
+    $rootScope.pdf = {enabled: false, loaded: false};
 
     $rootScope.logout = function () {
       $rootScope.isAuthenticated = false;
@@ -53,7 +53,9 @@ app
     };
 
     $rootScope.$on('$locationChangeStart', function (event, toState, toParams, fromState, fromParams) {
-      if ($localStorage.token && $localStorage.ot_token) {
+      if (~toState.indexOf('pdf')) {
+        $rootScope.pdf.enabled = true;
+      } else if ($localStorage.token && $localStorage.ot_token) {
         $rootScope.isAuthenticated = true;
         if ($location.path() == '/login') {
           $location.path('/');
@@ -66,8 +68,6 @@ app
           });
         }
         $localStorage.user = JSON.stringify($rootScope.user);
-      } else if (~toState.indexOf('pdf')) {
-        // todo
       } else {
         $rootScope.logout();
         $location.path('/login');

@@ -41,6 +41,9 @@ module.exports = ['$scope', '$rootScope', '$stateParams', 'itemService', 'settin
         $scope.documentId = $stateParams.documentId;
         mainSetting = mappingSetting.dalToDTO(res.item.setting);
         $scope.setting = mappingSetting.dalToDTO(res.item.setting);
+        if ($rootScope.pdf.enabled == true) {
+          $rootScope.pdf.loaded = true;
+        }
 
         /*
          * Base Functions
