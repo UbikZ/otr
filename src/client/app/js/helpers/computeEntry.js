@@ -1,12 +1,12 @@
 'use strict';
 
-const PRICE = 1<<0;
-const TIME = 1<<1;
-const HIGH = 1<<2;
-const LOW = 1<<3;
-const TASKS = 1<<4;
-const ESTIM_DEV = 1<<5;
-const ESTIM_SM = 1<<6;
+var PRICE = 1<<0;
+var TIME = 1<<1;
+var HIGH = 1<<2;
+var LOW = 1<<3;
+var TASKS = 1<<4;
+var ESTIM_DEV = 1<<5;
+var ESTIM_SM = 1<<6;
 
 function walkElement(entries, setting, id, _depth, opts) {
   var result = '-';
