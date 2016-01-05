@@ -11,7 +11,7 @@ function dalToDTO(item) {
   var result = {};
 
   check(item, function(setting) {
-    result.id = setting.id;
+    result._id = setting._id;
 
     check(setting.project_dev, function(project_dev) {
       check(project_dev.contributor_price, function(contributor_price) {
