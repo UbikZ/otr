@@ -1,7 +1,10 @@
 "use strict";
 
-var page = require('webpage').create();
+var webPage = require('webpage');
+var page = webPage.create();
 var system = require('system');
+var path = require('path');
+var fs = require('fs');
 var url;
 
 function waitFor(testFx, onReady, timeOutMillis) {
@@ -30,7 +33,7 @@ if (system.args.length != 2) {
 } else {
   url = system.args[1];
 
-  page.paperSize = {
+  var paperSize = {
     format: "A4",
     orientation: "portrait",
     margin: {left: "1cm", right: "1cm", top: "1cm", bottom: "1cm"},
@@ -49,16 +52,31 @@ if (system.args.length != 2) {
     }
   };
 
+  page.paperSize = paperSize;
+  var filePath = "./public/export.html";
+
   page.open(url, function (status) {
     console.log(url);
     waitFor(function () {
       console.log('Waiting...');
       return page.evaluate(function () {
-        return document.getElementById('global-total') != undefined;
+        return document.querySelectorAll('.versions.pdf').length > 0;
       });
     }, function () {
       console.log("Should be ok now.");
-      page.render("export.pdf");
+      var content = page.content.replace(new RegExp('\\s*<script[^>]*>[\\s\\S]*?</script>\\s*','ig'),'');
+      fs.write(filePath, content, 'w');
+      page.close();
+    });
+  });
+
+  waitFor(function() {
+    return fs.isFile(filePath);
+  }, function () {
+    var otherPage = webPage.create();
+    otherPage.paperSize = paperSize;
+    otherPage.open(filePath, function(status) {
+      otherPage.render('public/export.pdf');
       phantom.exit();
     });
   });

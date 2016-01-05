@@ -19,7 +19,7 @@ module.exports.controller = function (app, config) {
       //if (data.url) {
         console.log('Rendering...');
         var childArgs = [
-          path.join(__dirname, '../config', 'phantomjs-script.js'),
+          path.join(__dirname, '../../../scripts', 'phantomjs-script.js'),
           "http://localhost:3000/#/versions/pdf/568adb7c53df50832feb3f84/568adb9c53df50832feb3f87/568b8c448f5e804b51e91ed8"
         ];
 
