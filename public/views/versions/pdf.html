@@ -1,24 +1,45 @@
-<div class="versions" ng-controller="version-preview.controller" ng-init="ns='setting'">
+<div class="versions" ng-class="$root.pdf.loaded ? 'pdf': ''" ng-controller="version-preview.controller" ng-init="ns='setting'">
     <div ng-init="nsv='version.view'">
-        <div class="row wrapper border-bottom white-bg page-heading">
-            <div class="col-sm-12">
-                <h2>{{ (nsv+'.title') | translate }}</h2>
-                <ol class="breadcrumb">
-                    <li>
-                        <a ui-sref="{{ $root.routes.ORGANIZATIONS_DETAIL }}({id: organization._id, '#': documentId})"
-                           class="text-muted">
-                            {{ (nsv+'.back') | translate }}
-                        </a>
-                    </li>
-                    <li class="active">
-                        <strong>{{ item.name }}</strong>
-                    </li>
-                </ol>
+        <div id="page-wrapper">
+            <header class="row wrapper white-bg page-heading">
+                <h1>
+                    <span>Plan de développement</span>
+                    <small>Estimations INTERACTION pour BRICODEAL</small>
+                </h1>
+            </header>
+            <div class="row" id="document-read">
+                <div class="wrapper border-bottom white-bg page-heading">
+                    <h2>Estimations INTERACTION</h2>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="panel-heading">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-content">
+                                <div class="panel-body">
+                                    <div class="tab-content">
+                                        <div class="tab-pane active page-break-after" id="vision-macro">
+                                            <div class="row" id="vision-globale">
+                                                <div class="document-headlines ibox-title vision-globale">
+                                                    <span ng-include="'views/versions/partials/print/macro.html'"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="vision-synthese">
+                                        <div class="row">
+                                            <div class="document-headlines ibox-title"><h2>Synthèse</h2></div>
+                                            <div class="row entry-resume-content">
+                                                <span ng-include="'views/versions/partials/print/resume.html'"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="row wrapper">
-            <span ng-include="'views/versions/partials/macro.html'"></span>
-            <span ng-include="'views/versions/partials/resume.html'"></span>
         </div>
     </div>
 </div>
