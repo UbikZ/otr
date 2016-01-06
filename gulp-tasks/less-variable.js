@@ -12,7 +12,7 @@ module.exports = function(gulp, plugins, npmPackages, config) {
       .pipe(gulp.dest(config.path.public + '/lib/flag-icon-css/less'));
 
     // Bootstrap
-    return gulp.src('src/client/app/less/bootstrap/variables.less')
+    return gulp.src('src/client/app/less/bootstrap/{variables,bootstrap}.less')
       .pipe(gulp.dest(config.path.public + '/lib/bootstrap/less'));
   };
 };

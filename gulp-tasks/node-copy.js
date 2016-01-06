@@ -13,7 +13,7 @@ module.exports = function(gulp, plugins, npmPackages, config) {
 
     return gulp.src([
         // Bootstrap
-        nodePath + '/bootstrap/less/!(variables).less',
+        nodePath + '/bootstrap/less/!(variables,bootstrap,print).less',
         nodePath + '/bootstrap/less/mixins/*.less',
         nodePath + '/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css',
         // Flags
