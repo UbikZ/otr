@@ -1,69 +1,119 @@
 "use strict";
 
 var webPage = require('webpage');
-var page = webPage.create();
 var system = require('system');
+var page = webPage.create();
+var pdfPage = webPage.create();
 var path = require('path');
 var fs = require('fs');
 var url;
 
-function waitFor(testFx, onReady, timeOutMillis) {
-  var maxTimeOutMillis = timeOutMillis ? timeOutMillis : 3000,
-    start = new Date().getTime(),
-    condition = false,
-    interval = setInterval(function () {
-      if ((new Date().getTime() - start < maxTimeOutMillis) && !condition) {
-        condition = (typeof(testFx) === "string" ? eval(testFx) : testFx());
-      } else {
-        if (!condition) {
-          console.log("'waitFor()' timeout");
-          phantom.exit(-1);
-        } else {
-          console.log("'waitFor()' finished in " + (new Date().getTime() - start) + "ms.");
-          typeof(onReady) === "string" ? eval(onReady) : onReady();
-          clearInterval(interval);
-        }
-      }
-    }, 250);
+/**
+ * Variables Init
+ */
+var resourceWait = 300,
+  maxRenderWait = 10000,
+  count = 0,
+  forcedRenderTimeout,
+  renderTimeout,
+  debug = false;
+
+/**
+ * Page Config
+ */
+
+[page, pdfPage].forEach(function(cPage) {
+  cPage.onError = onError;
+  cPage.onResourceRequested = onResourceRequested;
+  cPage.onResourceReceived = onResourceReceived;
+});
+
+pdfPage.paperSize = {
+  format: "A4",
+  orientation: "portrait",
+  margin: {left: "1cm", right: "1cm", top: "1cm", bottom: "1cm"},
 };
 
-if (system.args.length != 2) {
+
+function doRender() {
+  var filePath = 'public/test.html';
+
+  if (debug) {
+    console.log('Start export PDF...');
+  }
+
+  fs.write(filePath, page.content.replace(new RegExp('\\s*<script[^>]*>[\\s\\S]*?</script>\\s*','ig'),''), 'w');
+  page.close();
+
+  pdfPage.clearMemoryCache();
+  open(pdfPage, filePath, function() {
+    pdfPage.render('public/exports/export.pdf');
+    fs.remove(filePath);
+    phantom.exit();
+  });
+}
+
+if (system.args.length < 2 || system.args.length > 3) {
   console.log('Parameter missing');
   phantom.exit(-1);
 } else {
   url = system.args[1];
+  debug = system.args[2] == 1;
 
-  page.paperSize = {
-    format: "A4",
-    orientation: "portrait",
-    margin: {left: "1cm", right: "1cm", top: "1cm", bottom: "1cm"},
-    header: {
-      height: "3cm",
-      contents: phantom.callback(function (pageNum, numPages) {
-        // todo
-      })
-    },
-    footer: {
-      class: "pull-right",
-      height: "1cm",
-      contents: phantom.callback(function (pageNum, numPages) {
-        return (pageNum + "/" + numPages);
-      })
-    }
-  };
-
-  page.open(url, function (status) {
-    console.log(url);
-    waitFor(function () {
-      console.log('Waiting...');
-      return page.evaluate(function () {
-        return document.querySelectorAll('.versions.pdf').length > 0;
-      });
-    }, function () {
-      console.log("Should be ok now.");
-      page.render('public/exports/export.pdf');
-      phantom.exit();
-    });
+  page.clearMemoryCache();
+  open(page, url, function() {
+    forcedRenderTimeout = setTimeout(function () {
+      if (debug) {
+        console.log(count);
+      }
+      doRender();
+    }, maxRenderWait);
   });
+}
+
+/**
+ * Functions / Events
+ */
+
+function open(currentPage, url, ownCallback) {
+  currentPage.open(url, function (status) {
+    if (status !== "success") {
+      if (debug) {
+        console.log('Unable to load url');
+      }
+      phantom.exit(-1);
+    } else {
+      ownCallback();
+    }
+  });
+}
+
+function onResourceRequested(req) {
+  count += 1;
+  if (debug) {
+    console.log('> ' + req.id + ' - ' + req.url);
+  }
+  clearTimeout(renderTimeout);
+}
+
+function onResourceReceived(res) {
+  if (!res.stage || res.stage === 'end') {
+    count -= 1;
+    if (debug) {
+      console.log(res.id + ' ' + res.status + ' - ' + res.url);
+    }
+    if (count === 0) {
+      renderTimeout = setTimeout(doRender, resourceWait);
+    }
+  }
+}
+
+function onError(msg, trace) {
+  if (debug) {
+    console.log(msg);
+    trace.forEach(function (item) {
+      console.log('  ', item.file, ':', item.line);
+    });
+  }
 }
 
