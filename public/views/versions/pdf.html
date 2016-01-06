@@ -1,3 +1,6 @@
+<link href="dist/print/main.css" rel="stylesheet" media="all">
+<link href="dist/print/print.css" rel="stylesheet" media="all">
+<link href="dist/print/font.css" rel="stylesheet" media="all">
 <div class="versions" ng-class="$root.pdf.loaded ? 'pdf': ''" ng-controller="version-preview.controller" ng-init="ns='setting'">
     <div ng-init="nsv='version.view'">
         <div id="page-wrapper">
@@ -16,24 +19,9 @@
                         <div class="ibox float-e-margins">
                             <div class="ibox-content">
                                 <div class="panel-body">
-                                    <div class="tab-content">
-                                        <div class="tab-pane active page-break-after" id="vision-macro">
-                                            <div class="row" id="vision-globale">
-                                                <div class="document-headlines ibox-title vision-globale">
-                                                    <span ng-include="'views/versions/partials/print/macro.html'"></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                     <div id="vision-synthese">
-                                        <div class="row">
-                                            <div class="document-headlines ibox-title"><h2>Synthèse</h2></div>
-                                            <div class="row entry-resume-content">
-                                                <span ng-include="'views/versions/partials/print/resume.html'"></span>
-                                            </div>
-                                        </div>
+                                        <div class="row"><div class="document-headlines ibox-title"><h2>Synthèse</h2></div><div class="row entry-resume-content"><div class="resume-block "><h3>Dimensionnement </h3><ul><li class="widget tasks lazur-bg"><i class="fa fa-tasks fa-5x"></i><p>Tâches <strong>40</strong></p></li><li class="widget estimate lazur-bg"><i class="fa fa-tachometer fa-5x"></i><p>Estimations (en jr/h) <strong>110,00</strong></p></li><li class="widget days_iteration lazur-bg"><i class="fa fa-users fa-5x"></i><p class="no-padding col-lg-4 col-md-4 col-sm-4 col-xs-4 pull-right">Jr/h/iter. <strong>8</strong></p><p class="no-padding col-lg-4 col-md-4 col-sm-4 col-xs-4 pull-right">Collab. <strong>1</strong></p></li><li class="widget iteration_amount lazur-bg"><i class="fa fa-refresh fa-5x"></i><p>Iterations <strong>13,75</strong></p></li><li class="widget date date_begin lazur-bg"><i class="fa fa-calendar fa-5x"></i><p>Début prévu <strong>29/09/2015</strong></p></li><li class="widget date date_end lazur-bg"><i class="fa fa-calendar fa-5x"></i><p>Fin prévue <strong>15/04/2016</strong></p></li></ul></div><div class="resume-block cost"><h3>Coûts de la prestation </h3><ul><li class="widget dev_days red-bg"><i class="fa fa-users fa-5x"></i><p>Dév. (en jr/h) <strong>110</strong></p></li><li class="widget sm_days red-bg"><i class="fa fa-user fa-5x"></i><p>SM (en jr/h) <strong>13,21</strong></p></li><li class="widget dev_price red-bg"><i class="fa fa-eur fa-5x"></i><p>Dév. <strong>71 500</strong></p></li><li class="widget sm_price red-bg"><i class="fa fa-eur fa-5x"></i><p>SM <strong>11 889</strong></p></li><li class="total_price widget blue-bg"><i class="fa fa-eur fa-5x"></i><p>Total <strong>83 389</strong></p></li></ul></div>                </div></div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
