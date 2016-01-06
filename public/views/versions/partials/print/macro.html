@@ -12,12 +12,7 @@
             <th translate class="text-center col-lg-1 col-md-1 col-sm-1 col-xs-1">{{ '.header.cost' }}</th>
         </tr>
         </thead>
-        <tbody ng-if="item == undefined">
-        <tr>
-            <td colspan="5" ng-include="'views/partials/spinner.html'"></td>
-        </tr>
-        </tbody>
-        <tbody ng-if="item != undefined">
+        <tbody>
         <tr ng-repeat-start="(index, theme) in item.entries | orderBy:'name'"></tr>
         <tr ng-repeat-end ng-repeat="(index, child) in theme.children | orderBy:'name'">
             <td ng-if="index == 0" rowspan="{{ theme.children.length + 1 }}">
