@@ -2,6 +2,8 @@ node_modules
 src/server/config/ontime.json
 public/dist
 public/lib
-.DS_Store
 .idea
 npm-debug.log
+.DS_Store
+public/exports/*
+!public/exports/.gitkeep
