@@ -33,7 +33,7 @@ if (system.args.length != 2) {
 } else {
   url = system.args[1];
 
-  var paperSize = {
+  page.paperSize = {
     format: "A4",
     orientation: "portrait",
     margin: {left: "1cm", right: "1cm", top: "1cm", bottom: "1cm"},
@@ -51,9 +51,6 @@ if (system.args.length != 2) {
       })
     }
   };
-
-  page.paperSize = paperSize;
-  var filePath = "./public/export.html";
 
   page.open(url, function (status) {
     console.log(url);
