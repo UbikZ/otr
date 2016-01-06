@@ -64,19 +64,7 @@ if (system.args.length != 2) {
       });
     }, function () {
       console.log("Should be ok now.");
-      var content = page.content.replace(new RegExp('\\s*<script[^>]*>[\\s\\S]*?</script>\\s*','ig'),'');
-      fs.write(filePath, content, 'w');
-      page.close();
-    });
-  });
-
-  waitFor(function() {
-    return fs.isFile(filePath);
-  }, function () {
-    var otherPage = webPage.create();
-    otherPage.paperSize = paperSize;
-    otherPage.open(filePath, function(status) {
-      otherPage.render('public/export.pdf');
+      page.render('public/exports/export.pdf');
       phantom.exit();
     });
   });
