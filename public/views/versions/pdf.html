@@ -1,13 +1,13 @@
-<link href="dist/print/main.css" rel="stylesheet" media="all">
-<link href="dist/print/print.css" rel="stylesheet" media="all">
-<link href="dist/print/font.css" rel="stylesheet" media="all">
-<div class="versions" ng-class="$root.pdf.loaded ? 'pdf': ''" ng-controller="version-preview.controller" ng-init="ns='setting'">
-    <div ng-init="nsv='version.view'">
+<link href="dist/print.min.css" rel="stylesheet" media="all">
+<div class="versions" ng-class="$root.pdf.loaded ? 'pdf': ''" ng-controller="version-preview.controller"
+     translate-namespace="pdf">
         <div id="page-wrapper">
             <header class="row wrapper white-bg page-heading">
                 <h1>
-                    <span>Plan de développement</span>
-                    <small>Estimations INTERACTION pour BRICODEAL</small>
+                    <span translate>{{ '.title' }}</span>
+                    <small translate translate-values="{org: organization.name, doc: document.name}">
+                        {{ '.subtitle' }}
+                    </small>
                 </h1>
             </header>
             <div class="row" id="document-read">
@@ -29,5 +29,4 @@
                 </div>
             </div>
         </div>
-    </div>
 </div>

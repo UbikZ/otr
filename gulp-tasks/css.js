@@ -2,6 +2,18 @@
 
 module.exports = function(gulp, plugins, npmPackages, config) {
   return function() {
+    var printStream = gulp.src([
+        config.path.client.app + '/css/main.css',
+        config.path.client.print + '/css/**/*.css',
+        config.path.public + '/lib/font-awesome/dist/css/**/*.css'
+      ]).pipe(plugins.concatCss('print.min.css', { rebaseUrls: false }));
+
+    if (!config.env.debug) {
+      printStream.pipe(plugins.minifyCss());
+    }
+
+    printStream.pipe(gulp.dest(config.path.public + '/dist'));
+
     var stream = gulp.src([config.path.public + '/lib/**/*.css', 'src/client/app/css/**/*.css'])
       .pipe(plugins.concatCss('app.min.css', { rebaseUrls: false }));
 
