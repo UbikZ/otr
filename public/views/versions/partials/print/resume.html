@@ -3,88 +3,89 @@
         <h2 translate>{{ '.title' }}</h2>
     </div>
     <div class="row entry-resume-content">
-        <div class="resume-block ">
-            <h3 translate>{{ '.sizing.title' }} </h3>
+        <div class="resume-block " translate-namespace="version.view.resume.sizing">
+            <h3 translate>{{ '.title' }} </h3>
             <ul>
                 <li class="widget tasks lazur-bg"><i class="fa fa-tasks fa-5x"></i>
                     <p>
-                        <span translate>{{ '.sizing.tasks' }}</span>
+                        <span translate>{{ '.tasks' }}</span>
                         <strong>{{ resumeTotalTasks() | currency:'':0 }}</strong></p>
                 </li>
                 <li class="widget estimate lazur-bg">
                     <i class="fa fa-tachometer fa-5x"></i>
                     <p>
-                        <span translate>{{ '.sizing.estimates' }}</span>
+                        <span translate>{{ '.estimates' }}</span>
                         <strong>{{ resumeTotalEstims() | currency:'' }}</strong></p>
                 </li>
                 <li class="widget days_iteration lazur-bg">
                     <i class="fa fa-users fa-5x"></i>
                     <p class="no-padding col-lg-4 col-md-4 col-sm-4 col-xs-4 pull-right">
-                        <span translate>{{ '.sizing.days_per_contributor_per_iteration' }}</span>
+                        <span translate>{{ '.days_per_contributor_per_iteration' }}</span>
                         <strong>{{ resumeDayPerPersonPerIter() | currency:'' }}</strong>
                     </p>
 
                     <p class="no-padding col-lg-4 col-md-4 col-sm-4 col-xs-4 pull-right">
-                        <span translate>{{ '.sizing.contributor' }}</span>
+                        <span translate>{{ '.contributor' }}</span>
                         <strong>{{ setting.contributorAvailable | currency:'':0 }}</strong>
                     </p>
                 </li>
                 <li class="widget iteration_amount lazur-bg">
                     <i class="fa fa-refresh fa-5x"></i>
                     <p>
-                        <span translate>{{ '.sizing.iterations' }}</span>
+                        <span translate>{{ '.iterations' }}</span>
                         <strong>{{ resumeIterations() | currency:'' }}</strong>
                     </p>
                 </li>
                 <li class="widget date date_begin lazur-bg" ng-if="setting.showDate == true">
                     <i class="fa fa-calendar fa-5x"></i>
                     <p>
-                        <span translate>{{ '.sizing.start_date' }}</span>
+                        <span translate>{{ '.start_date' }}</span>
                         <strong>N/A</strong>
                     </p>
                 </li>
                 <li class="widget date date_end lazur-bg" ng-if="setting.showDate == true">
                     <i class="fa fa-calendar fa-5x"></i>
                     <p>
-                        <span translate>{{ '.sizing.end_date' }}</span>
+                        <span translate>{{ '.end_date' }}</span>
                         <strong>N/A</strong></p>
                 </li>
             </ul>
         </div>
-        <div class="resume-block cost"><h3>{{ '.price.title' }} </h3>
+        <div class="resume-block cost" translate-namespace="version.view.resume.price">
+            <h3 translate>{{ '.title' }} </h3>
             <ul>
                 <li class="widget dev_days red-bg" ng-if="setting.showDev == true">
                     <i class="fa fa-users fa-5x"></i>
                     <p>
-                        <span translate>{{ '.price.dev_time' }}</span>
+                        <span translate>{{ '.dev_time' }}</span>
                         <strong>{{ resumeTotalEstimsDev() | currency:'' }}</strong>
                     </p>
                 </li>
                 <li class="widget sm_days red-bg" ng-if="setting.showManagement == true">
                     <i class="fa fa-user fa-5x"></i>
                     <p>
-                        <span translate>{{ '.price.sm_time' }}</span>
+                        <span translate>{{ '.sm_time' }}</span>
                         <strong>{{ resumeTotalEstimsSM() | currency:'' }}</strong>
                     </p>
                 </li>
                 <li class="widget dev_price red-bg" ng-if="setting.showDev == true">
                     <i class="fa fa-eur fa-5x"></i>
                     <p>
-                        <span translate>{{ '.price.dev_price' }}</span>
+                        <span translate>{{ '.dev_price' }}</span>
                         <strong>{{ resumeTotalPriceDev() | currency:'':0 }}</strong>
                     </p>
                 </li>
                 <li class="widget sm_price red-bg" ng-if="setting.showManagement == true">
                     <i class="fa fa-eur fa-5x"></i>
                     <p>
-                        <span translate>{{ '.price.sm_price' }}</span>
+                        <span translate>{{ '.sm_price' }}</span>
                         <strong>{{ resumeTotalPriceSM() | currency:'':0 }}</strong>
                     </p>
                 </li>
                 <li class="total_price widget blue-bg" >
                     <i class="fa fa-eur fa-5x"></i>
                     <p>
-                        <span translate>{{ '.price.total' }}</span>
+                        <span translate>{{ '.total' }}</span>
                         <strong>{{ resumeTotalPriceDev() + resumeTotalPriceSM() | currency:'':0 }}</strong>
                     </p>
                 </li>
