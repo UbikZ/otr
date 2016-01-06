@@ -59,7 +59,7 @@ h1 span {
     display: block;
     padding: 0 0 0 6cm;
     margin: 0;
-    background-image: url(../../img/galilee-logotype.png);
+    background-image: url(../../img/print/galilee-logotype.png);
     background-position: left center;
     background-repeat: no-repeat;
 }
@@ -85,19 +85,9 @@ h2 {
     padding: 0 0 10px 0;
     border-bottom: 3px solid #98C4D1;
     margin: 0 0 40px 0;
-    /*display: inline-block;*/
     position: relative;
 }
 
-/*h2:after {*/
-/*position: absolute;*/
-/*bottom: 0;*/
-/*left: 0;*/
-/*width: 75%;*/
-/*height: 3px;*/
-/*background-color: #98C4D1;*/
-/*content: "";*/
-/*}*/
 
 h2 small {
     display: none;
@@ -202,8 +192,6 @@ div.panel-body {
 
 #document-read .document-headlines h2 {
     background-color: transparent;
-    /*margin-top: 0;*/
-    /*margin-bottom: 0;*/
 }
 
 @page #document-read .document-headlines h2 {
@@ -313,8 +301,6 @@ div.panel-body {
     font-weight: normal;
     white-space: unset;
     text-align: inherit;
-    /*background-color: transparent;*/
-    /*color: #323232;*/
     font-size: 100%;
 }
 
@@ -326,11 +312,6 @@ div.panel-body {
 #document-read .small {
     font-size: 100%;
 }
-
-/*#document-read h2 small,*/
-/*#document-read h2 .small {*/
-/*font-size: 65%;*/
-/*}*/
 
 #document-read .block-description {
     padding: 0;
@@ -388,25 +369,6 @@ div.panel-body {
     vertical-align: middle;
 }
 
-
-
-#vision-globale .table > thead > tr > td ,
-#vision-globale .table > tbody > tr > td ,
-#vision-globale .table > tfoot > tr > td {
-    /*background-color: green;*/
-}
-
-#vision-globale .table > thead > tr > th[rowspan="3"],
-#vision-globale .table > tbody > tr > th[rowspan="3"],
-#vision-globale .table > tfoot > tr > th[rowspan="3"],
-#vision-globale .table > thead > tr > td[rowspan="3"],
-#vision-globale .table > tbody > tr > td[rowspan="3"],
-#vision-globale .table > tfoot > tr > td[rowspan="3"] {
-    /*background-color: blue;*/
-}
-
-
-
 #vision-globale .document .chiffres,
 #vision-liste .document .chiffres {
     width: 90px;
@@ -422,33 +384,12 @@ div.panel-body {
 #vision-globale .document td.chiffres,
 #vision-liste .document td.chiffres {
     text-align: right;
-    /*background-color: red;*/
 }
 
 #vision-globale .document .label,
 #vision-liste .document .label {
-    /*line-height: 24px;*/
     display: block;
-    /*padding: 0 4px;*/
-    /*margin: 0;*/
-    /*color: #ffffff;*/
-    /*font-weight: bold;*/
     border-radius: 2px;
-}
-
-#vision-globale .document .label-info,
-#vision-liste .document .label-info {
-    /*background-color: #346A84;*/
-}
-
-#vision-globale .document .label-danger,
-#vision-liste .document .label-danger {
-    /*background-color: #42ACD4;*/
-}
-
-#vision-globale .document .label-success,
-#vision-liste .document .label-success {
-    /*background-color: #9AC3D5;*/
 }
 
 /* ========================================================================= */
@@ -493,7 +434,7 @@ div.panel-body {
 
 #vision-detaillee .sub-item {
     padding-left: 20px;
-    background-image: url(../img/sub-item-bg.png);
+    background-image: url(../../img/print/sub-item-bg.png);
     background-position: 4px 48px;
     background-repeat: no-repeat;
 }
@@ -512,7 +453,6 @@ div.panel-body {
     line-height: 100%;
     margin: 0;
     font-size: 12px;
-    /*color: #555555;*/
 }
 
 #vision-detaillee .title {
@@ -724,25 +664,13 @@ div.panel-body {
     vertical-align: bottom;
 }
 
-#vision-detaillee .row-1 td:first-child,
-#vision-detaillee .row-2 td:first-child,
-#vision-detaillee .row-3 td:first-child {
-    /*border-left: 10px solid #98c4d1;*/
-    /*padding-left: 20px;*/
-}
-
 #vision-detaillee .row-1 td:last-child,
 #vision-detaillee .row-2 td:last-child {
-    /*border-right: 10px solid #98c4d1;*/
     padding-right: 20px;
 }
 
 #vision-detaillee .row-3 td:first-child {
     padding: 0;
-}
-
-#vision-detaillee .row-3 td:last-child {
-    /*padding-right: 0;*/
 }
 
 #vision-detaillee .col-2 .est {
@@ -768,20 +696,7 @@ div.panel-body {
     display: inline-block;
     margin: 0 0 0 10px;
     color: #ffffff;
-    /*font-weight: bold;*/
     border-radius: 2px;
-}
-
-#vision-detaillee .col-2 .est p .time {
-    /*background-color: #346A84;*/
-}
-
-#vision-detaillee .col-2 .est p .money {
-    /*background-color: #42ACD4;*/
-}
-
-#vision-detaillee .col-2 .est p .total {
-    /*background-color: #9AC3D5;*/
 }
 
 #vision-detaillee .col-2 .est p small {
@@ -801,53 +716,14 @@ div.panel-body {
     margin: 10px 0 20px 0;
 }
 
-#vision-synthese i {
-    /*color: #346A84;*/
-    /*font-size: 1em;*/
-}
-
-#vision-synthese h4 {
-    /*color: #42ACD4;*/
-}
-
-#vision-synthese .col-lg-6  {
-    /*width: 100%;*/
-}
-
-#vision-synthese div div {
-    /*float: left;*/
-    /*box-sizing: content-box;*/
-}
-
-#vision-synthese i {
-    /*background-color: yellow;*/
-    /*float: left;*/
-}
-
-#vision-synthese span {
-    /*background-color: green;*/
-}
-
-#vision-synthese h2 {
-    /*border-style: none;*/
-    /*color: #ffffff;*/
-    /*font-size: 30px;*/
-    /*margin: 5px 0 0 0;*/
-    /*border: 1px red solid;*/
-    /*background-color: red;*/
-}
-
 /* ========================================================================= */
 /* ========================================================================= */
 
 .resume-block {
     width: 47.5%;
-    /*color: #323232;*/
-    /*background-color: #f5f5f5;*/
     font-size: 12px;
     margin: 0;
     padding: 1% 0 0 0;
-    /*border-left: 3px solid #FF9530;*/
     float: left;
 }
 
@@ -863,13 +739,7 @@ div.panel-body {
 
 .resume-block ul li {
     position: relative;
-    /*margin: 0 5% 20px 5%;*/
     overflow: hidden;
-
-    /*border-radius: 5px;*/
-    /*margin-bottom: 10px;*/
-    /*margin-top: 10px;*/
-    /*padding: 15px 20px;*/
     border-radius: 2.5px;
     margin-bottom: 5px;
     margin-top: 5px;
@@ -878,15 +748,11 @@ div.panel-body {
 
 .resume-block ul li i {
     float: left;
-
-    /*font-size: 5em;*/
     font-size: 3.75em;
 }
 
 .resume-block ul li p {
     text-align: right;
-    /*font-size: 13px;*/
-    /*line-height: 18.5px;*/
     font-size: 9.75px;
     line-height: 13.875px;
     margin: 0;
@@ -894,8 +760,6 @@ div.panel-body {
 
 .resume-block ul li p strong {
     display: block;
-    /*font-size: 30px;*/
-    /*margin: 5px 0 0 0;*/
     font-size: 22.5px;
     margin: 3.75px 0 0 0;
 }
