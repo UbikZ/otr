@@ -6,15 +6,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>OnTime Reader</title>
+    <title>OnTime Reader 3</title>
 
-    <link href="dist/app.min.css" rel="stylesheet" media="all">
-    <link ng-if="$root.pdf.loaded == true" href="css/print.css" rel="stylesheet" media="all">
+    <link ng-if="$root.pdf.enabled == false" href="dist/app.min.css" rel="stylesheet" media="all">
 </head>
 
 
-<body ng-controller="main.controller" ng-class="!$state.current.data.includes && 'gray-bg'"
-      class="pace-done" id="page-top">
+<body ng-controller="main.controller" ng-class="!$state.current.data.includes && 'gray-bg'" id="page-top">
 <div id="wrapper">
     <div ng-if="$state.current.data.includes" ng-include="'views/common/left-sidebar.html'"></div>
     <div ng-attr-id="{{$state.current.data.includes && 'page-wrapper'}}"
