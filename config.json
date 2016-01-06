@@ -12,7 +12,9 @@
   "path": {
     "public": "./public",
     "client": {
-      "views": "./public/views"
+      "views": "./public/views",
+      "app": "./src/client/app",
+      "print": "./src/client/print"
     },
     "server": {
       "controller": "./src/server/controllers",

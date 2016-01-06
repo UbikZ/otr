@@ -4,10 +4,15 @@ module.exports = function(gulp, plugins, npmPackages, config) {
   return function() {
     var nodePath = 'node_modules/';
 
-    // Font-Awesome
-    gulp.src([nodePath + '/font-awesome/fonts/*.*']).pipe(gulp.dest(config.path.public + '/dist/fonts'));
+    // Font-Awesome & Print
+    gulp.src([nodePath + '/font-awesome/fonts/*.*', config.path.client.print + '/font/*.*'])
+      .pipe(gulp.dest(config.path.public + '/dist/fonts'));
     // Flags
     gulp.src([nodePath + '/flag-icon-css/flags/**/*.*']).pipe(gulp.dest(config.path.public + '/dist/flags'));
+
+    // Print CSS
+    gulp.src([config.path.client.app + '/css/main.css', config.path.client.print + '/css/**/*.css'])
+      .pipe(gulp.dest(config.path.public + '/dist/print'));
 
     return gulp.src([
         // Bootstrap
