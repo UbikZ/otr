@@ -4,7 +4,6 @@ var webPage = require('webpage');
 var system = require('system');
 var page = webPage.create();
 var pdfPage = webPage.create();
-var path = require('path');
 var fs = require('fs');
 var url;
 
@@ -31,7 +30,7 @@ var resourceWait = 300,
 pdfPage.paperSize = {
   format: "A4",
   orientation: "portrait",
-  margin: {left: "1cm", right: "1cm", top: "1cm", bottom: "1cm"},
+  margin: {left: "0.5cm", right: "0.5cm", top: "1cm", bottom: "1cm"},
 };
 
 
@@ -42,7 +41,11 @@ function doRender() {
     console.log('Start export PDF...');
   }
 
-  fs.write(filePath, page.content.replace(new RegExp('\\s*<script[^>]*>[\\s\\S]*?</script>\\s*','ig'),''), 'w');
+  fs.write(filePath,
+    page.content
+      .replace(new RegExp('\\s*<script[^>]*>[\\s\\S]*?</script>\\s*','ig'),'')
+      .replace(new RegExp('\\s*<div class="pace[^>]*>[\\s\\S]*?</div>\\s*','ig'),'')
+    , 'w');
   page.close();
 
   pdfPage.clearMemoryCache();
