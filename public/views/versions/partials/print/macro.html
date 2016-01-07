@@ -15,7 +15,7 @@
         <tr ng-repeat-start="(index, theme) in item.entries | orderBy:'name'"></tr>
         <tr ng-repeat-end ng-repeat="(index, child) in theme.children | orderBy:'name'">
             <td ng-if="index == 0" rowspan="{{ theme.children.length + 1 }}">
-                <strong>{{ theme.name }}</strong>
+                {{ theme.name }}
             </td>
             <td>{{ child.name }}</td>
             <td class="chiffres">
