@@ -5,29 +5,27 @@
     <table class="document table">
         <thead>
         <tr>
-            <th translate class="text-left col-lg-4 col-md-4 col-sm-4 col-xs-4">{{ '.header.theme' }}</th>
-            <th translate class="text-left col-lg-5 col-md-5 col-sm-5 col-xs-5">{{ '.header.feature' }}</th>
-            <th translate class="text-center col-lg-1 col-md-1 col-sm-1 col-xs-1">{{ '.header.nb_stories' }}</th>
-            <th translate class="text-center col-lg-1 col-md-1 col-sm-1 col-xs-1">{{ '.header.estimate' }}</th>
-            <th translate class="text-center col-lg-1 col-md-1 col-sm-1 col-xs-1">{{ '.header.cost' }}</th>
+            <th translate class="">{{ '.header.theme' }}</th>
+            <th translate class="">{{ '.header.feature' }}</th>
+            <th translate class="chiffres">{{ '.header.estimate' }}</th>
+            <th translate class="chiffres">{{ '.header.cost' }}</th>
         </tr>
         </thead>
         <tbody>
         <tr ng-repeat-start="(index, theme) in item.entries | orderBy:'name'"></tr>
         <tr ng-repeat-end ng-repeat="(index, child) in theme.children | orderBy:'name'">
             <td ng-if="index == 0" rowspan="{{ theme.children.length + 1 }}">
-                <strong>{{ theme.name | uppercase }}</strong>
+                <strong>{{ theme.name }}</strong>
             </td>
-            <td><u>{{ child.name }}</u></td>
-            <td class="text-center">{{ child.children.length }}</td>
-            <td class="text-center">
+            <td>{{ child.name }}</td>
+            <td class="chiffres">
                 <span class="label label-info">
-                    {{ time(child._id) | currency:setting.label }}
+                    <strong>{{ time(child._id) | currency:setting.label }}</strong>
                 </span>
             </td>
-            <td class="text-center">
+            <td class="chiffres">
                 <span class="label label-success">
-                    {{ cost(child._id) | currency }}
+                    <strong>{{ cost(child._id) | currency }}</strong>
                 </span>
             </td>
         </tr>
