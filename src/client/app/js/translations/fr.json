@@ -553,6 +553,7 @@
       },
       "macro": {
         "header": {
+          "theme": "Thème",
           "feature": "Fonctionnalité",
           "nb_stories": "Nombre de Stories",
           "estimate": "Estimation",

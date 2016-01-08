@@ -553,6 +553,7 @@
       },
       "macro": {
         "header": {
+          "theme": "Thème",
           "feature": "Feature",
           "nb_stories": "Number of Stories",
           "estimate": "Estimate",
@@ -578,6 +579,41 @@
           "sm_price": "SM",
           "total": "Total"
         }
+      }
+    }
+  },
+  "pdf": {
+    "title": "Development Plan",
+    "subtitle": "{{ org }} for {{ doc }}",
+    "macro": {
+      "title": "Global view",
+      "header": {
+        "theme": "Thème",
+        "feature": "Fonctionnalité",
+        "nb_stories": "Nombre de Stories",
+        "estimate": "Estimation",
+        "cost": "Coût"
+      }
+    },
+    "resume": {
+      "title": "Resume",
+      "sizing": {
+        "title": "Sizing",
+        "tasks": "Tasks",
+        "estimates": "Estim. (d/p)",
+        "contributor": "Person",
+        "days_per_contributor_per_iteration": "d/p/iter.",
+        "iterations": "Iterations",
+        "start_date": "Start date",
+        "end_date": "End date"
+      },
+      "price": {
+        "title": "Cost",
+        "dev_time": "Dev. (d/p)",
+        "sm_time": "SM (d/p)",
+        "dev_price": "Dev.",
+        "sm_price": "SM",
+        "total": "Total"
       }
     }
   }

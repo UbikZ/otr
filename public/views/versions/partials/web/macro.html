@@ -1,35 +1,38 @@
-<table class="document table table-striped" ng-init="nsvm='version.view.macro'">
-    <thead>
-    <tr>
-        <th class="text-center col-lg-1">#</th>
-        <th class="text-center col-lg-4">{{ (nsvm+'.header.feature') | translate }}</th>
-        <th class="text-center col-lg-2">{{ (nsvm+'.header.nb_stories') | translate }}</th>
-        <th class="text-center col-lg-2">{{ (nsvm+'.header.estimate') | translate }}</th>
-        <th class="text-center col-lg-2">{{ (nsvm+'.header.cost') | translate }}</th>
-    </tr>
-    </thead>
-    <tbody ng-if="item == undefined">
-    <tr>
-        <td colspan="5" ng-include="'views/partials/spinner.html'"></td>
-    </tr>
-    </tbody>
-    <tbody ng-if="item != undefined">
-    <tr ng-repeat-start="(index, theme) in item.entries | orderBy:'name'">
-        <td colspan="5">
-            <strong ng-if="theme.name">{{ theme.name | uppercase }}</strong>
-            <strong ng-if="!theme.name">_</strong>
-        </td>
-    </tr>
-    <tr ng-repeat-end ng-repeat="child in theme.children | orderBy:'name'" class="priority priority6">
-        <td><i>{{ child.ontime_id }}</i></td>
-        <td><u>{{ child.name }}</u></td>
-        <td class="text-center">{{ child.children.length }}</td>
-        <td class="text-center"><span class="label label-info col-lg-12">
-            {{ time(child._id) | currency:setting.label }}
-        </span></td>
-        <td class="text-center"><span class="label label-success col-lg-12">
-            {{ cost(child._id) | currency }}
-        </span></td>
-    </tr>
-    </tbody>
-</table>
+<div class="row" translate-namespace="version.view.macro">
+    <table class="document table">
+        <thead>
+        <tr>
+            <th translate class="text-center col-lg-1">{{ '.header.theme' }}</th>
+            <th translate class="text-center col-lg-4">{{ '.header.feature' }}</th>
+            <th translate class="text-center col-lg-2">{{ '.header.nb_stories' | translate }}</th>
+            <th translate class="text-center col-lg-2">{{ '.header.estimate' }}</th>
+            <th translate class="text-center col-lg-2">{{ '.header.cost' }}</th>
+        </tr>
+        </thead>
+        <tbody ng-if="item == undefined">
+        <tr>
+            <td colspan="5" ng-include="'views/partials/spinner.html'"></td>
+        </tr>
+        </tbody>
+        <tbody ng-if="item != undefined">
+        <tr ng-repeat-start="(index, theme) in item.entries | orderBy:'name'"></tr>
+        <tr ng-repeat-end ng-repeat="(index, child) in theme.children | orderBy:'name'">
+            <td ng-if="index == 0" rowspan="{{ theme.children.length + 1 }}">
+                {{ theme.name }}
+            </td>
+            <td>{{ child.name }}</td>
+            <td class="text-center">{{ child.size }}</td>
+            <td class="text-center">
+                <span class="label label-info col-lg-12">
+                    <strong>{{ time(child._id) | currency:setting.label }}</strong>
+                </span>
+            </td>
+            <td class="text-center">
+                <span class="label label-success col-lg-12">
+                    <strong>{{ cost(child._id) | currency }}</strong>
+                </span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
