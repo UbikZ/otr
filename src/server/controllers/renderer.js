@@ -4,14 +4,13 @@ var http = require('./helpers/http');
 var path = require('path');
 var childProcess = require('child_process');
 
-var binPath;
-try {
-  binPath = require('phantomjs2').path;
-} catch (e) {
-  binPath = config.bin.phantomjs;
-}
-
 module.exports.controller = function (app, config) {
+  var binPath;
+  try {
+    binPath = require('phantomjs2').path;
+  } catch (e) {
+    binPath = config.bin.phantomjs;
+  }
 
   var prefix = '/api/v' + config.api.version + '/renderer';
 

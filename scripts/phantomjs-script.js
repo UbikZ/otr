@@ -21,7 +21,7 @@ var resourceWait = 300,
  * Page Config
  */
 
-[page, pdfPage].forEach(function(cPage) {
+[page, pdfPage].forEach(function (cPage) {
   cPage.onError = onError;
   cPage.onResourceRequested = onResourceRequested;
   cPage.onResourceReceived = onResourceReceived;
@@ -43,13 +43,13 @@ function doRender() {
 
   fs.write(filePath,
     page.content
-      .replace(new RegExp('\\s*<script[^>]*>[\\s\\S]*?</script>\\s*','ig'),'')
-      .replace(new RegExp('\\s*<div class="pace[^>]*>[\\s\\S]*?</div>\\s*','ig'),'')
+      .replace(new RegExp('\\s*<script[^>]*>[\\s\\S]*?</script>\\s*', 'ig'), '')
+      .replace(new RegExp('\\s*<div class="pace[^>]*>[\\s\\S]*?</div>\\s*', 'ig'), '')
     , 'w');
   page.close();
 
   pdfPage.clearMemoryCache();
-  open(pdfPage, filePath, function() {
+  open(pdfPage, filePath, function () {
     pdfPage.render('public/exports/export.pdf');
     fs.remove(filePath);
     phantom.exit();
@@ -64,7 +64,7 @@ if (system.args.length < 2 || system.args.length > 3) {
   debug = system.args[2] == 1;
 
   page.clearMemoryCache();
-  open(page, url, function() {
+  open(page, url, function () {
     forcedRenderTimeout = setTimeout(function () {
       if (debug) {
         console.log(count);
