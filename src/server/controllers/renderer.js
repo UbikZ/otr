@@ -3,8 +3,13 @@
 var http = require('./helpers/http');
 var path = require('path');
 var childProcess = require('child_process');
-var phantomjs = require('phantomjs2');
-var binPath = phantomjs.path;
+
+var binPath;
+try {
+  binPath = require('phantomjs2').path;
+} catch (e) {
+  binPath = config.bin.phantomjs;
+}
 
 module.exports.controller = function (app, config) {
 

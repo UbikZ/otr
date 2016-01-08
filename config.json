@@ -9,6 +9,9 @@
     "uri": "mongodb://localhost:27017/otr"
   },
   "main": "app.js",
+  "bin": {
+    "phantomjs": "phantomjs"
+  },
   "path": {
     "public": "./public",
     "client": {
