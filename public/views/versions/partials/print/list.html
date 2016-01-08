@@ -1,5 +1,5 @@
-<div class="row" translate-namespace="pdf.list">
-    <div class="document-headlines ibox-title list-view">
+<div class="row" translate-namespace="pdf.list" id="list-view">
+    <div class="document-headlines ibox-title">
         <h2 translate>{{ '.title' }}</h2>
     </div>
     <table class="document table">
@@ -30,16 +30,16 @@
             </td>
         </tr>
         <tr ng-repeat="feature in child.children | orderBy:'name'" class="priority priority6">
-            <td><i>{{ feature.ontime_id }}</i></td>
+            <td>{{ feature.ontime_id }}</td>
             <td>{{ feature.name }}</td>
             <td class="chiffres">
                 <span class="label label-info">
-                    <strong>{{ time(feature._id) | currency:setting.label }}</strong>
+                    {{ time(feature._id) | currency:setting.label }}
                 </span>
             </td>
             <td class="chiffres">
                 <span class="label label-success">
-                    <strong>{{ cost(feature._id) | currency }}</strong>
+                    {{ cost(feature._id) | currency }}
                 </span>
             </td>
         </tr>

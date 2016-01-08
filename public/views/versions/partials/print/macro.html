@@ -1,5 +1,5 @@
-<div class="row" translate-namespace="pdf.macro">
-    <div class="document-headlines ibox-title global-view">
+<div class="row" translate-namespace="pdf.macro" id="global-view">
+    <div class="document-headlines ibox-title">
         <h2 translate>{{ '.title' }}</h2>
     </div>
     <table class="document table">
@@ -20,12 +20,12 @@
             <td>{{ child.name }}</td>
             <td class="chiffres">
                 <span class="label label-info">
-                    <strong>{{ time(child._id) | currency:setting.label }}</strong>
+                    {{ time(child._id) | currency:setting.label }}
                 </span>
             </td>
             <td class="chiffres">
                 <span class="label label-success">
-                    <strong>{{ cost(child._id) | currency }}</strong>
+                    {{ cost(child._id) | currency }}
                 </span>
             </td>
         </tr>
