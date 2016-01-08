@@ -1,0 +1,49 @@
+<div class="row" translate-namespace="pdf.list">
+    <div class="document-headlines ibox-title list-view">
+        <h2 translate>{{ '.title' }}</h2>
+    </div>
+    <table class="document table">
+        <thead>
+        <tr>
+            <th translate>#</th>
+            <th translate>{{ '.header.title' }}</th>
+            <th translate class="chiffres">{{ '.header.estimate' }}</th>
+            <th translate class="chiffres">{{ '.header.cost' }}</th>
+        </tr>
+        </thead>
+        <tbody ng-if="item == undefined">
+        <tr>
+            <td colspan="5" ng-include="'views/partials/spinner.html'"></td>
+        </tr>
+        </tbody>
+        <tbody ng-if="item != undefined">
+        <tr ng-repeat-start="(index, theme) in item.entries | orderBy:'name'">
+            <td colspan="5">
+                <strong ng-if="theme.name">{{ theme.name | uppercase }}</strong>
+                <strong ng-if="!theme.name">_</strong>
+            </td>
+        </tr>
+        <tr ng-repeat-start="child in theme.children | orderBy:'name'">
+            <td colspan="5">
+                <strong ng-if="child.name">{{ child.name }}</strong>
+                <strong ng-if="!child.name">_</strong>
+            </td>
+        </tr>
+        <tr ng-repeat="feature in child.children | orderBy:'name'" class="priority priority6">
+            <td><i>{{ feature.ontime_id }}</i></td>
+            <td>{{ feature.name }}</td>
+            <td class="chiffres">
+                <span class="label label-info">
+            {{ time(feature._id) | currency:setting.label }}
+        </span></td>
+            <td class="chiffres">
+                <span class="label label-success">
+                    {{ cost(feature._id) | currency }}
+                </span>
+            </td>
+        </tr>
+        <tr ng-repeat-end></tr>
+        <tr ng-repeat-end></tr>
+        </tbody>
+    </table>
+</div>

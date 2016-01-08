@@ -359,35 +359,35 @@ div.panel-body {
 #global-view .table > thead > tr > td.chiffres,
 #global-view .table > tbody > tr > td.chiffres,
 #global-view .table > tfoot > tr > td.chiffres,
-#vision-liste .table > thead > tr > th.chiffres,
-#vision-liste .table > tbody > tr > th.chiffres,
-#vision-liste .table > tfoot > tr > th.chiffres,
-#vision-liste .table > thead > tr > td.chiffres,
-#vision-liste .table > tbody > tr > td.chiffres,
-#vision-liste .table > tfoot > tr > td.chiffres {
+#list-view .table > thead > tr > th.chiffres,
+#list-view .table > tbody > tr > th.chiffres,
+#list-view .table > tfoot > tr > th.chiffres,
+#list-view .table > thead > tr > td.chiffres,
+#list-view .table > tbody > tr > td.chiffres,
+#list-view .table > tfoot > tr > td.chiffres {
     padding: 4px;
     vertical-align: middle;
 }
 
 #global-view .document .chiffres,
-#vision-liste .document .chiffres {
+#list-view .document .chiffres {
     width: 90px;
     padding: 6px 4px;
 }
 
 #global-view .document th.chiffres,
-#vision-liste .document th.chiffres {
+#list-view .document th.chiffres {
     text-align: center;
     vertical-align: middle;
 }
 
 #global-view .document td.chiffres,
-#vision-liste .document td.chiffres {
+#list-view .document td.chiffres {
     text-align: right;
 }
 
 #global-view .document .label,
-#vision-liste .document .label {
+#list-view .document .label {
     display: block;
     border-radius: 2px;
 }
