@@ -553,9 +553,16 @@
       },
       "macro": {
         "header": {
-          "theme": "Thème",
+          "theme": "Theme",
           "feature": "Feature",
-          "nb_stories": "Number of Stories",
+          "nb_stories": "Stories count",
+          "estimate": "Estimate",
+          "cost": "Price"
+        }
+      },
+      "list": {
+        "header": {
+          "title": "Title",
           "estimate": "Estimate",
           "cost": "Price"
         }
@@ -590,9 +597,17 @@
       "header": {
         "theme": "Thème",
         "feature": "Fonctionnalité",
-        "nb_stories": "Nombre de Stories",
-        "estimate": "Estimation",
-        "cost": "Coût"
+        "nb_stories": "Stories count",
+        "estimate": "Estimate",
+        "cost": "Price"
+      }
+    },
+    "list": {
+      "title": "List view",
+      "header": {
+        "title": "Title",
+        "estimate": "Estimate",
+        "cost": "Price"
       }
     },
     "resume": {

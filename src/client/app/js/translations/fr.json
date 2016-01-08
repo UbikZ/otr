@@ -560,6 +560,13 @@
           "cost": "Coût"
         }
       },
+      "list": {
+        "header": {
+          "title": "Titre",
+          "estimate": "Estimation",
+          "cost": "Coût"
+        }
+      },
       "resume": {
         "sizing": {
           "title": "Dimensionnement",
@@ -590,7 +597,15 @@
       "header": {
         "theme": "Thème",
         "feature": "Fonctionnalité",
-        "nb_stories": "Nombre de Stories",
+        "nb_stories": "Nb. de Stories",
+        "estimate": "Estimation",
+        "cost": "Coût"
+      }
+    },
+    "list": {
+      "title": "Vision liste",
+      "header": {
+        "title": "Titre",
         "estimate": "Estimation",
         "cost": "Coût"
       }

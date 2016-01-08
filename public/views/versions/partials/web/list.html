@@ -1,0 +1,41 @@
+<table class="document table table-striped" translate-namespace="version.view.list">
+    <thead>
+    <tr>
+        <th translate class="text-center col-lg-1">#</th>
+        <th translate class="text-center col-lg-7">{{ '.header.title' }}</th>
+        <th translate class="text-center col-lg-1">{{ '.header.estimate' }}</th>
+        <th translate class="text-center col-lg-1">{{ '.header.cost' }}</th>
+    </tr>
+    </thead>
+    <tbody ng-if="item == undefined">
+    <tr>
+        <td colspan="5" ng-include="'views/partials/spinner.html'"></td>
+    </tr>
+    </tbody>
+    <tbody ng-if="item != undefined">
+    <tr ng-repeat-start="(index, theme) in item.entries | orderBy:'name'">
+        <td colspan="5">
+            <strong ng-if="theme.name">{{ theme.name | uppercase }}</strong>
+            <strong ng-if="!theme.name">_</strong>
+        </td>
+    </tr>
+    <tr ng-repeat-start="child in theme.children | orderBy:'name'">
+        <td colspan="5">
+            <strong ng-if="child.name">{{ child.name }}</strong>
+            <strong ng-if="!child.name">_</strong>
+        </td>
+    </tr>
+    <tr ng-repeat="feature in child.children | orderBy:'name'" class="priority priority6">
+        <td><i>{{ feature.ontime_id }}</i></td>
+        <td>{{ feature.name }}</td>
+        <td class="text-center"><span class="label label-info col-lg-12">
+            {{ time(feature._id) | currency:setting.label }}
+        </span></td>
+        <td class="text-center"><span class="label label-success col-lg-12">
+            {{ cost(feature._id) | currency }}
+        </span></td>
+    </tr>
+    <tr ng-repeat-end></tr>
+    <tr ng-repeat-end></tr>
+    </tbody>
+</table>
