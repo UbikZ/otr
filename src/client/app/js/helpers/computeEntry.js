@@ -8,9 +8,9 @@ var TASKS = 1<<4;
 var ESTIM_DEV = 1<<5;
 var ESTIM_SM = 1<<6;
 
-function walkElement(entries, setting, id, _depth, opts) {
+// No need recursion here (3 levels max) (todo: add factorization)
+function walkElement(entries, setting, id, opts) {
   var result = '-';
-  var depth = _depth || 1;
 
   if (opts != undefined && id != undefined) {
     entries.forEach(function (entry) {
@@ -21,9 +21,15 @@ function walkElement(entries, setting, id, _depth, opts) {
           } else if (opts & TIME) {
             result = computeTime(subEntry, setting);
           }
-        } else if (depth > 1) {
+        } else {
           subEntry.children.forEach(function (element) {
-            // todo
+            if (element._id == id) {
+              if (opts & PRICE) {
+                result = computePrice(element, setting);
+              } else if (opts & TIME) {
+                result = computeTime(element, setting);
+              }
+            }
           });
         }
       });

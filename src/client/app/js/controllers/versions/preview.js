@@ -48,11 +48,11 @@ module.exports = ['$scope', '$rootScope', '$stateParams', 'itemService', 'settin
         /*
          * Base Functions
          */
-        $scope.cost = function (id, _depth) {
-          return computeEntry.walkElement($scope.item.entries, $scope.setting, id, _depth, computeEntry.const.PRICE);
+        $scope.cost = function (id) {
+          return computeEntry.walkElement($scope.item.entries, $scope.setting, id, computeEntry.const.PRICE);
         };
-        $scope.time = function (id, _depth) {
-          return computeEntry.walkElement($scope.item.entries, $scope.setting, id, _depth, computeEntry.const.TIME);
+        $scope.time = function (id) {
+          return computeEntry.walkElement($scope.item.entries, $scope.setting, id, computeEntry.const.TIME);
         };
 
         /*

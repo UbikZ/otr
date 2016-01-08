@@ -28,12 +28,16 @@
     <tr ng-repeat="feature in child.children | orderBy:'name'" class="priority priority6">
         <td><i>{{ feature.ontime_id }}</i></td>
         <td>{{ feature.name }}</td>
-        <td class="text-center"><span class="label label-info col-lg-12">
-            {{ time(feature._id) | currency:setting.label }}
-        </span></td>
-        <td class="text-center"><span class="label label-success col-lg-12">
-            {{ cost(feature._id) | currency }}
-        </span></td>
+        <td class="text-center">
+            <span class="label label-info col-lg-12">
+                <strong>{{ time(feature._id) | currency:setting.label }}</strong>
+            </span>
+        </td>
+        <td class="text-center">
+            <span class="label label-success col-lg-12">
+                <strong>{{ cost(feature._id) | currency }}</strong>
+            </span>
+        </td>
     </tr>
     <tr ng-repeat-end></tr>
     <tr ng-repeat-end></tr>

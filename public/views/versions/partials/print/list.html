@@ -34,11 +34,12 @@
             <td>{{ feature.name }}</td>
             <td class="chiffres">
                 <span class="label label-info">
-            {{ time(feature._id) | currency:setting.label }}
-        </span></td>
+                    <strong>{{ time(feature._id) | currency:setting.label }}</strong>
+                </span>
+            </td>
             <td class="chiffres">
                 <span class="label label-success">
-                    {{ cost(feature._id) | currency }}
+                    <strong>{{ cost(feature._id) | currency }}</strong>
                 </span>
             </td>
         </tr>
