@@ -199,7 +199,7 @@ div.panel-body {
       }
 
 #document-read #features .row,
-#document-read #vision-globale .row,
+#document-read #global-view .row,
 #document-read #vision-detaillee .row {
     margin-left: 0;
     margin-right: 0;
@@ -334,31 +334,31 @@ div.panel-body {
 
 /* ========================================================================= */
 
-#vision-globale .table > thead > tr > th,
-#vision-globale .table > tbody > tr > th,
-#vision-globale .table > tfoot > tr > th,
-#vision-globale .table > thead > tr > td,
-#vision-globale .table > tbody > tr > td,
-#vision-globale .table > tfoot > tr > td {
+#global-view .table > thead > tr > th,
+#global-view .table > tbody > tr > th,
+#global-view .table > tfoot > tr > th,
+#global-view .table > thead > tr > td,
+#global-view .table > tbody > tr > td,
+#global-view .table > tfoot > tr > td {
     line-height: 110%;
     padding: 10px 4px;
 
 }
 
-#vision-globale .type {
+#global-view .type {
     display: none;
 }
 
-#vision-globale .theme span {
+#global-view .theme span {
     display: inline-block;
 }
 
-#vision-globale .table > thead > tr > th.chiffres,
-#vision-globale .table > tbody > tr > th.chiffres,
-#vision-globale .table > tfoot > tr > th.chiffres,
-#vision-globale .table > thead > tr > td.chiffres,
-#vision-globale .table > tbody > tr > td.chiffres,
-#vision-globale .table > tfoot > tr > td.chiffres,
+#global-view .table > thead > tr > th.chiffres,
+#global-view .table > tbody > tr > th.chiffres,
+#global-view .table > tfoot > tr > th.chiffres,
+#global-view .table > thead > tr > td.chiffres,
+#global-view .table > tbody > tr > td.chiffres,
+#global-view .table > tfoot > tr > td.chiffres,
 #vision-liste .table > thead > tr > th.chiffres,
 #vision-liste .table > tbody > tr > th.chiffres,
 #vision-liste .table > tfoot > tr > th.chiffres,
@@ -369,24 +369,24 @@ div.panel-body {
     vertical-align: middle;
 }
 
-#vision-globale .document .chiffres,
+#global-view .document .chiffres,
 #vision-liste .document .chiffres {
     width: 90px;
     padding: 6px 4px;
 }
 
-#vision-globale .document th.chiffres,
+#global-view .document th.chiffres,
 #vision-liste .document th.chiffres {
     text-align: center;
     vertical-align: middle;
 }
 
-#vision-globale .document td.chiffres,
+#global-view .document td.chiffres,
 #vision-liste .document td.chiffres {
     text-align: right;
 }
 
-#vision-globale .document .label,
+#global-view .document .label,
 #vision-liste .document .label {
     display: block;
     border-radius: 2px;
