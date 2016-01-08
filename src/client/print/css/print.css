@@ -2,10 +2,10 @@
     counter-increment: pageCounter 1;
     size: A4;
     margin: 10mm 10mm 15mm 10mm;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
-@page :first {
+@page:first {
 }
 
 .header-left,
@@ -15,7 +15,7 @@
 .footer-center,
 .footer-right {
     font-size: 10px;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
 .footer-left {
@@ -37,19 +37,19 @@ html {
 }
 
 body {
-    font-size: 10px;
+    font-size: 13px;
     background-color: #ffffff !important;
     color: #323232;
     margin: 0;
     line-height: 100%;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-weight: 300;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 350;
 }
 
 h1 {
     padding: 0;
     margin: 0 0 .5em 0;
-    font-size: 1.7cm;
+    font-size: 2.2cm;
     font-family: "league-gothic";
     text-transform: uppercase;
     line-height: 100%;
@@ -57,9 +57,9 @@ h1 {
 
 h1 span {
     display: block;
-    padding: 0 0 0 4.5cm;
+    padding: 0 0 0 6cm;
     margin: 0;
-    /*background-image: url(./../img/print/galilee-logotype.png);
+    /*background-image: url(../../img/print/galilee-logotype.png);
     background-position: left center;
     background-repeat: no-repeat;*/
 }
@@ -68,6 +68,7 @@ h1,
 h2 {
     color: #326B82;
     letter-spacing: .02em;
+    font-weight: 500;
 }
 
 h1 small,
@@ -80,39 +81,29 @@ h2 small {
 h2 {
     line-height: 90%;
     text-transform: none;
-    font-size: .5cm;
-    padding: 0 0 5px 0;
+    font-size: .8cm;
+    padding: 0 0 10px 0;
     border-bottom: 3px solid #98C4D1;
     margin: 0 0 40px 0;
     position: relative;
 }
 
-h2 small {
 
+h2 small {
+    display: none;
     text-transform: uppercase;
 }
 
 h3 {
-    font-weight: bold;
     color: #326B82;
-    font-size: .4cm;
+    font-size: .6cm;
     line-height: 1;
-    margin: 0 0 10px 0;
+    margin: 0 0 20px 0;
 }
 
 h4 {
     font-size: 20px;
     line-height: 1;
-}
-
-h2,
-h3,
-th {
-    font-family: "Arial Black", Gadget, sans-serif;
-}
-
-th {
-    font-size: 0.9em;
 }
 
 p.no-hyphenation {
@@ -148,7 +139,7 @@ p.no-hyphenation {
 /* ========================================================================= */
 
 div.page-heading {
-
+    display: none;
 }
 
 div.panel-body {
@@ -188,6 +179,9 @@ div.panel-body {
     padding-left: 25px;
 }
 
+#document-read #informations-complentaires {
+    display: none;
+}
 #document-read .ibox {
     margin-bottom: 0;
 }
@@ -200,9 +194,9 @@ div.panel-body {
     background-color: transparent;
 }
 
-#document-read .document-headlines h2 {
-    margin-top: 0;
-}
+@page #document-read .document-headlines h2 {
+          margin-top: 0;
+      }
 
 #document-read #features .row,
 #document-read #vision-globale .row,
@@ -226,6 +220,10 @@ div.panel-body {
 
 #document-read .tab-content > .tab-pane {
     display: block;
+}
+
+#document-read .nav.nav-tabs {
+    display: none;
 }
 
 #document-read hr.page-break {
@@ -286,12 +284,15 @@ div.panel-body {
 }
 
 #document-read .ibox-title {
-    min-height: 0;
     border: none;
     padding: 0;
 }
 
 #document-read .ibox-content {
+    background-color: transparent;
+}
+
+.table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
     background-color: transparent;
 }
 
@@ -303,6 +304,10 @@ div.panel-body {
     font-size: 100%;
 }
 
+#document-read .hidden-print {
+    display: none;
+}
+
 #document-read small,
 #document-read .small {
     font-size: 100%;
@@ -311,9 +316,8 @@ div.panel-body {
 #document-read .block-description {
     padding: 0;
 }
-
-#document-read .block-description img {
-    max-width: 640px;
+#document-read .block-description img{
+    max-width:640px;
 }
 
 #document-read .long-description {
@@ -336,18 +340,17 @@ div.panel-body {
 #vision-globale .table > thead > tr > td,
 #vision-globale .table > tbody > tr > td,
 #vision-globale .table > tfoot > tr > td {
-    line-height: 100%;
-    padding: 8px 4px;
+    line-height: 110%;
+    padding: 10px 4px;
 
+}
+
+#vision-globale .type {
+    display: none;
 }
 
 #vision-globale .theme span {
     display: inline-block;
-}
-
-#vision-globale .table > thead > tr  {
-    font-size: 11px;
-    font-weight: bolder;
 }
 
 #vision-globale .table > thead > tr > th.chiffres,
@@ -431,7 +434,7 @@ div.panel-body {
 
 #vision-detaillee .sub-item {
     padding-left: 20px;
-    background-image: url(./img/print/sub-item-bg.png);
+    background-image: url(../../img/print/sub-item-bg.png);
     background-position: 4px 48px;
     background-repeat: no-repeat;
 }
@@ -720,6 +723,7 @@ div.panel-body {
     width: 47.5%;
     font-size: 12px;
     margin: 0;
+    padding: 1% 0 0 0;
     float: left;
 }
 
