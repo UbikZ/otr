@@ -1,7 +1,6 @@
-{{ options }}
 <span ng-if="setting.estimateType != 'range'">
     <span ng-include="'views/versions/partials/web/resume.html'"
-          ng-init="binOpts = []"></span>
+          ng-init="binOpts = [undefined]"></span>
 </span>
 <span ng-if="setting.estimateType == 'range'">
     <span ng-include="'views/versions/partials/web/resume.html'"
