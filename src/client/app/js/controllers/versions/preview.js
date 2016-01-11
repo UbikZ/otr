@@ -4,11 +4,11 @@ var $ = require('jquery');
 var mappingSetting = require('../../helpers/mapping/setting');
 var computeEntry = require('../../helpers/computeEntry');
 
-
 module.exports = ['$scope', '$rootScope', '$stateParams', 'itemService', 'settingService', 'rendererService', '$location',
   function ($scope, $rootScope, $stateParams, itemService, settingService, rendererService, $location) {
     var mainSetting = {};
     $scope.setting = {};
+    $scope.options = computeEntry.const;
 
     $scope.submitSetting = function(setting) {
       $scope.loadingSubmitSetting = true;
@@ -48,24 +48,14 @@ module.exports = ['$scope', '$rootScope', '$stateParams', 'itemService', 'settin
         /*
          * Base Functions
          */
-        $scope.cost = function (id) {
-          return computeEntry.walkElement($scope.item.entries, $scope.setting, id, computeEntry.const.PRICE);
-        };
-        $scope.costHigh = function (id) {
-          return computeEntry.walkElement($scope.item.entries, $scope.setting, id, computeEntry.const.PRICE | computeEntry.const.HIGH );
-        };
-        $scope.costLow = function (id) {
-          return computeEntry.walkElement($scope.item.entries, $scope.setting, id, computeEntry.const.PRICE | computeEntry.const.LOW );
+        $scope.cost = function (id, opts) {
+          return computeEntry
+            .walkElement($scope.item.entries, $scope.setting, id, computeEntry.const.PRICE | (opts || 0));
         };
 
-        $scope.time = function (id) {
-          return computeEntry.walkElement($scope.item.entries, $scope.setting, id, computeEntry.const.TIME);
-        };
-        $scope.timeHigh = function (id) {
-          return computeEntry.walkElement($scope.item.entries, $scope.setting, id, computeEntry.const.TIME | computeEntry.const.HIGH );
-        };
-        $scope.timeLow = function (id) {
-          return computeEntry.walkElement($scope.item.entries, $scope.setting, id, computeEntry.const.TIME | computeEntry.const.LOW );
+        $scope.time = function (id, opts) {
+          return computeEntry
+            .walkElement($scope.item.entries, $scope.setting, id, computeEntry.const.TIME | (opts || 0));
         };
 
         /*

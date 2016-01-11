@@ -36,10 +36,10 @@
                 </span>
                 <span ng-if="setting.estimateType == 'range'">
                     <span class="label label-info col-lg-5 m-r-sm m-l-sm">
-                        <strong>{{ timeLow(child._id) | currency:setting.label }}</strong>
+                        <strong>{{ time(child._id, options.LOW) | currency:setting.label }}</strong>
                     </span>
                     <span class="label label-success col-lg-5">
-                        <strong>{{ costLow(child._id) | currency }}</strong>
+                        <strong>{{ cost(child._id, options.LOW) | currency }}</strong>
                     </span>
                 </span>
             </td>
@@ -51,10 +51,10 @@
                 </span>
                 <span ng-if="setting.estimateType == 'range'">
                     <span class="label label-info col-lg-5 m-r-sm">
-                        <strong>{{ timeHigh(child._id) | currency:setting.label }}</strong>
+                        <strong>{{ time(child._id, options.HIGH) | currency:setting.label }}</strong>
                     </span>
                     <span class="label label-success col-lg-5">
-                        <strong>{{ costHigh(child._id) | currency }}</strong>
+                        <strong>{{ cost(child._id, options.HIGH) | currency }}</strong>
                     </span>
                 </span>
             </td>
