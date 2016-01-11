@@ -29,6 +29,7 @@ var app = angular.module('otr', [
 require('./controllers')(app);
 require('./directives')(app);
 require('./services')(app);
+require('./filters')(app);
 
 app
   .constant('_CONST', require('./constants'))
