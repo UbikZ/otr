@@ -567,6 +567,10 @@
           "cost": "Price"
         }
       },
+      "detail": {
+        "title": "Detail view",
+        "estimates": "Estimates"
+      },
       "resume": {
         "sizing": {
           "title": "Sizing",
@@ -609,6 +613,10 @@
         "estimate": "Estimate",
         "cost": "Price"
       }
+    },
+    "detail": {
+      "title": "Detail view",
+      "estimates": "Estimates"
     },
     "resume": {
       "title": "Resume",
