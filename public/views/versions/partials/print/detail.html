@@ -1,0 +1,50 @@
+<div class="row" translate-namespace="pdf.detail" id="detail-view">
+    <div class="document-headlines ibox-title">
+        <h2 translate>{{ '.title' }}</h2>
+    </div>
+    <div ng-repeat="theme in item.entries | orderBy:'name'">
+        <div ng-repeat="child in theme.children | orderBy:'name'">
+            <table class="entry" ng-repeat="feature in child.children | orderBy:'name'">
+                <tbody>
+                <tr class="row-1">
+                    <td class="col-1 align-bottom">
+                        <div class="theme-feature">{{ theme.name }} → {{ child.name }}</div>
+                    </td>
+                    <td class="col-2 align-bottom align-right"></td>
+                </tr>
+                <tr class="row-2">
+                    <td class="col-1">
+                        <h3 class="title">{{ feature.name }}</h3>
+                    </td>
+                    <td class="col-2 align-top">
+                        <div class="entry-id">
+                            <span class="label label-primary">Story</span> #{{ feature.ontime_id }}
+                        </div>
+                    </td>
+                </tr>
+                <tr class="row-3">
+                    <td class="col-1">
+                        <div class="short-description">
+                            // description //
+                        </div>
+                        <div class="long-description-container">
+                            <div class="long-description">
+                                // long description
+                            </div>
+                        </div>
+                    </td>
+                    <td class="col-2">
+                        <div class="est est-dev">
+                            <h4>Estimations</h4>
+                            <p class="men">
+                                <span class="label label-info">{{ time(feature._id) | currency:setting.label }}</span>
+                                <span class="label label-success">{{ cost(feature._id) | currency }}</span>
+                            </p>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
