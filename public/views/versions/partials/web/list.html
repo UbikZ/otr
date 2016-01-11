@@ -50,14 +50,34 @@
             <td><i>{{ feature.ontime_id }}</i></td>
             <td>{{ feature.name }}</td>
             <td class="text-center">
-            <span class="label label-info col-lg-12">
-                <strong>{{ time(feature._id) | currency:setting.label }}</strong>
-            </span>
+                <span ng-if="setting.estimateType != 'range'">
+                    <span class="label label-info col-lg-12">
+                        <strong>{{ time(feature._id) | currency:setting.label }}</strong>
+                    </span>
+                </span>
+                <span ng-if="setting.estimateType == 'range'">
+                    <span class="label label-info col-lg-5 m-r-sm m-l-sm">
+                        <strong>{{ time(feature._id, options.LOW) | currency:setting.label }}</strong>
+                    </span>
+                    <span class="label label-success col-lg-5">
+                        <strong>{{ cost(feature._id, options.LOW) | currency }}</strong>
+                    </span>
+                </span>
             </td>
             <td class="text-center">
-            <span class="label label-success col-lg-12">
-                <strong>{{ cost(feature._id) | currency }}</strong>
-            </span>
+                <span ng-if="setting.estimateType != 'range'">
+                    <span class="label label-info col-lg-12">
+                        <strong>{{ cost(feature._id) | currency }}</strong>
+                    </span>
+                </span>
+                <span ng-if="setting.estimateType == 'range'">
+                    <span class="label label-info col-lg-5 m-r-sm m-l-sm">
+                        <strong>{{ time(feature._id, options.HIGH) | currency:setting.label }}</strong>
+                    </span>
+                    <span class="label label-success col-lg-5">
+                        <strong>{{ cost(feature._id, options.HIGH) | currency }}</strong>
+                    </span>
+                </span>
             </td>
         </tr>
         <tr ng-repeat-end></tr>
