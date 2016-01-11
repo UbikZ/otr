@@ -28,7 +28,6 @@
     "awesome-bootstrap-checkbox": "^0.3.6",
     "body-parser": "^1.14.1",
     "bootstrap": "^3.3.5",
-    "compression": "^1.6.0",
     "express": "^4.8.3",
     "express-jwt": "^3.3.0",
     "flag-icon-css": "^1.0.0",

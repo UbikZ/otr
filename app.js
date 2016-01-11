@@ -7,7 +7,6 @@ var bodyParser = require('body-parser');
 var config = require('./config.json');
 var argv = require('yargs').argv;
 var fs = require('fs');
-var compression = require('compression');
 var mongoose = require('mongoose');
 var app = express();
 
@@ -22,7 +21,6 @@ app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, Authorization');
   next();
 });
-app.use(compression());
 app.use(express.static(config.path.public));
 app.use(function (req, res, next) {
   var _send = res.send;
