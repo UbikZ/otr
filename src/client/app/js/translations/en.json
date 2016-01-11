@@ -557,6 +557,8 @@
           "feature": "Feature",
           "nb_stories": "Stories count",
           "estimate": "Estimate",
+          "estimate_high": "High Estim.",
+          "estimate_low": "Low Estim.",
           "cost": "Price"
         }
       },
@@ -565,13 +567,17 @@
         "header": {
           "title": "Title",
           "estimate": "Estimate",
+          "estimate_high": "High Estim.",
+          "estimate_low": "Low Estim.",
           "cost": "Price"
         }
       },
       "detail": {
         "title": "Detail view",
         "search": "Search",
-        "estimates": "Estimates"
+        "estimates": "Estimates",
+        "estimate_high": "High Estimates",
+        "estimate_low": "Low Estimates"
       },
       "resume": {
         "sizing": {
@@ -601,10 +607,12 @@
     "macro": {
       "title": "Global view",
       "header": {
-        "theme": "Thème",
-        "feature": "Fonctionnalité",
+        "theme": "Theme",
+        "feature": "Feature",
         "nb_stories": "Stories count",
         "estimate": "Estimate",
+        "estimate_high": "High Estim.",
+        "estimate_low": "Low Estim.",
         "cost": "Price"
       }
     },
@@ -613,12 +621,16 @@
       "header": {
         "title": "Title",
         "estimate": "Estimate",
+        "estimate_high": "High Estim.",
+        "estimate_low": "Low Estim.",
         "cost": "Price"
       }
     },
     "detail": {
       "title": "Detail view",
-      "estimates": "Estimates"
+      "estimates": "Estimates",
+      "estimate_high": "High Estimates",
+      "estimate_low": "Low Estimates"
     },
     "resume": {
       "title": "Resume",

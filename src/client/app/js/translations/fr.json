@@ -557,6 +557,8 @@
           "feature": "Fonctionnalité",
           "nb_stories": "Nombre de Stories",
           "estimate": "Estimation",
+          "estimate_high": "Estim. hautes",
+          "estimate_low": "Estim. basses",
           "cost": "Coût"
         }
       },
@@ -564,6 +566,8 @@
         "search": "Recherche",
         "header": {
           "title": "Titre",
+          "estimate_high": "Estim. hautes",
+          "estimate_low": "Estim. basses",
           "estimate": "Estimation",
           "cost": "Coût"
         }
@@ -571,7 +575,9 @@
       "detail": {
         "title": "Vision détaillée",
         "search": "Recherche",
-        "estimates": "Estimations"
+        "estimate": "Estimations",
+        "estimate_high": "Estimations hautes",
+        "estimate_low": "Estimations basses"
       },
       "resume": {
         "sizing": {
@@ -605,6 +611,8 @@
         "feature": "Fonctionnalité",
         "nb_stories": "Nb. de Stories",
         "estimate": "Estimation",
+        "estimate_high": "Estim. hautes",
+        "estimate_low": "Estim. basses",
         "cost": "Coût"
       }
     },
@@ -613,12 +621,16 @@
       "header": {
         "title": "Titre",
         "estimate": "Estimation",
+        "estimate_high": "Estim. hautes",
+        "estimate_low": "Estim. basses",
         "cost": "Coût"
       }
     },
     "detail": {
       "title": "Vision détaillée",
-      "estimates": "Estimations"
+      "estimate": "Estimations",
+      "estimate_high": "Estimations hautes",
+      "estimate_low": "Estimations basses"
     },
     "resume": {
       "title": "Synthèse",
