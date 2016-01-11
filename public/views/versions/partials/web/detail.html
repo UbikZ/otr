@@ -1,0 +1,58 @@
+<div class="row" translate-namespace="version.view.detail">
+    <div ng-repeat="theme in item.entries | orderBy:'name'">
+        <div ng-repeat="child in theme.children | orderBy:'name'">
+            <div class="ibox" ng-repeat="(index, feature) in child.children | orderBy:'name'">
+                <div class="ibox-content ibox-heading" ng-class="index == 0 ? 'm-t-lg' : '';">
+                    <h3>{{ feature.name }}
+                        <span class="pull-right">
+                            <span class="label label-primary">Story</span>
+                        </span>
+                    </h3>
+                    <small>
+                        // description
+                    </small>
+                </div>
+                <div class="ibox-content inspinia-timelnie block-description">
+                    <div class="col-lg-8">
+                        // long description
+                    </div>
+                    <div class="col-lg-4 gray-bg">
+                        <table class="table detail">
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <span class="label label-default col-lg-12">
+                                        {{ theme.name }} → {{ child.name }}
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="label label-default col-lg-12">
+                                        id: {{ feature.ontime_id }}
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h5 translate>{{ '.estimates' }}</h5>
+                                    <span class="label label-info col-lg-12">
+                                        {{ time(feature._id) | currency:setting.label }}
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="label label-success col-lg-12">
+                                        {{ cost(feature._id) | currency }}
+                                    </span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

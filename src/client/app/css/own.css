@@ -129,3 +129,16 @@ table.document tr.priority.priority8 {
 table.document tr.priority.child td:first-child {
     text-indent: 5px;
 }
+
+.ibox {
+    overflow: hidden;
+}
+
+.ibox-heading {
+    background-color: #dae5f6;;
+}
+
+.ibox-content,
+.detail td {
+    border-top: none !important;
+}
