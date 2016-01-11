@@ -16,18 +16,18 @@
         <div ng-repeat="child in theme.children | orderBy:'name'">
             <div class="ibox" ng-repeat="(index, feature) in child.children | orderBy:'name' | filter:searchDetail">
                 <div class="ibox-content ibox-heading">
-                    <h3>{{ feature.name }}
+                    <h3><strong>{{ feature.name }}</strong>
                         <span class="pull-right">
                             <span class="label label-primary">Story</span>
                         </span>
                     </h3>
                     <small>
-                        // description
+                        <span ng-bind-html="feature.description | sanitize"></span>
                     </small>
                 </div>
                 <div class="ibox-content inspinia-timelnie block-description">
                     <div class="col-lg-8">
-                        // long description
+                        <span ng-bind-html="feature.notes | sanitize"></span>
                     </div>
                     <div class="col-lg-4 gray-bg">
                         <table class="table detail">

@@ -25,11 +25,11 @@
                 <tr class="row-3">
                     <td class="col-1">
                         <div class="short-description">
-                            // description //
+                            <span ng-bind-html="feature.description | sanitize"></span>
                         </div>
-                        <div class="long-description-container">
+                        <div class="long-description-container" ng-if="feature.notes != ''">
                             <div class="long-description">
-                                // long description
+                                <span ng-bind-html="feature.notes | sanitize"></span>
                             </div>
                         </div>
                     </td>
