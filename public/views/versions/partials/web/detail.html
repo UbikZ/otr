@@ -15,7 +15,7 @@
     <div ng-repeat="theme in item.entries | orderBy:'name'">
         <div ng-repeat="child in theme.children | orderBy:'name'">
             <div class="ibox" ng-repeat="(index, feature) in child.children | orderBy:'name' | filter:searchDetail">
-                <div class="ibox-content ibox-heading">
+                <div class="ibox-content ibox-heading" ng-class="index == 0 ? 'm-t-md' : 'm-t-sm';">
                     <h3><strong>{{ feature.name }}</strong>
                         <span class="pull-right">
                             <span class="label label-primary">Story</span>

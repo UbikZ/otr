@@ -134,6 +134,10 @@ table.document tr.priority.child td:first-child {
     overflow: hidden;
 }
 
+.tab-content .ibox {
+    margin-bottom: 5px;
+}
+
 .ibox-heading {
     background-color: #dae5f6;;
 }
