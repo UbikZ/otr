@@ -561,6 +561,7 @@
         }
       },
       "list": {
+        "search": "Search",
         "header": {
           "title": "Title",
           "estimate": "Estimate",
@@ -569,6 +570,7 @@
       },
       "detail": {
         "title": "Detail view",
+        "search": "Search",
         "estimates": "Estimates"
       },
       "resume": {

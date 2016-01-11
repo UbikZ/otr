@@ -561,6 +561,7 @@
         }
       },
       "list": {
+        "search": "Recherche",
         "header": {
           "title": "Titre",
           "estimate": "Estimation",
@@ -569,6 +570,7 @@
       },
       "detail": {
         "title": "Vision détaillée",
+        "search": "Recherche",
         "estimates": "Estimations"
       },
       "resume": {

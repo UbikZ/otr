@@ -1,8 +1,21 @@
 <div class="row" translate-namespace="version.view.detail">
+    <div class="ibox">
+        <div class="ibox-content">
+            <div class="m-t-sm col-lg-12">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-search"></i>
+                        <span translate>{{ '.search.title' }}</span>
+                    </span>
+                    <input type="text" ng-model="searchDetail.name" class="form-control">
+                </div>
+            </div>
+        </div>
+    </div>
     <div ng-repeat="theme in item.entries | orderBy:'name'">
         <div ng-repeat="child in theme.children | orderBy:'name'">
-            <div class="ibox" ng-repeat="(index, feature) in child.children | orderBy:'name'">
-                <div class="ibox-content ibox-heading" ng-class="index == 0 ? 'm-t-lg' : '';">
+            <div class="ibox" ng-repeat="(index, feature) in child.children | orderBy:'name' | filter:searchDetail">
+                <div class="ibox-content ibox-heading">
                     <h3>{{ feature.name }}
                         <span class="pull-right">
                             <span class="label label-primary">Story</span>
