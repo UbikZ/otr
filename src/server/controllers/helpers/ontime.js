@@ -56,7 +56,7 @@ function project(accessToken, projectId, cb) {
 }
 
 function items(accessToken, projectId, cb) {
-  var url = ontimeConfig.ontime_url + '/api/v5/items/?' +
+  var url = ontimeConfig.ontime_url + '/api/v5/features/?' +
     qs.stringify({
       'access_token': accessToken,
       'project_id': projectId,
@@ -65,6 +65,8 @@ function items(accessToken, projectId, cb) {
         'parent_project',
         'project',
         'name',
+        'description',
+        'notes',
         'estimated_duration',
         'custom_fields.custom_263', // OTR_ParentId
         'custom_fields.custom_256', // OTR_EstimateBase
