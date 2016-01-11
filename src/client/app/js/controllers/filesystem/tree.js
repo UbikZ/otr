@@ -216,7 +216,7 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
           ['projects', 'documents', 'versions'].forEach(function (itemType) {
             var elements = $scope[itemType] || [];
             elements.forEach(function (item, index) {
-              if (item._id == res.item._id) {
+              if (item._id == objectId) {
                 $scope[itemType].splice(index, 1);
               }
             });
