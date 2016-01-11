@@ -17,6 +17,19 @@ module.exports.controller = function (app, config) {
 
   var prefix = '/api/v' + config.api.version + '/item';
 
+  function saveOrganization(res, req, data, organization, modelItem, errorCode) {
+    organization.save(function (err, newOrganization) {
+      if (err) {
+        http.log(req, 'Internal error: create item -> save organization', err);
+        http.response(res, 500, {}, "-1", err);
+      } else {
+        newOrganization.populate('creation.user', function (err, newOrg) {
+          http.response(res, 200, {organization: newOrg, item: modelItem, type: data.type + 's'}, errorCode);
+        });
+      }
+    });
+  }
+
   /*
    * Get Item (by filtering)
    */
@@ -71,7 +84,8 @@ module.exports.controller = function (app, config) {
               http.response(res, 404, {}, "-6");
             }
 
-            organization.save(function (err, newOrganization) {
+            saveOrganization(res, req, data, organization, undefined, 4);
+            /*organization.save(function (err, newOrganization) {
               if (err) {
                 http.log(req, 'Internal error: organization found -> save organization', err);
                 http.response(res, 500, {}, "-1", err);
@@ -80,7 +94,7 @@ module.exports.controller = function (app, config) {
                   http.response(res, 200, {organization: newOrg, item: itemModel}, "4");
                 });
               }
-            });
+            });*/
           } else {
             http.log(req, 'Error: organization with id (' + data.organizationId + ') not found.');
             http.response(res, 404, {}, "-5");
@@ -117,9 +131,11 @@ module.exports.controller = function (app, config) {
                   if (data.type == "project") {
                     modelItem = new Project(item);
                     element.projects.push(modelItem);
+                    saveOrganization(res, req, data, organization, modelItem, 2);
                   } else if (data.type == "document") {
                     modelItem = new Document(item);
                     element.documents.push(modelItem);
+                    saveOrganization(res, req, data, organization, modelItem, 2);
                   } else if (data.type == "version") {
                     if (data.ontimeId != undefined) {
                       modelItem = new Version(item);
@@ -216,8 +232,8 @@ module.exports.controller = function (app, config) {
                           modelItem.entries = elements;
                           modelItem.setting = new Setting(mapping.settingDtoToDal(undefined, data.setting));
                           element.versions.push(modelItem);
-
-                          organization.save(function (err, newOrganization) {
+                          saveOrganization(res, req, data, organization, modelItem, 2);
+                          /*organization.save(function (err, newOrganization) {
                             if (err) {
                               http.log(req, 'Internal error: create item (version) -> save organization', err);
                               http.response(res, 500, {}, "-1", err);
@@ -226,7 +242,7 @@ module.exports.controller = function (app, config) {
                                 http.response(res, 200, {organization: newOrg, item: modelItem, type: data.type + 's'}, "2");
                               });
                             }
-                          });
+                          });*/
                         } else {
                           http.log(req, 'Ontime Error: issue during OnTime "/items" request');
                           http.response(res, 500, {}, "-1");
@@ -236,6 +252,7 @@ module.exports.controller = function (app, config) {
                       http.log(req, 'Error: item creation (version one) failed (data.ontimeId is undefined).');
                       http.response(res, 404, {}, "-7");
                     }
+
                   } else {
                     http.log(req, 'Error: item creation failed (data.type is undefined).');
                     http.response(res, 404, {}, "-7");
@@ -248,21 +265,21 @@ module.exports.controller = function (app, config) {
             } else if (data.type == "project") {
               modelItem = new Project(item);
               organization.projects.push(modelItem);
+              saveOrganization(res, req, data, organization, modelItem, 2);
+              /*organization.save(function (err, newOrganization) {
+                if (err) {
+                  http.log(req, 'Internal error: create item -> save organization', err);
+                  http.response(res, 500, {}, "-1", err);
+                } else {
+                  newOrganization.populate('creation.user', function (err, newOrg) {
+                    http.response(res, 200, {organization: newOrg, item: modelItem, type: data.type + 's'}, "2");
+                  });
+                }
+              });*/
             } else {
               http.log(req, 'Error: item creation failed (data.parentId is undefined).');
               http.response(res, 404, {}, "-7");
             }
-
-            organization.save(function (err, newOrganization) {
-              if (err) {
-                http.log(req, 'Internal error: create item -> save organization', err);
-                http.response(res, 500, {}, "-1", err);
-              } else {
-                newOrganization.populate('creation.user', function (err, newOrg) {
-                  http.response(res, 200, {organization: newOrg, item: modelItem, type: data.type + 's'}, "2");
-                });
-              }
-            });
           } else {
             http.log(req, 'Error: organization with id (' + data.organizationId + ') not found.');
             http.response(res, 404, {}, "-5");
