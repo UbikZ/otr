@@ -61,33 +61,39 @@ module.exports = ['$scope', '$rootScope', '$stateParams', 'itemService', 'settin
         /*
          * Resume Functions
          */
-        $scope.resumeTotalTasks = function() {
-          return computeEntry.computeTotal($scope.item.entries, $scope.setting, computeEntry.const.TASKS);
+        $scope.resumeTotalTasks = function(opts) {
+          return computeEntry.computeTotal($scope.item.entries, $scope.setting, computeEntry.const.TASKS | (opts || 0));
         };
-        $scope.resumeTotalEstims = function() {
+        $scope.resumeTotalEstims = function(opts) {
           return computeEntry.computeTotal(
             $scope.item.entries,
             $scope.setting,
-            computeEntry.const.ESTIM_DEV | computeEntry.const.ESTIM_SM
+            computeEntry.const.ESTIM_DEV | computeEntry.const.ESTIM_SM | (opts || 0)
           );
         };
-        $scope.resumeTotalEstimsDev = function() {
-          return computeEntry.computeTotal($scope.item.entries, $scope.setting, computeEntry.const.ESTIM_DEV);
+        $scope.resumeTotalEstimsDev = function(opts) {
+          return computeEntry
+            .computeTotal($scope.item.entries, $scope.setting, computeEntry.const.ESTIM_DEV | (opts || 0));
         };
-        $scope.resumeTotalEstimsSM = function() {
-          return computeEntry.computeTotal($scope.item.entries, $scope.setting, computeEntry.const.ESTIM_SM);
+        $scope.resumeTotalEstimsSM = function(opts) {
+          return computeEntry
+            .computeTotal($scope.item.entries, $scope.setting, computeEntry.const.ESTIM_SM | (opts || 0));
         };
-        $scope.resumeTotalPriceDev = function() {
-          return computeEntry.computeTotal($scope.item.entries, $scope.setting, computeEntry.const.ESTIM_DEV | computeEntry.const.PRICE);
+        $scope.resumeTotalPriceDev = function(opts) {
+          return computeEntry
+            .computeTotal($scope.item.entries, $scope.setting, computeEntry.const.ESTIM_DEV | computeEntry.const.PRICE | (opts || 0));
         };
-        $scope.resumeTotalPriceSM = function() {
-          return computeEntry.computeTotal($scope.item.entries, $scope.setting, computeEntry.const.ESTIM_SM | computeEntry.const.PRICE);
+        $scope.resumeTotalPriceSM = function(opts) {
+          return computeEntry
+            .computeTotal($scope.item.entries, $scope.setting, computeEntry.const.ESTIM_SM | computeEntry.const.PRICE | (opts || 0));
         };
-        $scope.resumeDayPerPersonPerIter = function() {
-          return computeEntry.computeDayPerPersonPerIter($scope.item.entries, $scope.setting);
+        $scope.resumeDayPerPersonPerIter = function(opts) {
+          return computeEntry
+            .computeDayPerPersonPerIter($scope.item.entries, $scope.setting | (opts || 0));
         };
-        $scope.resumeIterations = function() {
-          return computeEntry.interations($scope.item.entries, $scope.setting);
+        $scope.resumeIterations = function(opts) {
+          return computeEntry
+            .interations($scope.item.entries, $scope.setting | (opts || 0));
         }
       }
     });

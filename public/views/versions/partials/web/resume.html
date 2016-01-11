@@ -1,6 +1,6 @@
-<div class="row" ng-init="nsvr='version.view.resume'">
+<div class="row m-b-md" translate-namespace="version.view.resume" ng-repeat="binOpt in binOpts">
     <div class="col-lg-6">
-        <blockquote>{{ (nsvr+'.sizing.title') | translate }}</blockquote>
+        <blockquote translate>{{ '.sizing.title' }}</blockquote>
         <div class="row">
             <div class="col-lg-6">
                 <div class="widget lazur-bg">
@@ -9,9 +9,9 @@
                             <i class="fa fa-tasks fa-3x"></i>
                         </div>
                         <div class="col-lg-8 text-right">
-                            <span>{{ (nsvr+'.sizing.tasks') | translate }}</span>
+                            <span translate>{{ '.sizing.tasks' }}</span>
 
-                            <h2 class="font-bold">{{ resumeTotalTasks() | currency:'':0 }}</h2>
+                            <h2 class="font-bold">{{ resumeTotalTasks(binOpt) | currency:'':0 }}</h2>
                         </div>
                     </div>
                 </div>
@@ -23,9 +23,9 @@
                             <i class="fa fa-tachometer fa-3x"></i>
                         </div>
                         <div class="col-lg-8 text-right">
-                            <span>{{ (nsvr+'.sizing.estimates') | translate }}</span>
+                            <span translate>{{ '.sizing.estimates' }}</span>
 
-                            <h2 class="font-bold">{{ resumeTotalEstims() | currency:'' }}</h2>
+                            <h2 class="font-bold">{{ resumeTotalEstims(binOpt) | currency:'' }}</h2>
                         </div>
                     </div>
                 </div>
@@ -39,14 +39,14 @@
                             <i class="fa fa-users fa-3x"></i>
                         </div>
                         <div class="col-lg-4 text-right">
-                            <span>{{ (nsvr+'.sizing.contributor') | translate }}</span>
+                            <span translate>{{ '.sizing.contributor' }}</span>
 
                             <h2 class="font-bold">{{ setting.contributorAvailable | currency:'':0 }}</h2>
                         </div>
                         <div class="col-lg-4 text-right">
-                            <span>{{ (nsvr+'.sizing.days_per_contributor_per_iteration') | translate }}</span>
+                            <span translate>{{ '.sizing.days_per_contributor_per_iteration' }}</span>
 
-                            <h2 class="font-bold">{{ resumeDayPerPersonPerIter() | currency:'' }}</h2>
+                            <h2 class="font-bold">{{ resumeDayPerPersonPerIter(binOpt) | currency:'' }}</h2>
                         </div>
                     </div>
                 </div>
@@ -58,9 +58,9 @@
                             <i class="fa fa-refresh fa-3x"></i>
                         </div>
                         <div class="col-lg-8 text-right">
-                            <span>{{ (nsvr+'.sizing.iterations') | translate }}</span>
+                            <span translate>{{ '.sizing.iterations' }}</span>
 
-                            <h2 class="font-bold">{{ resumeIterations() | currency:'' }}</h2>
+                            <h2 class="font-bold">{{ resumeIterations(binOpt) | currency:'' }}</h2>
                         </div>
                     </div>
                 </div>
@@ -74,7 +74,7 @@
                             <i class="fa fa-calendar fa-3x"></i>
                         </div>
                         <div class="col-lg-8 text-right">
-                            <span>{{ (nsvr+'.sizing.start_date') | translate }}</span>
+                            <span translate>{{ '.sizing.start_date' }}</span>
 
                             <h2 class="font-bold">N/A</h2>
                         </div>
@@ -88,7 +88,7 @@
                             <i class="fa fa-calendar fa-3x"></i>
                         </div>
                         <div class="col-lg-8 text-right">
-                            <span>{{ (nsvr+'.sizing.end_date') | translate }}</span>
+                            <span translate>{{ '.sizing.end_date' }}</span>
 
                             <h2 class="font-bold">N/A</h2>
                         </div>
@@ -98,7 +98,7 @@
         </div>
     </div>
     <div class="col-lg-6">
-        <blockquote>{{ (nsvr+'.price.title') | translate }}</blockquote>
+        <blockquote translate>{{ '.price.title' }}</blockquote>
         <div class="row">
             <div ng-if="setting.showDev == true" ng-class="setting.showManagement ? 'col-lg-6' : 'col-lg-12'">
                 <div class="widget red-bg">
@@ -107,9 +107,9 @@
                             <i class="fa fa-users fa-3x"></i>
                         </div>
                         <div class="col-lg-8 text-right">
-                            <span>{{ (nsvr+'.price.dev_time') | translate }}</span>
+                            <span translate>{{ '.price.dev_time' }}</span>
 
-                            <h2 class="font-bold">{{ resumeTotalEstimsDev() | currency:'' }}</h2>
+                            <h2 class="font-bold">{{ resumeTotalEstimsDev(binOpt) | currency:'' }}</h2>
                         </div>
                     </div>
                 </div>
@@ -121,9 +121,9 @@
                             <i class="fa fa-user fa-3x"></i>
                         </div>
                         <div class="col-lg-8 text-right">
-                            <span>{{ (nsvr+'.price.sm_time') | translate }}</span>
+                            <span translate>{{ '.price.sm_time' }}</span>
 
-                            <h2 class="font-bold">{{ resumeTotalEstimsSM() | currency:'' }}</h2>
+                            <h2 class="font-bold">{{ resumeTotalEstimsSM(binOpt) | currency:'' }}</h2>
                         </div>
                     </div>
                 </div>
@@ -137,9 +137,9 @@
                             <i class="fa fa-eur fa-3x"></i>
                         </div>
                         <div class="col-lg-8 text-right">
-                            <span>{{ (nsvr+'.price.dev_price') | translate }}</span>
+                            <span translate>{{ '.price.dev_price' }}</span>
 
-                            <h2 class="font-bold">{{ resumeTotalPriceDev() | currency:'':0 }}</h2></div>
+                            <h2 class="font-bold">{{ resumeTotalPriceDev(binOpt) | currency:'':0 }}</h2></div>
                     </div>
                 </div>
             </div>
@@ -150,9 +150,9 @@
                             <i class="fa fa-eur fa-3x"></i>
                         </div>
                         <div class="col-lg-8 text-right">
-                            <span>{{ (nsvr+'.price.sm_price') | translate }}</span>
+                            <span translate>{{ '.price.sm_price' }}</span>
 
-                            <h2 class="font-bold">{{ resumeTotalPriceSM() | currency:'':0 }}</h2>
+                            <h2 class="font-bold">{{ resumeTotalPriceSM(binOpt) | currency:'':0 }}</h2>
                         </div>
                     </div>
                 </div>
@@ -166,10 +166,10 @@
                             <i class="fa fa-eur fa-3x"></i>
                         </div>
                         <div class="col-xs-8 text-right">
-                            <span>{{ (nsvr+'.price.total') | translate }}</span>
+                            <span translate>{{ '.price.total' }}</span>
 
                             <h2 class="font-bold" id="global-total">
-                                {{ resumeTotalPriceDev() + resumeTotalPriceSM() | currency:'':0 }}
+                                {{ resumeTotalPriceDev(binOpt) + resumeTotalPriceSM(binOpt) | currency:'':0 }}
                             </h2>
                         </div>
                     </div>
