@@ -51,8 +51,21 @@ module.exports = ['$scope', '$rootScope', '$stateParams', 'itemService', 'settin
         $scope.cost = function (id) {
           return computeEntry.walkElement($scope.item.entries, $scope.setting, id, computeEntry.const.PRICE);
         };
+        $scope.costHigh = function (id) {
+          return computeEntry.walkElement($scope.item.entries, $scope.setting, id, computeEntry.const.PRICE | computeEntry.const.HIGH );
+        };
+        $scope.costLow = function (id) {
+          return computeEntry.walkElement($scope.item.entries, $scope.setting, id, computeEntry.const.PRICE | computeEntry.const.LOW );
+        };
+
         $scope.time = function (id) {
           return computeEntry.walkElement($scope.item.entries, $scope.setting, id, computeEntry.const.TIME);
+        };
+        $scope.timeHigh = function (id) {
+          return computeEntry.walkElement($scope.item.entries, $scope.setting, id, computeEntry.const.TIME | computeEntry.const.HIGH );
+        };
+        $scope.timeLow = function (id) {
+          return computeEntry.walkElement($scope.item.entries, $scope.setting, id, computeEntry.const.TIME | computeEntry.const.LOW );
         };
 
         /*

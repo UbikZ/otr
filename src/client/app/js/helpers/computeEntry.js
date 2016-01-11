@@ -8,6 +8,19 @@ var TASKS = 1<<4;
 var ESTIM_DEV = 1<<5;
 var ESTIM_SM = 1<<6;
 
+function getAttributeName(opts) {
+  var attrName;
+  if (opts & HIGH) {
+    attrName = 'otr_high';
+  } else if (opts & LOW) {
+    attrName = 'otr_high';
+  } else {
+    attrName = 'duration_minutes';
+  }
+
+  return attrName;
+}
+
 // No need recursion here (3 levels max) (todo: add factorization)
 function walkElement(entries, setting, id, opts) {
   var result = '-';
@@ -17,17 +30,17 @@ function walkElement(entries, setting, id, opts) {
       entry.children.forEach(function (subEntry) {
         if (subEntry._id == id) {
           if (opts & PRICE) {
-            result = computePrice(subEntry, setting);
+            result = computePrice(subEntry, setting, opts);
           } else if (opts & TIME) {
-            result = computeTime(subEntry, setting);
+            result = computeTime(subEntry, setting, opts);
           }
         } else {
           subEntry.children.forEach(function (element) {
             if (element._id == id) {
               if (opts & PRICE) {
-                result = computePrice(element, setting);
+                result = computePrice(element, setting, opts);
               } else if (opts & TIME) {
-                result = computeTime(element, setting);
+                result = computeTime(element, setting, opts);
               }
             }
           });
@@ -56,14 +69,14 @@ function computeTotal(entries, setting, opts) {
       total += entry.size;
     }
     if (opts & ESTIM_DEV) {
-      var totalDev = getDevTime(entry, setting);
+      var totalDev = getDevTime(entry, setting, opts);
       if (opts & PRICE) {
         totalDev *= setting.contributorPrice;
       }
       total += totalDev;
     }
     if (opts & ESTIM_SM) {
-      var totalSm = getSMTime(entry, setting);
+      var totalSm = getSMTime(entry, setting, opts);
       if (opts & PRICE) {
         totalSm *= setting.scrummasterPrice;
       }
@@ -74,49 +87,41 @@ function computeTotal(entries, setting, opts) {
   return total;
 }
 
-function computeTime(entry, setting) {
-  var result = 0;
-
-  if (setting.estimateType == 'range') {
-    // todo
-  } else {
-    result = getSMTime(entry, setting) + getDevTime(entry, setting);
-  }
-
-  return result;
+function computeTime(entry, setting, opts) {
+  return getSMTime(entry, setting, opts) + getDevTime(entry, setting, opts);;
 }
 
 function getRate(setting) {
   return parseFloat(setting.rateMultiplier / (100 * 60 * setting.hourPerDay));
 }
 
-function getDevTime(entry, setting) {
+function getDevTime(entry, setting, opts) {
   var result = 0;
   if (setting.showDev === true) {
-    result += parseFloat(entry.estimate.duration_minutes * getRate(setting));
+    result += parseFloat(entry.estimate[getAttributeName(opts)] * getRate(setting));
   }
 
   return result;
 }
 
-function getSMTime(entry, setting) {
+function getSMTime(entry, setting, opts) {
   var result = 0;
   if (setting.showManagement === true) {
     var occupationSmPercentage = parseFloat(setting.scrummasterOccupation / 100);
-    result += parseFloat(entry.estimate.duration_minutes * occupationSmPercentage * getRate(setting));
+    result += parseFloat(entry.estimate[getAttributeName(opts)] * occupationSmPercentage * getRate(setting));
   }
 
   return result;
 }
 
-function computePrice(entry, setting) {
+function computePrice(entry, setting, opts) {
   var result = 0;
 
   if (setting.showManagement === true) {
-    result += getSMTime(entry, setting) * setting.scrummasterPrice;
+    result += getSMTime(entry, setting, opts) * setting.scrummasterPrice;
   }
   if (setting.showDev === true) {
-    result += getDevTime(entry, setting) * setting.contributorPrice;
+    result += getDevTime(entry, setting, opts) * setting.contributorPrice;
   }
 
   return parseFloat(result);
