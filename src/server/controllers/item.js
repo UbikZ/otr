@@ -157,6 +157,8 @@ module.exports.controller = function (app, config) {
 
                             elements[indexOfParentProject].children[indexOfProject].children.push(new Entry({
                               name: item.name,
+                              description: item.description,
+                              notes: item.notes,
                               ontime_id: item.id,
                               estimate: {
                                 duration_minutes: item.estimated_duration.duration_minutes,
