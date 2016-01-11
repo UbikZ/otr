@@ -50,7 +50,7 @@ app
       delete $localStorage.ot_token;
     };
 
-    $rootScope.$on('$locationChangeStart', function (event, toState, toParams, fromState, fromParams) {
+    $rootScope.$on('$locationChangeStart', function (event, toState) {
       if (~toState.indexOf('pdf')) {
         $rootScope.pdf.enabled = true;
       } else if ($localStorage.token && $localStorage.ot_token) {
@@ -71,5 +71,8 @@ app
         $location.path('/login');
       }
     });
+
+    $('#wrapper').fadeIn();
+    $('#wrapper-loader').fadeOut();
   })
 ;

@@ -38,6 +38,11 @@
 }
 
 /* Others */
+
+#wrapper {
+   display: none;
+}
+
 .file {
     border: none;
 }

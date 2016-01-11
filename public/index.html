@@ -14,6 +14,15 @@
 
 
 <body ng-controller="main.controller" ng-class="!$state.current.data.includes && 'gray-bg'" id="page-top">
+<div id="wrapper-loader">
+    <div class="assembly">
+        <div class="tri"></div><div class="tri"></div><div class="tri"></div><div class="tri"></div>
+        <div class="tri"></div><div class="tri"></div><div class="tri"></div><div class="tri"></div>
+        <div class="tri"></div><div class="tri"></div><div class="tri"></div><div class="tri"></div>
+        <div class="tri"></div><div class="tri"></div><div class="tri"></div><div class="tri"></div>
+        <div class="tri"></div><div class="tri"></div><div class="hex"></div>
+    </div>
+</div>
 <div id="wrapper">
     <div ng-if="$state.current.data.includes" ng-include="'views/common/left-sidebar.html'"></div>
     <div ng-attr-id="{{$state.current.data.includes && 'page-wrapper'}}"
