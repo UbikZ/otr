@@ -69,7 +69,8 @@
                 </a>
                 <button class="btn btn-sm btn-primary pull-right" type="submit"
                         ng-if="item.ontimeId != undefined || identifier" ng-disabled="form.$invalid || loading">
-                    <i class="fa fa-save"></i> <strong>{{ (ns+'.form.submit') | translate }}</strong>
+                    <i class="fa" ng-class="loading ? 'fa-spinner fa-spin' : 'fa-save' "></i>
+                    <strong>{{ (ns+'.form.submit') | translate }}</strong>
                 </button>
             </div>
         </div>
