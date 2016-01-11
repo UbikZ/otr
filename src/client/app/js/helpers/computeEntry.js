@@ -13,13 +13,31 @@ function getAttributeName(opts) {
   if (opts & HIGH) {
     attrName = 'otr_high';
   } else if (opts & LOW) {
-    attrName = 'otr_high';
+    attrName = 'otr_low';
   } else {
     attrName = 'duration_minutes';
   }
 
   return attrName;
 }
+
+// minutes is the default unit here
+function getConvertMultiplier(setting, opts) {
+  var mult = 1;
+  if (opts & (HIGH | LOW)) {
+    switch (setting.rangeEstimateUnit) {
+      case 'hour':
+        mult = 60;
+        break;
+      case 'day':
+        mult = 60 * setting.hourPerDay;
+        break;
+    }
+  }
+
+  return mult;
+}
+
 
 // No need recursion here (3 levels max) (todo: add factorization)
 function walkElement(entries, setting, id, opts) {
@@ -91,14 +109,14 @@ function computeTime(entry, setting, opts) {
   return getSMTime(entry, setting, opts) + getDevTime(entry, setting, opts);;
 }
 
-function getRate(setting) {
-  return parseFloat(setting.rateMultiplier / (100 * 60 * setting.hourPerDay));
+function getRate(setting, opts) {
+  return parseFloat(getConvertMultiplier(setting, opts) * setting.rateMultiplier / (100 * 60 * setting.hourPerDay));
 }
 
 function getDevTime(entry, setting, opts) {
   var result = 0;
   if (setting.showDev === true) {
-    result += parseFloat(entry.estimate[getAttributeName(opts)] * getRate(setting));
+    result += parseFloat(entry.estimate[getAttributeName(opts)] * getRate(setting, opts));
   }
 
   return result;
@@ -108,7 +126,7 @@ function getSMTime(entry, setting, opts) {
   var result = 0;
   if (setting.showManagement === true) {
     var occupationSmPercentage = parseFloat(setting.scrummasterOccupation / 100);
-    result += parseFloat(entry.estimate[getAttributeName(opts)] * occupationSmPercentage * getRate(setting));
+    result += parseFloat(entry.estimate[getAttributeName(opts)] * occupationSmPercentage * getRate(setting, opts));
   }
 
   return result;

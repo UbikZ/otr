@@ -14,12 +14,19 @@
     </div>
     <table class="document table table-striped">
         <thead>
-        <tr>
+        <tr ng-if="setting.estimateType != 'range'">
             <th translate class="text-center col-lg-1">#</th>
             <th translate class="text-center col-lg-7">{{ '.header.title' }}</th>
             <th translate class="text-center col-lg-1">{{ '.header.estimate' }}</th>
             <th translate class="text-center col-lg-1">{{ '.header.cost' }}</th>
         </tr>
+        <tr ng-if="setting.estimateType == 'range'">
+            <th translate class="text-center col-lg-1">#</th>
+            <th translate class="text-center col-lg-5">{{ '.header.title' }}</th>
+            <th translate class="text-center col-lg-2">{{ '.header.estimate_high' }}</th>
+            <th translate class="text-center col-lg-2">{{ '.header.estimate_low' }}</th>
+        </tr>
+
         </thead>
         <tbody ng-if="item == undefined">
         <tr>
