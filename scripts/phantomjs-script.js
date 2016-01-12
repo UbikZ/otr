@@ -45,6 +45,7 @@ function doRender() {
     page.content
       .replace(new RegExp('\\s*<script[^>]*>[\\s\\S]*?</script>\\s*', 'ig'), '')
       .replace(new RegExp('\\s*<div class="pace[^>]*>[\\s\\S]*?</div>\\s*', 'ig'), '')
+      .replace(new RegExp('\\s*<div id="wrapper-loader[^>]*>[\\s\\S]*?</div>\\s*', 'ig'), '')
     , 'w');
   page.close();
 

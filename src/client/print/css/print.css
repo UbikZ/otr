@@ -8,6 +8,10 @@
 @page:first {
 }
 
+#wrapper {
+    display: block;
+}
+
 .header-left,
 .header-center,
 .header-right,
