@@ -47,17 +47,49 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>
+                                <td ng-if="setting.estimateType != 'range'">
                                     <h5 translate>{{ '.estimate' }}</h5>
+                                </td>
+                                <td ng-if="setting.estimateType == 'range'">
+                                    <h5 class="col-lg-6 text-center" translate>{{ '.estimate_low' }}</h5>
+                                    <h5 class="col-lg-6 text-center" translate>{{ '.estimate_high' }}</h5>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td ng-if="setting.estimateType != 'range'">
                                     <span class="label label-info col-lg-12">
                                         {{ time(feature._id) | currency:setting.label }}
                                     </span>
                                 </td>
+                                <td ng-if="setting.estimateType == 'range'">
+                                    <span class="col-lg-6">
+                                        <span class="label label-info col-lg-12">
+                                            {{ time(feature._id, options.LOW) | currency:setting.label }}
+                                        </span>
+                                    </span>
+                                    <span class="col-lg-6">
+                                        <span class="label label-info col-lg-12">
+                                            {{ time(feature._id, options.HIGH) | currency:setting.label }}
+                                        </span>
+                                    </span>
+                                </td>
                             </tr>
                             <tr>
-                                <td>
+                                <td ng-if="setting.estimateType != 'range'">
                                     <span class="label label-success col-lg-12">
                                         {{ cost(feature._id) | currency }}
+                                    </span>
+                                </td>
+                                <td ng-if="setting.estimateType == 'range'">
+                                    <span class="col-lg-6">
+                                        <span class="label label-success col-lg-12">
+                                            {{ cost(feature._id, options.LOW) | currency }}
+                                        </span>
+                                    </span>
+                                    <span class="col-lg-6">
+                                        <span class="label label-success col-lg-12">
+                                            {{ cost(feature._id, options.HIGH) | currency }}
+                                        </span>
                                     </span>
                                 </td>
                             </tr>
