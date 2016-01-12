@@ -32,7 +32,7 @@ var schema = new mongoose.Schema({
   setting: Setting,
 });
 
-schema.static.findDeepAttributeById = function (model, elementId, cb) {
+schema.statics.findDeepAttributeById = function (model, elementId, cb) {
   utilsHelper.findSpecificRecursivelyById(model, elementId, function (element) {
     cb(element);
   });

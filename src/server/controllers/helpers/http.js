@@ -44,7 +44,7 @@ function ensureAuthorized(req, res, next) {
 }
 
 function checkAuthorized(req, res, cb) {
-  User.findOne({"identity.token": req.token}, function (err, user) {
+  User.findOne({"identity.token": req.token}).lean().exec(function (err, user) {
     if (err) {
       log(req, 'Internal error: check authorization.', err);
       response(res, 500, {}, "-1", err);

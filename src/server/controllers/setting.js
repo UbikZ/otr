@@ -20,7 +20,7 @@ module.exports.controller = function (app, config) {
       if (data.id) {
         criteria.id = data.id;
       }
-      Setting.find(criteria, function (err, settings) {
+      Setting.find(criteria).lean().exec(function (err, settings) {
         if (err) {
           http.log(req, 'Internal error: get setting', err);
           http.response(res, 500, {}, "-1", err);
@@ -41,14 +41,14 @@ module.exports.controller = function (app, config) {
     var data = req.query;
     http.checkAuthorized(req, res, function () {
       if (data.organizationId != undefined) {
-        Organization.findById(data.organizationId, function (err, organization) {
+        Organization.findById(data.organizationId).lean().exec(function (err, organization) {
           if (err) {
             http.log(req, 'Internal error: get setting', err);
             http.response(res, 500, {}, "-1", err);
           } else if (organization) {
             var modelItem;
             if (data.itemId != undefined && data.itemId != data.organizationId) {
-              organization.findDeepAttributeById(data.itemId, function (element) {
+              Organization.findDeepAttributeById(organization, data.itemId, function (element) {
                 modelItem = element.setting;
               });
             } else {
@@ -82,7 +82,7 @@ module.exports.controller = function (app, config) {
       if (data.id) {
         criteria.id = data.id;
       }
-      Setting.findOne(criteria, function (err, setting) {
+      Setting.findOne(criteria).lean().exec(function (err, setting) {
         if (err) {
           http.log(req, 'Internal error: update setting (in collection)', err);
           http.response(res, 500, {}, "-1", err);
@@ -90,18 +90,18 @@ module.exports.controller = function (app, config) {
           setting = mapping.settingDtoToDal(setting, data);
           setting.update = {user: user._id, date: new Date()};
 
-          setting.save(function (err, newSetting) {
+          Setting.update({_id: setting._id}, setting, {}, function (err, raw) {
             if (err) {
               http.log(req, 'Internal error: update setting (in collection) -> save setting', err);
               http.response(res, 500, {}, "-1", err);
             } else {
-              http.response(res, 200, {setting: newSetting}, "9");
+              http.response(res, 200, {setting: setting}, "9");
             }
           });
         } else {
           var newSetting = new Setting(mapping.settingDtoToDal(undefined, data));
           newSetting.id = 42; // We force ONLY ONE setting on the collection
-          newSetting.save(function (err, setting) {
+          Setting.create(newSetting, function (err, setting) {
             if (err) {
               http.log(req, 'Internal error: create setting (in collection)', err);
               http.response(res, 500, {}, "-1", err);
@@ -121,14 +121,14 @@ module.exports.controller = function (app, config) {
     var data = req.body;
     http.checkAuthorized(req, res, function (user) {
       if (data.organizationId != undefined) {
-        Organization.findById(data.organizationId, function (err, organization) {
+        Organization.findById(data.organizationId).populate('creation.user').lean().exec(function (err, organization) {
           if (err) {
             http.log(req, 'Internal error: edit setting (in organization)', err);
             http.response(res, 500, {}, "-1", err);
           } else if (organization) {
             var modelItem;
             if (data.itemId != undefined && data.itemId != data.organizationId) {
-              organization.findDeepAttributeById(data.itemId, function (element) {
+              Organization.findDeepAttributeById(organization, data.itemId, function (element) {
                 if (element != undefined) {
                   modelItem = new Setting(mapping.settingDtoToDal(element.setting, data));
                   modelItem.update = {user: user._id, date: new Date()};
@@ -144,14 +144,12 @@ module.exports.controller = function (app, config) {
               organization.setting = modelItem;
             }
 
-            organization.save(function (err, newOrganization) {
+            Organization.update({_id: organization._id}, organization, {upsert: true}, function (err, raw) {
               if (err) {
                 http.log(req, 'Internal error: edit setting (in organization) -> save organization', err);
                 http.response(res, 500, {}, "-1", err);
               } else {
-                newOrganization.populate('creation.user', function (err, newOrg) {
-                  http.response(res, 200, {organization: newOrg, setting: modelItem}, "10");
-                });
+                http.response(res, 200, {organization: organization}, "10");
               }
             });
           } else {

@@ -1,11 +1,13 @@
 'use strict';
 
 Array.prototype.id = function(elementId) {
-  this.filter(function(obj) {
+  var result = this.filter(function(obj) {
     if (obj._id == elementId) {
       return obj;
     }
   });
+
+  return result.length == 1 ? result[0] : undefined;
 };
 
 function findRecursivelyById(parentElement, attributeName, elementId, cb) {
