@@ -74,8 +74,8 @@ function computeDayPerPersonPerIter(entries, setting) {
   return setting.contributorOccupation * setting.dayPerWeek * setting.weekPerIteration / 100;
 }
 
-function iterations(entries, setting) {
-  return (computeTotal(entries, setting, ESTIM_DEV | ESTIM_SM) / computeDayPerPersonPerIter(entries, setting))
+function iterations(entries, setting, opts) {
+  return (computeTotal(entries, setting, ESTIM_DEV | ESTIM_SM | opts) / computeDayPerPersonPerIter(entries, setting))
     / setting.contributorAvailable;
 }
 

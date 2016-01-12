@@ -93,7 +93,7 @@ module.exports = ['$scope', '$rootScope', '$stateParams', 'itemService', 'settin
         };
         $scope.resumeIterations = function(opts) {
           return computeEntry
-            .iterations($scope.item.entries, $scope.setting);
+            .iterations($scope.item.entries, $scope.setting, opts || 0);
         }
       }
     });
