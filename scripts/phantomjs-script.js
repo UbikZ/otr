@@ -48,7 +48,7 @@ function doRender() {
     , 'w');
   page.close();
 
-  pdfPage.clearMemoryCache();
+  //pdfPage.clearMemoryCache();
   open(pdfPage, filePath, function () {
     pdfPage.render('public/exports/export.pdf');
     fs.remove(filePath);
@@ -63,7 +63,7 @@ if (system.args.length < 2 || system.args.length > 3) {
   url = system.args[1];
   debug = system.args[2] == 1;
 
-  page.clearMemoryCache();
+  //page.clearMemoryCache();
   open(page, url, function () {
     forcedRenderTimeout = setTimeout(function () {
       if (debug) {
