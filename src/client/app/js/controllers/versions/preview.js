@@ -89,11 +89,11 @@ module.exports = ['$scope', '$rootScope', '$stateParams', 'itemService', 'settin
         };
         $scope.resumeDayPerPersonPerIter = function(opts) {
           return computeEntry
-            .computeDayPerPersonPerIter($scope.item.entries, $scope.setting | (opts || 0));
+            .computeDayPerPersonPerIter($scope.item.entries, $scope.setting);
         };
         $scope.resumeIterations = function(opts) {
           return computeEntry
-            .interations($scope.item.entries, $scope.setting | (opts || 0));
+            .iterations($scope.item.entries, $scope.setting);
         }
       }
     });

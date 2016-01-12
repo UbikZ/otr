@@ -74,7 +74,7 @@ function computeDayPerPersonPerIter(entries, setting) {
   return setting.contributorOccupation * setting.dayPerWeek * setting.weekPerIteration / 100;
 }
 
-function interations(entries, setting) {
+function iterations(entries, setting) {
   return (computeTotal(entries, setting, ESTIM_DEV | ESTIM_SM) / computeDayPerPersonPerIter(entries, setting))
     / setting.contributorAvailable;
 }
@@ -149,7 +149,7 @@ module.exports = {
   walkElement: walkElement,
   computeTotal: computeTotal,
   computeDayPerPersonPerIter: computeDayPerPersonPerIter,
-  interations: interations,
+  iterations: iterations,
   const: {
     TASKS: TASKS,
     ESTIM_DEV: ESTIM_DEV,
