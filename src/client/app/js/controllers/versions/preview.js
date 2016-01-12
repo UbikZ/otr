@@ -18,6 +18,7 @@ module.exports = ['$scope', '$rootScope', '$stateParams', 'itemService', 'settin
         $scope.loadingSubmitSetting = false;
         mainSetting = mappingSetting.dalToDTO(res.setting);
         $scope.setting = mappingSetting.dalToDTO(res.setting);
+        $scope.toggleSetting();
       });
     };
 
