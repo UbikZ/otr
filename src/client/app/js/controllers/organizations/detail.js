@@ -6,6 +6,7 @@ module.exports = ['$scope', '$rootScope', '$stateParams', 'organizationService',
       if (res.organizations.length == 0) {
         $location.path('/');
       } else {
+        $rootScope.enableUi();
         $scope.organization = res.organizations[0];
         $scope.$broadcast('load-organization', {organization: $scope.organization});
       }

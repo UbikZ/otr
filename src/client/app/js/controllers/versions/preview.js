@@ -36,6 +36,7 @@ module.exports = ['$scope', '$rootScope', '$stateParams', 'itemService', 'settin
       if (res.organization == undefined || res.item == undefined) {
         $location.path('/');
       } else {
+        $rootScope.enableUi();
         $scope.organization = res.organization;
         $scope.item = res.item;
         $scope.documentId = $stateParams.documentId;

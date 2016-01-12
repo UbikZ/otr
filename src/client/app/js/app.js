@@ -3,6 +3,8 @@
 // Global
 window.$ = window.jQuery = require('jquery');
 
+$('#wrapper').hide();
+
 // External
 require('angular');
 require('angular-gravatar');
@@ -50,6 +52,11 @@ app
       delete $localStorage.ot_token;
     };
 
+    $rootScope.enableUi = function() {
+      $('#wrapper').fadeIn();
+      $('#wrapper-loader').fadeOut();
+    };
+
     $rootScope.$on('$locationChangeStart', function (event, toState) {
       if (~toState.indexOf('pdf')) {
         $rootScope.pdf.enabled = true;
@@ -71,8 +78,5 @@ app
         $location.path('/login');
       }
     });
-
-    $('#wrapper').fadeIn();
-    $('#wrapper-loader').fadeOut();
   })
 ;

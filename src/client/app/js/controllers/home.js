@@ -1,7 +1,8 @@
 'use strict';
 
-module.exports = ['$scope',
-  function($scope) {
+module.exports = ['$scope', '$rootScope',
+  function($scope, $rootScope) {
+    $rootScope.enableUi();
     // todo
   }
 ];

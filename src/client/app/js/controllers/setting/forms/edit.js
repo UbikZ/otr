@@ -9,6 +9,7 @@ module.exports = ['$rootScope', '$scope', 'settingService', '_CONST',
     // we have set our ONLY item with id 42 (we don't need more, others will be subdocuments)
     settingService.get({id: _CONST.DATAMODEL.ID_SETTING}, function (res) {
       $scope.loading = false;
+      $rootScope.enableUi();
       if (res.setting != undefined) {
         $scope.setting = mappingSetting.dalToDTO(res.setting);
       } else {

@@ -5,6 +5,7 @@ module.exports = ['$scope', '$rootScope', 'organizationService', '$uibModal',
     $scope.loading = true;
 
     organizationService.get({}, function (res) {
+      $rootScope.enableUi();
       $scope.loading = false;
       $scope.organizations = res.organizations;
     });

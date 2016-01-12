@@ -131,6 +131,10 @@ table.document tr.priority.priority8 {
     border-color: #9370db;
 }
 
+table.document tr.priority.priority8 {
+    border-color: #3ff5e3;
+}
+
 table.document tr.priority.child td:first-child {
     text-indent: 5px;
 }
@@ -150,4 +154,16 @@ table.document tr.priority.child td:first-child {
 .ibox-content,
 .detail td {
     border-top: none !important;
+}
+
+.label-info-light,
+.badge-info-light {
+    background-color: #3ff5e3;
+    color: #FFFFFF;
+}
+
+.label-success-light,
+.badge-success-light {
+    background-color: #32c7f5;
+    color: #FFFFFF;
 }

@@ -2,6 +2,7 @@
 
 module.exports = ['$scope', '$rootScope', 'authService', '$location', '$localStorage',
   function ($scope, $rootScope, authService, $location, $localStorage) {
+    $rootScope.enableUi();
     $scope.loading = false;
 
     $scope.login = function (user) {
