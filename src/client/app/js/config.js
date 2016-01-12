@@ -3,13 +3,11 @@
 var env = require('./env');
 
 module.exports = [
-  '$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$translateProvider', '$httpProvider', '_CONST', '$anchorScrollProvider',
-  function ($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, $translateProvider, $httpProvider, _CONST, $anchorScrollProvider) {
+  '$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$translateProvider', '$httpProvider', '_CONST',
+  function ($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, $translateProvider, $httpProvider, _CONST) {
 
     var routes = _CONST.ROUTES;
-
-    $anchorScrollProvider.disableAutoScrolling();
-
+    
     $ocLazyLoadProvider.config({
       debug: true
     });
