@@ -17,7 +17,7 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
     function changeCurrentIdNode(id) {
       $scope.currentIdNode = id;
       $scope.expandedNodes = $scope.expandedNodes || [];
-      $location.hash(id == undefined ? "" : $scope.currentIdNode);
+      $location.hash(id == undefined ? "_" : $scope.currentIdNode);
       if ($scope.currentIdNode == undefined) {
         $scope.breadcrumbElements = undefined;
         $scope.currentItem = $scope.organization;
@@ -94,7 +94,7 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
 
     $scope.$on('load-organization', function (event, data) {
       changeCurrentOrganization(data.organization);
-      changeCurrentIdNode($location.hash() == "" ? undefined : $location.hash());
+      changeCurrentIdNode(~["", "_"].indexOf($location.hash()) ? undefined : $location.hash());
       loadCurrentSetting();
       $scope.expandAll();
     });
