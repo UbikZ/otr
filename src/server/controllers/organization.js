@@ -15,12 +15,15 @@ module.exports.controller = function (app, config) {
   app.get(prefix, http.ensureAuthorized, function (req, res) {
     var data = req.query;
     http.checkAuthorized(req, res, function () {
-      var criteria = {};
+      var criteria = {}, fields = {};
       if (data.id) {
         criteria = {_id: new mongoose.Types.ObjectId(data.id)};
       }
+      if (data.lazy) {
+        fields = {name: 1, description: 1, active: 1, url: 1, logo: 1, creation: 1};
+      }
       
-      var query = Organization.find(criteria).populate('creation.user');
+      var query = Organization.find(criteria, fields).lean().populate('creation.user');
 
       query.exec(function (err, organizations) {
           if (err) {
@@ -52,10 +55,14 @@ module.exports.controller = function (app, config) {
   });
 
   app.post(prefix + '/edit', http.ensureAuthorized, function (req, res) {
-    var data = req.body;
+    var data = req.body, fields = {};
+
+    if (data.lazy) {
+      fields = {name: 1, description: 1, active: 1, url: 1, logo: 1, creation: 1};
+    }
 
     http.checkAuthorized(req, res, function (user) {
-      Organization.findById(data._id, function (err, organization) {
+      Organization.findById(data._id, fields).lean().populate('creation.user').exec(function (err, organization) {
         if (err) {
           http.log(req, 'Internal error: update organization', err);
           http.response(res, 500, {}, "-1", err);
@@ -76,14 +83,12 @@ module.exports.controller = function (app, config) {
             organization.url = data.url;
           }
           organization.update = {user: user._id, date: new Date()};
-          organization.save(function (err, newOrganization) {
+          Organization.update({_id: organization._id}, organization, {}, function (err, raw) {
             if (err) {
               http.log(req, 'Internal error: update organization -> save organization', err);
               http.response(res, 500, {}, "-1", err);
             } else {
-              newOrganization.populate('creation.user', function(err, newOrg) {
-                http.response(res, 200, {organization: newOrg}, "6");
-              });
+              http.response(res, 200, {organization: organization}, "6");
             }
           });
         } else {
@@ -106,7 +111,7 @@ module.exports.controller = function (app, config) {
             org.url = data.url;
           }
 
-          org.save(function (err, newOrganization) {
+          Organization.create(org, function (err, newOrganization) {
             if (err) {
               http.log(req, 'Internal error: create organization -> save organization', err);
               http.response(res, 500, {}, "-1", err);

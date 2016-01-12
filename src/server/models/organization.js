@@ -32,13 +32,10 @@ var schema = new mongoose.Schema({
   setting: Setting,
 });
 
-schema.methods.findDeepAttributeById = function (elementId, cb) {
-  var model = this;
-
+schema.static.findDeepAttributeById = function (model, elementId, cb) {
   utilsHelper.findSpecificRecursivelyById(model, elementId, function (element) {
     cb(element);
   });
-
 };
 
 module.exports = mongoose.model('Organization', schema);
