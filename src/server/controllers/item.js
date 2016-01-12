@@ -171,18 +171,37 @@ module.exports.controller = function (app, config) {
                               indexOfProject = elements[indexOfParentProject].children.length - 1;
                             }
 
-                            elements[indexOfParentProject].children[indexOfProject].children.push(new Entry({
-                              name: item.name,
-                              description: item.description,
-                              notes: item.notes,
-                              ontime_id: item.id,
-                              estimate: {
-                                duration_minutes: item.estimated_duration.duration_minutes,
-                                otr_low: item.custom_fields != undefined ? item.custom_fields.custom_257 : null,
-                                otr_high: item.custom_fields != undefined ? item.custom_fields.custom_259 : null,
-                                otr_isEstimated: item.custom_fields != undefined ? item.custom_fields.custom_262 : null,
-                              },
-                            }));
+                            var indexOfEntry =
+                              elements[indexOfParentProject].children[indexOfProject].children.pluck('ontime_id')
+                                .indexOf(item.parent.id);
+
+                            if (indexOfEntry == -1) {
+                              elements[indexOfParentProject].children[indexOfProject].children.push(new Entry({
+                                  name: item.name,
+                                  description: item.description,
+                                  notes: item.notes,
+                                  ontime_id: item.id,
+                                  estimate: {
+                                    duration_minutes: item.estimated_duration.duration_minutes,
+                                    otr_low: item.custom_fields != undefined ? item.custom_fields.custom_257 : null,
+                                    otr_high: item.custom_fields != undefined ? item.custom_fields.custom_259 : null,
+                                    otr_isEstimated: item.custom_fields != undefined ? item.custom_fields.custom_262 : null,
+                                  },
+                                }));
+                            } else {
+                              elements[indexOfParentProject].children[indexOfProject].children[indexOfEntry].children.push(new Entry({
+                                name: item.name,
+                                description: item.description,
+                                notes: item.notes,
+                                ontime_id: item.id,
+                                estimate: {
+                                  duration_minutes: item.estimated_duration.duration_minutes,
+                                  otr_low: item.custom_fields != undefined ? item.custom_fields.custom_257 : null,
+                                  otr_high: item.custom_fields != undefined ? item.custom_fields.custom_259 : null,
+                                  otr_isEstimated: item.custom_fields != undefined ? item.custom_fields.custom_262 : null,
+                                },
+                              }));
+                            }
 
                             // Count
 
@@ -194,9 +213,14 @@ module.exports.controller = function (app, config) {
                               elements[indexOfParentProject].children[indexOfProject].size = 0;
                             }
                             elements[indexOfParentProject].children[indexOfProject].size++;
+                            if (indexOfEntry != -1) {
+                              if (elements[indexOfParentProject].children[indexOfProject].children[indexOfEntry].size == undefined) {
+                                elements[indexOfParentProject].children[indexOfProject].children[indexOfEntry].size = 0;
+                              }
+                              elements[indexOfParentProject].children[indexOfProject].children[indexOfEntry].size++;
+                            }
                             
                             // Sum of parent project entries
-
                             if (elements[indexOfParentProject].estimate.duration_minutes == undefined) {
                               elements[indexOfParentProject].estimate.duration_minutes = 0;
                             }

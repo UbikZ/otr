@@ -62,6 +62,7 @@ function items(accessToken, projectId, cb) {
       'project_id': projectId,
       'sort_fields': 'id',
       'columns': [
+        'parent',
         'parent_project',
         'project',
         'name',
