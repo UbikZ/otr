@@ -151,6 +151,10 @@ table.document tr.priority.child td:first-child {
     background-color: #dae5f6;;
 }
 
+.story-child {
+    background-color: #f3f6fb;;
+}
+
 .ibox-content,
 .detail td {
     border-top: none !important;
