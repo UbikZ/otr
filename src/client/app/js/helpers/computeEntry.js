@@ -38,30 +38,27 @@ function getConvertMultiplier(setting, opts) {
   return mult;
 }
 
+function recursiveWalk(elements, setting, id, opts, cb) {
+  if (elements != undefined) {
+    elements.forEach(function (subElement) {
+      if (subElement._id == id) {
+        cb(subElement);
+      } else {
+        recursiveWalk(subElement.children, setting, id, opts, cb);
+      }
+    });
+  }
+}
 
-// No need recursion here (3 levels max) (todo: add factorization)
 function walkElement(entries, setting, id, opts) {
   var result = '-';
-
   if (opts != undefined && id != undefined) {
     entries.forEach(function (entry) {
-      entry.children.forEach(function (subEntry) {
-        if (subEntry._id == id) {
-          if (opts & PRICE) {
-            result = computePrice(subEntry, setting, opts);
-          } else if (opts & TIME) {
-            result = computeTime(subEntry, setting, opts);
-          }
-        } else {
-          subEntry.children.forEach(function (element) {
-            if (element._id == id) {
-              if (opts & PRICE) {
-                result = computePrice(element, setting, opts);
-              } else if (opts & TIME) {
-                result = computeTime(element, setting, opts);
-              }
-            }
-          });
+      recursiveWalk(entry.children, setting, id, opts, function(element) {
+        if (opts & PRICE) {
+          result = computePrice(element, setting, opts);
+        } else if (opts & TIME) {
+          result = computeTime(element, setting, opts);
         }
       });
     });
