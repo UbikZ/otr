@@ -111,7 +111,7 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
     $scope.editSetting = function (objectId) {
       var modalInstance = $uibModal.open({
         animation: true,
-        templateUrl: 'views/partials/modal-setting.html',
+        templateUrl: 'partials/modal-setting.html',
         controller: 'form.light-setting.controller',
         resolve: {
           organizationId: function () {
@@ -137,7 +137,7 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
     $scope.editVersion = function (objectId) {
       var modalInstance = $uibModal.open({
         animation: true,
-        templateUrl: 'views/partials/modal-version.html',
+        templateUrl: 'partials/modal-version.html',
         controller: 'form.item.controller',
         resolve: {
           organizationId: function () {
@@ -172,7 +172,7 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
     $scope.editItem = function (objectId) {
       var modalInstance = $uibModal.open({
         animation: true,
-        templateUrl: 'views/partials/modal-item.html',
+        templateUrl: 'partials/modal-item.html',
         controller: 'form.item.controller',
         resolve: {
           organizationId: function () {

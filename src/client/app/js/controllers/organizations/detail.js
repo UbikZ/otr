@@ -15,7 +15,7 @@ module.exports = ['$scope', '$rootScope', '$stateParams', 'organizationService',
     $scope.edit = function (objectId) {
       var modalInstance = $uibModal.open({
         animation: true,
-        templateUrl: 'views/partials/modal-organization.html',
+        templateUrl: 'partials/modal-organization.html',
         controller: 'form.organization.controller',
         resolve: {
           identifier: function () {
