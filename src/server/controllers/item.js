@@ -56,7 +56,13 @@ module.exports.controller = function (app, config) {
         }
         Organization.findDeepAttributeById(organization, data.itemId, function (element) {
           if (element != undefined) {
-            http.response(res, 200, {organization: organization, item: element});
+            var result = {};
+            if (data.modePreview = 1) {
+              result.item = element;
+            } else {
+              result.organization = organization;
+            }
+            http.response(res, 200, result);
           } else {
             http.log(req, 'Error: item with id (' + data.itemId + ') for "get request" not found.');
             http.response(res, 404, {}, "-6");

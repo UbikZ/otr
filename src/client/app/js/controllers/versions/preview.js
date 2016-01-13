@@ -14,6 +14,7 @@ module.exports = ['$scope', '$rootScope', '$stateParams', 'itemService', 'settin
       $scope.loadingSubmitSetting = true;
       setting.organizationId = $scope.organization._id;
       setting.itemId = $scope.item._id;
+      setting.modePreview = 1;
       settingService.edit(setting, function (res) {
         $scope.loadingSubmitSetting = false;
         mainSetting = mappingSetting.dalToDTO(res.setting);
@@ -33,8 +34,9 @@ module.exports = ['$scope', '$rootScope', '$stateParams', 'itemService', 'settin
     itemService.get({
       organizationId: $stateParams.organizationId,
       itemId: $stateParams.itemId,
+      modePreview: 1
     }, function (res) {
-      if (res.organization == undefined || res.item == undefined) {
+      if (res.item == undefined) {
         $location.path('/');
       } else {
         $rootScope.enableUi();

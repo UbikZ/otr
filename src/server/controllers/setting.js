@@ -149,7 +149,13 @@ module.exports.controller = function (app, config) {
                 http.log(req, 'Internal error: edit setting (in organization) -> save organization', err);
                 http.response(res, 500, {}, "-1", err);
               } else {
-                http.response(res, 200, {organization: organization}, "10");
+                var result = {};
+                if (data.modePreview == 1) {
+                  result.setting = modelItem;
+                } else {
+                  result.organization = organization;
+                }
+                http.response(res, 200, result, "10");
               }
             });
           } else {
