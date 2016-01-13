@@ -4,12 +4,22 @@ function convertTreeView(parent) {
   var result = [];
   if (parent.projects != undefined) {
     parent.projects.forEach(function (project) {
-      result.push({_id: project._id, name: project.name, setting: project.setting, type: 'project', children: convertTreeView(project)});
+      if (project != undefined) {
+        result.push({
+          _id: project._id,
+          name: project.name,
+          setting: project.setting,
+          type: 'project',
+          children: convertTreeView(project)
+        });
+      }
     });
   }
   if (parent.documents != undefined) {
     parent.documents.forEach(function (document) {
-      result.push({_id: document._id, name: document.name, setting: document.setting, type: 'document'});
+      if (document != undefined) {
+        result.push({_id: document._id, name: document.name, setting: document.setting, type: 'document'});
+      }
     });
   }
 
@@ -20,12 +30,14 @@ function findRecursivelyById(parentElement, attributeName, elementId, getParent,
   var elements = passFirstElement === true ? parentElement : parentElement[attributeName];
   if (elements != undefined) {
     elements.forEach(function (subElement) {
-      if (subElement['_id'] != elementId) {
-        findRecursivelyById(subElement, attributeName, elementId, getParent, cb);
-      } else if (parentElement.length === undefined) {
-        cb(getParent === true ? parentElement : subElement);
-      } else {
-        cb(getParent === true ? undefined : subElement);
+      if (subElement != undefined) {
+        if (subElement['_id'] != elementId) {
+          findRecursivelyById(subElement, attributeName, elementId, getParent, cb);
+        } else if (parentElement.length === undefined) {
+          cb(getParent === true ? parentElement : subElement);
+        } else {
+          cb(getParent === true ? undefined : subElement);
+        }
       }
     });
   }
@@ -47,10 +59,12 @@ function findSpecificRecursivelyById(parentElement, elementId, cb, passFirstElem
   }
   if (elements != undefined) {
     elements.forEach(function (subElement) {
-      if (subElement._id != elementId) {
-        findSpecificRecursivelyById(subElement, elementId, cb);
-      } else {
-        cb(subElement);
+      if (subElement != undefined) {
+        if (subElement._id != elementId) {
+          findSpecificRecursivelyById(subElement, elementId, cb);
+        } else {
+          cb(subElement);
+        }
       }
     });
   }
@@ -63,7 +77,9 @@ function findPathRecursivelyById(elements, elementId, attributeName) {
     var result = {}, props = properties || [];
 
     props.forEach(function(property) {
-      result[property] = object[property];
+      if (property != undefined) {
+        result[property] = object[property];
+      }
     });
     result.hasChildren = object.children != undefined;
 
@@ -86,18 +102,22 @@ function walkTreeRecursively(element, attributeName, type, cb) {
     return;
   }
   element[attributeName].forEach(function (child) {
-    cb(element);
-    walkTreeRecursively(child, attributeName, type, cb);
+    if (child != undefined) {
+      cb(element);
+      walkTreeRecursively(child, attributeName, type, cb);
+    }
   });
 }
 
 function removeRecursivelyById(parentElement, attributeName, elementId, cb) {
   var indexToRemove;
   parentElement[attributeName].forEach(function (subElement, index) {
-    if (subElement['_id'] != elementId) {
-      removeRecursivelyById(subElement, attributeName, elementId, cb);
-    } else {
-      indexToRemove = index;
+    if (subElement != undefined) {
+      if (subElement['_id'] != elementId) {
+        removeRecursivelyById(subElement, attributeName, elementId, cb);
+      } else {
+        indexToRemove = index;
+      }
     }
   });
 

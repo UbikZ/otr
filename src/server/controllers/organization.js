@@ -19,7 +19,7 @@ module.exports.controller = function (app, config) {
       if (data.id) {
         criteria = {_id: new mongoose.Types.ObjectId(data.id)};
       }
-      if (data.lazy) {
+      if (data.lazy == 1) {
         fields = {name: 1, description: 1, active: 1, url: 1, logo: 1, creation: 1};
       }
       
@@ -30,6 +30,15 @@ module.exports.controller = function (app, config) {
             http.log(req, 'Internal error: get organizations', err);
             http.response(res, 500, {}, "-1", err);
           } else if (organizations) {
+            if (data.lazyVersion == 1) {
+              organizations.forEach(function(organization) {
+                Organization.walkRecursively(organization, function(element) {
+                  if (element.entries != undefined) {
+                    delete element.entries;
+                  }
+                });
+              })
+            }
             http.response(res, 200, {organizations: organizations});
           } else {
             http.log(req, 'Error: organizations is undefined (criteria = ' + criteria + ').');

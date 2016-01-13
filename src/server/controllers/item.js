@@ -18,14 +18,20 @@ module.exports.controller = function (app, config) {
   var prefix = '/api/v' + config.api.version + '/item';
 
   function saveOrganization(res, req, data, organization, modelItem, errorCode) {
-    organization.save(function (err, newOrganization) {
+    Organization.update({_id: organization._id}, organization, {}, function (err, raw) {
       if (err) {
         http.log(req, 'Internal error: create item -> save organization', err);
         http.response(res, 500, {}, "-1", err);
       } else {
-        newOrganization.populate('creation.user', function (err, newOrg) {
-          http.response(res, 200, {organization: newOrg, item: modelItem, type: data.type + 's'}, errorCode);
-        });
+        if (data.lazy) {
+          Organization.walkRecursively(organization, function(element) {
+            if (element.entries != undefined) {
+              delete element.entries;
+            }
+          });
+          delete modelItem.entries;
+        }
+        http.response(res, 200, {organization: organization, item: modelItem, type: data.type + 's'}, errorCode);
       }
     });
   }
@@ -33,29 +39,34 @@ module.exports.controller = function (app, config) {
   /*
    * Get Item (by filtering)
    */
-  app.get(prefix, /*http.ensureAuthorized,*/ function (req, res) {
+  app.get(prefix,  function (req, res) {
     var data = req.query;
-    //http.checkAuthorized(req, res, function () {
-      Organization.findById(data.organizationId, function (err, organization) {
-        if (err) {
-          http.log(req, 'Internal error: get organization', err);
-          http.response(res, 500, {}, "-1", err);
-        } else if (organization) {
-          // todo: optimize with lazy loading for 'version' (do not load 'entries' attribute)
-          organization.findDeepAttributeById(data.itemId, function (element) {
-            if (element != undefined) {
-              http.response(res, 200, {organization: organization, item: element});
-            } else {
-              http.log(req, 'Error: item with id (' + data.itemId + ') for "get request" not found.');
-              http.response(res, 404, {}, "-6");
+
+    Organization.findById(data.organizationId).lean().exec(function (err, organization) {
+      if (err) {
+        http.log(req, 'Internal error: get organization', err);
+        http.response(res, 500, {}, "-1", err);
+      } else if (organization) {
+        if (data.lazy == 1) {
+          Organization.walkRecursively(organization, function(element) {
+            if (element.entries != undefined) {
+              delete element.entries;
             }
           });
-        } else {
-          http.log(req, 'Error: organization with id (' + data.organizationId + ') not found.');
-          http.response(res, 404, {}, "-5");
         }
-      });
-    //});
+        Organization.findDeepAttributeById(organization, data.itemId, function (element) {
+          if (element != undefined) {
+            http.response(res, 200, {organization: organization, item: element});
+          } else {
+            http.log(req, 'Error: item with id (' + data.itemId + ') for "get request" not found.');
+            http.response(res, 404, {}, "-6");
+          }
+        });
+      } else {
+        http.log(req, 'Error: organization with id (' + data.organizationId + ') not found.');
+        http.response(res, 404, {}, "-5");
+      }
+    });
   });
 
   app.post(prefix + '/delete', http.ensureAuthorized, function (req, res) {
@@ -63,17 +74,18 @@ module.exports.controller = function (app, config) {
 
     http.checkAuthorized(req, res, function () {
       if (data.organizationId != undefined) {
-        Organization.findById(data.organizationId, function (err, organization) {
+        Organization.findById(data.organizationId).populate('creation.user').exec(function (err, organization) {
           if (err) {
             http.log(req, 'Internal error: get organization', err);
             http.response(res, 500, {}, "-1", err);
           } else if (organization) {
-            var itemModel;
             if (data.itemId != undefined) {
-              organization.findDeepAttributeById(data.itemId, function (element) {
+              Organization.findDeepAttributeById(organization, data.itemId, function (element, parentElement, type) {
                 if (element != undefined) {
-                  itemModel = element;
+                  var item = element;
+                  data.type = type;
                   element.remove();
+                  saveOrganization(res, req, data, organization, item, 4);
                 } else {
                   http.log(req, 'Error: item with id (' + data.itemId + ') for "delete request" not found.');
                   http.response(res, 404, {}, "-6");
@@ -83,18 +95,6 @@ module.exports.controller = function (app, config) {
               http.log(req, 'Error: item id is not defined -> can\'t delete item.');
               http.response(res, 404, {}, "-6");
             }
-
-            saveOrganization(res, req, data, organization, undefined, 4);
-            /*organization.save(function (err, newOrganization) {
-              if (err) {
-                http.log(req, 'Internal error: organization found -> save organization', err);
-                http.response(res, 500, {}, "-1", err);
-              } else {
-                newOrganization.populate('creation.user', function (err, newOrg) {
-                  http.response(res, 200, {organization: newOrg, item: itemModel}, "4");
-                });
-              }
-            });*/
           } else {
             http.log(req, 'Error: organization with id (' + data.organizationId + ') not found.');
             http.response(res, 404, {}, "-5");
@@ -111,7 +111,7 @@ module.exports.controller = function (app, config) {
     var data = req.body;
     http.checkAuthorized(req, res, function (user) {
       if (data.organizationId != undefined) {
-        Organization.findById(data.organizationId, function (err, organization) {
+        Organization.findById(data.organizationId).lean().populate('creation.user').exec(function (err, organization) {
           if (err) {
             http.log(req, 'Internal error: create item', err);
             http.response(res, 500, {}, "-1", err);
@@ -126,7 +126,7 @@ module.exports.controller = function (app, config) {
             };
 
             if (data.parentId != undefined) {
-              organization.findDeepAttributeById(data.parentId, function (element) {
+              Organization.findDeepAttributeById(organization, data.parentId, function (element) {
                 if (element != undefined) {
                   if (data.type == "project") {
                     modelItem = new Project(item);
@@ -257,16 +257,6 @@ module.exports.controller = function (app, config) {
                           modelItem.setting = new Setting(mapping.settingDtoToDal(undefined, data.setting));
                           element.versions.push(modelItem);
                           saveOrganization(res, req, data, organization, modelItem, 2);
-                          /*organization.save(function (err, newOrganization) {
-                            if (err) {
-                              http.log(req, 'Internal error: create item (version) -> save organization', err);
-                              http.response(res, 500, {}, "-1", err);
-                            } else {
-                              newOrganization.populate('creation.user', function (err, newOrg) {
-                                http.response(res, 200, {organization: newOrg, item: modelItem, type: data.type + 's'}, "2");
-                              });
-                            }
-                          });*/
                         } else {
                           http.log(req, 'Ontime Error: issue during OnTime "/items" request');
                           http.response(res, 500, {}, "-1");
@@ -290,16 +280,6 @@ module.exports.controller = function (app, config) {
               modelItem = new Project(item);
               organization.projects.push(modelItem);
               saveOrganization(res, req, data, organization, modelItem, 2);
-              /*organization.save(function (err, newOrganization) {
-                if (err) {
-                  http.log(req, 'Internal error: create item -> save organization', err);
-                  http.response(res, 500, {}, "-1", err);
-                } else {
-                  newOrganization.populate('creation.user', function (err, newOrg) {
-                    http.response(res, 200, {organization: newOrg, item: modelItem, type: data.type + 's'}, "2");
-                  });
-                }
-              });*/
             } else {
               http.log(req, 'Error: item creation failed (data.parentId is undefined).');
               http.response(res, 404, {}, "-7");
@@ -320,12 +300,12 @@ module.exports.controller = function (app, config) {
     var data = req.body;
     http.checkAuthorized(req, res, function (user) {
       if (data.organizationId != undefined) {
-        Organization.findById(data.organizationId, function (err, organization) {
+        Organization.findById(data.organizationId).lean().populate('creation.user').exec(function (err, organization) {
           if (err) {
             http.log(req, 'Internal error: update item', err);
             http.response(res, 500, {}, "-1", err);
           } else if (organization) {
-            var item = {}, modelItem;
+            var item = {};
 
             if (data.name != undefined) {
               item.name = data.name;
@@ -336,9 +316,11 @@ module.exports.controller = function (app, config) {
             item.update = {user: user._id, date: new Date()};
 
             if (data._id != undefined) {
-              organization.findDeepAttributeById(data._id, function (element) {
+              Organization.findDeepAttributeById(organization, data._id, function (element) {
                 if (element != undefined) {
-                  element = modelItem = Object.assign(element, item);
+                  element = Object.assign(element, item);
+                  data.type = element.projects == undefined ? 'document' : 'project';
+                  saveOrganization(res, req, data, organization, element, 3);
                 } else {
                   http.log(req, 'Error: item not found (data._id = ' + data._id + ').');
                   http.response(res, 404, {}, "-8");
@@ -348,19 +330,6 @@ module.exports.controller = function (app, config) {
               http.log(req, 'Error: item to update not found (data._id = undefined).');
               http.response(res, 404, {}, "-8");
             }
-
-            organization.save(function (err, newOrganization) {
-              if (err) {
-                http.log(req, 'Internal error: update item -> save organization', err);
-                http.response(res, 500, {}, "-1", err);
-              } else {
-                newOrganization.populate('creation.user', function (err, newOrg) {
-                  // todo : not really pretty
-                  var type = modelItem.projects == undefined ? 'documents' : 'projects';
-                  http.response(res, 200, {organization: newOrg, item: modelItem, type: type}, "3");
-                });
-              }
-            });
           } else {
             http.log(req, 'Error: organization with id (' + data.organizationId + ') not found.');
             http.response(res, 404, {}, "-5");

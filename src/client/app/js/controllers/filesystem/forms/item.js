@@ -10,7 +10,7 @@ module.exports = ['$rootScope', '$scope', 'identifier', 'organizationId', 'itemS
     $scope.organizationId = organizationId;
 
     if ($scope.identifier) {
-      itemService.get({organizationId: organizationId, itemId: $scope.identifier}, function (res) {
+      itemService.get({organizationId: organizationId, itemId: $scope.identifier, lazy: 1}, function (res) {
         $scope.item = angular.extend({}, $scope.item || {}, res.item);
       });
     }
@@ -75,6 +75,7 @@ module.exports = ['$rootScope', '$scope', 'identifier', 'organizationId', 'itemS
       if (identifier.isVersion === true) {
         item.entries = {};
       }
+      item.lazy = 1;
 
       itemService.edit(item, function (res) {
         $scope.loading = false;

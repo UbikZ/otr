@@ -152,7 +152,6 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
       modalInstance.result.then(function (res) {
         var orga = res.organization;
         var lastItem = res.item;
-        console.log(res);
         changeCurrentOrganization(orga);
         var currentIds = $scope.versions.map(function (object) {
           return object._id;
