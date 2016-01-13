@@ -12,9 +12,8 @@ module.exports.controller = function (app, config) {
    * Get users (by filtering)
    */
   app.get(prefix, http.ensureAuthorized, function (req, res) {
-    // todo: add filters
     http.checkAuthorized(req, res, function() {
-      User.find({}, function (err, users) {
+      User.find({}).lean().exec(function (err, users) {
         if (err) {
           http.log(req, 'Internal error: get users', err);
           http.response(res, 500, {}, "-1", err);
@@ -33,7 +32,7 @@ module.exports.controller = function (app, config) {
    */
   app.post(prefix + '/update', http.ensureAuthorized, function (req, res) {
     var data = req.body;
-    User.findOne({"identity.token": req.token}, function (err, user) {
+    User.findOne({"identity.token": req.token}).lean().exec(function (err, user) {
       if (err) {
         http.log(req, 'Internal error: update user', err);
         http.response(res, 500, {}, "-1", err);
@@ -53,12 +52,12 @@ module.exports.controller = function (app, config) {
         if (data.job) {
           user.info.job = data.job;
         }
-        user.save(function (err, newUser) {
+        User.update({_id: user._id}, user, {}, function (err, raw) {
           if (err) {
             http.log(req, 'Internal error: update user -> save user', err);
             http.response(res, 500, {}, "-1", err);
           } else {
-            http.response(res, 200, {user: newUser}, "11");
+            http.response(res, 200, {user: user}, "11");
           }
         });
       } else {
