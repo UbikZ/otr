@@ -7,7 +7,7 @@ module.exports = function (gulp, plugins, npmPackages, config) {
       config.path.public + '/lib/bootstrap/dist/css/**/*.css',
       config.path.client.app + '/css/{main,own}.css',
       config.path.client.print + '/css/**/*.css',
-    ]).pipe(plugins.concatCss('print.min.css', {rebaseUrls: false}));
+    ]).pipe(plugins.concat('print.min.css'));
 
     if (!config.env.debug) {
       printStream.pipe(plugins.minifyCss());
@@ -16,7 +16,7 @@ module.exports = function (gulp, plugins, npmPackages, config) {
     printStream.pipe(gulp.dest(config.path.public + '/dist'));
 
     var stream = gulp.src([config.path.public + '/lib/**/*.css', 'src/client/app/css/**/*.css'])
-      .pipe(plugins.concatCss('app.min.css', {rebaseUrls: false}));
+      .pipe(plugins.concat('app.min.css'));
 
     if (!config.env.debug) {
       stream.pipe(plugins.minifyCss());
