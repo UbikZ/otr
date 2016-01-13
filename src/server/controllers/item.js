@@ -54,11 +54,13 @@ module.exports.controller = function (app, config) {
             }
           });
         }
-        Organization.findDeepAttributeById(organization, data.itemId, function (element) {
+        Organization.findDeepAttributeById(organization, data.itemId, function (element, parentElement) {
           if (element != undefined) {
             var result = {};
             if (data.modePreview = 1) {
               result.item = element;
+              result.documentName = parentElement.name;
+              result.organizationName = organization.name;
             } else {
               result.organization = organization;
             }

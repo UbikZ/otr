@@ -12,7 +12,7 @@ module.exports = ['$scope', '$rootScope', '$stateParams', 'itemService', 'settin
 
     $scope.submitSetting = function(setting) {
       $scope.loadingSubmitSetting = true;
-      setting.organizationId = $scope.organization._id;
+      setting.organizationId = $stateParams.organizationId;
       setting.itemId = $scope.item._id;
       setting.modePreview = 1;
       settingService.edit(setting, function (res) {
@@ -40,9 +40,9 @@ module.exports = ['$scope', '$rootScope', '$stateParams', 'itemService', 'settin
         $location.path('/');
       } else {
         $rootScope.enableUi();
-        $scope.organization = res.organization;
         $scope.item = res.item;
-        $scope.documentId = $stateParams.documentId;
+        $scope.organizationName = res.organizationName;
+        $scope.documentName = res.documentName;
         mainSetting = mappingSetting.dalToDTO(res.item.setting);
         $scope.setting = mappingSetting.dalToDTO(res.item.setting);
         if ($rootScope.pdf.enabled == true) {
