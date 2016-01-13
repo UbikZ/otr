@@ -5,7 +5,7 @@
                 <div class="ibox-content">
                     <h4>{{ (ns+'.title') | translate }}</h4>
 
-                    <div ng-if="loading" ng-include="'views/partials/spinner.html'"></div>
+                    <div ng-if="loading" ng-include="'partials/spinner.html'"></div>
                     <div ng-if="!loading">
                         <form role="form">
                             <pre>{{ json }}</pre>

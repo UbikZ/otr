@@ -1,8 +1,8 @@
 <span ng-if="setting.estimateType != 'range'">
-    <span ng-include="'views/versions/partials/web/resume.html'"
+    <span ng-include="'versions/partials/web/resume.html'"
           ng-init="binOpts = [undefined]"></span>
 </span>
 <span ng-if="setting.estimateType == 'range'">
-    <span ng-include="'views/versions/partials/web/resume.html'"
+    <span ng-include="'versions/partials/web/resume.html'"
           ng-init="binOpts = [options.LOW, options.HIGH]"></span>
 </span>

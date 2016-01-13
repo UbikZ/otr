@@ -16,7 +16,7 @@ module.exports = [
       .state(routes.APP, {
         abstract: true,
         url: '/app',
-        templateUrl: env.templatePath('common/content.html'),
+        templateUrl: 'common/content.html',
         data: {includes: true, requiresLogin: true},
         resolve: {
           loadPlugin: function ($ocLazyLoad) {
@@ -26,62 +26,62 @@ module.exports = [
       })
       .state(routes.APP_HOME, {
         url: '/home',
-        templateUrl: env.templatePath('home.html'),
+        templateUrl: 'home.html',
       })
       .state(routes.APP_USERS, {
         url: '/users',
-        templateUrl: env.templatePath('users/list.html'),
+        templateUrl: 'users/list.html',
       })
       .state(routes.ACCOUNT, {
         abstract: true,
         url: '/account',
-        templateUrl: env.templatePath('common/content.html'),
+        templateUrl: 'common/content.html',
         data: {includes: true, requiresLogin: true},
       })
       .state(routes.ACCOUNT_ONTIME, {
         url: '/ontime',
-        templateUrl: env.templatePath('account/ontime.html'),
+        templateUrl: 'account/ontime.html',
       })
       .state(routes.ACCOUNT_MANAGE, {
         url: '/manage',
-        templateUrl: env.templatePath('account/manage.html'),
+        templateUrl: 'account/manage.html',
       })
       .state(routes.ORGANIZATIONS, {
         abstract: true,
         url: '/organizations',
-        templateUrl: env.templatePath('common/content.html'),
+        templateUrl: 'common/content.html',
         data: {includes: true, requiresLogin: true},
       })
       .state(routes.ORGANIZATIONS_LIST, {
         url: '/list',
-        templateUrl: env.templatePath('organizations/list.html'),
+        templateUrl: 'organizations/list.html',
       })
       .state(routes.ORGANIZATIONS_DETAIL, {
         url: '/detail/:id',
-        templateUrl: env.templatePath('organizations/detail.html'),
+        templateUrl: 'organizations/detail.html',
       })
       .state(routes.VERSIONS, {
         abstract: true,
         url: '/versions',
-        templateUrl: env.templatePath('common/content.html'),
+        templateUrl: 'common/content.html',
         data: {includes: true, requiresLogin: true},
       })
       .state(routes.VERSIONS_PREVIEW, {
         url: '/preview/:organizationId/:documentId/:itemId',
-        templateUrl: env.templatePath('versions/preview.html'),
+        templateUrl: 'versions/preview.html',
       })
       .state(routes.VERSIONS_PDF, {
         url: '/pdf/:organizationId/:documentId/:itemId',
-        templateUrl: env.templatePath('versions/pdf.html'),
+        templateUrl: 'versions/pdf.html',
         data: {includes: false}
       })
       .state(routes.ORGANIZATIONS_SETTINGS, {
         url: '/settings',
-        templateUrl: env.templatePath('settings/forms/edit.html'),
+        templateUrl: 'settings/forms/edit.html',
       })
       .state(routes.LOGIN, {
         url: '/login',
-        templateUrl: env.templatePath('login.html'),
+        templateUrl: 'login.html',
         data: {includes: false},
       })
     ;

@@ -16,9 +16,12 @@ require('ngstorage');
 require('oclazyload');
 require('pace').start();
 
+require('../dist/cache/template-cache');
+
 var app = angular.module('otr', [
   'ui.router',
   'ui.bootstrap',
+  'gulp.cached.tmpl',
   'ui.gravatar',
   'oc.lazyLoad',
   'pascalprecht.translate',
@@ -36,7 +39,7 @@ require('./filters')(app);
 app
   .constant('_CONST', require('./constants'))
   .config(require('./config'))
-  .run(function ($rootScope, $state, $localStorage, $location, authService, _CONST) {
+  .run(function ($rootScope, $state, $localStorage, $location, authService, _CONST, $templateCache) {
     $rootScope.$state = $state;
     $rootScope.const = _CONST;
     $rootScope.routes = _CONST.ROUTES;

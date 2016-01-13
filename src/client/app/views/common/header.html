@@ -11,9 +11,9 @@
         </div>
         <ul class="nav navbar-top-links navbar-right">
             <li class="dropdown" uib-dropdown ng-controller="translate.controller"
-                ng-include="'views/common/partials/languages.html'"></li>
-            <!--<li class="dropdown" uib-dropdown ng-include="'views/common/partials/messages.html'"></li>
-            <li class="dropdown" uib-dropdown ng-include="'views/common/partials/alerts.html'"></li>-->
+                ng-include="'common/partials/languages.html'"></li>
+            <!--<li class="dropdown" uib-dropdown ng-include="'common/partials/messages.html'"></li>
+            <li class="dropdown" uib-dropdown ng-include="'common/partials/alerts.html'"></li>-->
             <li ng-controller="login.controller">
                 <a ui-sref="login" ng-click="$root.logout()">
                     <i class="fa fa-sign-out"></i> {{ (ns+'.logout') | translate }}

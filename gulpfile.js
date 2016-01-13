@@ -21,7 +21,7 @@ var tasksMapper = {
   'pre-clean': [],
   'post-clean': [],
   'vendor': [],
-  'app': [],
+  'app': ['html'],
   'node-copy': [],
   'less-variable': ['node-copy'],
   'less-compile': ['less-variable'],

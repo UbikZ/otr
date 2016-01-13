@@ -1,5 +1,6 @@
 node_modules
 src/server/config/ontime.json
+src/client/app/dist
 public/dist
 public/lib
 .idea
