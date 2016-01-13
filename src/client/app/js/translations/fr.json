@@ -549,7 +549,8 @@
       "items": {
         "macro": "Vision macro",
         "list": "Vision liste",
-        "detail": "Vision détaillée"
+        "detail": "Vision détaillée",
+        "download": "Télécharger un seul fichier"
       },
       "macro": {
         "header": {

@@ -549,7 +549,8 @@
       "items": {
         "macro": "Global view",
         "list": "List view",
-        "detail": "Detail view"
+        "detail": "Detail view",
+        "download": "Download one file"
       },
       "macro": {
         "header": {

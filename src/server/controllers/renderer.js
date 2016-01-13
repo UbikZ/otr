@@ -17,14 +17,16 @@ module.exports.controller = function (app, config) {
   /*
    * Get setting (by filtering)
    */
-  app.get(prefix, /*http.ensureAuthorized,*/ function (req, res) {
+  app.get(prefix, http.ensureAuthorized, function (req, res) {
     var data = req.query;
-    //http.checkAuthorized(req, res, function(user) {
-      //if (data.url) {
+    http.checkAuthorized(req, res, function(user) {
+      if (data.url) {
+        var fullUrl = req.protocol + '://' + req.get('host') + '/#' + data.url;
         console.log('Rendering...');
+        console.log(fullUrl);
         var childArgs = [
           path.join(__dirname, '../../../scripts', 'phantomjs-script.js'),
-          "http://localhost:3000/#/versions/pdf/568adb7c53df50832feb3f84/568adb9c53df50832feb3f87/568b8c448f5e804b51e91ed8"
+          fullUrl,
         ];
 
         childProcess.execFile(binPath, childArgs, function(err, stdout, stderr) {
@@ -37,10 +39,10 @@ module.exports.controller = function (app, config) {
             http.response(res, 200, {});
           }
         });
-      /*} else {
+      } else {
         http.log(req, 'Error when user (' + user.name.username + ') rendered url (' + data.url + ')');
         http.response(res, 404, {}, "-1");
-      }*/
-    //});
+      }
+    });
   });
 };

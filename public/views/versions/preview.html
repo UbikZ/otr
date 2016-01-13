@@ -98,6 +98,13 @@
                                     </span>
                                     <span ng-include="'views/versions/partials/web/main_resume.html'"></span>
                                 </uib-tab>
+                                <li>
+                                    <a ng-click="download()" uib-tab-heading-transclude="">
+                                        <tab-heading>
+                                            <i class="fa fa-download"></i> {{ (nsv+'.items.download') | translate }}
+                                        </tab-heading>
+                                    </a>
+                                </li>
                             </uib-tabset>
                         </div>
                     </div>

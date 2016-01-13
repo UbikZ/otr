@@ -27,8 +27,8 @@ module.exports = ['$scope', '$rootScope', '$stateParams', 'itemService', 'settin
       $scope.setting = mainSetting;
     };
 
-    $scope.download = function(args) {
-      rendererService.renderPdf({});
+    $scope.download = function() {
+      rendererService.renderPdf({url: $location.path().replace('preview', 'pdf')});
     };
 
     itemService.get({
