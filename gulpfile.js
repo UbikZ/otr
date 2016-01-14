@@ -20,6 +20,7 @@ plugins.minifyCss = require('gulp-minify-css');
 plugins.minifyHtml = require('gulp-minify-html');
 plugins.angularTemplateCache = require('gulp-angular-templatecache');
 plugins.rev = require('gulp-rev');
+plugins.buffer = require('gulp-buffer');
 plugins.gzip = require('gulp-gzip');
 plugins.ifProd = function(callback) {
   return require('gulp-if')(!config.env.debug, callback);
