@@ -12,12 +12,17 @@ module.exports = function(gulp, plugins, npmPackages, config) {
       }
     });
 
-    var stream = b.bundle().pipe(plugins.source('vendor.min.js'));
-
-    if (!config.env.debug) {
-      stream.pipe(plugins.streamify(plugins.uglify()));
-    }
-
-    return stream.pipe(gulp.dest(config.path.public + '/dist'));
+    return b.bundle()
+      .pipe(plugins.source('vendor.min.js'))
+      .pipe(plugins.ifProd(plugins.buffer()))
+      .pipe(plugins.ifProd(plugins.rev()))
+      .pipe(plugins.ifProd(plugins.streamify(plugins.uglify())))
+      .pipe(plugins.ifProd(gulp.dest(config.path.public + '/dist')))
+      .pipe(plugins.ifProd(plugins.rev.manifest(config.path.public + '/dist/rev-manifest.json', {
+        base: config.path.public + '/dist/',
+        merge: true,
+      })))
+      .pipe(gulp.dest(config.path.public + '/dist'))
+      ;
   };
 };

@@ -4,6 +4,9 @@ var gulp = require('gulp');
 var config = require('./config.json');
 var argv = require('yargs').argv;
 
+config.env.current = process.env.NODE_ENV || argv.env;
+config.env.debug = (config.env.current !== 'production');
+
 var plugins = {};
 plugins.uglify = require('gulp-uglify');
 plugins.browserify = require('browserify');
@@ -16,6 +19,11 @@ plugins.concat = require('gulp-concat');
 plugins.minifyCss = require('gulp-minify-css');
 plugins.minifyHtml = require('gulp-minify-html');
 plugins.angularTemplateCache = require('gulp-angular-templatecache');
+plugins.rev = require('gulp-rev');
+plugins.buffer = require('gulp-buffer');
+plugins.ifProd = function(callback) {
+  return require('gulp-if')(!config.env.debug, callback);
+};
 
 var tasksMapper = {
   'pre-clean': [],
@@ -47,9 +55,6 @@ var browserDependencies = [
   'pace',
   'toastr',
 ];
-
-config.env.current = process.env.NODE_ENV || argv.env;
-config.env.debug = (config.env.current !== 'production');
 
 // Bind tasks
 Object.keys(tasksMapper).forEach(function(task) {
