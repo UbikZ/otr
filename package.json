@@ -19,6 +19,7 @@
     "gulp-uglify": "^0.3.1",
     "istanbul": "^0.4.2",
     "mocha": "^2.3.4",
+    "protractor": "^3.0.0",
     "resolve": "^1.0.0",
     "vinyl-source-stream": "^0.1.1"
   },
