@@ -11,20 +11,20 @@ module.exports = function (gulp, plugins, npmPackages, config) {
       .pipe(plugins.concat('print.min.css'))
       .pipe(plugins.ifProd(plugins.rev()))
       .pipe(plugins.ifProd(plugins.minifyCss()))
-      .pipe(plugins.ifProd(plugins.gzip({gzipOptions: {level: 9}})))
+      .pipe(plugins.ifProd(plugins.gzip({gzipOptions: {level: 9}, preExtension: 'gz'})))
       .pipe(plugins.ifProd(gulp.dest(config.path.public + '/dist')))
       .pipe(plugins.ifProd(plugins.rev.manifest(config.path.public + '/dist/rev-manifest.json', {
         base: config.path.public + '/dist/',
         merge: true,
       })))
       .pipe(gulp.dest(config.path.public + '/dist'))
-      ;
+    ;
 
     return gulp.src([config.path.public + '/lib/**/*.css', 'src/client/app/css/**/*.css'])
       .pipe(plugins.concat('app.min.css'))
       .pipe(plugins.ifProd(plugins.rev()))
       .pipe(plugins.ifProd(plugins.minifyCss()))
-      .pipe(plugins.ifProd(plugins.gzip({gzipOptions: {level: 9}, preExtension: 'gz' })))
+      .pipe(plugins.ifProd(plugins.gzip({gzipOptions: {level: 9}, preExtension: 'gz'})))
       .pipe(plugins.ifProd(gulp.dest(config.path.public + '/dist')))
       .pipe(plugins.ifProd(plugins.rev.manifest(config.path.public + '/dist/rev-manifest.json', {
         base: config.path.public + '/dist/',

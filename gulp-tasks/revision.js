@@ -14,7 +14,7 @@ module.exports = function (gulp, plugins, npmPackages, config) {
             data = data.replace(key, manifest[key]);
           }
         }
-        
+
         fs.writeFile(config.path.public + '/index.html', data);
       });
   };
