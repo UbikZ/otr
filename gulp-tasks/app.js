@@ -11,7 +11,7 @@ module.exports = function(gulp, plugins, npmPackages, config) {
       b.external(extendId);
     });
 
-    b.bundle()
+    return b.bundle()
       .pipe(plugins.source('app.min.js'))
       .pipe(plugins.ifProd(plugins.buffer()))
       .pipe(plugins.ifProd(plugins.rev()))

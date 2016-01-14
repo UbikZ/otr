@@ -36,7 +36,7 @@ var tasksMapper = {
   'less-compile': ['less-variable'],
   'css': ['less-compile'],
   'html': [],
-  'revision': ['javascript', 'css'],
+  'revision': ['app', 'vendor', 'css'],
 };
 
 var browserDependencies = [
@@ -64,7 +64,6 @@ Object.keys(tasksMapper).forEach(function(task) {
 }, tasksMapper);
 
 // Build tasks
-gulp.task('javascript', ['vendor', 'app']);
 gulp.task('install', ['revision'], getTask('post-clean'));
 gulp.task('default', ['install']);
 
