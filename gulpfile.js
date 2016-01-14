@@ -22,6 +22,7 @@ plugins.angularTemplateCache = require('gulp-angular-templatecache');
 plugins.rev = require('gulp-rev');
 plugins.revCollector = require('gulp-rev-collector');
 plugins.buffer = require('gulp-buffer');
+plugins.gzip = require('gulp-gzip');
 plugins.ifProd = function(callback) {
   return require('gulp-if')(!config.env.debug, callback);
 };
@@ -36,7 +37,7 @@ var tasksMapper = {
   'less-compile': ['less-variable'],
   'css': ['less-compile'],
   'html': [],
-  'revision': [],
+  'revision': ['javascript', 'css'],
 };
 
 var browserDependencies = [
@@ -65,7 +66,6 @@ Object.keys(tasksMapper).forEach(function(task) {
 
 // Build tasks
 gulp.task('javascript', ['vendor', 'app']);
-gulp.task('revision', ['html', 'javascript', 'css'], getTask('revision'));
 gulp.task('install', ['revision'], getTask('post-clean'));
 gulp.task('default', ['install']);
 

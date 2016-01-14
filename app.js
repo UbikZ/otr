@@ -10,15 +10,21 @@ var fs = require('fs');
 var mongoose = require('mongoose');
 var app = express();
 
+config.env.current = process.env.NODE_ENV || argv.env;
+config.env.debug = (config.env.current !== 'production');
 
 var port = 3000, host = 'localhost';
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(function (req, res, next) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  // todo: improve
+  if (!config.env.debug && req.url.indexOf('.gz.') != -1) {
+    res.setHeader('Content-Encoding', 'gzip');
+  }
+  //res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
-  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, Authorization');
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-tType, Authorization');
   next();
 });
 app.use(express.static(config.path.public));
