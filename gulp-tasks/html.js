@@ -2,7 +2,7 @@
 
 module.exports = function (gulp, plugins, npmPackages, config) {
   return function () {
-    return gulp.src([config.path.client.app + '/views/**/*'])
+    return gulp.src([config.path.client.app + '/views/**/*', '!' + config.path.client.app + '/views/index.html'])
       .pipe(plugins.minifyHtml({empty: true, spare: true, quotes: true}))
       .pipe(plugins.angularTemplateCache(
         'template-cache.js',
