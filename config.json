@@ -3,27 +3,47 @@
     "version": 1
   },
   "env": {
-    "debug": false
+    "debug": false,
+    "development": {
+      "host": "localhost",
+      "port": 3000,
+      "mongo": {
+        "uri": "mongodb://localhost:27017/otr-dev"
+      }
+    },
+    "staging": {
+      "host": "localhost",
+      "port": 3001,
+      "mongo": {
+        "uri": "mongodb://localhost:27017/otr-stage"
+      }
+    },
+    "production": {
+      "host": "localhost",
+      "port": 3000,
+      "mongo": {
+        "uri": "mongodb://localhost:27017/otr-prod"
+      }
+    }
   },
-  "mongo": {
-    "uri": "mongodb://localhost:27017/otr"
-  },
-  "main": "app.js",
   "bin": {
     "phantomjs": "phantomjs"
   },
   "path": {
     "public": "./public",
+    "logs": "./logs",
     "client": {
       "views": "./public/views",
       "app": "./src/client/app",
-      "print": "./src/client/print"
+      "print": "./src/client/print",
+      "tests": "./src/client/tests"
     },
     "server": {
       "controller": "./src/server/controllers",
       "socket": "./src/server/sockets",
       "model": "./src/server/models",
-      "prototype": "./src/server/prototypes"
+      "prototype": "./src/server/prototypes",
+      "tests": "./src/server/tests"
     }
   },
   "particularities": {

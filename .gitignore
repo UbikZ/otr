@@ -7,5 +7,3 @@ public/lib
 .idea
 npm-debug.log
 .DS_Store
-public/exports/*
-!public/exports/.gitkeep

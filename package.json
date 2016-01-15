@@ -48,6 +48,7 @@
     "metismenu": "^2.2.0",
     "moment": "^2.10.6",
     "mongoose": "^4.3.3",
+    "morgan": "^1.6.1",
     "ngstorage": "^0.3.10",
     "oclazyload": "^1.0.6",
     "pace": "github:hubspot/pace",
@@ -56,6 +57,10 @@
     "request": "^2.67.0",
     "spinkit": "^1.2.5",
     "toastr": "^2.1.2",
+    "winston": "^2.1.1",
     "yargs": "^3.27.0"
+  },
+  "engines": {
+    "node": ">= 0.10.0"
   }
 }
