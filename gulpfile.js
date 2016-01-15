@@ -5,7 +5,7 @@ var config = require('./config.json');
 var argv = require('yargs').argv;
 
 config.env.current = process.env.NODE_ENV || argv.env;
-config.env.debug = (config.env.current !== 'production');
+config.env.debug = !~['staging', 'production'].indexOf(config.env.current);
 
 var plugins = {};
 plugins.uglify = require('gulp-uglify');
