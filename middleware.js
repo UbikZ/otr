@@ -14,7 +14,7 @@ module.exports = function (app, config) {
     transports: [
       new winston.transports.File({
         level: 'info',
-        filename: config.path.logs + '/access.' + moment().format('YYYY-MM-DD') + '.log',
+        filename: config.path.logs + '/otr.' + moment().format('YYYY-MM-DD') + '.0.log',
         handleExceptions: true,
         json: true,
         maxsize: 5242880, //5MB
