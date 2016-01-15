@@ -4,6 +4,7 @@ var moment = require('moment');
 var merge = require('merge');
 var ontimeRequester = require('./ontime');
 var User = require('../../models/user');
+var logger = require('../../logger');
 
 function response(res, status, data, message, err) {
   var dat = merge({
@@ -19,12 +20,12 @@ function response(res, status, data, message, err) {
 
 function log(req, message, err) {
   var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-  console.log('*** ' + ip + ' ***');
-  console.log('[' + moment().format('YYYY-MM-DD HH:mm:SS') + '] Msg: ' + message);
+  logger.debug('*** ' + ip + ' ***');
+  logger.debug('[' + moment().format('YYYY-MM-DD HH:mm:SS') + '] Msg: ' + message);
   if (err) {
-    console.log('[' + moment().format('YYYY-MM-DD HH:mm:SS') + '] Err: ' + err);
+    logger.debug('[' + moment().format('YYYY-MM-DD HH:mm:SS') + '] Err: ' + err);
   }
-  console.log('******');
+  logger.debug('******');
 }
 
 function ensureAuthorized(req, res, next) {

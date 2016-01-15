@@ -3,6 +3,7 @@
 var http = require('./helpers/http');
 var path = require('path');
 var childProcess = require('child_process');
+var logger = require('../logger');
 
 module.exports.controller = function (app, config) {
   var binPath;
@@ -22,20 +23,19 @@ module.exports.controller = function (app, config) {
     http.checkAuthorized(req, res, function(user) {
       if (data.url) {
         var fullUrl = req.protocol + '://' + req.get('host') + '/#' + data.url;
-        console.log('Rendering...');
-        console.log(fullUrl);
+        logger.info('[Start] Rendering: ' + fullUrl);
         var childArgs = [
           path.join(__dirname, '../../../scripts', 'phantomjs-script.js'),
           fullUrl,
         ];
 
         childProcess.execFile(binPath, childArgs, function(err, stdout, stderr) {
-          console.log(stdout);
+          logger.debug(stdout);
           if (err != undefined) {
-            console.log(err);
+            logger.error(err);
             http.response(res, 500, err, "-1");
           } else {
-            console.log('Done');
+            logger.info('[End] Rendering: ' + fullUrl);
             http.response(res, 200, {});
           }
         });

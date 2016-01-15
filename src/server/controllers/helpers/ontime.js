@@ -3,12 +3,13 @@
 var request = require('request');
 var qs = require('querystring');
 var ontimeConfig = require('../../config/ontime.json');
+var logger = require('../../logger');
 
 function req(url, cb) {
   request(url, function (error, response, body) {
-    console.log('# Ontime Call : ' + url);
+    logger.info('# Ontime Call : ' + url);
     if (error && response.statusCode != 200) {
-      console.log('Error while requesting (' + url + ').');
+      logger.error('Error while requesting (' + url + ').');
     }
     cb(body);
   });

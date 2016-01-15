@@ -5,36 +5,9 @@ var express = require('express');
 var fs = require('fs');
 var mongoose = require('mongoose');
 var morgan = require('morgan');
-var winston = require('winston');
-var moment = require('moment');
+var logger = require('./logger');
 
 module.exports = function (app, config) {
-
-  var logger = new winston.Logger({
-    transports: [
-      new winston.transports.File({
-        level: 'info',
-        filename: config.path.logs + '/otr.' + moment().format('YYYY-MM-DD') + '.0.log',
-        handleExceptions: true,
-        json: true,
-        maxsize: 5242880, //5MB
-        colorize: false,
-      }),
-      new winston.transports.Console({
-        level: 'debug',
-        handleExceptions: true,
-        json: false,
-        colorize: true
-      })
-    ],
-    exitOnError: false
-  });
-  logger.stream = {
-    write: function (message) {
-      logger.info(message);
-    }
-  };
-
   // Setup log rotate
   fs.existsSync(config.path.logs) || fs.mkdirSync(config.path.logs);
   app.use(morgan('combined', {stream: logger.stream}));
@@ -78,21 +51,21 @@ module.exports = function (app, config) {
   // Add models
   fs.readdirSync(config.path.server.model).forEach(function (file) {
     if (file.substr(-3) == '.js') {
-      require(config.path.server.model + '/' + file);
+      require('./models/' + file);
     }
   });
 
   // Add routes from controller file
   fs.readdirSync(config.path.server.controller).forEach(function (file) {
     if (file.substr(-3) == '.js') {
-      require(config.path.server.controller + '/' + file).controller(app, config);
+      require('./controllers/' + file).controller(app, config);
     }
   });
 
   // Add extend prototypes for helper utilities
   fs.readdirSync(config.path.server.prototype).forEach(function (file) {
     if (file.substr(-3) == '.js') {
-      require(config.path.server.prototype + '/' + file);
+      require('./prototypes/' + file);
     }
   });
 };

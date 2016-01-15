@@ -11,7 +11,7 @@ config.env.debug = (config.env.current !== 'production');
 var port = config.env[config.env.current].port;
 var host = config.env[config.env.current].host;
 
-require('./middleware')(app, config);
+require('./src/server/middleware')(app, config);
 
 app.listen(port, function () {
   console.log('Express server started on port %s', port);
