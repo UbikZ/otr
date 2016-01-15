@@ -4,6 +4,7 @@
   "main": "app.js",
   "devDependencies": {
     "browserify": "^5.9.3",
+    "chai": "^3.4.1",
     "del": "^0.1.2",
     "gulp": "^3.8.7",
     "gulp-angular-templatecache": "^1.8.0",
@@ -21,6 +22,7 @@
     "mocha": "^2.3.4",
     "protractor": "^3.0.0",
     "resolve": "^1.0.0",
+    "supertest": "^1.1.0",
     "vinyl-source-stream": "^0.1.1"
   },
   "dependencies": {

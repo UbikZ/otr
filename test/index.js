@@ -1,3 +1,4 @@
 'use strict';
 
-require('./app/app');
+var app = require('../app');
+require('./api')(app);

@@ -16,3 +16,5 @@ require('./src/server/middleware')(app, config);
 app.listen(port, function () {
   console.log('Express server started on port %s', port);
 });
+
+module.exports = app;
