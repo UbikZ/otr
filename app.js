@@ -18,7 +18,7 @@ var port = 3000, host = 'localhost';
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(function (req, res, next) {
-  // todo: improve
+  // For production test (nginx will deliver statics files with specific rule)
   if (!config.env.debug && req.url.indexOf('.gz.') != -1) {
     res.setHeader('Content-Encoding', 'gzip');
   }
@@ -39,7 +39,7 @@ app.use(function (req, res, next) {
   next();
 });
 
-// db
+// database configuration 
 mongoose.connect(config.mongo.uri);
 
 var db = mongoose.connection;
