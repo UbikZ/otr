@@ -20,13 +20,15 @@ module.exports = function (app) {
   var agent = request.agent(app);
   var url = '/api/v' + config.api.version;
 
+  var tokenBearer, tokenOtBearer;
+
   describe('> Application - ', function () {
     it('   # should exist', function (done) {
       should.exist(app);
       done();
     });
 
-    describe('> Index - ', function () {
+    describe('> Init API - ', function () {
       describe('   # [GET] /', function () {
         it('returns index.html', function (done) {
           agent
@@ -42,8 +44,7 @@ module.exports = function (app) {
       });
     });
 
-    describe('> Authentication - ', function () {
-      var tokenBearer, tokenOtBearer;
+    describe('> Authentication API - ', function () {
       describe('   # [POST] ' + url + '/sign-up', function () {
         it('when sign-up new user the first time', function (done) {
           var sentData = {username: 'test_stage', password: 'test_stage'};
@@ -121,6 +122,25 @@ module.exports = function (app) {
               assert.strictEqual(result.user.identity.token, tokenBearer);
               done();
             });
+        });
+      });
+
+      describe('> User API - ', function () {
+        describe('   # [GET] ' + url + '/user', function () {
+          it('when request list of all users', function(done) {
+            agent
+              .get(url + '/user')
+              .set('Authorization', 'Bearer ' + tokenBearer + " " + tokenOtBearer)
+              .expect(200)
+              .expect('Content-Type', 'application/json; charset=utf-8')
+              .end(function (err, res) {
+                if (err) return done(err);
+                var result = res.body;
+                assert.isArray(result.users);
+                assert.strictEqual(result.users.length, 1);
+                done();
+              });
+          });
         });
       });
     });
