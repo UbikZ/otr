@@ -16,7 +16,7 @@ module.exports = function (app, config) {
   app.use(bodyParser.json());
 
   app.use(function (req, res, next) {
-    // For production test (nginx will deliver statics files with specific rule)
+    // For staging/production test (nginx will deliver statics files with specific rule)
     if (!config.env.debug && req.url.indexOf('.gz.') != -1) {
       res.setHeader('Content-Encoding', 'gzip');
     }
@@ -45,7 +45,7 @@ module.exports = function (app, config) {
   var db = mongoose.connection;
   db.on('error', console.error.bind(console, 'Connection error:'));
   db.once('open', function () {
-    console.log('Connection OK.');
+    //console.log('Connection OK.');
   });
 
   // Add models

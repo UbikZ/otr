@@ -5,21 +5,18 @@
   "env": {
     "debug": false,
     "development": {
-      "host": "localhost",
       "port": 3000,
       "mongo": {
         "uri": "mongodb://localhost:27017/otr-dev"
       }
     },
     "staging": {
-      "host": "localhost",
       "port": 3001,
       "mongo": {
         "uri": "mongodb://localhost:27017/otr-stage"
       }
     },
     "production": {
-      "host": "localhost",
       "port": 3000,
       "mongo": {
         "uri": "mongodb://localhost:27017/otr-prod"
