@@ -7,8 +7,8 @@ var should = require('chai').should();
 var config = require('../config.json');
 var ontimeRequester = require('../src/server/controllers/helpers/ontime');
 
-// Mockery
-ontimeRequester.requestToken = function(authObject, cb) {
+// Mock external API
+ontimeRequester.requestToken = function (authObject, cb) {
   cb(JSON.stringify(require('./fixtures/ot_signup.json')));
 };
 
@@ -53,6 +53,13 @@ module.exports = function (app) {
               done();
             });
         });
+      });
+    });
+
+    after('should drop database', function (done) {
+      mongoose.connection.db.dropDatabase(function (err) {
+        if (err) throw err;
+        done();
       });
     });
   });
