@@ -43,8 +43,8 @@ module.exports = function (app) {
     });
 
     describe('> Authentication - ', function () {
+      var tokenBearer, tokenOtBearer;
       describe('   # [POST] ' + url + '/sign-up', function () {
-        var token;
         it('when sign-up new user the first time', function (done) {
           var sentData = {username: 'test_stage', password: 'test_stage'};
           agent
@@ -65,7 +65,7 @@ module.exports = function (app) {
               assert.strictEqual(result.user.name.username, sentData.username);
               assert.strictEqual(result.user.identity.ontime_token, expectedData.access_token);
               assert.isDefined(result.user.identity.token);
-              token = result.user.identity.ontime_token;
+              tokenOtBearer = result.user.identity.ontime_token;
               done();
             });
         });
@@ -90,12 +90,38 @@ module.exports = function (app) {
               assert.strictEqual(result.user.name.username, sentData.username);
               assert.strictEqual(result.user.identity.ontime_token, expectedData.access_token);
               assert.isDefined(result.user.identity.token);
-              assert.notEqual(token, result.user.identity.ontime_token);
+              assert.notEqual(tokenOtBearer, result.user.identity.ontime_token);
+              // We set tokens for next tests
+              tokenOtBearer = result.user.identity.ontime_token;
+              tokenBearer = result.user.identity.token;
               done();
             });
         });
+      });
 
-
+      describe('   # [GET] ' + url + '/me', function () {
+        it('when request information on logged user', function(done) {
+          agent
+            .get(url + '/me')
+            .set('Authorization', 'Bearer ' + tokenBearer + " " + tokenOtBearer)
+            .expect(200)
+            .expect('Content-Type', 'application/json; charset=utf-8')
+            .end(function (err, res) {
+              if (err) return done(err);
+              var result = res.body, expectedData = require('./fixtures/ot_signup.json');
+              assert.strictEqual(result.code, 200);
+              assert.strictEqual(result.error, undefined);
+              assert.isUndefined(result.messageCode);
+              assert.isDefined(result.user);
+              assert.strictEqual(result.user.info.email, expectedData.data.email);
+              assert.strictEqual(result.user.name.firstname, expectedData.data.first_name);
+              assert.strictEqual(result.user.name.lastname, expectedData.data.last_name);
+              assert.isDefined(result.user.name.username);
+              assert.strictEqual(result.user.identity.ontime_token, tokenOtBearer);
+              assert.strictEqual(result.user.identity.token, tokenBearer);
+              done();
+            });
+        });
       });
     });
 
