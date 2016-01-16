@@ -11,7 +11,7 @@ before_script:
   - npm install
 
 script:
-  - export NODE_ENV=staging && npm build && npm test
+  - export NODE_ENV=staging && npm run build && npm test
 
 after_success:
   - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
