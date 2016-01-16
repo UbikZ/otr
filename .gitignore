@@ -5,5 +5,6 @@ public/dist
 public/index.html
 public/lib
 .idea
+coverage
 npm-debug.log
 .DS_Store
