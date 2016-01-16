@@ -9,7 +9,7 @@ var ontimeRequester = require('../src/server/controllers/helpers/ontime');
 
 // Mockery
 ontimeRequester.requestToken = function(authObject, cb) {
-  cb('{"access_token": "xxxxx"}');
+  cb(JSON.stringify(require('./fixtures/ot_signup.json')));
 };
 
 // Start tests
@@ -55,8 +55,6 @@ module.exports = function (app) {
         });
       });
     });
-
-
   });
 };
 

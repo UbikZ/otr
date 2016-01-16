@@ -1,0 +1,18 @@
+{
+  "date": "2016-01-16 12:33:78",
+  "code": 200,
+  "data": {},
+  "ontime_user": {
+    "id": 1,
+    "login_id": "test",
+    "is_active": true,
+    "is_locked": false,
+    "last_login_date_time": "2016-01-16T11:33:01Z",
+    "created_date_time": "2012-10-03T07:19:33Z",
+    "culture_info": "fr-FR",
+    "first_name": "Test Firstname",
+    "last_name": "Test Lastname",
+    "email": "test@test.fr",
+    "is_admin": true
+  }
+}

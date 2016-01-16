@@ -3,9 +3,9 @@
 var User = require('../models/user');
 var otrConf = require('../config/ontime.json');
 var jwt = require("jsonwebtoken");
+var http = require('./helpers/http');
 
-module.exports.controller = function (app, config, logger) {
-  var http = require('./helpers/http')(config, logger);
+module.exports.controller = function (app, config) {
 
   var prefix = '/api/v' + config.api.version;
 

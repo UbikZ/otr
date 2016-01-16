@@ -59,8 +59,7 @@
     "request": "^2.67.0",
     "spinkit": "^1.2.5",
     "toastr": "^2.1.2",
-    "winston": "^2.1.1",
-    "yargs": "^3.27.0"
+    "winston": "^2.1.1"
   },
   "engines": {
     "node": ">= 0.10.0"

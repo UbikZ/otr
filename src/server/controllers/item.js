@@ -10,10 +10,10 @@ var User = require('../models/user');
 var mongoose = require('mongoose');
 var merge = require('merge');
 var mapping = require('../models/helpers/mapping');
+var http = require('./helpers/http');
+var ontimeRequester = require('./helpers/ontime');
 
-module.exports.controller = function (app, config, logger) {
-  var http = require('./helpers/http')(config, logger);
-  var ontimeRequester = require('./helpers/ontime')(config, logger);
+module.exports.controller = function (app, config) {
 
   var prefix = '/api/v' + config.api.version + '/item';
 
@@ -24,7 +24,7 @@ module.exports.controller = function (app, config, logger) {
         http.response(res, 500, {}, "-1", err);
       } else {
         if (data.lazy) {
-          Organization.walkRecursively(organization, function(element) {
+          Organization.walkRecursively(organization, function (element) {
             if (element.entries != undefined) {
               delete element.entries;
             }
@@ -39,7 +39,7 @@ module.exports.controller = function (app, config, logger) {
   /*
    * Get Item (by filtering)
    */
-  app.get(prefix,  function (req, res) {
+  app.get(prefix, function (req, res) {
     var data = req.query;
 
     Organization.findById(data.organizationId).lean().exec(function (err, organization) {
@@ -48,7 +48,7 @@ module.exports.controller = function (app, config, logger) {
         http.response(res, 500, {}, "-1", err);
       } else if (organization) {
         if (data.lazy == 1) {
-          Organization.walkRecursively(organization, function(element) {
+          Organization.walkRecursively(organization, function (element) {
             if (element.entries != undefined) {
               delete element.entries;
             }
@@ -155,7 +155,7 @@ module.exports.controller = function (app, config, logger) {
                           http.response(res, 403, {error: result}, "-3", result.error);
                         } else if (result.data) {
                           var elements = [];
-                          result.data.forEach(function(item) {
+                          result.data.forEach(function (item) {
                             var indexOfParentProject = elements.pluck('ontime_id').indexOf(item.parent_project.id);
                             if (indexOfParentProject == -1) {
                               elements.push(new Entry({
@@ -185,17 +185,17 @@ module.exports.controller = function (app, config, logger) {
 
                             if (indexOfEntry == -1) {
                               elements[indexOfParentProject].children[indexOfProject].children.push(new Entry({
-                                  name: item.name,
-                                  description: item.description,
-                                  notes: item.notes,
-                                  ontime_id: item.id,
-                                  estimate: {
-                                    duration_minutes: item.estimated_duration.duration_minutes,
-                                    otr_low: item.custom_fields != undefined ? item.custom_fields.custom_257 : null,
-                                    otr_high: item.custom_fields != undefined ? item.custom_fields.custom_259 : null,
-                                    otr_isEstimated: item.custom_fields != undefined ? item.custom_fields.custom_262 : null,
-                                  },
-                                }));
+                                name: item.name,
+                                description: item.description,
+                                notes: item.notes,
+                                ontime_id: item.id,
+                                estimate: {
+                                  duration_minutes: item.estimated_duration.duration_minutes,
+                                  otr_low: item.custom_fields != undefined ? item.custom_fields.custom_257 : null,
+                                  otr_high: item.custom_fields != undefined ? item.custom_fields.custom_259 : null,
+                                  otr_isEstimated: item.custom_fields != undefined ? item.custom_fields.custom_262 : null,
+                                },
+                              }));
                             } else {
                               elements[indexOfParentProject].children[indexOfProject].children[indexOfEntry].children.push(new Entry({
                                 name: item.name,
@@ -227,7 +227,7 @@ module.exports.controller = function (app, config, logger) {
                               }
                               elements[indexOfParentProject].children[indexOfProject].children[indexOfEntry].size++;
                             }
-                            
+
                             // Sum of parent project entries
                             if (elements[indexOfParentProject].estimate.duration_minutes == undefined) {
                               elements[indexOfParentProject].estimate.duration_minutes = 0;

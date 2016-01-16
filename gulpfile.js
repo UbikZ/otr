@@ -2,10 +2,8 @@
 
 var gulp = require('gulp');
 var config = require('./config.json');
-var argv = require('yargs').argv;
 
-config.env.current = process.env.NODE_ENV || argv.env;
-config.env.debug = !~['staging', 'production'].indexOf(config.env.current);
+config.env.debug = !~['staging', 'production'].indexOf(process.env.NODE_ENV);
 
 var plugins = {};
 plugins.uglify = require('gulp-uglify');

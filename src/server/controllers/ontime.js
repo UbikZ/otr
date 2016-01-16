@@ -1,15 +1,15 @@
 'use strict';
 
 var merge = require('merge');
+var http = require('./helpers/http');
+var ontimeRequester = require('./helpers/ontime');
 
-module.exports.controller = function (app, config, logger) {
-  var http = require('./helpers/http')(config, logger);
-  var ontimeRequester = require('./helpers/ontime')(config, logger);
+module.exports.controller = function (app, config) {
 
   var prefix = '/api/v' + config.api.version + '/ontime';
 
   app.get(prefix + '/me', http.ensureAuthorized, function (req, res) {
-    http.checkAuthorized(req, res, function() {
+    http.checkAuthorized(req, res, function () {
       ontimeRequester.me(req.ot_token, function (result) {
         result = JSON.parse(result);
         if (result.error) {
@@ -26,7 +26,7 @@ module.exports.controller = function (app, config, logger) {
   });
 
   app.get(prefix + '/tree', http.ensureAuthorized, function (req, res) {
-    http.checkAuthorized(req, res, function() {
+    http.checkAuthorized(req, res, function () {
       ontimeRequester.tree(req.ot_token, function (result) {
         result = JSON.parse(result);
         if (result.error) {
@@ -43,7 +43,7 @@ module.exports.controller = function (app, config, logger) {
   });
 
   app.get(prefix + '/project', http.ensureAuthorized, function (req, res) {
-    http.checkAuthorized(req, res, function() {
+    http.checkAuthorized(req, res, function () {
       ontimeRequester.project(req.ot_token, req.query.projectId, function (result) {
         result = JSON.parse(result);
         if (result.error) {
@@ -60,7 +60,7 @@ module.exports.controller = function (app, config, logger) {
   });
 
   app.get(prefix + '/items', http.ensureAuthorized, function (req, res) {
-    http.checkAuthorized(req, res, function() {
+    http.checkAuthorized(req, res, function () {
       ontimeRequester.items(req.ot_token, req.query.projectId, function (result) {
         result = JSON.parse(result);
         if (result.error) {

@@ -5,10 +5,9 @@ var config = require('./config.json');
 var argv = require('yargs').argv;
 var app = express();
 
-config.env.current = process.env.NODE_ENV || argv.env;
-config.env.debug = (config.env.current !== 'production');
+config.env.debug = (process.env.NODE_ENV !== 'production');
 
-var port = config.env[config.env.current].port;
+var port = config.env[process.env.NODE_ENV].port;
 
 require('./src/server/middleware')(app, config);
 

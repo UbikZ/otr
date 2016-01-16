@@ -2,9 +2,9 @@
 
 var path = require('path');
 var childProcess = require('child_process');
+var http = require('./helpers/http');
 
-module.exports.controller = function (app, config, logger) {
-  var http = require('./helpers/http')(config);
+module.exports.controller = function (app, config) {
 
   var binPath;
 
@@ -21,7 +21,7 @@ module.exports.controller = function (app, config, logger) {
    */
   app.get(prefix, http.ensureAuthorized, function (req, res) {
     var data = req.query;
-    http.checkAuthorized(req, res, function(user) {
+    http.checkAuthorized(req, res, function (user) {
       if (data.url) {
         var fullUrl = req.protocol + '://' + req.get('host') + '/#' + data.url;
         logger.info('[Start] Rendering: ' + fullUrl);
@@ -30,7 +30,7 @@ module.exports.controller = function (app, config, logger) {
           fullUrl,
         ];
 
-        childProcess.execFile(binPath, childArgs, function(err, stdout, stderr) {
+        childProcess.execFile(binPath, childArgs, function (err, stdout, stderr) {
           logger.debug(stdout);
           if (err != undefined) {
             logger.error(err);

@@ -2,9 +2,9 @@
 
 var User = require('../models/user');
 var jwt = require("jsonwebtoken");
+var http = require('./helpers/http');
 
-module.exports.controller = function (app, config, logger) {
-  var http = require('./helpers/http')(config, logger);
+module.exports.controller = function (app, config) {
 
   var prefix = '/api/v' + config.api.version + '/user';
 
@@ -12,7 +12,7 @@ module.exports.controller = function (app, config, logger) {
    * Get users (by filtering)
    */
   app.get(prefix, http.ensureAuthorized, function (req, res) {
-    http.checkAuthorized(req, res, function() {
+    http.checkAuthorized(req, res, function () {
       User.find({}).lean().exec(function (err, users) {
         if (err) {
           http.log(req, 'Internal error: get users', err);

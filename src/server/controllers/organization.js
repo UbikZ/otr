@@ -3,9 +3,9 @@
 var Organization = require('../models/organization');
 var User = require('../models/user');
 var mongoose = require('mongoose');
+var http = require('./helpers/http');
 
-module.exports.controller = function (app, config, logger) {
-  var http = require('./helpers/http')(config, logger);
+module.exports.controller = function (app, config) {
 
   var prefix = '/api/v' + config.api.version + '/organization';
 
@@ -22,37 +22,37 @@ module.exports.controller = function (app, config, logger) {
       if (data.lazy == 1) {
         fields = {name: 1, description: 1, active: 1, url: 1, logo: 1, creation: 1};
       }
-      
+
       var query = Organization.find(criteria, fields).lean().populate('creation.user');
 
       query.exec(function (err, organizations) {
-          if (err) {
-            http.log(req, 'Internal error: get organizations', err);
-            http.response(res, 500, {}, "-1", err);
-          } else if (organizations) {
-            if (data.lazyVersion == 1) {
-              organizations.forEach(function(organization) {
-                Organization.walkRecursively(organization, function(element) {
-                  if (element.entries != undefined) {
-                    delete element.entries;
-                  }
-                });
-              })
-            }
-            http.response(res, 200, {organizations: organizations});
-          } else {
-            http.log(req, 'Error: organizations is undefined (criteria = ' + criteria + ').');
-            http.response(res, 404, {}, "-9");
+        if (err) {
+          http.log(req, 'Internal error: get organizations', err);
+          http.response(res, 500, {}, "-1", err);
+        } else if (organizations) {
+          if (data.lazyVersion == 1) {
+            organizations.forEach(function (organization) {
+              Organization.walkRecursively(organization, function (element) {
+                if (element.entries != undefined) {
+                  delete element.entries;
+                }
+              });
+            })
           }
-        });
+          http.response(res, 200, {organizations: organizations});
+        } else {
+          http.log(req, 'Error: organizations is undefined (criteria = ' + criteria + ').');
+          http.response(res, 404, {}, "-9");
+        }
+      });
     });
   });
 
-  app.post(prefix  + '/delete', http.ensureAuthorized, function (req, res) {
+  app.post(prefix + '/delete', http.ensureAuthorized, function (req, res) {
     var data = req.body;
 
     http.checkAuthorized(req, res, function () {
-      Organization.findByIdAndRemove(data.id, function(err) {
+      Organization.findByIdAndRemove(data.id, function (err) {
         if (err) {
           http.log(req, 'Internal error: delete organization', err);
           http.response(res, 500, {}, "-1", err);
@@ -125,7 +125,7 @@ module.exports.controller = function (app, config, logger) {
               http.log(req, 'Internal error: create organization -> save organization', err);
               http.response(res, 500, {}, "-1", err);
             } else {
-              newOrganization.populate('creation.user', function(err, newOrg) {
+              newOrganization.populate('creation.user', function (err, newOrg) {
                 http.response(res, 200, {organization: newOrg}, "5");
               });
             }

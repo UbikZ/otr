@@ -4,9 +4,9 @@ var Setting = require('../models/setting');
 var Organization = require('../models/organization');
 var mapping = require('../models/helpers/mapping');
 var merge = require('merge');
+var http = require('./helpers/http');
 
-module.exports.controller = function (app, config, logger) {
-  var http = require('./helpers/http')(config, logger);
+module.exports.controller = function (app, config) {
 
   var prefix = '/api/v' + config.api.version + '/setting';
 
@@ -15,7 +15,7 @@ module.exports.controller = function (app, config, logger) {
    */
   app.get(prefix, http.ensureAuthorized, function (req, res) {
     var data = req.query;
-    http.checkAuthorized(req, res, function() {
+    http.checkAuthorized(req, res, function () {
       var criteria = {};
       if (data.id) {
         criteria.id = data.id;
@@ -77,7 +77,7 @@ module.exports.controller = function (app, config, logger) {
    */
   app.post(prefix + '/update', http.ensureAuthorized, function (req, res) {
     var data = req.body;
-    http.checkAuthorized(req, res, function(user) {
+    http.checkAuthorized(req, res, function (user) {
       var criteria = {};
       if (data.id) {
         criteria.id = data.id;
@@ -144,7 +144,7 @@ module.exports.controller = function (app, config, logger) {
               organization.setting = modelItem;
             }
 
-            Organization.update({_id: organization._id}, organization, {upsert: true}, function (err, raw) {
+            Organization.update({_id: organization._id}, organization, {upsert: true}, function (err, raw) {
               if (err) {
                 http.log(req, 'Internal error: edit setting (in organization) -> save organization', err);
                 http.response(res, 500, {}, "-1", err);

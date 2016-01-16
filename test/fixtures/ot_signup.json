@@ -1,0 +1,10 @@
+{
+  "access_token": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+  "token_type": "bearer",
+  "data": {
+    "id": 1,
+    "first_name": "Test Firstname",
+    "last_name": "Test Lastname",
+    "email": "test@test.fr"
+  }
+}
