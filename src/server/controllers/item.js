@@ -8,12 +8,12 @@ var Version = require('../models/version');
 var Entry = require('../models/entry');
 var User = require('../models/user');
 var mongoose = require('mongoose');
-var http = require('./helpers/http');
 var merge = require('merge');
-var ontimeRequester = require('./helpers/ontime');
 var mapping = require('../models/helpers/mapping');
 
-module.exports.controller = function (app, config) {
+module.exports.controller = function (app, config, logger) {
+  var http = require('./helpers/http')(config, logger);
+  var ontimeRequester = require('./helpers/ontime')(config, logger);
 
   var prefix = '/api/v' + config.api.version + '/item';
 

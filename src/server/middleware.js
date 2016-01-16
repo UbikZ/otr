@@ -5,9 +5,10 @@ var express = require('express');
 var fs = require('fs');
 var mongoose = require('mongoose');
 var morgan = require('morgan');
-var logger = require('./logger');
 
 module.exports = function (app, config) {
+  var logger = require('./logger')(config);
+
   // Setup log rotate
   fs.existsSync(config.path.logs) || fs.mkdirSync(config.path.logs);
   app.use(morgan('combined', {stream: logger.stream}));
@@ -58,7 +59,7 @@ module.exports = function (app, config) {
   // Add routes from controller file
   fs.readdirSync(config.path.server.controller).forEach(function (file) {
     if (file.substr(-3) == '.js') {
-      require('./controllers/' + file).controller(app, config);
+      require('./controllers/' + file).controller(app, config, logger);
     }
   });
 

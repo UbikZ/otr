@@ -1,10 +1,10 @@
 'use strict';
 
-var http = require('./helpers/http');
-var ontimeRequester = require('./helpers/ontime');
 var merge = require('merge');
 
-module.exports.controller = function (app, config) {
+module.exports.controller = function (app, config, logger) {
+  var http = require('./helpers/http')(config, logger);
+  var ontimeRequester = require('./helpers/ontime')(config, logger);
 
   var prefix = '/api/v' + config.api.version + '/ontime';
 

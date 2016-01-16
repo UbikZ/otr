@@ -1,11 +1,11 @@
 'use strict';
 
 var User = require('../models/user');
-var http = require('./helpers/http');
 var otrConf = require('../config/ontime.json');
 var jwt = require("jsonwebtoken");
 
-module.exports.controller = function (app, config) {
+module.exports.controller = function (app, config, logger) {
+  var http = require('./helpers/http')(config, logger);
 
   var prefix = '/api/v' + config.api.version;
 

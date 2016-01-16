@@ -3,9 +3,9 @@
 var Organization = require('../models/organization');
 var User = require('../models/user');
 var mongoose = require('mongoose');
-var http = require('./helpers/http');
 
-module.exports.controller = function (app, config) {
+module.exports.controller = function (app, config, logger) {
+  var http = require('./helpers/http')(config, logger);
 
   var prefix = '/api/v' + config.api.version + '/organization';
 

@@ -1,12 +1,13 @@
 'use strict';
 
-var http = require('./helpers/http');
 var path = require('path');
 var childProcess = require('child_process');
-var logger = require('../logger');
 
-module.exports.controller = function (app, config) {
+module.exports.controller = function (app, config, logger) {
+  var http = require('./helpers/http')(config);
+
   var binPath;
+
   try {
     binPath = require('phantomjs2').path;
   } catch (e) {

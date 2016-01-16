@@ -2,11 +2,11 @@
 
 var Setting = require('../models/setting');
 var Organization = require('../models/organization');
-var http = require('./helpers/http');
 var mapping = require('../models/helpers/mapping');
 var merge = require('merge');
 
-module.exports.controller = function (app, config) {
+module.exports.controller = function (app, config, logger) {
+  var http = require('./helpers/http')(config, logger);
 
   var prefix = '/api/v' + config.api.version + '/setting';
 
