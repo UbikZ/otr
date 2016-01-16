@@ -17,14 +17,14 @@ module.exports = function (app) {
   var agent = request.agent(app);
   var url = '/api/v' + config.api.version;
 
-  describe(' - Application - ', function () {
-    it('should exist', function (done) {
+  describe('> Application - ', function () {
+    it('   # should exist', function (done) {
       should.exist(app);
       done();
     });
 
-    describe(' - Index - ', function () {
-      describe('[GET] /', function () {
+    describe('> Index - ', function () {
+      describe('   # [GET] /', function () {
         it('returns index.html', function (done) {
           agent
             .get('/')
@@ -39,8 +39,8 @@ module.exports = function (app) {
       });
     });
 
-    describe(' - Authentication - ', function () {
-      describe('[POST] ' + url + '/sign-up', function () {
+    describe('> Authentication - ', function () {
+      describe('   # [POST] ' + url + '/sign-up', function () {
         it('when create new user', function (done) {
           var sentData = {username: 'test_stage', password: 'test_stage'};
           agent
@@ -67,7 +67,7 @@ module.exports = function (app) {
       });
     });
 
-    after('should drop database', function (done) {
+    after('   # should drop database', function (done) {
       if (process.env.NODE_ENV == 'staging') {
         mongoose.connection.db.dropDatabase(function (err) {
           if (err) throw err;
