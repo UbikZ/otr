@@ -38,6 +38,7 @@
     "awesome-bootstrap-checkbox": "^0.3.6",
     "body-parser": "^1.14.1",
     "bootstrap": "^3.3.5",
+    "coveralls": "^2.11.6",
     "express": "^4.8.3",
     "express-jwt": "^3.3.0",
     "flag-icon-css": "^1.0.0",
@@ -64,5 +65,9 @@
   },
   "engines": {
     "node": ">= 0.10.0"
+  },
+  "scripts": {
+    "build": "./node_modules/.bin/gulp pre-clean && ./node_modules/.bin/gulp install",
+    "test": "export NODE_ENV=staging && ./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha test"
   }
 }
