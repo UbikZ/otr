@@ -44,7 +44,7 @@ module.exports = function (app) {
         it('when create new user', function (done) {
           agent
             .post(url + '/sign-up')
-            .send({username: 'test', password: 'test'})
+            .send({username: 'test_stage', password: 'test_stage'})
             .expect(200)
             .expect('Content-Type', 'application/json; charset=utf-8')
             .end(function (err, res) {
@@ -57,10 +57,14 @@ module.exports = function (app) {
     });
 
     after('should drop database', function (done) {
-      mongoose.connection.db.dropDatabase(function (err) {
-        if (err) throw err;
+      if (process.env.node == 'staging') {
+        mongoose.connection.db.dropDatabase(function (err) {
+          if (err) throw err;
+          done();
+        });
+      } else {
         done();
-      });
+      }
     });
   });
 };
