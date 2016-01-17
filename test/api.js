@@ -317,10 +317,26 @@ module.exports = function (app) {
               done();
             });
         });
+      });
 
+      describe('# [DELETE] ' + url + '/organization/delete', function () {
+        it('should delete one organization', function (done) {
+          agent
+            .post(url + '/organization/delete')
+            .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+            .expect(200)
+            .expect('Content-Type', 'application/json; charset=utf-8')
+            .end(function (err, res) {
+              if (err) return done(err);
+              var result = res.body;
+              assert.strictEqual(result.code, 200);
+              assert.isUndefined(result.error);
+              assert.strictEqual(result.messageCode, "7");
+              done();
+            });
+        });
       });
     });
-
 
     after('# should drop database', function (done) {
       if (process.env.NODE_ENV == 'staging') {
