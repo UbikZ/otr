@@ -286,20 +286,38 @@ module.exports = function (app) {
       });
 
       describe('# [GET] ' + url + '/organization', function () {
-        it('should request list of all organizations (not lazy)', function (done) {
+        it('should request list of all organizations (without lazy loading)', function (done) {
           agent
-            .get(url + '/user')
+            .get(url + '/organization?')
             .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
             .expect(200)
             .expect('Content-Type', 'application/json; charset=utf-8')
             .end(function (err, res) {
               if (err) return done(err);
               var result = res.body;
-              assert.isArray(result.users);
-              assert.strictEqual(result.users.length, 1);
+              assert.isArray(result.organizations);
+              assert.strictEqual(result.organizations.length, 1);
+              assert.isArray(result.organizations[0].projects);
               done();
             });
         });
+
+        it('should request list of all organizations (with lazy loading)', function (done) {
+          agent
+            .get(url + '/organization?lazy=1')
+            .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+            .expect(200)
+            .expect('Content-Type', 'application/json; charset=utf-8')
+            .end(function (err, res) {
+              if (err) return done(err);
+              var result = res.body;
+              assert.isArray(result.organizations);
+              assert.strictEqual(result.organizations.length, 1);
+              assert.isUndefined(result.organizations[0].projects);
+              done();
+            });
+        });
+
       });
     });
 
