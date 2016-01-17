@@ -9,7 +9,13 @@ var moment = require('moment');
 var ontimeRequester = require('../src/server/controllers/helpers/ontime');
 
 // Generic mock method
-function invalidOntimeAPIResponse(token, cb) {
+function invalidOntimeAPIResponse() {
+  var cb;
+  if (typeof (arguments[1]) == 'function') {
+    cb = arguments[1];
+  } else if (typeof (arguments[2]) == 'function') {
+    cb = arguments[2];
+  }
   cb(JSON.stringify(require('./fixtures/ontime/ko')));
 }
 
@@ -447,8 +453,47 @@ module.exports = function (app) {
             });
         });
       });
-    });
 
+      describe('# [GET] ' + url + '/ontime/project', function () {
+        it('should get an error with token', function (done) {
+          ontimeRequester.project = invalidOntimeAPIResponse;
+          agent
+            .get(url + '/ontime/project')
+            .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+            .expect(403)
+            .expect('Content-Type', 'application/json; charset=utf-8')
+            .end(function (err, res) {
+              if (err) return done(err);
+              var result = res.body;
+              assert.strictEqual(result.code, 403);
+              assert.isDefined(result.error);
+              assert.strictEqual(result.messageCode, "-3");
+              done();
+            });
+        });
+
+        it('should get ontime tree items', function (done) {
+          var expectedData = require('./fixtures/ontime/project');
+          ontimeRequester.project = function(token, projectId, cb) {
+            cb(JSON.stringify(expectedData));
+          };
+          agent
+            .get(url + '/ontime/project')
+            .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+            .expect(200)
+            .expect('Content-Type', 'application/json; charset=utf-8')
+            .end(function (err, res) {
+              if (err) return done(err);
+              var result = res.body;
+              assert.strictEqual(result.code, 200);
+              assert.isUndefined(result.error);
+              assert.isUndefined(result.messageCode);
+
+              done();
+            });
+        });
+      });
+    });
 
     after('# should drop database', function (done) {
       if (process.env.NODE_ENV == 'staging') {

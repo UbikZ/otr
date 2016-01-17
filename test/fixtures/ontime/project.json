@@ -1,0 +1,104 @@
+{
+  "data": [
+    {
+      "parent": {
+        "id": 0
+      },
+      "parent_project": {
+        "name": "01 - PARENT PROJECT",
+        "path": "BRAND, 01 - PARENT PROJECT",
+        "id": 1
+      },
+      "project": {
+        "name": "01 - PROJECT",
+        "path": "BRAND, 01 - PARENT PROJECT - 01 - PROJECT",
+        "id": 2
+      },
+      "name": "Feature 01",
+      "description": "<p>Feature 01 description.</p>",
+      "notes": "Notes for the first feature !",
+      "estimated_duration": {
+        "duration_text": "2 days",
+        "abbreviation": "days",
+        "time_unit": {
+          "name": "Days",
+          "id": 3
+        },
+        "duration_minutes": 960.0,
+        "aggregate_duration_minutes": 960.0,
+        "value": 2.0
+      },
+      "custom_fields": {
+        "custom_263": 0.0,
+        "custom_256": 0.0,
+        "custom_257": 2.0,
+        "custom_259": 2.0,
+        "custom_262": true,
+        "custom_260": false,
+        "custom_261": false,
+        "custom_296": ""
+      },
+      "item_type": "features",
+      "subitems": {
+        "count": 0
+      },
+      "id": 1234,
+      "number": "1234",
+      "workflow_step": {
+        "order": 1,
+        "name": "Todo",
+        "id": 2
+      }
+    },
+    {
+      "parent": {
+        "id": 0
+      },
+      "parent_project": {
+        "name": "02 - PARENT PROJECT",
+        "path": "BRAND, 02 - PARENT PROJECT",
+        "id": 1
+      },
+      "project": {
+        "name": "02 - PROJECT",
+        "path": "BRAND, 02 - PARENT PROJECT - 02 - PROJECT",
+        "id": 2
+      },
+      "name": "Feature 02",
+      "description": "<p>Feature 02 description.</p>",
+      "notes": "Notes for the first feature !",
+      "estimated_duration": {
+        "duration_text": "2 days",
+        "abbreviation": "days",
+        "time_unit": {
+          "name": "Days",
+          "id": 3
+        },
+        "duration_minutes": 960.0,
+        "aggregate_duration_minutes": 960.0,
+        "value": 2.0
+      },
+      "custom_fields": {
+        "custom_263": 0.0,
+        "custom_256": 0.0,
+        "custom_257": 2.0,
+        "custom_259": 2.0,
+        "custom_262": true,
+        "custom_260": false,
+        "custom_261": false,
+        "custom_296": ""
+      },
+      "item_type": "features",
+      "subitems": {
+        "count": 0
+      },
+      "id": 5678,
+      "number": "5678",
+      "workflow_step": {
+        "order": 2,
+        "name": "Todo",
+        "id": 3
+      }
+    }
+  ]
+}
