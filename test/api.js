@@ -384,7 +384,7 @@ module.exports = function (app) {
 
         it('should get ontime user information', function (done) {
           var expectedData = require('./fixtures/ontime/me');
-          ontimeRequester.me = function(token, cb) {
+          ontimeRequester.me = function (token, cb) {
             cb(JSON.stringify(expectedData));
           };
           agent
@@ -429,7 +429,7 @@ module.exports = function (app) {
 
         it('should get ontime tree items', function (done) {
           var expectedData = require('./fixtures/ontime/tree');
-          ontimeRequester.tree = function(token, cb) {
+          ontimeRequester.tree = function (token, cb) {
             cb(JSON.stringify(expectedData));
           };
           agent
@@ -454,11 +454,11 @@ module.exports = function (app) {
         });
       });
 
-      describe('# [GET] ' + url + '/ontime/project', function () {
+      describe('# [GET] ' + url + '/ontime/items', function () {
         it('should get an error with token', function (done) {
-          ontimeRequester.project = invalidOntimeAPIResponse;
+          ontimeRequester.items = invalidOntimeAPIResponse;
           agent
-            .get(url + '/ontime/project')
+            .get(url + '/ontime/items')
             .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
             .expect(403)
             .expect('Content-Type', 'application/json; charset=utf-8')
@@ -473,12 +473,12 @@ module.exports = function (app) {
         });
 
         it('should get ontime tree items', function (done) {
-          var expectedData = require('./fixtures/ontime/project');
-          ontimeRequester.project = function(token, projectId, cb) {
+          var expectedData = require('./fixtures/ontime/items');
+          ontimeRequester.items = function (token, projectId, cb) {
             cb(JSON.stringify(expectedData));
           };
           agent
-            .get(url + '/ontime/project')
+            .get(url + '/ontime/items')
             .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
             .expect(200)
             .expect('Content-Type', 'application/json; charset=utf-8')
@@ -488,7 +488,17 @@ module.exports = function (app) {
               assert.strictEqual(result.code, 200);
               assert.isUndefined(result.error);
               assert.isUndefined(result.messageCode);
-
+              assert.isArray(result.items);
+              assert.strictEqual(result.items.length, 2);
+              result.items.forEach(function (item, index) {
+                assert.strictEqual(item.parent.id, expectedData.data[index].parent.id);
+                assert.strictEqual(item.parent_project.id, expectedData.data[index].parent_project.id);
+                assert.strictEqual(item.parent_project.name, expectedData.data[index].parent_project.name);
+                assert.strictEqual(item.parent_project.path, expectedData.data[index].parent_project.path);
+                assert.strictEqual(item.name, expectedData.data[index].name);
+                assert.strictEqual(item.description, expectedData.data[index].description);
+                assert.strictEqual(item.notes, expectedData.data[index].notes);
+              });
               done();
             });
         });
