@@ -40,7 +40,7 @@ function ensureAuthorized(req, res, next) {
     next();
   } else {
     log(req, 'No bearer header provided');
-    res.sendStatus(403);
+    response(res, 403, {}, "-3");
   }
 }
 

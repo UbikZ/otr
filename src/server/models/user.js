@@ -17,7 +17,7 @@ var schema = new mongoose.Schema({
     skype: {type: String, trim: true},
     location: {type: String, trim: true},
     organization: {type: mongoose.Schema.Types.ObjectId, ref: 'Organization'},
-    email: {type: String, index: {unique: true}},
+    email: {type: String, index: {unique: true}, require: true},
   },
 });
 

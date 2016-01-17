@@ -36,15 +36,20 @@ module.exports.controller = function (app, config) {
           userModel.name.firstname = userData.first_name;
           userModel.name.lastname = userData.last_name;
           userModel.save(function (err, user) {
-            user.identity.token = jwt.sign(user._id, otrConf.jwt_secret);
-            user.save(function (err, newUser) {
-              if (err) {
-                http.log(req, 'Internal error: check /sign-up -> create user -> save', err);
-                http.response(res, 500, {}, "-1", err);
-              } else {
-                http.response(res, 200, {user: newUser}, "1");
-              }
-            });
+            if (err) {
+              http.log(req, 'Internal error: check /sign-up -> create user -> save 1', err);
+              http.response(res, 500, {}, "-1", err);
+            } else {
+              user.identity.token = jwt.sign(user._id, otrConf.jwt_secret);
+              user.save(function (err, newUser) {
+                if (err) {
+                  http.log(req, 'Internal error: check /sign-up -> create user -> save 2', err);
+                  http.response(res, 500, {}, "-1", err);
+                } else {
+                  http.response(res, 200, {user: newUser}, "1");
+                }
+              });
+            }
           })
         }
       });
