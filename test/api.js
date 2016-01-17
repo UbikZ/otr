@@ -610,7 +610,7 @@ module.exports = function (app) {
             });
         });
 
-        var projectId;
+        var projectId, documentId;
         it('should create a new project in the organization', function (done) {
           var sentData = require('./fixtures/item/create-ok-1');
           sentData.organizationId = organizationId;
@@ -715,6 +715,27 @@ module.exports = function (app) {
               assert.strictEqual(result.item.name, sentData.name);
               assert.strictEqual(result.item.description, sentData.description);
               assert.isDefined(result.type);
+              documentId = result.item._id;
+              done();
+            });
+        });
+
+        it('should get an error because no "ontime_id" given (for version create)', function (done) {
+          var sentData = require('./fixtures/item/create-ko-1');
+          sentData.organizationId = organizationId;
+          sentData.parentId = documentId;
+          agent
+            .post(url + '/item/create')
+            .send(sentData)
+            .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+            .expect(404)
+            .expect('Content-Type', 'application/json; charset=utf-8')
+            .end(function (err, res) {
+              if (err) return done(err);
+              var result = res.body;
+              assert.strictEqual(result.code, 404);
+              assert.isUndefined(result.error);
+              assert.strictEqual(result.messageCode, "-7");
               done();
             });
         });
