@@ -10,7 +10,7 @@ var ontimeRequester = require('../src/server/controllers/helpers/ontime');
 
 // Mock external API
 ontimeRequester.requestToken = function (authObject, cb) {
-  var data = require('./fixtures/ot_signup.json');
+  var data = require('./fixtures/auth_signup.json');
   data.access_token += 'delta';
   cb(JSON.stringify(data));
 };
@@ -22,14 +22,14 @@ module.exports = function (app) {
 
   var tokenBearer, tokenOtBearer;
 
-  describe('> Application - ', function () {
-    it('   # should exist', function (done) {
+  describe('> Application', function () {
+    it('# should exist', function (done) {
       should.exist(app);
       done();
     });
 
-    describe('> Init API - ', function () {
-      describe('   # [GET] /', function () {
+    describe('> Init API', function () {
+      describe('# [GET] /', function () {
         it('returns index.html', function (done) {
           agent
             .get('/')
@@ -44,8 +44,8 @@ module.exports = function (app) {
       });
     });
 
-    describe('> Authentication API - ', function () {
-      describe('   # [POST] ' + url + '/sign-up', function () {
+    describe('> Authentication API', function () {
+      describe('# [POST] ' + url + '/sign-up', function () {
         it('when sign-up new user the first time', function (done) {
           var sentData = {username: 'test_stage', password: 'test_stage'};
           agent
@@ -55,7 +55,7 @@ module.exports = function (app) {
             .expect('Content-Type', 'application/json; charset=utf-8')
             .end(function (err, res) {
               if (err) return done(err);
-              var result = res.body, expectedData = require('./fixtures/ot_signup.json');
+              var result = res.body, expectedData = require('./fixtures/auth_signup.json');
               assert.strictEqual(result.code, 200);
               assert.strictEqual(result.error, undefined);
               assert.strictEqual(result.messageCode, "1");
@@ -80,7 +80,7 @@ module.exports = function (app) {
             .expect('Content-Type', 'application/json; charset=utf-8')
             .end(function (err, res) {
               if (err) return done(err);
-              var result = res.body, expectedData = require('./fixtures/ot_signup.json');
+              var result = res.body, expectedData = require('./fixtures/auth_signup.json');
               assert.strictEqual(result.code, 200);
               assert.strictEqual(result.error, undefined);
               assert.strictEqual(result.messageCode, "1");
@@ -100,8 +100,8 @@ module.exports = function (app) {
         });
       });
 
-      describe('   # [GET] ' + url + '/me', function () {
-        it('when request information on logged user', function(done) {
+      describe('# [GET] ' + url + '/me', function () {
+        it('when request information on logged user', function (done) {
           agent
             .get(url + '/me')
             .set('Authorization', 'Bearer ' + tokenBearer + " " + tokenOtBearer)
@@ -109,7 +109,7 @@ module.exports = function (app) {
             .expect('Content-Type', 'application/json; charset=utf-8')
             .end(function (err, res) {
               if (err) return done(err);
-              var result = res.body, expectedData = require('./fixtures/ot_signup.json');
+              var result = res.body, expectedData = require('./fixtures/auth_signup.json');
               assert.strictEqual(result.code, 200);
               assert.strictEqual(result.error, undefined);
               assert.isUndefined(result.messageCode);
@@ -124,28 +124,53 @@ module.exports = function (app) {
             });
         });
       });
+    });
 
-      describe('> User API - ', function () {
-        describe('   # [GET] ' + url + '/user', function () {
-          it('when request list of all users', function(done) {
-            agent
-              .get(url + '/user')
-              .set('Authorization', 'Bearer ' + tokenBearer + " " + tokenOtBearer)
-              .expect(200)
-              .expect('Content-Type', 'application/json; charset=utf-8')
-              .end(function (err, res) {
-                if (err) return done(err);
-                var result = res.body;
-                assert.isArray(result.users);
-                assert.strictEqual(result.users.length, 1);
-                done();
-              });
-          });
+    describe('> User API', function () {
+      describe('# [GET] ' + url + '/user', function () {
+        it('when request list of all users', function (done) {
+          agent
+            .get(url + '/user')
+            .set('Authorization', 'Bearer ' + tokenBearer + " " + tokenOtBearer)
+            .expect(200)
+            .expect('Content-Type', 'application/json; charset=utf-8')
+            .end(function (err, res) {
+              if (err) return done(err);
+              var result = res.body;
+              assert.isArray(result.users);
+              assert.strictEqual(result.users.length, 1);
+              done();
+            });
+        });
+      });
+
+      describe('# [POST] ' + url + '/user/update', function () {
+        it('when update current user', function (done) {
+          var sentData = require('./fixtures/user_update');
+          agent
+            .post(url + '/user/update')
+            .set('Authorization', 'Bearer ' + tokenBearer + " " + tokenOtBearer)
+            .send(sentData)
+            .expect(200)
+            .expect('Content-Type', 'application/json; charset=utf-8')
+            .end(function (err, res) {
+              if (err) return done(err);
+              var result = res.body;
+              assert.strictEqual(result.code, 200);
+              assert.strictEqual(result.error, undefined);
+              assert.strictEqual(result.messageCode, "11");
+              assert.isDefined(result.user);
+              assert.strictEqual(result.user.name.firstname, sentData.firstname);
+              assert.strictEqual(result.user.name.lastname, sentData.lastname);
+              assert.strictEqual(result.user.info.skype, sentData.skype);
+              assert.strictEqual(result.user.info.job, sentData.job);
+              done();
+            });
         });
       });
     });
 
-    after('   # should drop database', function (done) {
+    after('# should drop database', function (done) {
       if (process.env.NODE_ENV == 'staging') {
         mongoose.connection.db.dropDatabase(function (err) {
           if (err) throw err;
