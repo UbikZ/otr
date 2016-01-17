@@ -1,8 +1,5 @@
 {
-  "date": "2016-01-16 12:33:78",
-  "code": 200,
-  "data": {},
-  "ontime_user": {
+  "data": {
     "id": 1,
     "login_id": "test",
     "is_active": true,

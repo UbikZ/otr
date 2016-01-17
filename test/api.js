@@ -8,15 +8,9 @@ var config = require('../config');
 var moment = require('moment');
 var ontimeRequester = require('../src/server/controllers/helpers/ontime');
 
-// Mock external API
-function invalidRequestToken(authObject, cb) {
-  cb(JSON.stringify({}));
-}
-
-function validRequestToken(authObject, cb) {
-  var data = require('./fixtures/auth/signup');
-  data.access_token += 'delta';
-  cb(JSON.stringify(data));
+// Generic mock method
+function invalidOntimeAPIResponse(token, cb) {
+  cb(JSON.stringify(require('./fixtures/ontime/ko')));
 }
 
 // Start tests
@@ -67,7 +61,9 @@ module.exports = function (app) {
     describe('> Authentication API', function () {
       describe('# [POST] ' + url + '/sign-up', function () {
         it('should error on sign-up for bad user data', function (done) {
-          ontimeRequester.requestToken = invalidRequestToken;
+          ontimeRequester.requestToken = function (authObject, cb) {
+            cb(JSON.stringify({}));
+          };
           agent
             .post(url + '/sign-up')
             .send({})
@@ -83,8 +79,12 @@ module.exports = function (app) {
         });
 
         it('should sign-up new user the first time', function (done) {
-          ontimeRequester.requestToken = validRequestToken;
           var sentData = {username: 'test_stage', password: 'test_stage'};
+          var expectedData = require('./fixtures/auth/signup');
+          ontimeRequester.requestToken = function (authObject, cb) {
+            expectedData.access_token += 'delta';
+            cb(JSON.stringify(expectedData));
+          };
           agent
             .post(url + '/sign-up')
             .send(sentData)
@@ -92,7 +92,7 @@ module.exports = function (app) {
             .expect('Content-Type', 'application/json; charset=utf-8')
             .end(function (err, res) {
               if (err) return done(err);
-              var result = res.body, expectedData = require('./fixtures/auth/signup');
+              var result = res.body;
               assert.strictEqual(result.code, 200);
               assert.isUndefined(result.error);
               assert.strictEqual(result.messageCode, "1");
@@ -337,6 +337,73 @@ module.exports = function (app) {
         });
       });
     });
+
+    describe('> Ontime API', function () {
+      describe('# [POST] Request token generic error', function () {
+        it('should get an error for request token', function (done) {
+          ontimeRequester.requestToken = invalidOntimeAPIResponse;
+          agent
+            .post(url + '/sign-up')
+            .send({})
+            .expect(403)
+            .expect('Content-Type', 'application/json; charset=utf-8')
+            .end(function (err, res) {
+              if (err) return done(err);
+              var result = res.body;
+              assert.strictEqual(result.code, 403);
+              assert.isDefined(result.error);
+              assert.strictEqual(result.messageCode, "-3");
+              done();
+            });
+        });
+      });
+
+      describe('# [GET] ' + url + '/ontime/me', function () {
+        it('should get an error with token', function (done) {
+          ontimeRequester.me = invalidOntimeAPIResponse;
+          agent
+            .get(url + '/ontime/me')
+            .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+            .expect(403)
+            .expect('Content-Type', 'application/json; charset=utf-8')
+            .end(function (err, res) {
+              if (err) return done(err);
+              var result = res.body;
+              assert.strictEqual(result.code, 403);
+              assert.isDefined(result.error);
+              assert.strictEqual(result.messageCode, "-3");
+              done();
+            });
+        });
+
+        it('should get ontime user information', function (done) {
+          var expectedData = require('./fixtures/ontime/me');
+          ontimeRequester.me = function(token, cb) {
+            cb(JSON.stringify(expectedData));
+          };
+          agent
+            .get(url + '/ontime/me')
+            .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+            .expect(200)
+            .expect('Content-Type', 'application/json; charset=utf-8')
+            .end(function (err, res) {
+              if (err) return done(err);
+              var result = res.body;
+              assert.strictEqual(result.code, 200);
+              assert.isUndefined(result.error);
+              assert.isUndefined(result.messageCode);
+              assert.isDefined(result.ontime_user);
+              ['id', 'login_id', 'is_active', 'is_locked', 'last_login_date_time', 'created_date_time',
+                'culture_info', 'first_name', 'last_name', 'email', 'is_admin']
+                .forEach(function (item) {
+                  assert.strictEqual(result.ontime_user[item], expectedData.data[item]);
+                });
+              done();
+            });
+        });
+      });
+    });
+
 
     after('# should drop database', function (done) {
       if (process.env.NODE_ENV == 'staging') {
