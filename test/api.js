@@ -254,6 +254,35 @@ module.exports = function (app) {
               done();
             });
         });
+
+        it('should update organization', function (done) {
+          var sentData = require('./fixtures/organization/update');
+          sentData._id = organizationId;
+          agent
+            .post(url + '/organization/edit')
+            .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+            .send(sentData)
+            .expect(200)
+            .expect('Content-Type', 'application/json; charset=utf-8')
+            .end(function (err, res) {
+              if (err) return done(err);
+              var result = res.body;
+              assert.strictEqual(result.code, 200);
+              assert.isUndefined(result.error);
+              assert.strictEqual(result.messageCode, "6");
+              assert.isDefined(result.organization);
+              assert.strictEqual(result.organization.name, sentData.name);
+              assert.strictEqual(result.organization.description, sentData.description);
+              assert.strictEqual(result.organization.active, sentData.active);
+              assert.strictEqual(result.organization.logo, sentData.logo);
+              assert.strictEqual(result.organization.url, sentData.url);
+              assert.isDefined(result.organization.creation);
+              assert.isDefined(result.organization.creation.user);
+              assert.isDefined(result.organization.update);
+              assert.isDefined(result.organization.update.user);
+              done();
+            });
+        });
       });
 
       describe('# [GET] ' + url + '/organization', function () {
