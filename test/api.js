@@ -505,6 +505,113 @@ module.exports = function (app) {
       });
     });
 
+    describe('> Item API', function () {
+      var organizationId;
+      before('should create new organization', function (done) {
+        var sentData = require('./fixtures/organization/create');
+        agent
+          .post(url + '/organization/edit')
+          .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+          .send(sentData)
+          .expect(200)
+          .expect('Content-Type', 'application/json; charset=utf-8')
+          .end(function (err, res) {
+            if (err) return done(err);
+            var result = res.body;
+            assert.strictEqual(result.code, 200);
+            assert.isUndefined(result.error);
+            assert.strictEqual(result.messageCode, "5");
+            assert.isDefined(result.organization);
+            assert.strictEqual(result.organization.name, sentData.name);
+            assert.strictEqual(result.organization.description, sentData.description);
+            assert.strictEqual(result.organization.active, sentData.active);
+            assert.strictEqual(result.organization.logo, sentData.logo);
+            assert.strictEqual(result.organization.url, sentData.url);
+            assert.isDefined(result.organization.creation);
+            assert.isDefined(result.organization.creation.user);
+            assert.isDefined(result.organization.update);
+            assert.isDefined(result.organization.update.user);
+            organizationId = result.organization._id;
+            done();
+          });
+      });
+
+      describe('# [POST] ' + url + '/item/create', function () {
+        it('should get an error because no organization identifier given', function (done) {
+          var sentData = {};
+          agent
+            .post(url + '/item/create')
+            .send(sentData)
+            .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+            .expect(404)
+            .expect('Content-Type', 'application/json; charset=utf-8')
+            .end(function (err, res) {
+              if (err) return done(err);
+              var result = res.body;
+              assert.strictEqual(result.code, 404);
+              assert.isUndefined(result.error);
+              assert.strictEqual(result.messageCode, "-1");
+              done();
+            });
+        });
+
+        it('should get an error because bad organization identifier-type given', function (done) {
+          var sentData = {organizationId: 'badIdea#joke'};
+          agent
+            .post(url + '/item/create')
+            .send(sentData)
+            .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+            .expect(500)
+            .expect('Content-Type', 'application/json; charset=utf-8')
+            .end(function (err, res) {
+              if (err) return done(err);
+              var result = res.body;
+              assert.strictEqual(result.code, 500);
+              assert.isDefined(result.error);
+              assert.strictEqual(result.messageCode, "-1");
+              done();
+            });
+        });
+
+        it('should get an error because bad (not known) organization identifier given', function (done) {
+          var sentData = {organizationId: '569a498efd2e11a55a2822f4'};
+          agent
+            .post(url + '/item/create')
+            .send(sentData)
+            .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+            .expect(404)
+            .expect('Content-Type', 'application/json; charset=utf-8')
+            .end(function (err, res) {
+              if (err) return done(err);
+              var result = res.body;
+              assert.strictEqual(result.code, 404);
+              assert.isUndefined(result.error);
+              assert.strictEqual(result.messageCode, "-5");
+              done();
+            });
+        });
+
+        it('should get an error because bad not parentId / "project" type given', function (done) {
+          var sentData = require('./fixtures/item/create-ko-1');
+          sentData.organizationId = organizationId;
+          agent
+            .post(url + '/item/create')
+            .send(sentData)
+            .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+            .expect(404)
+            .expect('Content-Type', 'application/json; charset=utf-8')
+            .end(function (err, res) {
+              if (err) return done(err);
+              var result = res.body;
+              assert.strictEqual(result.code, 404);
+              assert.isUndefined(result.error);
+              assert.strictEqual(result.messageCode, "-7");
+              done();
+            });
+        });
+      });
+    });
+
     after('# should drop database', function (done) {
       if (process.env.NODE_ENV == 'staging') {
         mongoose.connection.db.dropDatabase(function (err) {
