@@ -1,0 +1,30 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "name": "PROJECT_1"
+    },
+    {
+      "id": 2,
+      "name": "PROJECT_2"
+    },
+    {
+      "id": 3,
+      "name": "PROJECT_3",
+      "children": [
+        {
+          "id": 30,
+          "name": "PROJECT_3.1"
+        },
+        {
+          "id": 31,
+          "name": "PROJECT_3.2"
+        },
+        {
+          "id": 32,
+          "name": "PROJECT_3.3"
+        }
+      ]
+    }
+  ]
+}
