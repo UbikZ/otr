@@ -287,7 +287,7 @@ module.exports.controller = function (app, config) {
             } else if (data.type == "project") {
               modelItem = new Project(item);
               organization.projects.push(modelItem);
-              saveOrganization(res, req, data, organization, modelItem, 2);
+              saveOrganization(res, req, data, organization, modelItem, "2");
             } else {
               http.log(req, 'Error: item creation failed (data.parentId is undefined).');
               http.response(res, 404, {}, "-7");
