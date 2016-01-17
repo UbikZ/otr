@@ -139,11 +139,11 @@ module.exports.controller = function (app, config) {
                   if (data.type == "project") {
                     modelItem = new Project(item);
                     element.projects.push(modelItem);
-                    saveOrganization(res, req, data, organization, modelItem, 2);
+                    saveOrganization(res, req, data, organization, modelItem, "2");
                   } else if (data.type == "document") {
                     modelItem = new Document(item);
                     element.documents.push(modelItem);
-                    saveOrganization(res, req, data, organization, modelItem, 2);
+                    saveOrganization(res, req, data, organization, modelItem, "2");
                   } else if (data.type == "version") {
                     if (data.ontimeId != undefined) {
                       modelItem = new Version(item);
@@ -264,7 +264,7 @@ module.exports.controller = function (app, config) {
                           modelItem.entries = elements;
                           modelItem.setting = new Setting(mapping.settingDtoToDal(undefined, data.setting));
                           element.versions.push(modelItem);
-                          saveOrganization(res, req, data, organization, modelItem, 2);
+                          saveOrganization(res, req, data, organization, modelItem, "2");
                         } else {
                           http.log(req, 'Ontime Error: issue during OnTime "/items" request');
                           http.response(res, 500, {}, "-1");
