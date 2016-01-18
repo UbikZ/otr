@@ -720,7 +720,7 @@ module.exports = function (app) {
             });
         });
 
-        it('should get an error because no "ontime_id" given (for version create)', function (done) {
+        it('should get an error because no "ontimeId" given (for version create)', function (done) {
           var sentData = require('./fixtures/item/create-ko-1');
           sentData.organizationId = organizationId;
           sentData.parentId = documentId;
@@ -736,6 +736,86 @@ module.exports = function (app) {
               assert.strictEqual(result.code, 404);
               assert.isUndefined(result.error);
               assert.strictEqual(result.messageCode, "-7");
+              done();
+            });
+        });
+
+        it('should get an error because ontimeRequester.items throw an error', function (done) {
+          var sentData = Object.assign(
+            require('./fixtures/item/create-ok-3'),
+            {organizationId: organizationId, parentId: documentId, ontimeId: 123}
+          );
+          ontimeRequester.items = function(token, ontimeId, cb) {
+            cb(JSON.stringify(require('./fixtures/ontime/ko')));
+          };
+          agent
+            .post(url + '/item/create')
+            .send(sentData)
+            .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+            .expect(403)
+            .expect('Content-Type', 'application/json; charset=utf-8')
+            .end(function (err, res) {
+              if (err) return done(err);
+              var result = res.body;
+              assert.strictEqual(result.code, 403);
+              assert.isDefined(result.error);
+              assert.strictEqual(result.messageCode, "-3");
+              done();
+            });
+        });
+
+        it('should get an error because ontimeRequester.items does nothing', function (done) {
+          var sentData = Object.assign(
+            require('./fixtures/item/create-ok-3'),
+            {organizationId: organizationId, parentId: documentId, ontimeId: 123}
+          );
+          ontimeRequester.items = function(token, ontimeId, cb) { cb(JSON.stringify({})); };
+          agent
+            .post(url + '/item/create')
+            .send(sentData)
+            .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+            .expect(500)
+            .expect('Content-Type', 'application/json; charset=utf-8')
+            .end(function (err, res) {
+              if (err) return done(err);
+              var result = res.body;
+              assert.strictEqual(result.code, 500);
+              assert.isUndefined(result.error);
+              assert.strictEqual(result.messageCode, "-1");
+              done();
+            });
+        });
+
+        it('should create a new version in the document (with no settings)', function (done) {
+          var sentData = Object.assign(
+            require('./fixtures/item/create-ok-3'),
+            {organizationId: organizationId, parentId: documentId, ontimeId: 123}
+          );
+          var expectedData = require('./fixtures/ontime/items');
+          ontimeRequester.items = function(token, ontimeId, cb) {
+            cb(JSON.stringify(expectedData));
+          };
+          agent
+            .post(url + '/item/create')
+            .send(sentData)
+            .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+            .expect(200)
+            .expect('Content-Type', 'application/json; charset=utf-8')
+            .end(function (err, res) {
+              if (err) return done(err);
+              var result = res.body;
+              assert.strictEqual(result.code, 200);
+              assert.isUndefined(result.error);
+              assert.strictEqual(result.messageCode, "2");
+              assert.isDefined(result.organization);
+              assert.strictEqual(result.organization.projects.length, 1);
+              assert.strictEqual(result.organization.projects[0].projects.length, 1);
+              assert.strictEqual(result.organization.projects[0].projects[0].documents.length, 1);
+              var versions = result.organization.projects[0].projects[0].documents[0].versions;
+              assert.strictEqual(versions.length, 1);
+              assert.isArray(versions[0].entries);
+              assert(versions[0].entries.length > 0);
+              assert.isUndefined(versions.setting);
               done();
             });
         });

@@ -260,7 +260,6 @@ module.exports.controller = function (app, config) {
                             elements[indexOfParentProject].children[indexOfProject].estimate.otr_high +=
                               item.custom_fields != undefined ? item.custom_fields.custom_259 : 0;
                           });
-
                           modelItem.entries = elements;
                           modelItem.setting = new Setting(mapping.settingDtoToDal(undefined, data.setting));
                           element.versions.push(modelItem);
