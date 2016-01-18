@@ -47,15 +47,6 @@ function tree(accessToken, cb) {
   req(url, cb);
 }
 
-function project(accessToken, projectId, cb) {
-  var url = ontimeConfig.ontime_url + '/api/v5/projects/' + projectId + '?' +
-    qs.stringify({
-      'access_token': accessToken,
-    });
-
-  req(url, cb);
-}
-
 function items(accessToken, projectId, cb) {
   var url = ontimeConfig.ontime_url + '/api/v5/features/?' +
     qs.stringify({
@@ -94,6 +85,5 @@ module.exports = {
   requestToken: requestToken,
   me: me,
   tree: tree,
-  project: project,
   items: items,
 };
