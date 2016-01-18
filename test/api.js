@@ -1200,6 +1200,98 @@ module.exports = function (app) {
             });
         });
       });
+
+      describe('# [DELETE] ' + url + '/item', function () {
+        it('should get an error because no organization identifier given', function (done) {
+          var sentData = {};
+          agent
+            .post(url + '/item/delete')
+            .send(sentData)
+            .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+            .expect(404)
+            .expect('Content-Type', 'application/json; charset=utf-8')
+            .end(function (err, res) {
+              if (err) return done(err);
+              var result = res.body;
+              assert.strictEqual(result.code, 404);
+              assert.isUndefined(result.error);
+              assert.strictEqual(result.messageCode, "-1");
+              done();
+            });
+        });
+
+        it('should get an error because bad organization identifier-type given', function (done) {
+          var sentData = {organizationId: 'badIdea#joke'};
+          agent
+            .post(url + '/item/delete')
+            .send(sentData)
+            .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+            .expect(500)
+            .expect('Content-Type', 'application/json; charset=utf-8')
+            .end(function (err, res) {
+              if (err) return done(err);
+              var result = res.body;
+              assert.strictEqual(result.code, 500);
+              assert.isDefined(result.error);
+              assert.strictEqual(result.messageCode, "-1");
+              done();
+            });
+        });
+
+        it('should get an error because bad (not known) organization identifier given', function (done) {
+          var sentData = {organizationId: '569a498efd2e11a55a2822f4'};
+          agent
+            .post(url + '/item/delete')
+            .send(sentData)
+            .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+            .expect(404)
+            .expect('Content-Type', 'application/json; charset=utf-8')
+            .end(function (err, res) {
+              if (err) return done(err);
+              var result = res.body;
+              assert.strictEqual(result.code, 404);
+              assert.isUndefined(result.error);
+              assert.strictEqual(result.messageCode, "-5");
+              done();
+            });
+        });
+
+        it('should get an error because no "data.itemId" given', function (done) {
+          var sentData = {organizationId: organizationId};
+          agent
+            .post(url + '/item/delete')
+            .send(sentData)
+            .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+            .expect(404)
+            .expect('Content-Type', 'application/json; charset=utf-8')
+            .end(function (err, res) {
+              if (err) return done(err);
+              var result = res.body;
+              assert.strictEqual(result.code, 404);
+              assert.isUndefined(result.error);
+              assert.strictEqual(result.messageCode, "-6");
+              done();
+            });
+        });
+
+        it('should get an error because bad "data.itemId" given', function (done) {
+          var sentData = {organizationId: organizationId, itemId: '009a498efd2e22a55a2822f4'};
+          agent
+            .post(url + '/item/delete')
+            .send(sentData)
+            .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+            .expect(404)
+            .expect('Content-Type', 'application/json; charset=utf-8')
+            .end(function (err, res) {
+              if (err) return done(err);
+              var result = res.body;
+              assert.strictEqual(result.code, 404);
+              assert.isUndefined(result.error);
+              assert.strictEqual(result.messageCode, "-6");
+              done();
+            });
+        });
+      });
     });
 
     after('# should drop database', function (done) {
