@@ -16,8 +16,7 @@
     "scrummasterPrice": 900,
     "showDev": true,
     "showManagement": true,
-    "weekPerIteration": 2
-
-
+    "weekPerIteration": 2,
+    "showDate": true
   }
 }
