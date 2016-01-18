@@ -1157,6 +1157,26 @@ module.exports = function (app) {
             });
         });
 
+        it('should get an item (version) with modePreview', function (done) {
+          agent
+            .get(url + '/item?modePreview=1&organizationId=' + organizationId + '&itemId=' + versionId)
+            .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+            .expect(200)
+            .expect('Content-Type', 'application/json; charset=utf-8')
+            .end(function (err, res) {
+              if (err) return done(err);
+              var result = res.body;
+              assert.strictEqual(result.code, 200);
+              assert.isUndefined(result.error);
+              assert.isUndefined(result.organization);
+              assert.isDefined(result.item);
+              assert.isDefined(result.item.entries);
+              assert.isDefined(result.documentName);
+              assert.isDefined(result.organizationName);
+              done();
+            });
+        });
+
         it('should get an item (version) with lazy loading', function (done) {
           agent
             .get(url + '/item?lazy=1&organizationId=' + organizationId + '&itemId=' + versionId)
