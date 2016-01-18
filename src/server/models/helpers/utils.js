@@ -10,19 +10,6 @@ Array.prototype.id = function (elementId) {
   return result.length == 1 ? result[0] : undefined;
 };
 
-function findRecursivelyById(parentElement, attributeName, elementId, cb) {
-  if (parentElement[attributeName] != undefined) {
-    var element = parentElement[attributeName].id(elementId);
-    if (element == undefined) {
-      parentElement[attributeName].forEach(function (subElement) {
-        findRecursivelyById(subElement, attributeName, elementId, cb);
-      });
-    } else {
-      cb(element);
-    }
-  }
-}
-
 function walkRecursively(element, cb) {
   var elements = [];
   if (element != undefined) {
@@ -79,7 +66,6 @@ function findSpecificRecursivelyById(parentElement, elementId, cb, prevEl) {
 }
 
 module.exports = {
-  findRecursivelyById: findRecursivelyById,
   findSpecificRecursivelyById: findSpecificRecursivelyById,
   walkRecursively: walkRecursively,
 };
