@@ -1071,6 +1071,22 @@ module.exports = function (app) {
               done();
             });
         });
+
+        it('should get an error because unknown item identifier given', function (done) {
+          agent
+            .get(url + '/item?organizationId=' + organizationId + '&itemId=badIdea#joke')
+            .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+            .expect(404)
+            .expect('Content-Type', 'application/json; charset=utf-8')
+            .end(function (err, res) {
+              if (err) return done(err);
+              var result = res.body;
+              assert.strictEqual(result.code, 404);
+              assert.isUndefined(result.error);
+              assert.strictEqual(result.messageCode, "-6");
+              done();
+            });
+        });
       });
     });
 
