@@ -46,7 +46,7 @@ function walkRecursively(element, cb) {
   }
 }
 
-function findSpecificRecursivelyById(parentElement, elementId, cb) {
+function findSpecificRecursivelyById(parentElement, elementId, cb, prevEl) {
   var type;
   if (parentElement.projects != undefined) {
     var element = parentElement.projects.id(elementId);
@@ -63,10 +63,16 @@ function findSpecificRecursivelyById(parentElement, elementId, cb) {
         });
       }
     }
-    if (element == undefined) {
-      parentElement.projects.forEach(function (subElement) {
-        findSpecificRecursivelyById(subElement, elementId, cb);
-      });
+    if (element == undefined) {
+      if (parentElement.projects != undefined && parentElement.projects.length > 0) {
+        parentElement.projects.forEach(function (subElement) {
+          findSpecificRecursivelyById(subElement, elementId, cb, parentElement);
+        });
+      } else {
+        cb();
+      }
+
+
     } else {
       cb(element, parentElement, type);
     }

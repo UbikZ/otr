@@ -327,7 +327,7 @@ module.exports.controller = function (app, config) {
                 if (element != undefined) {
                   element = Object.assign(element, item);
                   data.type = element.projects == undefined ? 'document' : 'project';
-                  saveOrganization(res, req, data, organization, element, 3);
+                  saveOrganization(res, req, data, organization, element, "3");
                 } else {
                   http.log(req, 'Error: item not found (data._id = ' + data._id + ').');
                   http.response(res, 404, {}, "-8");

@@ -506,7 +506,7 @@ module.exports = function (app) {
     });
 
     describe('> Item API', function () {
-      var organizationId;
+      var organizationId, projectId, documentId;
       before('should create new organization', function (done) {
         var sentData = require('./fixtures/organization/create');
         agent
@@ -610,7 +610,6 @@ module.exports = function (app) {
             });
         });
 
-        var projectId, documentId;
         it('should create a new project in the organization', function (done) {
           var sentData = require('./fixtures/item/create-ok-1');
           sentData.organizationId = organizationId;
@@ -745,7 +744,7 @@ module.exports = function (app) {
             require('./fixtures/item/create-ok-3'),
             {organizationId: organizationId, parentId: documentId, ontimeId: 123}
           );
-          ontimeRequester.items = function(token, ontimeId, cb) {
+          ontimeRequester.items = function (token, ontimeId, cb) {
             cb(JSON.stringify(require('./fixtures/ontime/ko')));
           };
           agent
@@ -769,7 +768,9 @@ module.exports = function (app) {
             require('./fixtures/item/create-ok-3'),
             {organizationId: organizationId, parentId: documentId, ontimeId: 123}
           );
-          ontimeRequester.items = function(token, ontimeId, cb) { cb(JSON.stringify({})); };
+          ontimeRequester.items = function (token, ontimeId, cb) {
+            cb(JSON.stringify({}));
+          };
           agent
             .post(url + '/item/create')
             .send(sentData)
@@ -792,7 +793,7 @@ module.exports = function (app) {
             {organizationId: organizationId, parentId: documentId, ontimeId: 123}
           );
           var expectedData = require('./fixtures/ontime/items');
-          ontimeRequester.items = function(token, ontimeId, cb) {
+          ontimeRequester.items = function (token, ontimeId, cb) {
             cb(JSON.stringify(expectedData));
           };
           agent
@@ -877,7 +878,7 @@ module.exports = function (app) {
         });
 
         it('should get an error because bad not parentId / "project" type given', function (done) {
-          var sentData = require('./fixtures/item/update-ko-1');
+          var sentData = require('./fixtures/item/update-ok-1');
           sentData.organizationId = organizationId;
           agent
             .post(url + '/item/update')
@@ -891,6 +892,71 @@ module.exports = function (app) {
               assert.strictEqual(result.code, 404);
               assert.isUndefined(result.error);
               assert.strictEqual(result.messageCode, "-8");
+              done();
+            });
+        });
+
+        it('should get an error because no "data._id" given', function (done) {
+          var sentData = Object.assign(require('./fixtures/item/update-ok-1'), {organizationId: organizationId});
+          agent
+            .post(url + '/item/update')
+            .send(sentData)
+            .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+            .expect(404)
+            .expect('Content-Type', 'application/json; charset=utf-8')
+            .end(function (err, res) {
+              if (err) return done(err);
+              var result = res.body;
+              assert.strictEqual(result.code, 404);
+              assert.isUndefined(result.error);
+              assert.strictEqual(result.messageCode, "-8");
+              done();
+            });
+        });
+
+        it('should get an error because bad "data._id" given', function (done) {
+          var sentData = Object.assign(
+            require('./fixtures/item/update-ok-1'),
+            {organizationId: organizationId, _id: '569a498efd2e22a55a2822f4'}
+          );
+          agent
+            .post(url + '/item/update')
+            .send(sentData)
+            .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+            .expect(404)
+            .expect('Content-Type', 'application/json; charset=utf-8')
+            .end(function (err, res) {
+              if (err) return done(err);
+              var result = res.body;
+              assert.strictEqual(result.code, 404);
+              assert.isUndefined(result.error);
+              assert.strictEqual(result.messageCode, "-8");
+              done();
+            });
+        });
+
+        it('should update an item (generic way for projects, documents and versions)', function (done) {
+          var expectedData = require('./fixtures/item/update-ok-1');
+          var sentData = Object.assign(expectedData, {organizationId: organizationId, _id: documentId});
+          agent
+            .post(url + '/item/update')
+            .send(sentData)
+            .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+            .expect(200)
+            .expect('Content-Type', 'application/json; charset=utf-8')
+            .end(function (err, res) {
+              if (err) return done(err);
+              var result = res.body;
+              assert.strictEqual(result.code, 200);
+              assert.isUndefined(result.error);
+              assert.strictEqual(result.messageCode, "3");
+              assert.isDefined(result.organization);
+              assert.strictEqual(result.organization.projects.length, 1);
+              assert.strictEqual(result.organization.projects[0].projects.length, 1);
+              assert.strictEqual(result.organization.projects[0].projects[0].documents.length, 1);
+              var document = result.organization.projects[0].projects[0].documents[0];
+              assert.strictEqual(document.name, expectedData.name);
+              assert.strictEqual(document.description, expectedData.description);
               done();
             });
         });
