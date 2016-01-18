@@ -18,7 +18,7 @@ if (process.env.NODE_ENV != 'staging') {
 
 transports.push(new winston.transports.File({
   level: 'info',
-  filename: config.path.logs + '/' + config.env.current + '.otr.' + moment().format('YYYY-MM-DD') + '.0.log',
+  filename: config.path.logs + '/' + process.env.NODE_ENV + '.otr.' + moment().format('YYYY-MM-DD') + '.0.log',
   handleExceptions: true,
   json: json,
   maxsize: 5242880, //5MB
