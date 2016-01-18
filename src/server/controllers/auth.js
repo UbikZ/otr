@@ -20,7 +20,7 @@ module.exports.controller = function (app, config) {
           http.response(res, 500, {}, "-1", err);
         } else if (user) {
           user.identity.ontime_token = userData.access_token;
-          User.update({_id: user._id}, user, {}, function (err, raw) {
+          User.update({_id: user._id}, user, {}).exec(function (err, raw) {
             if (err) {
               http.log(req, 'Internal error: check /sign-up -> update user -> save', err);
               http.response(res, 500, {}, "-1", err);
@@ -31,24 +31,17 @@ module.exports.controller = function (app, config) {
         } else {
           var userModel = new User();
           userModel.identity.ontime_token = userData.access_token;
+          userModel.identity.token = jwt.sign(userModel._id, otrConf.jwt_secret);
           userModel.info.email = userData.email;
           userModel.name.username = req.body.username;
           userModel.name.firstname = userData.first_name;
           userModel.name.lastname = userData.last_name;
-          userModel.save(function (err, user) {
+          User.update({_id: userModel._id}, userModel, {upsert: true}).exec(function (err, raw) {
             if (err) {
               http.log(req, 'Internal error: check /sign-up -> create user -> save 1', err);
               http.response(res, 500, {}, "-1", err);
             } else {
-              user.identity.token = jwt.sign(user._id, otrConf.jwt_secret);
-              user.save(function (err, newUser) {
-                if (err) {
-                  http.log(req, 'Internal error: check /sign-up -> create user -> save 2', err);
-                  http.response(res, 500, {}, "-1", err);
-                } else {
-                  http.response(res, 200, {user: newUser}, "1");
-                }
-              });
+              http.response(res, 200, {user: userModel}, "1");
             }
           })
         }

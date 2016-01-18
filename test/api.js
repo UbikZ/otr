@@ -8,6 +8,8 @@ var config = require('../config');
 var moment = require('moment');
 var OrganizationModel = require('../src/server/models/organization');
 var ontimeRequester = require('../src/server/controllers/helpers/ontime');
+var sinon = require('sinon');
+require('sinon-mongoose');
 
 // Generic mocks methods
 function invalidOntimeAPIResponse() {
@@ -30,6 +32,18 @@ function internalErrorOntimeAPIResponse() {
   cb(JSON.stringify({}));
 }
 
+// Mock Stub Mongoose Model
+function mock(model, method, callback) {
+  var stub = sinon.stub(model, method).returns({
+    lean: function () {
+      return this;
+    },
+    exec: function (cb) {
+      cb({error: 'error'});
+    },
+  });
+  callback(stub);
+}
 
 // Start tests
 module.exports = function (app) {
@@ -78,7 +92,7 @@ module.exports = function (app) {
 
       describe('> Authentication API', function () {
         describe('# [POST] ' + url + '/sign-up', function () {
-          it('should error on sign-up for bad user data', function (done) {
+          it('should get an error on sign-up for bad user data', function (done) {
             ontimeRequester.requestToken = function (authObject, cb) {
               cb(JSON.stringify({}));
             };
@@ -94,6 +108,58 @@ module.exports = function (app) {
                 assert.strictEqual(result.messageCode, "-1");
                 done();
               });
+          });
+
+          it('should get an internal error on sign-up (mongo fail)', function (done) {
+            var sentData = {username: 'test_stage', password: 'test_stage'};
+            var expectedData = require('./fixtures/auth/signup');
+            ontimeRequester.requestToken = function (authObject, cb) {
+              expectedData.access_token += 'delta';
+              cb(JSON.stringify(expectedData));
+            };
+
+            mock(mongoose.model('User'), "findOne", function (stub) {
+              agent
+                .post(url + '/sign-up')
+                .send(sentData)
+                .expect(500)
+                .expect('Content-Type', 'application/json; charset=utf-8')
+                .end(function (err, res) {
+                  if (err) return done(err);
+                  var result = res.body;
+                  assert.strictEqual(result.code, 500);
+                  assert.strictEqual(result.messageCode, "-1");
+                  assert.isDefined(result.error);
+                  stub.restore();
+                  done();
+                });
+            });
+          });
+
+          it('should get an internal error on the create (mongo fail)', function (done) {
+            var sentData = {username: 'test_stage', password: 'test_stage'};
+            var expectedData = require('./fixtures/auth/signup');
+            ontimeRequester.requestToken = function (authObject, cb) {
+              expectedData.access_token += 'delta';
+              cb(JSON.stringify(expectedData));
+            };
+
+            mock(mongoose.model('User'), "update", function (stub) {
+              agent
+                .post(url + '/sign-up')
+                .send(sentData)
+                .expect(500)
+                .expect('Content-Type', 'application/json; charset=utf-8')
+                .end(function (err, res) {
+                  if (err) return done(err);
+                  var result = res.body;
+                  assert.strictEqual(result.code, 500);
+                  assert.strictEqual(result.messageCode, "-1");
+                  assert.isDefined(result.error);
+                  stub.restore();
+                  done();
+                });
+            });
           });
 
           it('should sign-up new user the first time', function (done) {
@@ -124,6 +190,26 @@ module.exports = function (app) {
                 tokenOtBearer = result.user.identity.ontime_token;
                 done();
               });
+          });
+
+          it('should get an internal error on sign-up same user the others times (mongo fail)', function (done) {
+            var sentData = {username: 'test_stage', password: 'test_stage'};
+            mock(mongoose.model('User'), 'update', function (stub) {
+              agent
+                .post(url + '/sign-up')
+                .send(sentData)
+                .expect(500)
+                .expect('Content-Type', 'application/json; charset=utf-8')
+                .end(function (err, res) {
+                  if (err) return done(err);
+                  var result = res.body;
+                  assert.strictEqual(result.code, 500);
+                  assert.strictEqual(result.messageCode, "-1");
+                  assert.isDefined(result.error);
+                  stub.restore();
+                  done();
+                });
+            });
           });
 
           it('should sign-up same user the others times', function (done) {
@@ -159,6 +245,41 @@ module.exports = function (app) {
           it('should get error on request information for logged user (bad token)', function (done) {
             agent
               .get(url + '/me')
+              .set('Authorization', 'Bearer bad_token ' + tokenOtBearer)
+              .expect(404)
+              .expect('Content-Type', 'application/json; charset=utf-8')
+              .end(function (err, res) {
+                if (err) return done(err);
+                var result = res.body;
+                assert.strictEqual(result.code, 404);
+                assert.isUndefined(result.error);
+                assert.strictEqual(result.messageCode, "-3");
+                done();
+              });
+          });
+
+          it('should get an internal error on request information for logged user (mongo fail)', function (done) {
+            mock(mongoose.model('User'), 'findOne', function(stub) {
+              agent
+                .get(url + '/me')
+                .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+                .expect(500)
+                .expect('Content-Type', 'application/json; charset=utf-8')
+                .end(function (err, res) {
+                  if (err) return done(err);
+                  var result = res.body;
+                  assert.strictEqual(result.code, 500);
+                  assert.isDefined(result.error);
+                  assert.strictEqual(result.messageCode, "-1");
+                  stub.restore();
+                  done();
+                });
+            });
+          });
+
+          it('should request information for logged user', function (done) {
+            agent
+              .get(url + '/me')
               .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
               .expect(200)
               .expect('Content-Type', 'application/json; charset=utf-8')
@@ -175,22 +296,6 @@ module.exports = function (app) {
                 assert.isDefined(result.user.name.username);
                 assert.strictEqual(result.user.identity.ontime_token, tokenOtBearer);
                 assert.strictEqual(result.user.identity.token, tokenBearer);
-                done();
-              });
-          });
-
-          it('should request information for logged user', function (done) {
-            agent
-              .get(url + '/me')
-              .set('Authorization', 'Bearer bad_token ' + tokenOtBearer)
-              .expect(404)
-              .expect('Content-Type', 'application/json; charset=utf-8')
-              .end(function (err, res) {
-                if (err) return done(err);
-                var result = res.body;
-                assert.strictEqual(result.code, 404);
-                assert.isUndefined(result.error);
-                assert.strictEqual(result.messageCode, "-3");
                 done();
               });
           });
