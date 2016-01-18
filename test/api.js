@@ -6,6 +6,7 @@ var should = require('chai').should();
 var assert = require('chai').assert;
 var config = require('../config');
 var moment = require('moment');
+var OrganizationModel = require('../src/server/models/organization');
 var ontimeRequester = require('../src/server/controllers/helpers/ontime');
 
 // Generic mock method
@@ -506,7 +507,7 @@ module.exports = function (app) {
     });
 
     describe('> Item API', function () {
-      var organizationId, projectId, documentId;
+      var organizationId, projectId, documentId, versionId;
       before('should create new organization', function (done) {
         var sentData = require('./fixtures/organization/create');
         agent
@@ -876,6 +877,7 @@ module.exports = function (app) {
                 assert.strictEqual(element.iteration.day_per_week, expectedData.setting.dayPerWeek);
                 assert.strictEqual(element.iteration.week_per_iteration, expectedData.setting.weekPerIteration);
               });
+              versionId = result.item._id;
               done();
             });
         });
@@ -1084,6 +1086,72 @@ module.exports = function (app) {
               assert.strictEqual(result.code, 404);
               assert.isUndefined(result.error);
               assert.strictEqual(result.messageCode, "-6");
+              done();
+            });
+        });
+
+        it('should get an item (project)', function (done) {
+          agent
+            .get(url + '/item?organizationId=' + organizationId + '&itemId=' + projectId)
+            .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+            .expect(200)
+            .expect('Content-Type', 'application/json; charset=utf-8')
+            .end(function (err, res) {
+              if (err) return done(err);
+              var result = res.body;
+              assert.strictEqual(result.code, 200);
+              assert.isUndefined(result.error);
+              assert.isDefined(result.organization);
+              assert.isDefined(result.item);
+              assert.isUndefined(result.documentName);
+              assert.isUndefined(result.organizationName);
+              OrganizationModel.findDeepAttributeById(result.organization, projectId, function(element) {
+                assert.isDefined(element);
+              });
+              done();
+            });
+        });
+
+        it('should get an item (document)', function (done) {
+          agent
+            .get(url + '/item?organizationId=' + organizationId + '&itemId=' + documentId)
+            .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+            .expect(200)
+            .expect('Content-Type', 'application/json; charset=utf-8')
+            .end(function (err, res) {
+              if (err) return done(err);
+              var result = res.body;
+              assert.strictEqual(result.code, 200);
+              assert.isUndefined(result.error);
+              assert.isDefined(result.organization);
+              assert.isDefined(result.item);
+              assert.isUndefined(result.documentName);
+              assert.isUndefined(result.organizationName);
+              OrganizationModel.findDeepAttributeById(result.organization, documentId, function(element) {
+                assert.isDefined(element);
+              });
+              done();
+            });
+        });
+
+        it('should get an item (version)', function (done) {
+          agent
+            .get(url + '/item?organizationId=' + organizationId + '&itemId=' + versionId)
+            .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+            .expect(200)
+            .expect('Content-Type', 'application/json; charset=utf-8')
+            .end(function (err, res) {
+              if (err) return done(err);
+              var result = res.body;
+              assert.strictEqual(result.code, 200);
+              assert.isUndefined(result.error);
+              assert.isDefined(result.organization);
+              assert.isDefined(result.item);
+              assert.isUndefined(result.documentName);
+              assert.isUndefined(result.organizationName);
+              OrganizationModel.findDeepAttributeById(result.organization, versionId, function(element) {
+                assert.isDefined(element);
+              });
               done();
             });
         });
