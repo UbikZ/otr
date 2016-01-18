@@ -1,0 +1,20 @@
+{
+  "name": "Version 2",
+  "description": "Version Description 2",
+  "type": "version",
+  "setting": {
+    "contributorAvailable": 1,
+    "contributorOccupation": 80,
+    "contributorPrice": 650,
+    "dayPerWeek": 5,
+    "estimateType": "final",
+    "hourPerDay": 8,
+    "label": "jr/h",
+    "rateMultiplier": 130,
+    "scrummasterOccupation": 12,
+    "scrummasterPrice": 900,
+    "showDev": true,
+    "showManagement": true,
+    "weekPerIteration": 2
+  }
+}

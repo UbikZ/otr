@@ -816,7 +816,66 @@ module.exports = function (app) {
               assert.strictEqual(versions.length, 1);
               assert.isArray(versions[0].entries);
               assert(versions[0].entries.length > 0);
-              assert.isUndefined(versions.setting);
+              assert.isDefined(versions[0].setting._id);
+              assert.isUndefined(versions[0].setting.contributorPrice);
+              assert.isArray(result.item.entries);
+              assert(result.item.entries.length > 0);
+              assert.isDefined(result.item.setting._id);
+              assert.isUndefined(result.item.setting.contributorPrice);
+              done();
+            });
+        });
+
+        it('should create a new version in the document (with settings)', function (done) {
+          var expectedData = require('./fixtures/item/create-ok-4');
+          var sentData = Object.assign(
+            expectedData,
+            {organizationId: organizationId, parentId: documentId, ontimeId: 123}
+          );
+          ontimeRequester.items = function (token, ontimeId, cb) {
+            cb(JSON.stringify(require('./fixtures/ontime/items')));
+          };
+          agent
+            .post(url + '/item/create')
+            .send(sentData)
+            .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+            .expect(200)
+            .expect('Content-Type', 'application/json; charset=utf-8')
+            .end(function (err, res) {
+              if (err) return done(err);
+              var result = res.body;
+              assert.strictEqual(result.code, 200);
+              assert.isUndefined(result.error);
+              assert.strictEqual(result.messageCode, "2");
+              assert.isDefined(result.organization);
+              assert.strictEqual(result.organization.projects.length, 1);
+              assert.strictEqual(result.organization.projects[0].projects.length, 1);
+              assert.strictEqual(result.organization.projects[0].projects[0].documents.length, 1);
+              var versions = result.organization.projects[0].projects[0].documents[0].versions;
+              assert.strictEqual(versions.length, 2);
+              assert.isArray(versions[1].entries);
+              assert(versions[1].entries.length > 0);
+              assert.isDefined(versions[1].setting);
+              assert.isArray(result.item.entries);
+              assert(result.item.entries.length > 0);
+              assert.isDefined(result.item.setting);
+              [versions[1].setting, result.item.setting].forEach(function(element) {
+                  assert.strictEqual(element.project_dev.contributor_price, expectedData.setting.contributorPrice);
+                  assert.strictEqual(element.project_dev.contributor_occupation, expectedData.setting.contributorOccupation);
+                  assert.strictEqual(element.project_management.scrummaster_price, expectedData.setting.scrummasterPrice);
+                  assert.strictEqual(element.project_management.scrummaster_occupation, expectedData.setting.scrummasterOccupation);
+                  assert.strictEqual(element.billing.show_dev_price, expectedData.setting.showDev);
+                  assert.strictEqual(element.billing.rate_multiplier, expectedData.setting.rateMultiplier);
+                  assert.strictEqual(element.billing.show_management_price, expectedData.setting.showManagement);
+                  assert.strictEqual(element.unit.estimate_type, expectedData.setting.estimateType);
+                  assert.strictEqual(element.unit.range_estimate_unit, expectedData.setting.rangeEstimateUnit);
+                  assert.strictEqual(element.unit.label, expectedData.setting.label);
+                  assert.strictEqual(element.date.show, expectedData.setting.showDate);
+                  assert.strictEqual(element.iteration.contributor_available, expectedData.setting.contributorAvailable);
+                  assert.strictEqual(element.iteration.hour_per_day, expectedData.setting.hourPerDay);
+                  assert.strictEqual(element.iteration.day_per_week, expectedData.setting.dayPerWeek);
+                  assert.strictEqual(element.iteration.week_per_iteration, expectedData.setting.weekPerIteration);
+                });
               done();
             });
         });
@@ -957,6 +1016,8 @@ module.exports = function (app) {
               var document = result.organization.projects[0].projects[0].documents[0];
               assert.strictEqual(document.name, expectedData.name);
               assert.strictEqual(document.description, expectedData.description);
+              assert.strictEqual(result.item.name, expectedData.name);
+              assert.strictEqual(result.item.description, expectedData.description);
               done();
             });
         });
