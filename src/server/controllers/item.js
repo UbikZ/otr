@@ -57,11 +57,15 @@ module.exports.controller = function (app, config) {
         Organization.findDeepAttributeById(organization, data.itemId, function (element, parentElement) {
           if (element != undefined) {
             var result = {};
-            if (data.modePreview = 1) {
+            if (data.modePreview == 1) {
               result.item = element;
               result.documentName = parentElement.name;
               result.organizationName = organization.name;
             } else {
+              result.item = element;
+              if (data.lazy == 1) {
+                delete result.item.entries;
+              }
               result.organization = organization;
             }
             http.response(res, 200, result);
