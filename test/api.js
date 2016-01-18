@@ -9,7 +9,7 @@ var moment = require('moment');
 var OrganizationModel = require('../src/server/models/organization');
 var ontimeRequester = require('../src/server/controllers/helpers/ontime');
 
-// Generic mock method
+// Generic mocks methods
 function invalidOntimeAPIResponse() {
   var cb;
   if (typeof (arguments[1]) == 'function') {
@@ -19,6 +19,17 @@ function invalidOntimeAPIResponse() {
   }
   cb(JSON.stringify(require('./fixtures/ontime/ko')));
 }
+
+function internalErrorOntimeAPIResponse() {
+  var cb;
+  if (typeof (arguments[1]) == 'function') {
+    cb = arguments[1];
+  } else if (typeof (arguments[2]) == 'function') {
+    cb = arguments[2];
+  }
+  cb(JSON.stringify({}));
+}
+
 
 // Start tests
 module.exports = function (app) {
@@ -367,6 +378,23 @@ module.exports = function (app) {
 
         describe('# [GET] ' + url + '/ontime/me', function () {
           it('should get an error with token', function (done) {
+            ontimeRequester.me = internalErrorOntimeAPIResponse;
+            agent
+              .get(url + '/ontime/me')
+              .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+              .expect(500)
+              .expect('Content-Type', 'application/json; charset=utf-8')
+              .end(function (err, res) {
+                if (err) return done(err);
+                var result = res.body;
+                assert.strictEqual(result.code, 500);
+                assert.isUndefined(result.error);
+                assert.strictEqual(result.messageCode, "-1");
+                done();
+              });
+          });
+
+          it('should get an internal error', function (done) {
             ontimeRequester.me = invalidOntimeAPIResponse;
             agent
               .get(url + '/ontime/me')
@@ -428,6 +456,23 @@ module.exports = function (app) {
               });
           });
 
+          it('should get an error with token', function (done) {
+            ontimeRequester.tree = internalErrorOntimeAPIResponse;
+            agent
+              .get(url + '/ontime/tree')
+              .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+              .expect(500)
+              .expect('Content-Type', 'application/json; charset=utf-8')
+              .end(function (err, res) {
+                if (err) return done(err);
+                var result = res.body;
+                assert.strictEqual(result.code, 500);
+                assert.isUndefined(result.error);
+                assert.strictEqual(result.messageCode, "-1");
+                done();
+              });
+          });
+
           it('should get ontime tree items', function (done) {
             var expectedData = require('./fixtures/ontime/tree');
             ontimeRequester.tree = function (token, cb) {
@@ -469,6 +514,23 @@ module.exports = function (app) {
                 assert.strictEqual(result.code, 403);
                 assert.isDefined(result.error);
                 assert.strictEqual(result.messageCode, "-3");
+                done();
+              });
+          });
+
+          it('should get an error with token', function (done) {
+            ontimeRequester.items = internalErrorOntimeAPIResponse;
+            agent
+              .get(url + '/ontime/items')
+              .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+              .expect(500)
+              .expect('Content-Type', 'application/json; charset=utf-8')
+              .end(function (err, res) {
+                if (err) return done(err);
+                var result = res.body;
+                assert.strictEqual(result.code, 500);
+                assert.isUndefined(result.error);
+                assert.strictEqual(result.messageCode, "-1");
                 done();
               });
           });
