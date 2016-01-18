@@ -42,23 +42,6 @@ module.exports.controller = function (app, config) {
     });
   });
 
-  app.get(prefix + '/project', http.ensureAuthorized, function (req, res) {
-    http.checkAuthorized(req, res, function () {
-      ontimeRequester.project(req.ot_token, req.query.projectId, function (result) {
-        result = JSON.parse(result);
-        if (result.error) {
-          http.log(req, 'Ontime Error: ' + result.error_description);
-          http.response(res, 403, {error: result}, "-3", result.error);
-        } else if (result.data) {
-          http.response(res, 200, {project: result.data});
-        } else {
-          http.log(req, 'Ontime Error: issue during OnTime "/project" request');
-          http.response(res, 500, {}, "-1");
-        }
-      });
-    });
-  });
-
   app.get(prefix + '/items', http.ensureAuthorized, function (req, res) {
     http.checkAuthorized(req, res, function () {
       ontimeRequester.items(req.ot_token, req.query.projectId, function (result) {
