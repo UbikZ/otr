@@ -7,7 +7,8 @@
     "contributorOccupation": 80,
     "contributorPrice": 650,
     "dayPerWeek": 5,
-    "estimateType": "final",
+    "estimateType": "range",
+    "rangeEstimateUnit": "hour",
     "hourPerDay": 8,
     "label": "jr/h",
     "rateMultiplier": 130,
@@ -16,5 +17,7 @@
     "showDev": true,
     "showManagement": true,
     "weekPerIteration": 2
+
+
   }
 }
