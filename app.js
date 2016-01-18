@@ -5,7 +5,7 @@ var config = require('./config.json');
 var argv = require('yargs').argv;
 var app = express();
 
-config.env.debug = (process.env.NODE_ENV !== 'production');
+config.env.debug = !~['staging', 'production'].indexOf(process.env.NODE_ENV);
 
 var port = config.env[process.env.NODE_ENV].port;
 

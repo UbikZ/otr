@@ -10,7 +10,6 @@ var logger = require('./logger');
 module.exports = function (app, config) {
 
   // Setup log rotate
-  fs.existsSync(config.path.logs) || fs.mkdirSync(config.path.logs);
   app.use(morgan('combined', {stream: logger.stream}));
 
   app.use(bodyParser.urlencoded({extended: true}));

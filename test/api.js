@@ -6,6 +6,7 @@ var should = require('chai').should();
 var assert = require('chai').assert;
 var config = require('../config');
 var moment = require('moment');
+var fs = require('fs');
 var OrganizationModel = require('../src/server/models/organization');
 var ontimeRequester = require('../src/server/controllers/helpers/ontime');
 var sinon = require('sinon');
@@ -50,6 +51,10 @@ module.exports = function (app) {
   var agent = request.agent(app);
   var url = '/api/v' + config.api.version;
 
+  var staticFiles = fs.readdirSync(config.path.public + '/dist').filter(function(file) {
+    return ~file.indexOf('.gz.');
+  });
+
   var tokenBearer, tokenOtBearer;
 
   describe('> Application', function () {
@@ -70,6 +75,29 @@ module.exports = function (app) {
                 res.text.should.be.a('string');
                 done();
               });
+          });
+        });
+
+        describe('# [GET] /dist/*.gz', function () {
+          staticFiles.forEach(function(staticFile) {
+            it('returns *.gz compiled files', function (done) {
+              var contentType = undefined;
+              if (~staticFile.indexOf('.js')) {
+                contentType = 'application/javascript';
+              } else if (~staticFile.indexOf('.css')) {
+                contentType = 'text/css; charset=UTF-8';
+              }
+              agent
+                .get('/dist/' + staticFile)
+                .expect(200)
+                .expect('Content-Encoding', 'gzip')
+                .expect('Content-Type', contentType)
+                .end(function (err, res) {
+                  if (err) return done(err);
+                  res.text.should.be.a('string');
+                  done();
+                });
+            });
           });
         });
 
