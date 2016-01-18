@@ -23,13 +23,19 @@ module.exports.controller = function (app, config) {
         http.log(req, 'Internal error: create item -> save organization', err);
         http.response(res, 500, {}, "-1", err);
       } else {
-        if (data.lazy) {
+        if (data.lazy == 1) {
           Organization.walkRecursively(organization, function (element) {
             if (element.entries != undefined) {
               delete element.entries;
+              if (element.entries != undefined) {
+                element.entries = null;
+              }
             }
           });
           delete modelItem.entries;
+          if (modelItem.entries != undefined) {
+            modelItem.entries = null;
+          }
         }
         http.response(res, 200, {organization: organization, item: modelItem, type: data.type + 's'}, errorCode);
       }

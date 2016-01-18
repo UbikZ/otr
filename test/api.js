@@ -881,6 +881,41 @@ module.exports = function (app) {
               done();
             });
         });
+
+        it('should create a new version in the document with lazy loading', function (done) {
+          var expectedData = require('./fixtures/item/create-ok-5');
+          var sentData = Object.assign(
+            expectedData,
+            {organizationId: organizationId, parentId: documentId, ontimeId: 123, lazy: 1}
+          );
+          ontimeRequester.items = function (token, ontimeId, cb) {
+            cb(JSON.stringify(require('./fixtures/ontime/items')));
+          };
+          agent
+            .post(url + '/item/create')
+            .send(sentData)
+            .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+            .expect(200)
+            .expect('Content-Type', 'application/json; charset=utf-8')
+            .end(function (err, res) {
+              if (err) return done(err);
+              var result = res.body;
+              assert.strictEqual(result.code, 200);
+              assert.isUndefined(result.error);
+              assert.strictEqual(result.messageCode, "2");
+              assert.isDefined(result.organization);
+              assert.strictEqual(result.organization.projects.length, 1);
+              assert.strictEqual(result.organization.projects[0].projects.length, 1);
+              assert.strictEqual(result.organization.projects[0].projects[0].documents.length, 1);
+              var versions = result.organization.projects[0].projects[0].documents[0].versions;
+              assert.strictEqual(versions.length, 3);
+              assert.isNull(versions[2].entries);
+              assert.isNull(result.item.entries);
+              assert.isDefined(result.item.setting._id);
+              assert.isUndefined(result.item.setting.contributorPrice);
+              done();
+            });
+        });
       });
 
       describe('# [POST] ' + url + '/item/update', function () {
@@ -1018,6 +1053,31 @@ module.exports = function (app) {
               var document = result.organization.projects[0].projects[0].documents[0];
               assert.strictEqual(document.name, expectedData.name);
               assert.strictEqual(document.description, expectedData.description);
+              assert.strictEqual(result.item.name, expectedData.name);
+              assert.strictEqual(result.item.description, expectedData.description);
+              done();
+            });
+        });
+
+        it('should update a version with lazy', function (done) {
+          var expectedData = require('./fixtures/item/update-ok-1');
+          var sentData = Object.assign(expectedData, {organizationId: organizationId, _id: versionId, lazy: 1});
+          agent
+            .post(url + '/item/update')
+            .send(sentData)
+            .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+            .expect(200)
+            .expect('Content-Type', 'application/json; charset=utf-8')
+            .end(function (err, res) {
+              if (err) return done(err);
+              var result = res.body;
+              assert.strictEqual(result.code, 200);
+              assert.isUndefined(result.error);
+              assert.strictEqual(result.messageCode, "3");
+              assert.isDefined(result.organization);
+              var version = result.organization.projects[0].projects[0].documents[0].versions[0];
+              assert.isDefined(version);
+              assert.isUndefined(version.entries);
               assert.strictEqual(result.item.name, expectedData.name);
               assert.strictEqual(result.item.description, expectedData.description);
               done();
