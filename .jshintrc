@@ -1,4 +1,5 @@
 {
   "browserify": true,
-  "phantom": true
+  "phantom": true,
+  "browser": true
 }
