@@ -436,6 +436,27 @@ module.exports = function (app) {
             });
           });
 
+          it('should get an internal error on create (mongo fail)', function (done) {
+            var sentData = require('./fixtures/organization/create');
+            mockModel(mongoose.model('Organization'), 'update', function (stub) {
+              agent
+                .post(url + '/organization/edit')
+                .send(sentData)
+                .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+                .expect(500)
+                .expect('Content-Type', 'application/json; charset=utf-8')
+                .end(function (err, res) {
+                  if (err) return done(err);
+                  var result = res.body;
+                  assert.strictEqual(result.code, 500);
+                  assert.isDefined(result.error);
+                  assert.strictEqual(result.messageCode, "-1");
+                  stub.restore();
+                  done();
+                });
+            });
+          });
+
           it('should create new organization', function (done) {
             var sentData = require('./fixtures/organization/create');
             agent
@@ -463,6 +484,28 @@ module.exports = function (app) {
                 organizationId = result.organization._id;
                 done();
               });
+          });
+
+          it('should get an internal error on update (mongo fail)', function (done) {
+            var sentData = require('./fixtures/organization/update');
+            sentData._id = organizationId;
+            mockModel(mongoose.model('Organization'), 'update', function (stub) {
+              agent
+                .post(url + '/organization/edit')
+                .send(sentData)
+                .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+                .expect(500)
+                .expect('Content-Type', 'application/json; charset=utf-8')
+                .end(function (err, res) {
+                  if (err) return done(err);
+                  var result = res.body;
+                  assert.strictEqual(result.code, 500);
+                  assert.isDefined(result.error);
+                  assert.strictEqual(result.messageCode, "-1");
+                  stub.restore();
+                  done();
+                });
+            });
           });
 
           it('should update organization', function (done) {

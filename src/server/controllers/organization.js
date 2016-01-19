@@ -120,14 +120,12 @@ module.exports.controller = function (app, config) {
             org.url = data.url;
           }
 
-          Organization.create(org, function (err, newOrganization) {
+          Organization.update({_id: org._id}, org, {upsert: true}).lean().exec(function (err, raw) {
             if (err) {
               http.log(req, 'Internal error: create organization -> save organization', err);
               http.response(res, 500, {}, "-1", err);
             } else {
-              newOrganization.populate('creation.user', function (err, newOrg) {
-                http.response(res, 200, {organization: newOrg}, "5");
-              });
+              http.response(res, 200, {organization: org}, "5");
             }
           });
         }
