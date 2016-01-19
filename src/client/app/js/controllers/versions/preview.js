@@ -1,10 +1,10 @@
 'use strict';
 
-var $ = require('jquery');
 var mappingSetting = require('../../helpers/mapping/setting');
 var computeEntry = require('../../helpers/computeEntry');
 
-module.exports = ['$scope', '$rootScope', '$stateParams', 'itemService', 'settingService', 'rendererService', '$location',
+module.exports = [
+  '$scope', '$rootScope', '$stateParams', 'itemService', 'settingService', 'rendererService', '$location',
   function ($scope, $rootScope, $stateParams, itemService, settingService, rendererService, $location) {
     var mainSetting = {};
     $scope.setting = {};
@@ -84,12 +84,16 @@ module.exports = ['$scope', '$rootScope', '$stateParams', 'itemService', 'settin
             .computeTotal($scope.item.entries, $scope.setting, computeEntry.const.ESTIM_SM | (opts || 0));
         };
         $scope.resumeTotalPriceDev = function(opts) {
-          return computeEntry
-            .computeTotal($scope.item.entries, $scope.setting, computeEntry.const.ESTIM_DEV | computeEntry.const.PRICE | (opts || 0));
+          return computeEntry.computeTotal(
+            $scope.item.entries, $scope.setting,
+            computeEntry.const.ESTIM_DEV | computeEntry.const.PRICE | (opts || 0)
+          );
         };
         $scope.resumeTotalPriceSM = function(opts) {
-          return computeEntry
-            .computeTotal($scope.item.entries, $scope.setting, computeEntry.const.ESTIM_SM | computeEntry.const.PRICE | (opts || 0));
+          return computeEntry.computeTotal(
+            $scope.item.entries, $scope.setting,
+            computeEntry.const.ESTIM_SM | computeEntry.const.PRICE | (opts || 0)
+          );
         };
         $scope.resumeDayPerPersonPerIter = function() {
           return computeEntry
@@ -99,13 +103,12 @@ module.exports = ['$scope', '$rootScope', '$stateParams', 'itemService', 'settin
           return computeEntry
             .iterations($scope.item.entries, $scope.setting, opts || 0);
         };
-        var test;
       }
     });
 
     $scope.toggleSetting = function () {
-      $('.theme-config-box').toggleClass('show');
-      $('#document-element').toggleClass('col-lg-8');
+      window.$('.theme-config-box').toggleClass('show');
+      window.$('#document-element').toggleClass('col-lg-8');
     };
   }
 ];
