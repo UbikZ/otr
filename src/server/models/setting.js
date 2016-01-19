@@ -8,22 +8,22 @@ var schema = new mongoose.Schema({
     user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
     date: {type: Date, default: Date.now},
   },
-  project_dev: {
-    contributor_price: {type: Number, min: 0},
-    contributor_occupation: {type: Number, min: 0, max: 100},
+  projectDev: {
+    contributorPrice: {type: Number, min: 0},
+    contributorOccupation: {type: Number, min: 0, max: 100},
   },
-  project_management: {
-    scrummaster_price: {type: Number, min: 0},
-    scrummaster_occupation: {type: Number, min: 0, max: 100},
+  projectManagement: {
+    scrummasterPrice: {type: Number, min: 0},
+    scrummasterOccupation: {type: Number, min: 0, max: 100},
   },
   billing: {
-    show_dev_price: Boolean,
-    show_management_price: Boolean,
-    rate_multiplier: {type: Number, min: 0},
+    showDevPrice: Boolean,
+    showManagementPrice: Boolean,
+    rateMultiplier: {type: Number, min: 0},
   },
   unit: {
-    estimate_type: {type: String, enum: ['final', 'range']},
-    range_estimate_unit: {type: String, enum: ['minute', 'hour', 'day']},
+    estimateType: {type: String, enum: ['final', 'range']},
+    rangeEstimateUnit: {type: String, enum: ['minute', 'hour', 'day']},
     label: {type: String, trim: true},
   },
   date: {
@@ -31,10 +31,10 @@ var schema = new mongoose.Schema({
     start_date: {type: Date, default: Date.now},
   },
   iteration: {
-    contributor_available: {type: Number, min: 0},
-    hour_per_day: {type: Number, min: 0},
-    day_per_week: {type: Number, min: 0},
-    week_per_iteration: {type: Number, min: 0},
+    contributorAvailable: {type: Number, min: 0},
+    hourPerDay: {type: Number, min: 0},
+    dayPerWeek: {type: Number, min: 0},
+    weekPerIteration: {type: Number, min: 0},
   }
 });
 
