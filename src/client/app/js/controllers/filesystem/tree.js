@@ -14,39 +14,6 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
       }
     }
 
-    function changeCurrentIdNode(id) {
-      $scope.currentIdNode = id;
-      $scope.expandedNodes = $scope.expandedNodes || [];
-      $location.hash(id === undefined ? "_" : $scope.currentIdNode);
-      if ($scope.currentIdNode === undefined) {
-        $scope.breadcrumbElements = undefined;
-        $scope.currentItem = $scope.organization;
-        $scope.documents = [];
-        $scope.projects = $scope.organization.projects;
-      } else {
-        recursiveTool.findSpecificRecursivelyById($scope.organization, $scope.currentIdNode, function (item) {
-          $scope.currentItem = item;
-          $scope.projects = item.projects;
-          $scope.documents = item.documents;
-        });
-        recursiveTool.findRecursivelyById($scope.items, 'children', id, false, function (element) {
-          if (element._id === id) {
-            $scope.currentItem.type = element.type;
-            if ($scope.currentItem.type == 'document') {
-              $scope.versions = $scope.currentItem.versions;
-            }
-            $scope.selected = element;
-            $scope.expandedNodes.push(element);
-          }
-        }, true);
-        $scope.breadcrumbElements =
-          recursiveTool.findPathRecursivelyById($scope.items, $scope.currentIdNode, 'children');
-      }
-      mergeSettings();
-      $scope.$broadcast('load-fs-current-item', {currentItem: $scope.currentItem});
-      mergeFileItems();
-    }
-
     function mergeFileItems() {
       $scope.fileItems = [];
       if ($scope.projects !== undefined) {
@@ -61,7 +28,8 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
       var parentSetting, finalSetting;
       finalSetting = parentSetting = $scope.masterSetting;
       if (finalSetting !== undefined) {
-        parentSetting = finalSetting = angular.extend({}, finalSetting, mappingSetting.dalToDTO($scope.organization.setting));
+        parentSetting = finalSetting =
+          angular.extend({}, finalSetting, mappingSetting.dalToDTO($scope.organization.setting));
         if ($scope.breadcrumbElements !== undefined) {
           $scope.breadcrumbElements.forEach(function (element, index) {
             if (index < $scope.breadcrumbElements.length - 1) {
@@ -76,6 +44,39 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
 
       $scope.parentSetting = parentSetting;
       $scope.setting = finalSetting;
+    }
+
+    function changeCurrentIdNode(id) {
+      $scope.currentIdNode = id;
+      $scope.expandedNodes = $scope.expandedNodes || [];
+      $location.hash(id === undefined ? '_' : $scope.currentIdNode);
+      if ($scope.currentIdNode === undefined) {
+        $scope.breadcrumbElements = undefined;
+        $scope.currentItem = $scope.organization;
+        $scope.documents = [];
+        $scope.projects = $scope.organization.projects;
+      } else {
+        recursiveTool.findSpecificRecursivelyById($scope.organization, $scope.currentIdNode, function (item) {
+          $scope.currentItem = item;
+          $scope.projects = item.projects;
+          $scope.documents = item.documents;
+        });
+        recursiveTool.findRecursivelyById($scope.items, 'children', id, false, function (element) {
+          if (element._id === id) {
+            $scope.currentItem.type = element.type;
+            if ($scope.currentItem.type === 'document') {
+              $scope.versions = $scope.currentItem.versions;
+            }
+            $scope.selected = element;
+            $scope.expandedNodes.push(element);
+          }
+        }, true);
+        $scope.breadcrumbElements =
+          recursiveTool.findPathRecursivelyById($scope.items, $scope.currentIdNode, 'children');
+      }
+      mergeSettings();
+      $scope.$broadcast('load-fs-current-item', {currentItem: $scope.currentItem});
+      mergeFileItems();
     }
 
     function loadCurrentSetting() {
@@ -94,16 +95,62 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
 
     $scope.$on('load-organization', function (event, data) {
       changeCurrentOrganization(data.organization);
-      changeCurrentIdNode(~["", "_"].indexOf($location.hash()) ? undefined : $location.hash());
+      changeCurrentIdNode(~['', '_'].indexOf($location.hash()) ? undefined : $location.hash());
       loadCurrentSetting();
       $scope.expandAll();
     });
 
-    $scope.treeOptions = {
-      nodeChildren: "children",
-      dirSelectable: true,
+    $scope.treeOptions = {nodeChildren: 'children', dirSelectable: true};
+
+    /*
+     * Angular Control Tree actions
+     */
+
+    $scope.clearSelected = function () {
+      $scope.selected = undefined;
+      changeCurrentIdNode();
+      $scope.breadcrumbElements = [];
     };
 
+    $scope.expandAll = function () {
+      $scope.expandedNodes = [];
+      $scope.items.forEach(function (item) {
+        recursiveTool.walkTreeRecursively(item, 'children', 'project', function (element) {
+          $scope.expandedNodes.push(element);
+        });
+      });
+    };
+
+    $scope.collapseAll = function () {
+      $scope.expandedNodes = [];
+    };
+
+    $scope.open = function (idNode) {
+      changeCurrentIdNode(idNode);
+    };
+
+    $scope.onSelect = function (node, selected) {
+      var idNode;
+      if (selected) {
+        idNode = node._id;
+      } else {
+        idNode = undefined;
+      }
+      changeCurrentIdNode(idNode);
+    };
+
+    function addExpandedNode(id) {
+      $scope.expandedNodes = $scope.expandedNodes || [];
+      var expendedIds = $scope.expandedNodes.map(function (obj) {
+        return obj._id;
+      });
+      recursiveTool.findRecursivelyById($scope.items, 'children', id, true, function (element) {
+        if (element !== undefined && expendedIds.indexOf(element._id) === -1) {
+          $scope.expandedNodes.push(element);
+        }
+      }, true);
+    }
+    
     /*
      * Modal Setting Edition
      */
@@ -215,7 +262,7 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
           ['projects', 'documents', 'versions'].forEach(function (itemType) {
             var elements = $scope[itemType] || [];
             elements.forEach(function (item, index) {
-              if (item._id == objectId) {
+              if (item._id === objectId) {
                 $scope[itemType].splice(index, 1);
               }
             });
@@ -231,54 +278,5 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
       $event.stopPropagation();
       $scope.opened = !$scope.opened;
     };
-
-    /*
-     * Angular Control Tree actions
-     */
-
-    $scope.clearSelected = function () {
-      $scope.selected = undefined;
-      changeCurrentIdNode();
-      $scope.breadcrumbElements = [];
-    };
-
-    $scope.expandAll = function () {
-      $scope.expandedNodes = [];
-      $scope.items.forEach(function (item) {
-        recursiveTool.walkTreeRecursively(item, 'children', 'project', function (element) {
-          $scope.expandedNodes.push(element);
-        });
-      });
-    };
-
-    $scope.collapseAll = function () {
-      $scope.expandedNodes = [];
-    };
-
-    $scope.open = function (idNode) {
-      changeCurrentIdNode(idNode);
-    };
-
-    $scope.onSelect = function (node, selected, $parentNode, $index) {
-      var idNode;
-      if (selected) {
-        idNode = node._id;
-      } else {
-        idNode = undefined;
-      }
-      changeCurrentIdNode(idNode);
-    };
-
-    function addExpandedNode(id) {
-      $scope.expandedNodes = $scope.expandedNodes || [];
-      var expendedIds = $scope.expandedNodes.map(function (obj) {
-        return obj._id;
-      });
-      recursiveTool.findRecursivelyById($scope.items, 'children', id, true, function (element) {
-        if (element !== undefined && expendedIds.indexOf(element._id) == -1) {
-          $scope.expandedNodes.push(element);
-        }
-      }, true);
-    }
   }
 ];
