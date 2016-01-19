@@ -2206,7 +2206,60 @@ module.exports = function (app) {
           });
 
           describe('# [GET] ~standalone' + url + '/setting', function () {
+            it('should get an internal error (find) for request a standalone setting (mongo fail)', function (done) {
+              mockModel(mongoose.model('Setting'), 'find', function (stub) {
+                agent
+                  .get(url + '/setting?id=42')
+                  .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+                  .expect(500)
+                  .expect('Content-Type', 'application/json; charset=utf-8')
+                  .end(function (err, res) {
+                    if (err) return done(err);
+                    var result = res.body;
+                    assert.strictEqual(result.code, 500);
+                    assert.isDefined(result.error);
+                    assert.strictEqual(result.messageCode, '-1');
+                    stub.restore();
+                    done();
+                  });
+              });
+            });
 
+            it('should get an internal error (find) for request a standalone setting (empty response)', function (done) {
+              mockModel(mongoose.model('Setting'), 'find', function (stub) {
+                agent
+                  .get(url + '/setting?id=42')
+                  .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+                  .expect(404)
+                  .expect('Content-Type', 'application/json; charset=utf-8')
+                  .end(function (err, res) {
+                    if (err) return done(err);
+                    var result = res.body;
+                    assert.strictEqual(result.code, 404);
+                    assert.isUndefined(result.error);
+                    assert.strictEqual(result.messageCode, '-10');
+                    stub.restore();
+                    done();
+                  });
+              }, true);
+            });
+
+            it('should request a standalone setting', function (done) {
+              agent
+                .get(url + '/setting?id=42')
+                .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+                .expect(200)
+                .expect('Content-Type', 'application/json; charset=utf-8')
+                .end(function (err, res) {
+                  if (err) return done(err);
+                  var result = res.body;
+                  assert.strictEqual(result.code, 200);
+                  assert.isUndefined(result.error);
+                  assert.isUndefined(result.messageCode);
+                  assert.isDefined(result.setting);
+                  done();
+                });
+            });
           });
 
           describe('# [POST] ~sub-item' + url + '/setting/update', function () {
