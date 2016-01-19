@@ -12,6 +12,7 @@ plugins.nodeResolve = require('resolve');
 plugins.source = require('vinyl-source-stream');
 plugins.streamify = require('gulp-streamify');
 plugins.del = require('del');
+plugins.mapStream = require('map-stream');
 plugins.less = require('gulp-less');
 plugins.concat = require('gulp-concat');
 plugins.minifyCss = require('gulp-minify-css');
