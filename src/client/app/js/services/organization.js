@@ -1,6 +1,5 @@
 'use strict';
 
-var angular = require('angular');
 var env = require('../env');
 
 var callbacks = require('../helpers/callback');
@@ -10,15 +9,9 @@ module.exports = ['$http', '$translate',
     var baseUrl = env.apiUrl, currentOrganization;
 
     return {
-      setCurrentOrganization: function(organization) {
-        currentOrganization = organization;
-      },
-      getCurrentOrganization: function() {
-        return currentOrganization;
-      },
       get: function(data, success, error) {
         callbacks.get(baseUrl + '/organization', data, $http, $translate, function(result) {
-          if (result.organizations.length == 1) {
+          if (result.organizations.length ===  1) {
             currentOrganization = result.organizations[0];
           }
           success(result);
