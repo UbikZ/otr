@@ -150,7 +150,7 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
         }
       }, true);
     }
-    
+
     /*
      * Modal Setting Edition
      */
