@@ -1,7 +1,5 @@
 'use strict';
 
-var env = require('./env');
-
 module.exports = [
   '$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$translateProvider', '$httpProvider', '_CONST',
   function ($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, $translateProvider, $httpProvider, _CONST) {
