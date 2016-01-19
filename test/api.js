@@ -50,7 +50,7 @@ module.exports = function (app) {
   var agent = request.agent(app);
   var url = '/api/v' + config.api.version;
 
-  var staticFiles = fs.readdirSync(config.path.public + '/dist').filter(function(file) {
+  var staticFiles = fs.readdirSync(config.path.public + '/dist').filter(function (file) {
     return ~file.indexOf('.gz.');
   });
 
@@ -78,7 +78,7 @@ module.exports = function (app) {
         });
 
         describe('# [GET] /dist/*.gz', function () {
-          staticFiles.forEach(function(staticFile) {
+          staticFiles.forEach(function (staticFile) {
             it('returns *.gz compiled files', function (done) {
               var contentType = undefined;
               if (~staticFile.indexOf('.js')) {
@@ -116,7 +116,7 @@ module.exports = function (app) {
           });
 
           it('returns an internal error (checkAuthorized fail)', function (done) {
-            mock(mongoose.model('User'), 'findOne', function(stub) {
+            mock(mongoose.model('User'), 'findOne', function (stub) {
               agent
                 .get(url + '/user')
                 .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
@@ -132,6 +132,22 @@ module.exports = function (app) {
                   done();
                 });
             });
+          });
+
+          it('returns an internal error (checkAuthorized with unknown token)', function (done) {
+            agent
+              .get(url + '/user')
+              .set('Authorization', 'Bearer 569a498efd2e11a55a2822f4 ' + tokenOtBearer)
+              .expect(404)
+              .expect('Content-Type', 'application/json; charset=utf-8')
+              .end(function (err, res) {
+                if (err) return done(err);
+                var result = res.body;
+                assert.strictEqual(result.code, 404);
+                assert.strictEqual(result.messageCode, "-2");
+                assert.isUndefined(result.error);
+                done();
+              });
           });
         });
       });
@@ -305,7 +321,7 @@ module.exports = function (app) {
           });
 
           it('should get an internal error on request information for logged user (mongo fail)', function (done) {
-            mock(mongoose.model('User'), 'findOne', function(stub) {
+            mock(mongoose.model('User'), 'findOne', function (stub) {
               agent
                 .get(url + '/me')
                 .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)

@@ -53,7 +53,7 @@ function checkAuthorized(req, res, cb) {
       cb(user);
     } else {
       log(req, 'Error: token provided is not associated with an account.', err);
-      response(res, 404, {}, "-2", err);
+      response(res, 404, {}, "-2");
     }
   });
 }
