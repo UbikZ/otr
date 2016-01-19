@@ -28,6 +28,7 @@
   },
   "path": {
     "public": "./public",
+    "scripts": "./scripts",
     "logs": "./logs",
     "client": {
       "views": "./public/views",
@@ -36,6 +37,7 @@
       "tests": "./src/client/tests"
     },
     "server": {
+      "root": "./src/server",
       "controller": "./src/server/controllers",
       "socket": "./src/server/sockets",
       "model": "./src/server/models",
