@@ -136,6 +136,22 @@ module.exports = function (app) {
                 });
             });
           });
+
+          it('returns an internal error (checkAuthorized with unknown token)', function (done) {
+            agent
+              .get(url + '/user')
+              .set('Authorization', 'Bearer 569a498efd2e11a55a2822f4 ' + tokenOtBearer)
+              .expect(404)
+              .expect('Content-Type', 'application/json; charset=utf-8')
+              .end(function (err, res) {
+                if (err) return done(err);
+                var result = res.body;
+                assert.strictEqual(result.code, 404);
+                assert.strictEqual(result.messageCode, "-2");
+                assert.isUndefined(result.error);
+                done();
+              });
+          });
         });
       });
 
