@@ -31,7 +31,7 @@ function findRecursivelyById(parentElement, attributeName, elementId, getParent,
   if (elements !== undefined) {
     elements.forEach(function (subElement) {
       if (subElement !== undefined) {
-        if (subElement._id != elementId) {
+        if (subElement._id !==elementId) {
           findRecursivelyById(subElement, attributeName, elementId, getParent, cb);
         } else if (parentElement.length === undefined) {
           cb(getParent === true ? parentElement : subElement);
@@ -50,17 +50,17 @@ function findSpecificRecursivelyById(parentElement, elementId, cb, passFirstElem
   } else {
     elements = parentElement.projects;
     if (elements === undefined) {
-      if (parentElement._id == elementId) {
+      if (parentElement._id === elementId) {
         cb(parentElement);
       }
-    } else if (parentElement.documents !== undefined) {
+    } else if (parentElement.documents !== undefined) {
       elements = elements.concat(parentElement.documents);
     }
   }
   if (elements !== undefined) {
     elements.forEach(function (subElement) {
       if (subElement !== undefined) {
-        if (subElement._id != elementId) {
+        if (subElement._id !==elementId) {
           findSpecificRecursivelyById(subElement, elementId, cb);
         } else {
           cb(subElement);
@@ -101,7 +101,7 @@ function findPathRecursivelyById(elements, elementId, attributeName) {
 }
 
 function walkTreeRecursively(element, attributeName, type, cb) {
-  if (element.type != type || element[attributeName] === undefined || element[attributeName].length === 0) {
+  if (element.type !==type || element[attributeName] === undefined || element[attributeName].length === 0) {
     return;
   }
   element[attributeName].forEach(function (child) {
@@ -116,7 +116,7 @@ function removeRecursivelyById(parentElement, attributeName, elementId, cb) {
   var indexToRemove;
   parentElement[attributeName].forEach(function (subElement, index) {
     if (subElement !== undefined) {
-      if (subElement._id != elementId) {
+      if (subElement._id !==elementId) {
         removeRecursivelyById(subElement, attributeName, elementId, cb);
       } else {
         indexToRemove = index;
@@ -125,9 +125,7 @@ function removeRecursivelyById(parentElement, attributeName, elementId, cb) {
   });
 
   if (indexToRemove !== undefined) {
-    /*jshint -W051 */
-    delete parentElement[attributeName].splice(indexToRemove, 1);
-    /*jshint +W051 */
+    parentElement[attributeName].splice(indexToRemove, 1);
     cb(parentElement[attributeName]);
   }
 }
