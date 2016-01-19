@@ -10,7 +10,6 @@ var fs = require('fs');
 var OrganizationModel = require('../src/server/models/organization');
 var ontimeRequester = require('../src/server/controllers/helpers/ontime');
 var sinon = require('sinon');
-require('sinon-mongoose');
 
 // Generic mocks methods
 function invalidOntimeAPIResponse() {
