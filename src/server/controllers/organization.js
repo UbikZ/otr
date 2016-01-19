@@ -52,7 +52,7 @@ module.exports.controller = function (app, config) {
     var data = req.body;
 
     http.checkAuthorized(req, res, function () {
-      Organization.findByIdAndRemove(data.id, function (err) {
+      Organization.findByIdAndRemove(data.id).lean().exec(function (err) {
         if (err) {
           http.log(req, 'Internal error: delete organization', err);
           http.response(res, 500, {}, "-1", err);

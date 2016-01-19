@@ -593,9 +593,30 @@ module.exports = function (app) {
         });
 
         describe('# [DELETE] ' + url + '/organization/delete', function () {
+          it('should get an internal error (mongo fail)', function (done) {
+            mockModel(mongoose.model('Organization'), 'findByIdAndRemove', function (stub) {
+              agent
+                .post(url + '/organization/delete')
+                .send({id: organizationId})
+                .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+                .expect(500)
+                .expect('Content-Type', 'application/json; charset=utf-8')
+                .end(function (err, res) {
+                  if (err) return done(err);
+                  var result = res.body;
+                  assert.strictEqual(result.code, 500);
+                  assert.isDefined(result.error);
+                  assert.strictEqual(result.messageCode, "-1");
+                  stub.restore();
+                  done();
+                });
+            });
+          });
+
           it('should delete one organization', function (done) {
             agent
               .post(url + '/organization/delete')
+              .send({id: organizationId})
               .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
               .expect(200)
               .expect('Content-Type', 'application/json; charset=utf-8')
