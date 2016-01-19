@@ -56,10 +56,6 @@ module.exports = function (app) {
   var agent = request.agent(app);
   var url = '/api/v' + config.api.version;
 
-  var staticFiles = fs.readdirSync(config.path.public + '/dist').filter(function (file) {
-    return ~file.indexOf('.gz.');
-  });
-
   var tokenBearer, tokenOtBearer;
 
   describe('> Application', function () {
@@ -84,6 +80,16 @@ module.exports = function (app) {
         });
 
         describe('# [GET] /dist/*.gz', function () {
+          var path = config.path.public + '/dist';
+          var staticFiles = [];
+
+          it ('check public/dist exists', function (done) {
+            assert.isTrue(fs.existsSync(path));
+            staticFiles = fs.readdirSync(path).filter(function (file) {
+                return ~file.indexOf('.gz.');
+              });
+          });
+          
           staticFiles.forEach(function (staticFile) {
             it('returns *.gz compiled files', function (done) {
               var contentType = undefined;
@@ -253,9 +259,9 @@ module.exports = function (app) {
                 assert.strictEqual(result.user.name.firstname, expectedData.data.first_name);
                 assert.strictEqual(result.user.name.lastname, expectedData.data.last_name);
                 assert.strictEqual(result.user.name.username, sentData.username);
-                assert.strictEqual(result.user.identity.ontime_token, expectedData.access_token);
+                assert.strictEqual(result.user.identity.ontimeToken, expectedData.access_token);
                 assert.isDefined(result.user.identity.token);
-                tokenOtBearer = result.user.identity.ontime_token;
+                tokenOtBearer = result.user.identity.ontimeToken;
                 done();
               });
           });
@@ -298,11 +304,11 @@ module.exports = function (app) {
                 assert.strictEqual(result.user.name.firstname, expectedData.data.first_name);
                 assert.strictEqual(result.user.name.lastname, expectedData.data.last_name);
                 assert.strictEqual(result.user.name.username, sentData.username);
-                assert.strictEqual(result.user.identity.ontime_token, expectedData.access_token);
+                assert.strictEqual(result.user.identity.ontimeToken, expectedData.access_token);
                 assert.isDefined(result.user.identity.token);
-                assert.notEqual(tokenOtBearer, result.user.identity.ontime_token);
+                assert.notEqual(tokenOtBearer, result.user.identity.ontimeToken);
                 // We set tokens for next tests
-                tokenOtBearer = result.user.identity.ontime_token;
+                tokenOtBearer = result.user.identity.ontimeToken;
                 tokenBearer = result.user.identity.token;
                 done();
               });
@@ -362,7 +368,7 @@ module.exports = function (app) {
                 assert.strictEqual(result.user.name.firstname, expectedData.data.first_name);
                 assert.strictEqual(result.user.name.lastname, expectedData.data.last_name);
                 assert.isDefined(result.user.name.username);
-                assert.strictEqual(result.user.identity.ontime_token, tokenOtBearer);
+                assert.strictEqual(result.user.identity.ontimeToken, tokenOtBearer);
                 assert.strictEqual(result.user.identity.token, tokenBearer);
                 done();
               });
