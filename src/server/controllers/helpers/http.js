@@ -64,8 +64,10 @@ function ontimeRequestToken(req, res, cb) {
     if (result.error) {
       log(req, 'Ontime Error: ' + result.error_description);
       response(res, 403, {error: result}, "-3", result.error);
+      /*jshint camelcase: false */
     } else if (result.access_token) {
-      cb(merge(result.data, {access_token: result.access_token}));
+      cb(merge(result.data, {accessToken: result.access_token}));
+      /*jshint camelcase: true */
     } else {
       log(req, 'Ontime Error: issue during OnTime "/authenticate" request');
       response(res, 500, {}, "-1");

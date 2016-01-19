@@ -1,5 +1,5 @@
 {
-  "jwt_secret": "xxxx",
+  "jwtSecret": "xxxx",
   "client_id": "xxxxx",
   "client_secret": "xxxxx",
   "api_version": "x",

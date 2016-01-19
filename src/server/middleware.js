@@ -17,7 +17,7 @@ module.exports = function (app, config) {
 
   app.use(function (req, res, next) {
     // For staging/production test (nginx will deliver statics files with specific rule)
-    if (!config.env.debug && req.url.indexOf('.gz.') != -1) {
+    if (!config.env.debug && req.url.indexOf('.gz.') !==  -1) {
       res.setHeader('Content-Encoding', 'gzip');
     }
     //res.setHeader('Access-Control-Allow-Origin', '*');
@@ -34,7 +34,9 @@ module.exports = function (app, config) {
     var _send = res.send;
     var sent = false;
     res.send = function (data) {
-      if (sent) return;
+      if (sent) {
+        return;
+      }
       _send.bind(res)(data);
       sent = true;
     };
@@ -52,21 +54,21 @@ module.exports = function (app, config) {
 
   // Add models
   fs.readdirSync(config.path.server.model).forEach(function (file) {
-    if (file.substr(-3) == '.js') {
+    if (file.substr(-3) === '.js') {
       require('./models/' + file);
     }
   });
 
   // Add routes from controller file
   fs.readdirSync(config.path.server.controller).forEach(function (file) {
-    if (file.substr(-3) == '.js') {
+    if (file.substr(-3) === '.js') {
       require('./controllers/' + file).controller(app, config);
     }
   });
 
   // Add extend prototypes for helper utilities
   fs.readdirSync(config.path.server.prototype).forEach(function (file) {
-    if (file.substr(-3) == '.js') {
+    if (file.substr(-3) === '.js') {
       require('./prototypes/' + file);
     }
   });

@@ -1,5 +1,5 @@
 {
-  "jwt_secret": "testozerozeir,ozei,rozenrzern",
+  "jwtSecret": "testozerozeir,ozei,rozenrzern",
   "client_id": "0477d446-5602-475e-a7e2-f14dd5d2aa8a",
   "client_secret": "TZWW22_6pOA0wTk34NJESUo3pdEGwatY2Kdvxl3CvZRzmtVM9NGbrkuebD4Ova9lI5LXXTTICzGOt4tsafd5I29mIDChR2gpJlZG",
   "api_version": "5",

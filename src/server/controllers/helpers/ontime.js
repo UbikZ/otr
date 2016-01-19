@@ -32,7 +32,9 @@ function requestToken(authObject, cb) {
 function me(accessToken, cb) {
   var url = ontimeConfig.ontime_url + '/api/v5/me?' +
     qs.stringify({
+      /*jshint camelcase: false */
       'access_token': accessToken,
+      /*jshint camelcase: true */
     });
 
   req(url, cb);
@@ -41,7 +43,9 @@ function me(accessToken, cb) {
 function tree(accessToken, cb) {
   var url = ontimeConfig.ontime_url + '/api/v5/projects?' +
     qs.stringify({
+      /*jshint camelcase: false */
       'access_token': accessToken,
+      /*jshint camelcase: true */
     });
 
   req(url, cb);
@@ -50,6 +54,7 @@ function tree(accessToken, cb) {
 function items(accessToken, projectId, cb) {
   var url = ontimeConfig.ontime_url + '/api/v5/features/?' +
     qs.stringify({
+      /*jshint camelcase: false */
       'access_token': accessToken,
       'project_id': projectId,
       'sort_fields': 'id',
@@ -77,6 +82,7 @@ function items(accessToken, projectId, cb) {
       'include_archived': false,
       'page': 1,
       'page_size': 1000,
+      /*jshint camelcase: false */
     });
   req(url, cb);
 }
