@@ -1,8 +1,8 @@
 'use strict';
 
-function check(item, cb) {
-  if (item != undefined) {
-    cb(item);
+function check(item) {
+  if (item !== undefined) {
+    return item;
   }
 }
 
@@ -13,43 +13,43 @@ function dalToDTO(item) {
   check(item, function(setting) {
     result._id = setting._id;
 
-    check(setting.project_dev, function(project_dev) {
-      check(project_dev.contributor_price, function(contributor_price) {
-        result.contributorPrice = contributor_price;
+    check(setting.projectDev, function(projectDev) {
+      check(projectDev.contributorPrice, function(contributorPrice) {
+        result.contributorPrice = contributorPrice;
       });
-      check(project_dev.contributor_occupation, function(contributor_occupation) {
-        result.contributorOccupation = contributor_occupation;
+      check(projectDev.contributorOccupation, function(contributorOccupation) {
+        result.contributorOccupation = contributorOccupation;
       });
     });
-    check(setting.project_management, function(project_management) {
-      check(project_management.scrummaster_price, function(scrummaster_price) {
-        result.scrummasterPrice = scrummaster_price;
+    check(setting.projectManagement, function(projectManagement) {
+      check(projectManagement.scrummasterPrice, function(scrummasterPrice) {
+        result.scrummasterPrice = scrummasterPrice;
       });
-      check(project_management.scrummaster_occupation, function(scrummaster_occupation) {
-        result.scrummasterOccupation = scrummaster_occupation;
+      check(projectManagement.scrummasterOccupation, function(scrummasterOccupation) {
+        result.scrummasterOccupation = scrummasterOccupation;
       });
     });
     check(setting.billing, function(billing) {
-      check(billing.rate_multiplier, function(rate_multiplier) {
-        result.rateMultiplier = rate_multiplier;
+      check(billing.rateMultiplier, function(rateMultiplier) {
+        result.rateMultiplier = rateMultiplier;
       });
-      check(billing.show_dev_price, function(show_dev_price) {
-        result.showDev = show_dev_price;
+      check(billing.showDevPrice, function(showDevPrice) {
+        result.showDev = showDevPrice;
       });
-      check(billing.show_management_price, function(show_management_price) {
-        result.showManagement = show_management_price;
+      check(billing.showManagementPrice, function(showManagementPrice) {
+        result.showManagement = showManagementPrice;
       });
     });
     check(setting.unit, function(unit) {
-      check(unit.estimate_type, function(estimate_type) {
-        result.estimateType = estimate_type;
+      check(unit.estimateType, function(estimateType) {
+        result.estimateType = estimateType;
       });
-      check(unit.range_estimate_unit, function(range_estimate_unit) {
-        result.rangeEstimateUnit = range_estimate_unit;
+      check(unit.rangeEstimateUnit, function(rangeEstimateUnit) {
+        result.rangeEstimateUnit = rangeEstimateUnit;
       });
       check(unit.label, function(label) {
-        if (label !== "") {
-          result.label = label
+        if (label !== '') {
+          result.label = label;
         }
       });
     });
@@ -59,17 +59,17 @@ function dalToDTO(item) {
       });
     });
     check(setting.iteration, function(iteration) {
-      check(iteration.contributor_available, function(contributor_available) {
-        result.contributorAvailable = contributor_available;
+      check(iteration.contributorAvailable, function(contributorAvailable) {
+        result.contributorAvailable = contributorAvailable;
       });
-      check(iteration.hour_per_day, function(hour_per_day) {
-        result.hourPerDay = hour_per_day;
+      check(iteration.hourPerDay, function(hourPerDay) {
+        result.hourPerDay = hourPerDay;
       });
-      check(iteration.day_per_week, function(day_per_week) {
-        result.dayPerWeek = day_per_week;
+      check(iteration.dayPerWeek, function(dayPerWeek) {
+        result.dayPerWeek = dayPerWeek;
       });
-      check(iteration.week_per_iteration, function(week_per_iteration) {
-        result.weekPerIteration = week_per_iteration;
+      check(iteration.weekPerIteration, function(weekPerIteration) {
+        result.weekPerIteration = weekPerIteration;
       });
     });
   });

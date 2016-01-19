@@ -5,40 +5,40 @@ function settingDtoToDal(object, data) {
 
   if (data != undefined) {
     if (typeof data.contributorPrice != 'undefined') {
-      result.project_dev = result.project_dev || {};
-      result.project_dev.contributor_price = data.contributorPrice;
+      result.projectDev = result.projectDev || {};
+      result.projectDev.contributorPrice = data.contributorPrice;
     }
     if (typeof data.contributorOccupation != 'undefined') {
-      result.project_dev = result.project_dev || {};
-      result.project_dev.contributor_occupation = data.contributorOccupation;
+      result.projectDev = result.projectDev || {};
+      result.projectDev.contributorOccupation = data.contributorOccupation;
     }
     if (typeof data.scrummasterPrice != 'undefined') {
-      result.project_management = result.project_management || {};
-      result.project_management.scrummaster_price = data.scrummasterPrice;
+      result.projectManagement = result.projectManagement || {};
+      result.projectManagement.scrummasterPrice = data.scrummasterPrice;
     }
     if (typeof data.scrummasterOccupation != 'undefined') {
-      result.project_management = result.project_management || {};
-      result.project_management.scrummaster_occupation = data.scrummasterOccupation;
+      result.projectManagement = result.projectManagement || {};
+      result.projectManagement.scrummasterOccupation = data.scrummasterOccupation;
     }
     if (typeof data.showDev != 'undefined') {
       result.billing = result.billing || {};
-      result.billing.show_dev_price = data.showDev;
+      result.billing.showDevPrice = data.showDev;
     }
     if (typeof data.rateMultiplier != 'undefined') {
       result.billing = result.billing || {};
-      result.billing.rate_multiplier = data.rateMultiplier;
+      result.billing.rateMultiplier = data.rateMultiplier;
     }
     if (typeof data.showManagement != 'undefined') {
       result.billing = result.billing || {};
-      result.billing.show_management_price = data.showManagement;
+      result.billing.showManagementPrice = data.showManagement;
     }
     if (typeof data.estimateType != 'undefined') {
       result.unit = result.unit || {};
-      result.unit.estimate_type = data.estimateType;
+      result.unit.estimateType = data.estimateType;
     }
     if (typeof data.rangeEstimateUnit != 'undefined') {
       result.unit = result.unit || {};
-      result.unit.range_estimate_unit = data.rangeEstimateUnit;
+      result.unit.rangeEstimateUnit = data.rangeEstimateUnit;
     }
     if (typeof data.label != 'undefined') {
       result.unit = result.unit || {};
@@ -50,19 +50,19 @@ function settingDtoToDal(object, data) {
     }
     if (typeof data.contributorAvailable != 'undefined') {
       result.iteration = result.iteration || {};
-      result.iteration.contributor_available = data.contributorAvailable;
+      result.iteration.contributorAvailable = data.contributorAvailable;
     }
     if (typeof data.hourPerDay != 'undefined') {
       result.iteration = result.iteration || {};
-      result.iteration.hour_per_day = data.hourPerDay;
+      result.iteration.hourPerDay = data.hourPerDay;
     }
     if (typeof data.dayPerWeek != 'undefined') {
       result.iteration = result.iteration || {};
-      result.iteration.day_per_week = data.dayPerWeek;
+      result.iteration.dayPerWeek = data.dayPerWeek;
     }
     if (typeof data.weekPerIteration != 'undefined') {
       result.iteration = result.iteration || {};
-      result.iteration.week_per_iteration = data.weekPerIteration;
+      result.iteration.weekPerIteration = data.weekPerIteration;
     }
   }
 
