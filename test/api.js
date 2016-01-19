@@ -824,9 +824,29 @@ module.exports = function (app) {
               });
           });
 
-          it('should get an error because bad not parentId / "project" type given', function (done) {
+          it('should get an error because no "parentId" and no "project" type given', function (done) {
             var sentData = require('./fixtures/item/create-ko-1');
             sentData.organizationId = organizationId;
+            agent
+              .post(url + '/item/create')
+              .send(sentData)
+              .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+              .expect(404)
+              .expect('Content-Type', 'application/json; charset=utf-8')
+              .end(function (err, res) {
+                if (err) return done(err);
+                var result = res.body;
+                assert.strictEqual(result.code, 404);
+                assert.isUndefined(result.error);
+                assert.strictEqual(result.messageCode, "-7");
+                done();
+              });
+          });
+
+          it('should get an error because unknown parentId given', function (done) {
+            var sentData = require('./fixtures/item/create-ko-1');
+            sentData.organizationId = organizationId;
+            sentData.parentId = '56961966de7cbad8ba3be464';
             agent
               .post(url + '/item/create')
               .send(sentData)
@@ -978,6 +998,7 @@ module.exports = function (app) {
             var sentData = require('./fixtures/item/create-ko-1');
             sentData.organizationId = organizationId;
             sentData.parentId = documentId;
+            sentData.type = 'version';
             agent
               .post(url + '/item/create')
               .send(sentData)
