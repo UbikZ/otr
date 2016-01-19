@@ -37,13 +37,16 @@ function mock(object, method, returns, callback) {
   callback(sinon.stub(object, method).returns(returns));
 }
 
-function mockModel(model, method, callback) {
+function mockModel(model, method, callback, empty) {
   mock(model, method, {
+    populate: function () {
+      return this;
+    },
     lean: function () {
       return this;
     },
     exec: function (cb) {
-      cb({error: 'error'});
+      cb(empty == true ? null : {error: 'error'});
     },
   }, callback);
 }
@@ -474,6 +477,82 @@ module.exports = function (app) {
         });
 
         describe('# [GET] ' + url + '/organization', function () {
+          it('should get an internal error (mongo fail)', function (done) {
+            mockModel(mongoose.model('Organization'), 'find', function (stub) {
+              agent
+                .get(url + '/organization')
+                .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+                .expect(500)
+                .expect('Content-Type', 'application/json; charset=utf-8')
+                .end(function (err, res) {
+                  if (err) return done(err);
+                  var result = res.body;
+                  assert.strictEqual(result.code, 500);
+                  assert.isDefined(result.error);
+                  assert.strictEqual(result.messageCode, "-1");
+                  stub.restore();
+                  done();
+                });
+            });
+          });
+
+          it('should get an empty array (unknown organizationId : not found)', function (done) {
+            agent
+              .get(url + '/organization?id=56961966de7cbad8ba3be46d')
+              .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+              .expect(200)
+              .expect('Content-Type', 'application/json; charset=utf-8')
+              .end(function (err, res) {
+                if (err) return done(err);
+                var result = res.body;
+                assert.strictEqual(result.code, 200);
+                assert.isUndefined(result.error);
+                assert.isUndefined(result.messageCode);
+                assert.isArray(result.organizations);
+                assert.strictEqual(result.organizations.length, 0);
+                done();
+              });
+          });
+
+          it('should get an error 404 not found (query issue)', function (done) {
+            mockModel(mongoose.model('Organization'), 'find', function (stub) {
+              agent
+                .get(url + '/organization?id=' + organizationId)
+                .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+                .expect(404)
+                .expect('Content-Type', 'application/json; charset=utf-8')
+                .end(function (err, res) {
+                  if (err) return done(err);
+                  var result = res.body;
+                  assert.strictEqual(result.code, 404);
+                  assert.isUndefined(result.error);
+                  assert.strictEqual(result.messageCode, "-9");
+                  stub.restore();
+                  done();
+                });
+            }, true);
+          });
+
+          it('should request one organization', function (done) {
+            agent
+              .get(url + '/organization?id=' + organizationId)
+              .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+              .expect(200)
+              .expect('Content-Type', 'application/json; charset=utf-8')
+              .end(function (err, res) {
+                if (err) return done(err);
+                var result = res.body;
+                assert.strictEqual(result.code, 200);
+                assert.isUndefined(result.error);
+                assert.isUndefined(result.messageCode);
+                assert.isArray(result.organizations);
+                assert.strictEqual(result.organizations.length, 1);
+                assert.isArray(result.organizations[0].projects);
+                done();
+              });
+          });
+
+
           it('should request list of all organizations (without lazy loading)', function (done) {
             agent
               .get(url + '/organization?')
@@ -483,6 +562,9 @@ module.exports = function (app) {
               .end(function (err, res) {
                 if (err) return done(err);
                 var result = res.body;
+                assert.strictEqual(result.code, 200);
+                assert.isUndefined(result.error);
+                assert.isUndefined(result.messageCode);
                 assert.isArray(result.organizations);
                 assert.strictEqual(result.organizations.length, 1);
                 assert.isArray(result.organizations[0].projects);
@@ -499,6 +581,9 @@ module.exports = function (app) {
               .end(function (err, res) {
                 if (err) return done(err);
                 var result = res.body;
+                assert.strictEqual(result.code, 200);
+                assert.isUndefined(result.error);
+                assert.isUndefined(result.messageCode);
                 assert.isArray(result.organizations);
                 assert.strictEqual(result.organizations.length, 1);
                 assert.isUndefined(result.organizations[0].projects);
@@ -864,7 +949,7 @@ module.exports = function (app) {
           });
 
           it('should get an internal error (mongo fail)', function (done) {
-            mockModel(mongoose.model('Organization'), 'update', function(stub) {
+            mockModel(mongoose.model('Organization'), 'update', function (stub) {
               var sentData = require('./fixtures/item/create-ok-1');
               sentData.organizationId = organizationId;
               agent
@@ -1095,8 +1180,8 @@ module.exports = function (app) {
                 assert.isDefined(versions[0].setting._id);
                 assert.isUndefined(versions[0].setting.contributorPrice);
                 assert.isArray(result.item.entries);
-                [result.item.entries, versions[0].entries].forEach(function(elements) {
-                  elements.forEach(function(element) {
+                [result.item.entries, versions[0].entries].forEach(function (elements) {
+                  elements.forEach(function (element) {
                     assert.isArray(element.children);
                     assert.strictEqual(element.children.length, 1);
                     assert.isArray(element.children[0].children);
@@ -1545,6 +1630,28 @@ module.exports = function (app) {
                 assert.isUndefined(result.documentName);
                 assert.isUndefined(result.organizationName);
                 OrganizationModel.walkRecursively(result.organization, function (element) {
+                  assert.isUndefined(element.entries);
+                });
+                done();
+              });
+          });
+
+          it('should get /organization for versions/entries (with lazy loading)', function (done) {
+            agent
+              .get(url + '/organization?lazyVersion=1&id=' + organizationId)
+              .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+              .expect(200)
+              .expect('Content-Type', 'application/json; charset=utf-8')
+              .end(function (err, res) {
+                if (err) return done(err);
+                var result = res.body;
+                assert.strictEqual(result.code, 200);
+                assert.isUndefined(result.error);
+                assert.isUndefined(result.messageCode);
+                assert.isArray(result.organizations);
+                assert.strictEqual(result.organizations.length, 1);
+                assert.isDefined(result.organizations[0]);
+                OrganizationModel.walkRecursively(result.organizations[0], function (element) {
                   assert.isUndefined(element.entries);
                 });
                 done();
