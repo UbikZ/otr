@@ -2,9 +2,9 @@
 
 function convertTreeView(parent) {
   var result = [];
-  if (parent.projects != undefined) {
+  if (parent.projects !== undefined) {
     parent.projects.forEach(function (project) {
-      if (project != undefined) {
+      if (project !== undefined) {
         result.push({
           _id: project._id,
           name: project.name,
@@ -15,9 +15,9 @@ function convertTreeView(parent) {
       }
     });
   }
-  if (parent.documents != undefined) {
+  if (parent.documents !== undefined) {
     parent.documents.forEach(function (document) {
-      if (document != undefined) {
+      if (document !== undefined) {
         result.push({_id: document._id, name: document.name, setting: document.setting, type: 'document'});
       }
     });
@@ -28,10 +28,10 @@ function convertTreeView(parent) {
 
 function findRecursivelyById(parentElement, attributeName, elementId, getParent, cb, passFirstElement) {
   var elements = passFirstElement === true ? parentElement : parentElement[attributeName];
-  if (elements != undefined) {
+  if (elements !== undefined) {
     elements.forEach(function (subElement) {
-      if (subElement != undefined) {
-        if (subElement['_id'] != elementId) {
+      if (subElement !== undefined) {
+        if (subElement._id != elementId) {
           findRecursivelyById(subElement, attributeName, elementId, getParent, cb);
         } else if (parentElement.length === undefined) {
           cb(getParent === true ? parentElement : subElement);
@@ -49,17 +49,17 @@ function findSpecificRecursivelyById(parentElement, elementId, cb, passFirstElem
     elements = parentElement;
   } else {
     elements = parentElement.projects;
-    if (elements == undefined) {
+    if (elements === undefined) {
       if (parentElement._id == elementId) {
         cb(parentElement);
       }
-    } else if (parentElement.documents != undefined) {
+    } else if (parentElement.documents !== undefined) {
       elements = elements.concat(parentElement.documents);
     }
   }
-  if (elements != undefined) {
+  if (elements !== undefined) {
     elements.forEach(function (subElement) {
-      if (subElement != undefined) {
+      if (subElement !== undefined) {
         if (subElement._id != elementId) {
           findSpecificRecursivelyById(subElement, elementId, cb);
         } else {
@@ -71,38 +71,41 @@ function findSpecificRecursivelyById(parentElement, elementId, cb, passFirstElem
 }
 
 function findPathRecursivelyById(elements, elementId, attributeName) {
-  var sub, index;
+  var index;
 
   function slice(object, properties) {
     var result = {}, props = properties || [];
 
     props.forEach(function(property) {
-      if (property != undefined) {
+      if (property !== undefined) {
         result[property] = object[property];
       }
     });
-    result.hasChildren = object.children != undefined;
+    result.hasChildren = object.children !== undefined;
 
     return result;
   }
 
-  if (elements != undefined) {
+  if (elements !== undefined) {
     for (index = 0; index < elements.length ; index++) {
       if (elements[index]._id === elementId) {
         return [slice(elements[index], ['_id', 'name', 'setting'])];
-      } else if (sub = findPathRecursivelyById(elements[index][attributeName], elementId, attributeName)) {
-        return [slice(elements[index], ['_id', 'name', 'setting'])].concat(sub);
+      } else {
+        var sub = findPathRecursivelyById(elements[index][attributeName], elementId, attributeName);
+        if (sub) {
+          return [slice(elements[index], ['_id', 'name', 'setting'])].concat(sub);
+        }
       }
     }
   }
 }
 
 function walkTreeRecursively(element, attributeName, type, cb) {
-  if (element.type != type || element[attributeName] == undefined || element[attributeName].length == 0) {
+  if (element.type != type || element[attributeName] === undefined || element[attributeName].length === 0) {
     return;
   }
   element[attributeName].forEach(function (child) {
-    if (child != undefined) {
+    if (child !== undefined) {
       cb(element);
       walkTreeRecursively(child, attributeName, type, cb);
     }
@@ -112,8 +115,8 @@ function walkTreeRecursively(element, attributeName, type, cb) {
 function removeRecursivelyById(parentElement, attributeName, elementId, cb) {
   var indexToRemove;
   parentElement[attributeName].forEach(function (subElement, index) {
-    if (subElement != undefined) {
-      if (subElement['_id'] != elementId) {
+    if (subElement !== undefined) {
+      if (subElement._id != elementId) {
         removeRecursivelyById(subElement, attributeName, elementId, cb);
       } else {
         indexToRemove = index;
@@ -121,8 +124,10 @@ function removeRecursivelyById(parentElement, attributeName, elementId, cb) {
     }
   });
 
-  if (indexToRemove != undefined) {
+  if (indexToRemove !== undefined) {
+    /*jshint -W051 */
     delete parentElement[attributeName].splice(indexToRemove, 1);
+    /*jshint +W051 */
     cb(parentElement[attributeName]);
   }
 }

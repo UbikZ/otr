@@ -36,7 +36,7 @@ module.exports = ['$scope', '$rootScope', '$stateParams', 'itemService', 'settin
       itemId: $stateParams.itemId,
       modePreview: 1
     }, function (res) {
-      if (res.item == undefined) {
+      if (res.item === undefined) {
         $location.path('/');
       } else {
         $rootScope.enableUi();
@@ -45,7 +45,7 @@ module.exports = ['$scope', '$rootScope', '$stateParams', 'itemService', 'settin
         $scope.documentName = res.documentName;
         mainSetting = mappingSetting.dalToDTO(res.item.setting);
         $scope.setting = mappingSetting.dalToDTO(res.item.setting);
-        if ($rootScope.pdf.enabled == true) {
+        if ($rootScope.pdf.enabled === true) {
           $rootScope.pdf.loaded = true;
         }
 
@@ -91,14 +91,15 @@ module.exports = ['$scope', '$rootScope', '$stateParams', 'itemService', 'settin
           return computeEntry
             .computeTotal($scope.item.entries, $scope.setting, computeEntry.const.ESTIM_SM | computeEntry.const.PRICE | (opts || 0));
         };
-        $scope.resumeDayPerPersonPerIter = function(opts) {
+        $scope.resumeDayPerPersonPerIter = function() {
           return computeEntry
             .computeDayPerPersonPerIter($scope.item.entries, $scope.setting);
         };
         $scope.resumeIterations = function(opts) {
           return computeEntry
             .iterations($scope.item.entries, $scope.setting, opts || 0);
-        }
+        };
+        var test;
       }
     });
 

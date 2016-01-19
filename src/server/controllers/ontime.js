@@ -10,7 +10,7 @@ module.exports.controller = function (app, config) {
 
   app.get(prefix + '/me', http.ensureAuthorized, function (req, res) {
     http.checkAuthorized(req, res, function () {
-      ontimeRequester.me(req.ot_token, function (result) {
+      ontimeRequester.me(req.ontimeToken, function (result) {
         result = JSON.parse(result);
         if (result.error) {
           http.log(req, 'Ontime Error: ' + result.error_description);
@@ -27,7 +27,7 @@ module.exports.controller = function (app, config) {
 
   app.get(prefix + '/tree', http.ensureAuthorized, function (req, res) {
     http.checkAuthorized(req, res, function () {
-      ontimeRequester.tree(req.ot_token, function (result) {
+      ontimeRequester.tree(req.ontimeToken, function (result) {
         result = JSON.parse(result);
         if (result.error) {
           http.log(req, 'Ontime Error: ' + result.error_description);
@@ -44,7 +44,7 @@ module.exports.controller = function (app, config) {
 
   app.get(prefix + '/items', http.ensureAuthorized, function (req, res) {
     http.checkAuthorized(req, res, function () {
-      ontimeRequester.items(req.ot_token, req.query.projectId, function (result) {
+      ontimeRequester.items(req.ontimeToken, req.query.projectId, function (result) {
         result = JSON.parse(result);
         if (result.error) {
           http.log(req, 'Ontime Error: ' + result.error_description);

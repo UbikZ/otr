@@ -14,7 +14,7 @@ module.exports = ['$http', '$translate',
         callbacks.get(baseUrl + '/item', data, $http, $translate, success, error);
       },
       edit: function(data, success, error) {
-        var url = baseUrl + (data._id == undefined ? '/item/create' : '/item/update');
+        var url = baseUrl + (data._id === undefined ? '/item/create' : '/item/update');
         callbacks.post(url, data, $http, $translate, success, error);
       },
       delete: function(data, success, error) {

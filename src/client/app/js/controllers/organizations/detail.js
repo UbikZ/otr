@@ -3,7 +3,7 @@
 module.exports = ['$scope', '$rootScope', '$stateParams', 'organizationService', '$uibModal', '$location',
   function ($scope, $rootScope, $stateParams, organizationService, $uibModal, $location) {
     organizationService.get({id: $stateParams.id, lazyVersion: 1}, function (res) {
-      if (res.organizations.length == 0) {
+      if (res.organizations.length === 0) {
         $location.path('/');
       } else {
         $rootScope.enableUi();

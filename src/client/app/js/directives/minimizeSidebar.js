@@ -1,5 +1,7 @@
 'use strict';
 
+var $ = require('jQuery');
+
 module.exports = ['$timeout',
   function($timeout) {
     return {
@@ -25,7 +27,7 @@ module.exports = ['$timeout',
           } else {
             $('#side-menu').removeAttr('style');
           }
-        }
+        };
       }
     };
   }

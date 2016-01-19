@@ -4,7 +4,7 @@ var toastr = require('toastr');
 var jquery = require('jquery');
 
 function ok(res, $translate) {
-  if (res.messageCode != undefined) {
+  if (res.messageCode !== undefined) {
     $translate('messages.success.' + res.messageCode).then(function (msg) {
       toastr.success(msg);
     });
@@ -12,7 +12,7 @@ function ok(res, $translate) {
 }
 
 function ko(res, $translate) {
-  if (res.messageCode != undefined) {
+  if (res.messageCode !== undefined) {
     $translate('messages.error.' + res.messageCode).then(function (msg) {
       toastr.error(msg);
     });
@@ -22,17 +22,17 @@ function ko(res, $translate) {
 function requestResult($http, $translate, success, error) {
   $http
     .success(function (res) {
-      if (res != undefined) {
+      if (res !== undefined) {
         ok(res, $translate);
-        if (success != undefined) {
+        if (success !== undefined) {
           success(res);
         }
       }
     })
     .error(function (res) {
-      if (res != undefined) {
+      if (res !== undefined) {
         ko(res, $translate);
-        if (error != undefined) {
+        if (error !== undefined) {
           error(res);
         }
       }
