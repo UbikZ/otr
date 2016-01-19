@@ -2449,7 +2449,90 @@ module.exports = function (app) {
           });
 
           describe('# [GET] ~sub-item' + url + '/setting/sub', function () {
+            it('should get an error request (not found because no organizationId given) a sub-item setting', function (done) {
+              agent
+                .get(url + '/setting/sub')
+                .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+                .expect(404)
+                .expect('Content-Type', 'application/json; charset=utf-8')
+                .end(function (err, res) {
+                  if (err) return done(err);
+                  var result = res.body;
+                  assert.strictEqual(result.code, 404);
+                  assert.isUndefined(result.error);
+                  assert.strictEqual(result.messageCode, '-1');
+                  done();
+                });
+            });
 
+            it('should get an internal error request (findById) a sub-item setting (mongo fail)', function (done) {
+              mockModel(mongoose.model('Organization'), 'findById', function (stub) {
+                agent
+                  .get(url + '/setting/sub?organizationId=' + organizationId)
+                  .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+                  .expect(500)
+                  .expect('Content-Type', 'application/json; charset=utf-8')
+                  .end(function (err, res) {
+                    if (err) return done(err);
+                    var result = res.body;
+                    assert.strictEqual(result.code, 500);
+                    assert.isDefined(result.error);
+                    assert.strictEqual(result.messageCode, '-1');
+                    stub.restore();
+                    done();
+                  });
+              });
+            });
+
+            it('should get an error request (unknown organizationId) a sub-item setting', function (done) {
+              agent
+                .get(url + '/setting/sub?organizationId=56961966de7cbad8ba3be467')
+                .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+                .expect(404)
+                .expect('Content-Type', 'application/json; charset=utf-8')
+                .end(function (err, res) {
+                  if (err) return done(err);
+                  var result = res.body;
+                  assert.strictEqual(result.code, 404);
+                  assert.isUndefined(result.error);
+                  assert.strictEqual(result.messageCode, '-5');
+                  done();
+                });
+            });
+
+            it('should get a sub-item setting', function (done) {
+              agent
+                .get(url + '/setting/sub?organizationId=' + organizationId)
+                .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+                .expect(200)
+                .expect('Content-Type', 'application/json; charset=utf-8')
+                .end(function (err, res) {
+                  if (err) return done(err);
+                  var result = res.body;
+                  assert.strictEqual(result.code, 200);
+                  assert.isUndefined(result.error);
+                  assert.isUndefined(result.messageCode);
+                  assert.isDefined(result.setting);
+                  done();
+                });
+            });
+
+            it('should get a sub-item setting', function (done) {
+              agent
+                .get(url + '/setting/sub?organizationId=' + organizationId + '&itemId=' + projectId)
+                .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+                .expect(200)
+                .expect('Content-Type', 'application/json; charset=utf-8')
+                .end(function (err, res) {
+                  if (err) return done(err);
+                  var result = res.body;
+                  assert.strictEqual(result.code, 200);
+                  assert.isUndefined(result.error);
+                  assert.isUndefined(result.messageCode);
+                  assert.isDefined(result.setting);
+                  done();
+                });
+            });
           });
         });
       });
