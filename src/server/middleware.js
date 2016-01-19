@@ -28,8 +28,8 @@ module.exports = function (app, config) {
 
   app.use(express.static(config.path.public));
 
-  /*
-  // Hack code
+
+  // Hack to avoid muti-send issue
   app.use(function (req, res, next) {
     var _send = res.send;
     var sent = false;
@@ -39,7 +39,7 @@ module.exports = function (app, config) {
       sent = true;
     };
     next();
-  });*/
+  });
 
   // Database configuration
   mongoose.connect(config.env[process.env.NODE_ENV].mongo.uri);

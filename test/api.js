@@ -2040,29 +2040,6 @@ module.exports = function (app) {
                 done();
               });
           });
-
-          it('should delete an item of project item', function (done) {
-            var sentData = {organizationId: organizationId, itemId: projectId};
-            agent
-              .post(url + '/item/delete')
-              .send(sentData)
-              .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
-              .expect(200)
-              .expect('Content-Type', 'application/json; charset=utf-8')
-              .end(function (err, res) {
-                if (err) return done(err);
-                var result = res.body;
-                assert.strictEqual(result.code, 200);
-                assert.isUndefined(result.error);
-                assert.isDefined(result.organization);
-                assert.isDefined(result.item);
-                assert.strictEqual(result.item._id, projectId);
-                OrganizationModel.findDeepAttributeById(result.organization, projectId, function (element) {
-                  assert.isUndefined(element);
-                });
-                done();
-              });
-          });
         });
 
         describe('> Setting API', function () {
@@ -2263,7 +2240,212 @@ module.exports = function (app) {
           });
 
           describe('# [POST] ~sub-item' + url + '/setting/update', function () {
+            it('should get an error request (not found because no organizationId given) a sub-item setting', function (done) {
+              agent
+                .post(url + '/setting/edit')
+                .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+                .expect(404)
+                .expect('Content-Type', 'application/json; charset=utf-8')
+                .end(function (err, res) {
+                  if (err) return done(err);
+                  var result = res.body;
+                  assert.strictEqual(result.code, 404);
+                  assert.isUndefined(result.error);
+                  assert.strictEqual(result.messageCode, '-1');
+                  done();
+                });
+            });
 
+            it('should get an internal error request (findById) a sub-item setting (mongo fail)', function (done) {
+              mockModel(mongoose.model('Organization'), 'findById', function (stub) {
+                agent
+                  .post(url + '/setting/edit')
+                  .send({organizationId: organizationId})
+                  .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+                  .expect(500)
+                  .expect('Content-Type', 'application/json; charset=utf-8')
+                  .end(function (err, res) {
+                    if (err) return done(err);
+                    var result = res.body;
+                    assert.strictEqual(result.code, 500);
+                    assert.isDefined(result.error);
+                    assert.strictEqual(result.messageCode, '-1');
+                    stub.restore();
+                    done();
+                  });
+              });
+            });
+
+            it('should get an error request (unknown organizationId) a sub-item setting', function (done) {
+              agent
+                .post(url + '/setting/edit')
+                .send({organizationId: '56961966de7cbad8ba3be467'})
+                .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+                .expect(404)
+                .expect('Content-Type', 'application/json; charset=utf-8')
+                .end(function (err, res) {
+                  if (err) return done(err);
+                  var result = res.body;
+                  assert.strictEqual(result.code, 404);
+                  assert.isUndefined(result.error);
+                  assert.strictEqual(result.messageCode, '-5');
+                  done();
+                });
+            });
+
+            it('should get an internal error (update) for create a sub-item setting in organization (mongo fail)', function (done) {
+              var sentData = require('./fixtures/setting/create-ok-1');
+              sentData.organizationId = organizationId;
+              mockModel(mongoose.model('Organization'), 'update', function (stub) {
+                agent
+                  .post(url + '/setting/edit')
+                  .send(sentData)
+                  .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+                  .expect(500)
+                  .expect('Content-Type', 'application/json; charset=utf-8')
+                  .end(function (err, res) {
+                    if (err) return done(err);
+                    var result = res.body;
+                    assert.strictEqual(result.code, 500);
+                    assert.isDefined(result.error);
+                    assert.strictEqual(result.messageCode, '-1');
+                    stub.restore();
+                    done();
+                  });
+              });
+            });
+
+            it('should create a sub-item setting in organization', function (done) {
+              var sentData = require('./fixtures/setting/create-ok-1');
+              sentData.organizationId = organizationId;
+              agent
+                .post(url + '/setting/edit')
+                .send(sentData)
+                .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+                .expect(200)
+                .expect('Content-Type', 'application/json; charset=utf-8')
+                .end(function (err, res) {
+                  if (err) return done(err);
+                  var result = res.body;
+                  assert.strictEqual(result.code, 200);
+                  assert.isUndefined(result.error);
+                  assert.strictEqual(result.messageCode, '10');
+                  assert.isDefined(result.organization);
+                  assert.isDefined(result.organization.setting);
+                  assert.isUndefined(result.setting);
+                  assert.strictEqual(result.organization.setting.project_dev.contributor_price, sentData.contributorPrice);
+                  assert.strictEqual(result.organization.setting.project_dev.contributor_occupation, sentData.contributorOccupation);
+                  assert.strictEqual(result.organization.setting.project_management.scrummaster_price, sentData.scrummasterPrice);
+                  assert.strictEqual(result.organization.setting.project_management.scrummaster_occupation, sentData.scrummasterOccupation);
+                  assert.strictEqual(result.organization.setting.billing.show_dev_price, sentData.showDev);
+                  assert.strictEqual(result.organization.setting.billing.rate_multiplier, sentData.rateMultiplier);
+                  assert.strictEqual(result.organization.setting.billing.show_management_price, sentData.showManagement);
+                  assert.strictEqual(result.organization.setting.unit.estimate_type, sentData.estimateType);
+                  assert.strictEqual(result.organization.setting.unit.range_estimate_unit, sentData.rangeEstimateUnit);
+                  assert.strictEqual(result.organization.setting.unit.label, sentData.label);
+                  assert.strictEqual(result.organization.setting.date.show, sentData.showDate);
+                  assert.strictEqual(result.organization.setting.iteration.contributor_available, sentData.contributorAvailable);
+                  assert.strictEqual(result.organization.setting.iteration.hour_per_day, sentData.hourPerDay);
+                  assert.strictEqual(result.organization.setting.iteration.day_per_week, sentData.dayPerWeek);
+                  assert.strictEqual(result.organization.setting.iteration.week_per_iteration, sentData.weekPerIteration);
+                  done();
+                });
+            });
+
+            it('should create a sub-item setting in organization (with previewMode enabled)', function (done) {
+              var sentData = require('./fixtures/setting/update-ok-1');
+              sentData.organizationId = organizationId;
+              sentData.modePreview = 1;
+              agent
+                .post(url + '/setting/edit')
+                .send(sentData)
+                .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+                .expect(200)
+                .expect('Content-Type', 'application/json; charset=utf-8')
+                .end(function (err, res) {
+                  if (err) return done(err);
+                  var result = res.body;
+                  assert.strictEqual(result.code, 200);
+                  assert.isUndefined(result.error);
+                  assert.strictEqual(result.messageCode, '10');
+                  assert.isUndefined(result.organization);
+                  assert.isDefined(result.setting);
+                  assert.strictEqual(result.setting.project_dev.contributor_price, sentData.contributorPrice);
+                  assert.strictEqual(result.setting.project_dev.contributor_occupation, sentData.contributorOccupation);
+                  assert.strictEqual(result.setting.project_management.scrummaster_price, sentData.scrummasterPrice);
+                  assert.strictEqual(result.setting.project_management.scrummaster_occupation, sentData.scrummasterOccupation);
+                  assert.strictEqual(result.setting.billing.show_dev_price, sentData.showDev);
+                  assert.strictEqual(result.setting.billing.rate_multiplier, sentData.rateMultiplier);
+                  assert.strictEqual(result.setting.billing.show_management_price, sentData.showManagement);
+                  assert.strictEqual(result.setting.unit.estimate_type, sentData.estimateType);
+                  assert.strictEqual(result.setting.unit.label, sentData.label);
+                  assert.strictEqual(result.setting.date.show, sentData.showDate);
+                  assert.strictEqual(result.setting.iteration.contributor_available, sentData.contributorAvailable);
+                  assert.strictEqual(result.setting.iteration.hour_per_day, sentData.hourPerDay);
+                  assert.strictEqual(result.setting.iteration.day_per_week, sentData.dayPerWeek);
+                  assert.strictEqual(result.setting.iteration.week_per_iteration, sentData.weekPerIteration);
+                  done();
+                });
+            });
+
+            it('should get an internal error (update) for create a sub-item setting in organization (mongo fail)', function (done) {
+              var sentData = require('./fixtures/setting/create-ok-1');
+              sentData.organizationId = organizationId;
+              sentData.itemId = '56961966de7cbad8ba3be467';
+              agent
+                .post(url + '/setting/edit')
+                .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+                .send(sentData)
+                .expect(404)
+                .expect('Content-Type', 'application/json; charset=utf-8')
+                .end(function (err, res) {
+                  if (err) return done(err);
+                  var result = res.body;
+                  assert.strictEqual(result.code, 404);
+                  assert.isUndefined(result.error);
+                  assert.strictEqual(result.messageCode, '-11');
+                  done();
+                });
+            });
+
+            it('should get an internal error (update) for create a sub-item setting in organization (mongo fail)', function (done) {
+              var sentData = require('./fixtures/setting/create-ok-1');
+              sentData.organizationId = organizationId;
+              sentData.itemId = projectId;
+              agent
+                .post(url + '/setting/edit')
+                .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+                .send(sentData)
+                .expect(200)
+                .expect('Content-Type', 'application/json; charset=utf-8')
+                .end(function (err, res) {
+                  if (err) return done(err);
+                  var result = res.body;
+                  assert.strictEqual(result.code, 200);
+                  assert.isUndefined(result.error);
+                  assert.strictEqual(result.messageCode, '10');
+                  assert.isDefined(result.organization);
+                  OrganizationModel.findDeepAttributeById(result.organization, projectId, function (element) {
+                    assert.isDefined(element);
+                    assert.isDefined(element.setting);
+                    assert.strictEqual(element.setting.project_dev.contributor_price, sentData.contributorPrice);
+                    assert.strictEqual(element.setting.project_dev.contributor_occupation, sentData.contributorOccupation);
+                    assert.strictEqual(element.setting.project_management.scrummaster_price, sentData.scrummasterPrice);
+                    assert.strictEqual(element.setting.project_management.scrummaster_occupation, sentData.scrummasterOccupation);
+                    assert.strictEqual(element.setting.billing.show_dev_price, sentData.showDev);
+                    assert.strictEqual(element.setting.billing.rate_multiplier, sentData.rateMultiplier);
+                    assert.strictEqual(element.setting.billing.show_management_price, sentData.showManagement);
+                    assert.strictEqual(element.setting.unit.estimate_type, sentData.estimateType);
+                    assert.strictEqual(element.setting.unit.label, sentData.label);
+                    assert.strictEqual(element.setting.date.show, sentData.showDate);
+                    assert.strictEqual(element.setting.iteration.contributor_available, sentData.contributorAvailable);
+                    assert.strictEqual(element.setting.iteration.hour_per_day, sentData.hourPerDay);
+                    assert.strictEqual(element.setting.iteration.day_per_week, sentData.dayPerWeek);
+                    assert.strictEqual(element.setting.iteration.week_per_iteration, sentData.weekPerIteration);
+                  });
+                  done();
+                });
+            });
           });
 
           describe('# [GET] ~sub-item' + url + '/setting/sub', function () {
