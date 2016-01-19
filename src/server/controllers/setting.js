@@ -90,7 +90,7 @@ module.exports.controller = function (app, config) {
           setting = mapping.settingDtoToDal(setting, data);
           setting.update = {user: user._id, date: new Date()};
 
-          Setting.update({_id: setting._id}, setting, {}, function (err, raw) {
+          Setting.update({_id: setting._id}, setting, {}).lean().exec(function (err, raw) {
             if (err) {
               http.log(req, 'Internal error: update setting (in collection) -> save setting', err);
               http.response(res, 500, {}, "-1", err);
@@ -144,7 +144,7 @@ module.exports.controller = function (app, config) {
               organization.setting = modelItem;
             }
 
-            Organization.update({_id: organization._id}, organization, {upsert: true}, function (err, raw) {
+            Organization.update({_id: organization._id}, organization, {upsert: true}).lean().exec(function (err, raw) {
               if (err) {
                 http.log(req, 'Internal error: edit setting (in organization) -> save organization', err);
                 http.response(res, 500, {}, "-1", err);

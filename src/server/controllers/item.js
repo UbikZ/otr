@@ -18,7 +18,7 @@ module.exports.controller = function (app, config) {
   var prefix = '/api/v' + config.api.version + '/item';
 
   function saveOrganization(res, req, data, organization, modelItem, errorCode) {
-    Organization.update({_id: organization._id}, organization, {}, function (err, raw) {
+    Organization.update({_id: organization._id}, organization, {}).lean().exec(function (err, raw) {
       if (err) {
         http.log(req, 'Internal error: create item -> save organization', err);
         http.response(res, 500, {}, "-1", err);

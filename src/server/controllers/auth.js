@@ -20,7 +20,7 @@ module.exports.controller = function (app, config) {
           http.response(res, 500, {}, "-1", err);
         } else if (user) {
           user.identity.ontime_token = userData.access_token;
-          User.update({_id: user._id}, user, {}).exec(function (err, raw) {
+          User.update({_id: user._id}, user, {}).lean().exec(function (err, raw) {
             if (err) {
               http.log(req, 'Internal error: check /sign-up -> update user -> save', err);
               http.response(res, 500, {}, "-1", err);
@@ -36,7 +36,7 @@ module.exports.controller = function (app, config) {
           userModel.name.username = req.body.username;
           userModel.name.firstname = userData.first_name;
           userModel.name.lastname = userData.last_name;
-          User.update({_id: userModel._id}, userModel, {upsert: true}).exec(function (err, raw) {
+          User.update({_id: userModel._id}, userModel, {upsert: true}).lean().exec(function (err, raw) {
             if (err) {
               http.log(req, 'Internal error: check /sign-up -> create user -> save 1', err);
               http.response(res, 500, {}, "-1", err);

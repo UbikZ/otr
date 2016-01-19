@@ -92,7 +92,7 @@ module.exports.controller = function (app, config) {
             organization.url = data.url;
           }
           organization.update = {user: user._id, date: new Date()};
-          Organization.update({_id: organization._id}, organization, {}, function (err, raw) {
+          Organization.update({_id: organization._id}, organization, {}).lean().exec(function (err, raw) {
             if (err) {
               http.log(req, 'Internal error: update organization -> save organization', err);
               http.response(res, 500, {}, "-1", err);

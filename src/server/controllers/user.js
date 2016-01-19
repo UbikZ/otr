@@ -52,7 +52,7 @@ module.exports.controller = function (app, config) {
         if (data.job) {
           user.info.job = data.job;
         }
-        User.update({_id: user._id}, user, {}, function (err, raw) {
+        User.update({_id: user._id}, user, {}).lean().exec(function (err, raw) {
           if (err) {
             http.log(req, 'Internal error: update user -> save user', err);
             http.response(res, 500, {}, "-1", err);
