@@ -3,7 +3,8 @@
 var recursiveTool = require('../../../helpers/recursive');
 var angular = require('angular');
 
-module.exports = ['$rootScope', '$scope', 'identifier', 'organizationId', 'itemService', 'ontimeService', '$uibModalInstance',
+module.exports = [
+  '$rootScope', '$scope', 'identifier', 'organizationId', 'itemService', 'ontimeService', '$uibModalInstance',
   function ($rootScope, $scope, identifier, organizationId, itemService, ontimeService, $uibModalInstance) {
     $scope.identifier = identifier.id;
     $scope.isProject = identifier.parentId !== undefined;
@@ -24,17 +25,14 @@ module.exports = ['$rootScope', '$scope', 'identifier', 'organizationId', 'itemS
         });
       };
 
-      if ($scope.identifier == undefined) {
+      if ($scope.identifier === undefined) {
         $scope.refresh();
       }
 
       $scope.selected = undefined;
-      $scope.treeOptions = {
-        nodeChildren: "children",
-        dirSelectable: true,
-      };
+      $scope.treeOptions = {nodeChildren: 'children', dirSelectable: true};
 
-      $scope.onSelect = function (node, selected, $parentNode, $index) {
+      $scope.onSelect = function (node, selected) {
         if (selected) {
           $scope.selected = node;
           $scope.item.ontimeId = node.id;
@@ -64,7 +62,7 @@ module.exports = ['$rootScope', '$scope', 'identifier', 'organizationId', 'itemS
       if ($scope.organizationId) {
         item = Object.assign(item, {organizationId: $scope.organizationId});
       }
-      if (item._id == undefined) {
+      if (item._id === undefined) {
         if (identifier.parentId) {
           item = Object.assign(item, {parentId: identifier.parentId});
         }

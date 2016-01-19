@@ -19,6 +19,6 @@ module.exports = ['$rootScope', '$scope', '$localStorage', 'userService',
         $localStorage.user = JSON.stringify($rootScope.user);
         $scope.loading = false;
       });
-    }
+    };
   }
 ];

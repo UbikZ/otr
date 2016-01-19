@@ -10,7 +10,7 @@ module.exports = ['$rootScope', '$scope', 'settingService', '_CONST',
     settingService.get({id: _CONST.DATAMODEL.ID_SETTING}, function (res) {
       $scope.loading = false;
       $rootScope.enableUi();
-      if (res.setting != undefined) {
+      if (res.setting !== undefined) {
         $scope.setting = mappingSetting.dalToDTO(res.setting);
       } else {
         $scope.setting = {};
