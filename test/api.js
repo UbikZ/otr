@@ -32,17 +32,20 @@ function internalErrorOntimeAPIResponse() {
   cb(JSON.stringify({}));
 }
 
-// Mock Stub Mongoose Model
-function mock(model, method, callback) {
-  var stub = sinon.stub(model, method).returns({
+// Mock Stub
+function mock(object, method, returns, callback) {
+  callback(sinon.stub(object, method).returns(returns));
+}
+
+function mockModel(model, method, callback) {
+  mock(model, method, {
     lean: function () {
       return this;
     },
     exec: function (cb) {
       cb({error: 'error'});
     },
-  });
-  callback(stub);
+  }, callback);
 }
 
 // Start tests
@@ -116,7 +119,7 @@ module.exports = function (app) {
           });
 
           it('returns an internal error (checkAuthorized fail)', function (done) {
-            mock(mongoose.model('User'), 'findOne', function (stub) {
+            mockModel(mongoose.model('User'), 'findOne', function (stub) {
               agent
                 .get(url + '/user')
                 .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
@@ -132,22 +135,6 @@ module.exports = function (app) {
                   done();
                 });
             });
-          });
-
-          it('returns an internal error (checkAuthorized with unknown token)', function (done) {
-            agent
-              .get(url + '/user')
-              .set('Authorization', 'Bearer 569a498efd2e11a55a2822f4 ' + tokenOtBearer)
-              .expect(404)
-              .expect('Content-Type', 'application/json; charset=utf-8')
-              .end(function (err, res) {
-                if (err) return done(err);
-                var result = res.body;
-                assert.strictEqual(result.code, 404);
-                assert.strictEqual(result.messageCode, "-2");
-                assert.isUndefined(result.error);
-                done();
-              });
           });
         });
       });
@@ -180,7 +167,7 @@ module.exports = function (app) {
               cb(JSON.stringify(expectedData));
             };
 
-            mock(mongoose.model('User'), "findOne", function (stub) {
+            mockModel(mongoose.model('User'), "findOne", function (stub) {
               agent
                 .post(url + '/sign-up')
                 .send(sentData)
@@ -206,7 +193,7 @@ module.exports = function (app) {
               cb(JSON.stringify(expectedData));
             };
 
-            mock(mongoose.model('User'), "update", function (stub) {
+            mockModel(mongoose.model('User'), "update", function (stub) {
               agent
                 .post(url + '/sign-up')
                 .send(sentData)
@@ -256,7 +243,7 @@ module.exports = function (app) {
 
           it('should get an internal error on sign-up same user the others times (mongo fail)', function (done) {
             var sentData = {username: 'test_stage', password: 'test_stage'};
-            mock(mongoose.model('User'), 'update', function (stub) {
+            mockModel(mongoose.model('User'), 'update', function (stub) {
               agent
                 .post(url + '/sign-up')
                 .send(sentData)
@@ -321,7 +308,7 @@ module.exports = function (app) {
           });
 
           it('should get an internal error on request information for logged user (mongo fail)', function (done) {
-            mock(mongoose.model('User'), 'findOne', function (stub) {
+            mockModel(mongoose.model('User'), 'findOne', function (stub) {
               agent
                 .get(url + '/me')
                 .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
