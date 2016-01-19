@@ -1,12 +1,12 @@
 'use strict';
 
-var PRICE = 1<<0;
-var TIME = 1<<1;
-var HIGH = 1<<2;
-var LOW = 1<<3;
-var TASKS = 1<<4;
-var ESTIM_DEV = 1<<5;
-var ESTIM_SM = 1<<6;
+var PRICE = 1 << 0;
+var TIME = 1 << 1;
+var HIGH = 1 << 2;
+var LOW = 1 << 3;
+var TASKS = 1 << 4;
+var ESTIM_DEV = 1 << 5;
+var ESTIM_SM = 1 << 6;
 
 function getAttributeName(opts) {
   var attrName;
@@ -38,71 +38,16 @@ function getConvertMultiplier(setting, opts) {
   return mult;
 }
 
-function recursiveWalk(elements, setting, id, opts, cb) {
+function recursiveWalk(elements, setting, id, opts, cb) {
   if (elements !== undefined) {
     elements.forEach(function (subElement) {
-      if (subElement._id == id) {
+      if (subElement._id === id) {
         cb(subElement);
       } else {
         recursiveWalk(subElement.children, setting, id, opts, cb);
       }
     });
   }
-}
-
-function walkElement(entries, setting, id, opts) {
-  var result = '-';
-  if (opts !== undefined && id !== undefined) {
-    entries.forEach(function (entry) {
-      recursiveWalk(entry.children, setting, id, opts, function(element) {
-        if (opts & PRICE) {
-          result = computePrice(element, setting, opts);
-        } else if (opts & TIME) {
-          result = computeTime(element, setting, opts);
-        }
-      });
-    });
-  }
-
-  return result;
-}
-
-function computeDayPerPersonPerIter(entries, setting) {
-  return setting.contributorOccupation * setting.dayPerWeek * setting.weekPerIteration / 100;
-}
-
-function iterations(entries, setting, opts) {
-  return (computeTotal(entries, setting, ESTIM_DEV | ESTIM_SM | opts) / computeDayPerPersonPerIter(entries, setting)) / setting.contributorAvailable;
-}
-
-function computeTotal(entries, setting, opts) {
-  var total = 0;
-
-  entries.forEach(function (entry) {
-    if (opts & TASKS) {
-      total += entry.size;
-    }
-    if (opts & ESTIM_DEV) {
-      var totalDev = getDevTime(entry, setting, opts);
-      if (opts & PRICE) {
-        totalDev *= setting.contributorPrice;
-      }
-      total += totalDev;
-    }
-    if (opts & ESTIM_SM) {
-      var totalSm = getSMTime(entry, setting, opts);
-      if (opts & PRICE) {
-        totalSm *= setting.scrummasterPrice;
-      }
-      total += totalSm;
-    }
-  });
-
-  return total;
-}
-
-function computeTime(entry, setting, opts) {
-  return getSMTime(entry, setting, opts) + getDevTime(entry, setting, opts);
 }
 
 function getRate(setting, opts) {
@@ -128,6 +73,36 @@ function getSMTime(entry, setting, opts) {
   return result;
 }
 
+function computeTotal(entries, setting, opts) {
+  var total = 0;
+
+  entries.forEach(function (entry) {
+    if (opts & TASKS) {
+      total += entry.size;
+    }
+    if (opts & ESTIM_DEV) {
+      var totalDev = getDevTime(entry, setting, opts);
+      if (opts & PRICE) {
+        totalDev *= setting.contributorPrice;
+      }
+      total += totalDev;
+    }
+    if (opts & ESTIM_SM) {
+      var totalSm = getSMTime(entry, setting, opts);
+      if (opts & PRICE) {
+        totalSm *= setting.scrummasterPrice;
+      }
+      total += totalSm;
+    }
+  });
+
+  return total;
+}
+
+function computeTime(entry, setting, opts) {
+  return getSMTime(entry, setting, opts) + getDevTime(entry, setting, opts);
+}
+
 function computePrice(entry, setting, opts) {
   var result = 0;
 
@@ -139,6 +114,33 @@ function computePrice(entry, setting, opts) {
   }
 
   return parseFloat(result);
+}
+
+function computeDayPerPersonPerIter(entries, setting) {
+  return setting.contributorOccupation * setting.dayPerWeek * setting.weekPerIteration / 100;
+}
+
+function iterations(entries, setting, opts) {
+  return (computeTotal(entries, setting, ESTIM_DEV | ESTIM_SM | opts) /
+    computeDayPerPersonPerIter(entries, setting)) / setting.contributorAvailable;
+}
+
+
+function walkElement(entries, setting, id, opts) {
+  var result = '-';
+  if (opts !== undefined && id !== undefined) {
+    entries.forEach(function (entry) {
+      recursiveWalk(entry.children, setting, id, opts, function (element) {
+        if (opts & PRICE) {
+          result = computePrice(element, setting, opts);
+        } else if (opts & TIME) {
+          result = computeTime(element, setting, opts);
+        }
+      });
+    });
+  }
+
+  return result;
 }
 
 module.exports = {
