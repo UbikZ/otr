@@ -372,6 +372,44 @@ module.exports = function (app) {
 
       describe('> User API', function () {
         describe('# [GET] ' + url + '/user', function () {
+          it('should get an internal error (mongo fail)', function (done) {
+            mockModel(mongoose.model('User'), 'find', function (stub) {
+              agent
+                .get(url + '/user')
+                .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+                .expect(500)
+                .expect('Content-Type', 'application/json; charset=utf-8')
+                .end(function (err, res) {
+                  if (err) return done(err);
+                  var result = res.body;
+                  assert.strictEqual(result.code, 500);
+                  assert.isDefined(result.error);
+                  assert.strictEqual(result.messageCode, "-1");
+                  stub.restore();
+                  done();
+                });
+            });
+          });
+
+          it('should get an error (empty response)', function (done) {
+            mockModel(mongoose.model('User'), 'find', function (stub) {
+              agent
+                .get(url + '/user')
+                .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+                .expect(404)
+                .expect('Content-Type', 'application/json; charset=utf-8')
+                .end(function (err, res) {
+                  if (err) return done(err);
+                  var result = res.body;
+                  assert.strictEqual(result.code, 404);
+                  assert.isUndefined(result.error);
+                  assert.strictEqual(result.messageCode, "-12");
+                  stub.restore();
+                  done();
+                });
+            }, true);
+          });
+
           it('should request list of all users', function (done) {
             agent
               .get(url + '/user')
@@ -381,6 +419,9 @@ module.exports = function (app) {
               .end(function (err, res) {
                 if (err) return done(err);
                 var result = res.body;
+                assert.strictEqual(result.code, 200);
+                assert.isUndefined(result.error);
+                assert.isUndefined(result.messageCode);
                 assert.isArray(result.users);
                 assert.strictEqual(result.users.length, 1);
                 done();
@@ -389,6 +430,69 @@ module.exports = function (app) {
         });
 
         describe('# [POST] ' + url + '/user/update', function () {
+          it('should get an internal error (findOne) for update current user (mongo fail)', function (done) {
+            var sentData = require('./fixtures/user/update');
+            mockModel(mongoose.model('User'), 'findOne', function (stub) {
+              agent
+                .post(url + '/user/update')
+                .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+                .send(sentData)
+                .expect(500)
+                .expect('Content-Type', 'application/json; charset=utf-8')
+                .end(function (err, res) {
+                  if (err) return done(err);
+                  var result = res.body;
+                  assert.strictEqual(result.code, 500);
+                  assert.isDefined(result.error);
+                  assert.strictEqual(result.messageCode, "-1");
+                  stub.restore();
+                  done();
+                });
+            });
+          });
+
+          it('should get an error (empty response) for update current user', function (done) {
+            var sentData = require('./fixtures/user/update');
+            mockModel(mongoose.model('User'), 'findOne', function (stub) {
+              agent
+                .post(url + '/user/update')
+                .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+                .send(sentData)
+                .expect(404)
+                .expect('Content-Type', 'application/json; charset=utf-8')
+                .end(function (err, res) {
+                  if (err) return done(err);
+                  var result = res.body;
+                  assert.strictEqual(result.code, 404);
+                  assert.isUndefined(result.error);
+                  assert.strictEqual(result.messageCode, "-12");
+                  stub.restore();
+                  done();
+                });
+            }, true);
+          });
+
+          it('should get an internal error (update) for update current user (mongo fail)', function (done) {
+            var sentData = require('./fixtures/user/update');
+            mockModel(mongoose.model('User'), 'update', function (stub) {
+              agent
+                .post(url + '/user/update')
+                .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+                .send(sentData)
+                .expect(500)
+                .expect('Content-Type', 'application/json; charset=utf-8')
+                .end(function (err, res) {
+                  if (err) return done(err);
+                  var result = res.body;
+                  assert.strictEqual(result.code, 500);
+                  assert.isDefined(result.error);
+                  assert.strictEqual(result.messageCode, "-1");
+                  stub.restore();
+                  done();
+                });
+            });
+          });
+
           it('should update current user', function (done) {
             var sentData = require('./fixtures/user/update');
             agent

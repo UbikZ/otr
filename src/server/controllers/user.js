@@ -61,7 +61,7 @@ module.exports.controller = function (app, config) {
           }
         });
       } else {
-        http.response(res, 404, {}, "User not found.", err);
+        http.response(res, 404, {}, "-12");
       }
     });
   });
