@@ -57,6 +57,7 @@ var browserDependencies = [
   'oclazyload',
   'pace',
   'toastr',
+  'q'
 ];
 
 // Bind tasks
