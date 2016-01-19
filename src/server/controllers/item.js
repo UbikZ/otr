@@ -158,7 +158,7 @@ module.exports.controller = function (app, config) {
                     if (data.ontimeId != undefined) {
                       modelItem = new Version(item);
                       modelItem.update = modelItem.creation = {user: user._id, date: new Date()};
-                      ontimeRequester.items(req.ot_token, data.ontimeId, function (result) {
+                      ontimeRequester.items(req.ontimeToken, data.ontimeId, function (result) {
                         result = JSON.parse(result);
                         if (result.error) {
                           http.log(req, 'Ontime Error: ' + result.error_description);

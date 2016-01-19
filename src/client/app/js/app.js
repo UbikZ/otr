@@ -6,7 +6,7 @@ window.$ = window.jQuery = require('jquery');
 $('#wrapper').hide();
 
 // External
-require('angular');
+var angular = require('angular');
 require('angular-gravatar');
 require('angular-ui-router');
 require('angular-translate');
@@ -39,7 +39,7 @@ require('./filters')(app);
 app
   .constant('_CONST', require('./constants'))
   .config(require('./config'))
-  .run(function ($rootScope, $state, $localStorage, $location, authService, _CONST, $templateCache) {
+  .run(function ($rootScope, $state, $localStorage, $location, authService, _CONST) {
     $rootScope.$state = $state;
     $rootScope.const = _CONST;
     $rootScope.routes = _CONST.ROUTES;
@@ -52,7 +52,7 @@ app
       $rootScope.user = undefined;
       delete $localStorage.user;
       delete $localStorage.token;
-      delete $localStorage.ot_token;
+      delete $localStorage.ontimeToken;
     };
 
     $rootScope.enableUi = function() {
@@ -63,12 +63,12 @@ app
     $rootScope.$on('$locationChangeStart', function (event, toState) {
       if (~toState.indexOf('pdf')) {
         $rootScope.pdf.enabled = true;
-      } else if ($localStorage.token && $localStorage.ot_token) {
+      } else if ($localStorage.token && $localStorage.ontimeToken) {
         $rootScope.isAuthenticated = true;
-        if ($location.path() == '/login') {
+        if ($location.path() === '/login') {
           $location.path('/');
         }
-        if ($rootScope.user == undefined) {
+        if ($rootScope.user === undefined) {
           authService.me(function (user) {
             $rootScope.user = user;
           }, function (err) {

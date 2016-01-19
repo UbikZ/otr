@@ -39,7 +39,7 @@ function getConvertMultiplier(setting, opts) {
 }
 
 function recursiveWalk(elements, setting, id, opts, cb) {
-  if (elements != undefined) {
+  if (elements !== undefined) {
     elements.forEach(function (subElement) {
       if (subElement._id == id) {
         cb(subElement);
@@ -52,7 +52,7 @@ function recursiveWalk(elements, setting, id, opts, cb) {
 
 function walkElement(entries, setting, id, opts) {
   var result = '-';
-  if (opts != undefined && id != undefined) {
+  if (opts !== undefined && id !== undefined) {
     entries.forEach(function (entry) {
       recursiveWalk(entry.children, setting, id, opts, function(element) {
         if (opts & PRICE) {
@@ -72,8 +72,7 @@ function computeDayPerPersonPerIter(entries, setting) {
 }
 
 function iterations(entries, setting, opts) {
-  return (computeTotal(entries, setting, ESTIM_DEV | ESTIM_SM | opts) / computeDayPerPersonPerIter(entries, setting))
-    / setting.contributorAvailable;
+  return (computeTotal(entries, setting, ESTIM_DEV | ESTIM_SM | opts) / computeDayPerPersonPerIter(entries, setting)) / setting.contributorAvailable;
 }
 
 function computeTotal(entries, setting, opts) {
@@ -103,7 +102,7 @@ function computeTotal(entries, setting, opts) {
 }
 
 function computeTime(entry, setting, opts) {
-  return getSMTime(entry, setting, opts) + getDevTime(entry, setting, opts);;
+  return getSMTime(entry, setting, opts) + getDevTime(entry, setting, opts);
 }
 
 function getRate(setting, opts) {

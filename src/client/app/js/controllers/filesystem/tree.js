@@ -9,7 +9,7 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
 
     function changeCurrentOrganization(organization) {
       $scope.organization = organization;
-      if ($scope.organization != undefined) {
+      if ($scope.organization !== undefined) {
         $scope.items = recursiveTool.convertTreeView($scope.organization);
       }
     }
@@ -17,8 +17,8 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
     function changeCurrentIdNode(id) {
       $scope.currentIdNode = id;
       $scope.expandedNodes = $scope.expandedNodes || [];
-      $location.hash(id == undefined ? "_" : $scope.currentIdNode);
-      if ($scope.currentIdNode == undefined) {
+      $location.hash(id === undefined ? "_" : $scope.currentIdNode);
+      if ($scope.currentIdNode === undefined) {
         $scope.breadcrumbElements = undefined;
         $scope.currentItem = $scope.organization;
         $scope.documents = [];
@@ -49,10 +49,10 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
 
     function mergeFileItems() {
       $scope.fileItems = [];
-      if ($scope.projects != undefined) {
+      if ($scope.projects !== undefined) {
         $scope.fileItems = $scope.fileItems.concat($scope.projects);
       }
-      if ($scope.documents != undefined) {
+      if ($scope.documents !== undefined) {
         $scope.fileItems = $scope.fileItems.concat($scope.documents);
       }
     }
@@ -60,9 +60,9 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
     function mergeSettings() {
       var parentSetting, finalSetting;
       finalSetting = parentSetting = $scope.masterSetting;
-      if (finalSetting != undefined) {
+      if (finalSetting !== undefined) {
         parentSetting = finalSetting = angular.extend({}, finalSetting, mappingSetting.dalToDTO($scope.organization.setting));
-        if ($scope.breadcrumbElements != undefined) {
+        if ($scope.breadcrumbElements !== undefined) {
           $scope.breadcrumbElements.forEach(function (element, index) {
             if (index < $scope.breadcrumbElements.length - 1) {
               parentSetting = angular.extend({}, parentSetting, mappingSetting.dalToDTO(element.setting));
@@ -79,12 +79,12 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
     }
 
     function loadCurrentSetting() {
-      if ($scope.masterSetting == undefined) {
+      if ($scope.masterSetting === undefined) {
         settingService.get({id: _CONST.DATAMODEL.ID_SETTING}, function (res) {
-          if (res.setting != undefined) {
+          if (res.setting !== undefined) {
             $scope.masterSetting = mappingSetting.dalToDTO(res.setting);
-            if ($scope.organization.setting == undefined) {
-              $scope.setting = $scope.masterSetting
+            if ($scope.organization.setting === undefined) {
+              $scope.setting = $scope.masterSetting;
             }
             mergeSettings();
           }

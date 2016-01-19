@@ -93,8 +93,8 @@ module.exports = [
         return {
           'request': function (config) {
             config.headers = config.headers || {};
-            if ($localStorage.token && $localStorage.ot_token) {
-              config.headers.Authorization = 'Bearer ' + $localStorage.token + ' ' + $localStorage.ot_token;
+            if ($localStorage.token && $localStorage.ontimeToken) {
+              config.headers.Authorization = 'Bearer ' + $localStorage.token + ' ' + $localStorage.ontimeToken;
             }
 
             return config;

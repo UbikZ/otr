@@ -36,7 +36,7 @@ function ensureAuthorized(req, res, next) {
     bearerToken = bearer[1];
     bearerOtToken = bearer[2];
     req.token = bearerToken;
-    req.ot_token = bearerOtToken;
+    req.ontimeToken = bearerOtToken;
     next();
   } else {
     log(req, 'No bearer header provided');
