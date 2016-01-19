@@ -99,14 +99,14 @@ module.exports.controller = function (app, config) {
             }
           });
         } else {
-          var newSetting = new Setting(mapping.settingDtoToDal(undefined, data));
-          newSetting.id = 42; // We force ONLY ONE setting on the collection
-          Setting.create(newSetting, function (err, setting) {
+          var nSetting = new Setting(mapping.settingDtoToDal(undefined, data));
+          nSetting.id = 42; // We force ONLY ONE setting on the collection
+          Setting.update({_id: nSetting._id}, nSetting, {upsert: true}).lean().exec(function (err, raw) {
             if (err) {
               http.log(req, 'Internal error: create setting (in collection)', err);
               http.response(res, 500, {}, "-1", err);
             } else {
-              http.response(res, 200, {setting: setting}, "8");
+              http.response(res, 200, {setting: nSetting}, "8");
             }
           })
         }

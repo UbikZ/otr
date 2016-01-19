@@ -1,0 +1,16 @@
+{
+  "contributorAvailable": 2,
+  "contributorOccupation": 50,
+  "contributorPrice": 900,
+  "dayPerWeek": 6,
+  "estimateType": "final",
+  "hourPerDay": 6,
+  "label": "jrr/h",
+  "rateMultiplier": 1340,
+  "scrummasterOccupation": 20,
+  "scrummasterPrice": 1300,
+  "showDev": false,
+  "showManagement": false,
+  "weekPerIteration": 3,
+  "showDate": true
+}

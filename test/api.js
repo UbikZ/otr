@@ -1513,7 +1513,7 @@ module.exports = function (app) {
           });
         });
 
-        describe('# [POST] ' + url + '/item/update', function () {
+        describe('# [UPDATE] ' + url + '/item/update', function () {
           it('should get an error because no organization identifier given', function (done) {
             var sentData = {};
             agent
@@ -2062,6 +2062,159 @@ module.exports = function (app) {
                 });
                 done();
               });
+          });
+        });
+
+        describe('> Setting API', function () {
+          var settingStandaloneId, settingSubItemId;
+          describe('# [POST] ~standalone' + url + '/setting/update', function () {
+            it('should get an internal error (findOne) on create a standalone setting (mongo fail)', function (done) {
+              var sentData = require('./fixtures/setting/create-ok-1');
+              mockModel(mongoose.model('Setting'), 'findOne', function (stub) {
+                agent
+                  .post(url + '/setting/update')
+                  .send(sentData)
+                  .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+                  .expect(500)
+                  .expect('Content-Type', 'application/json; charset=utf-8')
+                  .end(function (err, res) {
+                    if (err) return done(err);
+                    var result = res.body;
+                    assert.strictEqual(result.code, 500);
+                    assert.isDefined(result.error);
+                    assert.strictEqual(result.messageCode, "-1");
+                    stub.restore();
+                    done();
+                  });
+              });
+            });
+
+            it('should get an internal error (update) on create a standalone setting (mongo fail)', function (done) {
+              var sentData = require('./fixtures/setting/create-ok-1');
+              mockModel(mongoose.model('Setting'), 'update', function (stub) {
+                agent
+                  .post(url + '/setting/update')
+                  .send(sentData)
+                  .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+                  .expect(500)
+                  .expect('Content-Type', 'application/json; charset=utf-8')
+                  .end(function (err, res) {
+                    if (err) return done(err);
+                    var result = res.body;
+                    assert.strictEqual(result.code, 500);
+                    assert.isDefined(result.error);
+                    assert.strictEqual(result.messageCode, "-1");
+                    stub.restore();
+                    done();
+                  });
+              });
+            });
+
+            it('should create a standalone setting', function (done) {
+              var sentData = require('./fixtures/setting/create-ok-1');
+              agent
+                .post(url + '/setting/update')
+                .send(sentData)
+                .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+                .expect(200)
+                .expect('Content-Type', 'application/json; charset=utf-8')
+                .end(function (err, res) {
+                  if (err) return done(err);
+                  var result = res.body;
+                  assert.strictEqual(result.code, 200);
+                  assert.isUndefined(result.error);
+                  assert.strictEqual(result.messageCode, "8");
+                  assert.isDefined(result.setting);
+                  assert.strictEqual(result.setting.project_dev.contributor_price, sentData.contributorPrice);
+                  assert.strictEqual(result.setting.project_dev.contributor_occupation, sentData.contributorOccupation);
+                  assert.strictEqual(result.setting.project_management.scrummaster_price, sentData.scrummasterPrice);
+                  assert.strictEqual(result.setting.project_management.scrummaster_occupation, sentData.scrummasterOccupation);
+                  assert.strictEqual(result.setting.billing.show_dev_price, sentData.showDev);
+                  assert.strictEqual(result.setting.billing.rate_multiplier, sentData.rateMultiplier);
+                  assert.strictEqual(result.setting.billing.show_management_price, sentData.showManagement);
+                  assert.strictEqual(result.setting.unit.estimate_type, sentData.estimateType);
+                  assert.strictEqual(result.setting.unit.range_estimate_unit, sentData.rangeEstimateUnit);
+                  assert.strictEqual(result.setting.unit.label, sentData.label);
+                  assert.strictEqual(result.setting.date.show, sentData.showDate);
+                  assert.strictEqual(result.setting.iteration.contributor_available, sentData.contributorAvailable);
+                  assert.strictEqual(result.setting.iteration.hour_per_day, sentData.hourPerDay);
+                  assert.strictEqual(result.setting.iteration.day_per_week, sentData.dayPerWeek);
+                  assert.strictEqual(result.setting.iteration.week_per_iteration, sentData.weekPerIteration);
+                  assert.strictEqual(result.setting.id, 42);
+                  settingStandaloneId = result.setting._id;
+                  done();
+                });
+            });
+
+            it('should get an internal error (update) on update a standalone setting (mongo fail)', function (done) {
+              var sentData = require('./fixtures/setting/create-ok-1');
+              sentData.id = 42;
+              mockModel(mongoose.model('Setting'), 'update', function (stub) {
+                agent
+                  .post(url + '/setting/update')
+                  .send(sentData)
+                  .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+                  .expect(500)
+                  .expect('Content-Type', 'application/json; charset=utf-8')
+                  .end(function (err, res) {
+                    if (err) return done(err);
+                    var result = res.body;
+                    assert.strictEqual(result.code, 500);
+                    assert.isDefined(result.error);
+                    assert.strictEqual(result.messageCode, "-1");
+                    stub.restore();
+                    done();
+                  });
+              });
+            });
+
+            it('should update a standalone setting', function (done) {
+              var sentData = require('./fixtures/setting/update-ok-1');
+              sentData.id = 42;
+              agent
+                .post(url + '/setting/update')
+                .send(sentData)
+                .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+                .expect(200)
+                .expect('Content-Type', 'application/json; charset=utf-8')
+                .end(function (err, res) {
+                  if (err) return done(err);
+                  var result = res.body;
+                  assert.strictEqual(result.code, 200);
+                  assert.isUndefined(result.error);
+                  assert.strictEqual(result.messageCode, "9");
+                  assert.isDefined(result.setting);
+                  assert.strictEqual(result.setting.project_dev.contributor_price, sentData.contributorPrice);
+                  assert.strictEqual(result.setting.project_dev.contributor_occupation, sentData.contributorOccupation);
+                  assert.strictEqual(result.setting.project_management.scrummaster_price, sentData.scrummasterPrice);
+                  assert.strictEqual(result.setting.project_management.scrummaster_occupation, sentData.scrummasterOccupation);
+                  assert.strictEqual(result.setting.billing.show_dev_price, sentData.showDev);
+                  assert.strictEqual(result.setting.billing.rate_multiplier, sentData.rateMultiplier);
+                  assert.strictEqual(result.setting.billing.show_management_price, sentData.showManagement);
+                  assert.strictEqual(result.setting.unit.estimate_type, sentData.estimateType);
+                  assert.strictEqual(result.setting.unit.label, sentData.label);
+                  assert.strictEqual(result.setting.date.show, sentData.showDate);
+                  assert.strictEqual(result.setting.iteration.contributor_available, sentData.contributorAvailable);
+                  assert.strictEqual(result.setting.iteration.hour_per_day, sentData.hourPerDay);
+                  assert.strictEqual(result.setting.iteration.day_per_week, sentData.dayPerWeek);
+                  assert.strictEqual(result.setting.iteration.week_per_iteration, sentData.weekPerIteration);
+                  assert.strictEqual(result.setting.id, 42);
+                  settingStandaloneId = result.setting._id;
+                  done();
+                });
+            });
+          });
+
+          describe('# [GET] ~standalone' + url + '/setting', function () {
+
+          });
+
+          describe('# [POST] ~sub-item' + url + '/setting/update', function () {
+
+          });
+
+          describe('# [GET] ~sub-item' + url + '/setting/sub', function () {
+
           });
         });
       });
