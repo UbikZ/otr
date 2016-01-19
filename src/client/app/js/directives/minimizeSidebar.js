@@ -1,17 +1,17 @@
 'use strict';
 
-var $ = require('jQuery');
-
-module.exports = ['$timeout',
-  function($timeout) {
+module.exports = [
+  function() {
     return {
       restrict: 'A',
-      // todo : externalize template ?
-      template: '<a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="" ng-click="minimalize()"><i class="fa fa-bars"></i></a>',
-      controller: function ($scope, $element) {
+      template:
+        '<a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="" ng-click="minimalize()">' +
+        '<i class="fa fa-bars"></i>' +
+        '</a>',
+      controller: function ($scope) {
         $scope.minimalize = function () {
-          var $body = $('body');
-          $body.toggleClass("mini-navbar");
+          var $body = window.$('body');
+          $body.toggleClass('mini-navbar');
           if (!$body.hasClass('mini-navbar') || $body.hasClass('body-small')) {
             $('#side-menu').hide();
             setTimeout(
