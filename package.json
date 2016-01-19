@@ -23,7 +23,6 @@
     "protractor": "^3.0.0",
     "resolve": "^1.0.0",
     "sinon": "^1.17.2",
-    "sinon-mongoose": "^1.2.1",
     "supertest": "^1.1.0",
     "vinyl-source-stream": "^0.1.1"
   },
