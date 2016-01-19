@@ -1,6 +1,5 @@
 'use strict';
 
-var angular = require('angular');
 var env = require('../env');
 
 var callbacks = require('../helpers/callback');
