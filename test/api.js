@@ -100,8 +100,8 @@ module.exports = function (app) {
           });
         });
 
-        describe('# [GET] ' + url + '/user (examples) without Bearer Token', function () {
-          it('returns a 403 (Not Allowed) error', function (done) {
+        describe('# [GET] ' + url + '/user (examples)', function () {
+          it('returns a 403 (Not Allowed) error (without Bearer Token)', function (done) {
             agent
               .get(url + '/user')
               .expect(403)
@@ -113,6 +113,25 @@ module.exports = function (app) {
                 assert.strictEqual(result.messageCode, "-3");
                 done();
               });
+          });
+
+          it('returns an internal error (checkAuthorized fail)', function (done) {
+            mock(mongoose.model('User'), 'findOne', function(stub) {
+              agent
+                .get(url + '/user')
+                .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+                .expect(500)
+                .expect('Content-Type', 'application/json; charset=utf-8')
+                .end(function (err, res) {
+                  if (err) return done(err);
+                  var result = res.body;
+                  assert.strictEqual(result.code, 500);
+                  assert.strictEqual(result.messageCode, "-1");
+                  assert.isDefined(result.error);
+                  stub.restore();
+                  done();
+                });
+            });
           });
         });
       });
