@@ -722,7 +722,7 @@ module.exports = function (app) {
                 assert.isUndefined(result.error);
                 assert.isUndefined(result.messageCode);
                 assert.isArray(result.items);
-                assert.strictEqual(result.items.length, 2);
+                assert.strictEqual(result.items.length, 3);
                 result.items.forEach(function (item, index) {
                   assert.strictEqual(item.parent.id, expectedData.data[index].parent.id);
                   assert.strictEqual(item.parent_project.id, expectedData.data[index].parent_project.id);
@@ -841,6 +841,28 @@ module.exports = function (app) {
                 assert.strictEqual(result.messageCode, "-7");
                 done();
               });
+          });
+
+          it('should get an internal error (mongo fail)', function (done) {
+            mockModel(mongoose.model('Organization'), 'update', function(stub) {
+              var sentData = require('./fixtures/item/create-ok-1');
+              sentData.organizationId = organizationId;
+              agent
+                .post(url + '/item/create')
+                .send(sentData)
+                .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+                .expect(500)
+                .expect('Content-Type', 'application/json; charset=utf-8')
+                .end(function (err, res) {
+                  if (err) return done(err);
+                  var result = res.body;
+                  assert.strictEqual(result.code, 500);
+                  assert.isDefined(result.error);
+                  assert.strictEqual(result.messageCode, "-1");
+                  stub.restore();
+                  done();
+                });
+            });
           });
 
           it('should create a new project in the organization', function (done) {
@@ -1052,6 +1074,18 @@ module.exports = function (app) {
                 assert.isDefined(versions[0].setting._id);
                 assert.isUndefined(versions[0].setting.contributorPrice);
                 assert.isArray(result.item.entries);
+                [result.item.entries, versions[0].entries].forEach(function(elements) {
+                  elements.forEach(function(element) {
+                    assert.isArray(element.children);
+                    assert.strictEqual(element.children.length, 1);
+                    assert.isArray(element.children[0].children);
+                    assert.strictEqual(element.children[0].children.length, 2);
+                    assert.isArray(element.children[0].children[0].children);
+                    assert.strictEqual(element.children[0].children[0].children.length, 0);
+                    assert.isArray(element.children[0].children[1].children);
+                    assert.strictEqual(element.children[0].children[1].children.length, 1);
+                  });
+                });
                 assert(result.item.entries.length > 0);
                 assert.isDefined(result.item.setting._id);
                 assert.isUndefined(result.item.setting.contributorPrice);
