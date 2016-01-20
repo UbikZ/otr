@@ -5,6 +5,7 @@
   "devDependencies": {
     "browserify": "^5.9.3",
     "chai": "^3.4.1",
+    "chai-as-promised": "^5.2.0",
     "del": "^0.1.2",
     "gulp": "^3.8.7",
     "gulp-angular-protractor": "0.0.6",

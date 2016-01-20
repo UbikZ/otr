@@ -1,17 +1,33 @@
-describe('angularjs homepage todo list', function() {
-  it('should add a todo', function() {
-    browser.get('https://angularjs.org');
+var chai = require('chai');
+var chaiAsPromised = require('chai-as-promised');
+chai.use(chaiAsPromised);
 
-    element(by.model('todoList.todoText')).sendKeys('write first protractor test');
-    element(by.css('[value="add"]')).click();
+var expect = chai.expect;
 
-    var todoList = element.all(by.repeater('todo in todoList.todos'));
-    expect(todoList.count()).toEqual(3);
-    expect(todoList.get(2).getText()).toEqual('write first protractor test');
+/*jhint expr:true */
+describe('no protractor at all', function() {
+  it('should still do normal tests', function() {
+    expect(true).to.equal(true);
+  });
+});
 
-    // You wrote your first test, cross it off the list
-    todoList.get(2).element(by.css('input')).click();
-    var completedAmount = element.all(by.css('.done-true'));
-    expect(completedAmount.count()).toEqual(2);
+describe('protractor library', function() {
+  it.skip('should be able to skip tests', function() {
+    expect(true).to.equal(false);
+  });
+
+  it('should expose the correct global variables', function() {
+    expect(protractor).to.exist;
+    expect(browser).to.exist;
+    expect(by).to.exist;
+    expect(element).to.exist;
+    expect($).to.exist;
+  });
+
+  it('should wrap webdriver', function() {
+    // Mocha will report the spec as slow if it goes over this time in ms.
+    this.slow(6000);
+    browser.get('index.html');
+    expect(browser.getTitle()).to.eventually.equal('My AngularJS App');
   });
 });
