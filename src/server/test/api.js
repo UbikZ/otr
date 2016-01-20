@@ -11,6 +11,10 @@ var OrganizationModel = require('../models/organization');
 var ontimeRequester = require('../controllers/helpers/ontime');
 var sinon = require('sinon');
 
+if (process.env.NODE_ENV != 'staging') {
+  process.exit(1);
+}
+
 // Generic mocks methods
 function invalidOntimeAPIResponse() {
   var cb;
@@ -2566,14 +2570,10 @@ module.exports = function (app) {
       });
 
       after('# should drop database', function (done) {
-        if (process.env.NODE_ENV == 'staging') {
-          mongoose.connection.db.dropDatabase(function (err) {
-            if (err) throw err;
-            done();
-          });
-        } else {
+        mongoose.connection.db.dropDatabase(function (err) {
+          if (err) throw err;
           done();
-        }
+        });
       });
     }
   );
