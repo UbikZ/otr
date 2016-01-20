@@ -78,6 +78,8 @@
   },
   "scripts": {
     "build": "./node_modules/.bin/gulp pre-clean && ./node_modules/.bin/gulp jshint && ./node_modules/.bin/gulp install",
-    "test": "export NODE_ENV=staging && ./node_modules/.bin/gulp test-back"
+    "test-back": "export NODE_ENV=staging && ./node_modules/.bin/gulp test-back",
+    "test-front": "export NODE_ENV=staging && ./node_modules/.bin/gulp test-front",
+    "test": "export NODE_ENV=staging && ./node_modules/.bin/gulp test-back && ./node_modules/.bin/gulp test-front"
   }
 }

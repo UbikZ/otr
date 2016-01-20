@@ -35,7 +35,7 @@
       "views": "./public/views",
       "app": "./src/client/app",
       "print": "./src/client/print",
-      "test": "./src/client/tests"
+      "test": "./src/client/test"
     },
     "server": {
       "root": "./src/server",

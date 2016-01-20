@@ -25,6 +25,8 @@ plugins.jshint = require('gulp-jshint');
 plugins.istanbul = require('gulp-istanbul');
 plugins.mocha = require('gulp-mocha');
 plugins.coveralls = require('gulp-coveralls');
+plugins.angularProtractor = require('gulp-angular-protractor');
+
 plugins.ifProd = function(callback) {
   return require('gulp-if')(!config.env.debug, callback);
 };
@@ -32,6 +34,7 @@ plugins.ifProd = function(callback) {
 var tasksMapper = {
   'jshint': [],
   'test-back': [],
+  'test-front': [],
   'pre-clean': [],
   'post-clean': [],
   'vendor': [],
