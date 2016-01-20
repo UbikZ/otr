@@ -1,3 +1,14 @@
+engines:
+  nodesecurity:
+    enabled: true
+  dupplication:
+    enabled: true
+  eslint:
+    enabled: true
+  csslint:
+    enabled: true
+  fixme:
+    enabled: true
 exclude_paths:
 - test/**/*
 - src/client/app/css/main.css
