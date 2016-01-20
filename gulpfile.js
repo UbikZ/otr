@@ -22,12 +22,16 @@ plugins.rev = require('gulp-rev');
 plugins.buffer = require('gulp-buffer');
 plugins.gzip = require('gulp-gzip');
 plugins.jshint = require('gulp-jshint');
+plugins.istanbul = require('gulp-istanbul');
+plugins.mocha = require('gulp-mocha');
+plugins.coveralls = require('gulp-coveralls');
 plugins.ifProd = function(callback) {
   return require('gulp-if')(!config.env.debug, callback);
 };
 
 var tasksMapper = {
   'jshint': [],
+  'test-back': [],
   'pre-clean': [],
   'post-clean': [],
   'vendor': [],
@@ -66,7 +70,6 @@ Object.keys(tasksMapper).forEach(function(task) {
 }, tasksMapper);
 
 // Build tasks
-gulp.task('check', ['jshint']);
 gulp.task('install', ['revision'], getTask('post-clean'));
 gulp.task('default', ['install']);
 

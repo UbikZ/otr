@@ -7,15 +7,19 @@
     "chai": "^3.4.1",
     "del": "^0.1.2",
     "gulp": "^3.8.7",
+    "gulp-angular-protractor": "0.0.6",
     "gulp-angular-templatecache": "^1.8.0",
     "gulp-buffer": "0.0.2",
     "gulp-concat": "^2.6.0",
+    "gulp-coveralls": "^0.1.4",
     "gulp-gzip": "^1.2.0",
     "gulp-if": "^2.0.0",
+    "gulp-istanbul": "^0.10.3",
     "gulp-jshint": "^2.0.0",
     "gulp-less": "^3.0.3",
     "gulp-minify-css": "^1.2.1",
     "gulp-minify-html": "^1.0.4",
+    "gulp-mocha": "^2.2.0",
     "gulp-rev": "^6.0.1",
     "gulp-streamify": "^1.0.2",
     "gulp-uglify": "^0.3.1",
@@ -74,6 +78,6 @@
   },
   "scripts": {
     "build": "./node_modules/.bin/gulp pre-clean && ./node_modules/.bin/gulp jshint && ./node_modules/.bin/gulp install",
-    "test": "export NODE_ENV=staging && ./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha test"
+    "test": "export NODE_ENV=staging && ./node_modules/.bin/gulp test-back"
   }
 }

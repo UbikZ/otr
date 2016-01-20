@@ -29,12 +29,13 @@
   "path": {
     "public": "./public",
     "scripts": "./scripts",
+    "coverage": "./coverage",
     "logs": "./logs",
     "client": {
       "views": "./public/views",
       "app": "./src/client/app",
       "print": "./src/client/print",
-      "tests": "./src/client/tests"
+      "test": "./src/client/tests"
     },
     "server": {
       "root": "./src/server",
@@ -42,7 +43,7 @@
       "socket": "./src/server/sockets",
       "model": "./src/server/models",
       "prototype": "./src/server/prototypes",
-      "tests": "./src/server/tests"
+      "test": "./test"
     }
   },
   "particularities": {
