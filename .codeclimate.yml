@@ -1,6 +1,4 @@
 engines:
-  nodesecurity:
-    enabled: true
   dupplication:
     enabled: true
   eslint:
