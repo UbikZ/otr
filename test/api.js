@@ -2054,7 +2054,7 @@ module.exports = function (app) {
         });
 
         describe('> Setting API', function () {
-          var settingStandaloneId, settingSubItemId;
+          var settingStandaloneId;
           describe('# [POST] ~standalone' + url + '/setting/update', function () {
             it('should get an internal error (findOne) on create a standalone setting (mongo fail)', function (done) {
               var sentData = require('./fixtures/setting/create-ok-1');
@@ -2511,7 +2511,7 @@ module.exports = function (app) {
                 });
             });
 
-            it('should get a sub-item setting', function (done) {
+            it('should get a sub-item setting for organization', function (done) {
               agent
                 .get(url + '/setting/sub?organizationId=' + organizationId)
                 .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
@@ -2528,7 +2528,24 @@ module.exports = function (app) {
                 });
             });
 
-            it('should get a sub-item setting', function (done) {
+            it('should get a sub-item setting for organization (with lazy)', function (done) {
+              agent
+                .get(url + '/setting/sub?lazy=1&organizationId=' + organizationId)
+                .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+                .expect(200)
+                .expect('Content-Type', 'application/json; charset=utf-8')
+                .end(function (err, res) {
+                  if (err) return done(err);
+                  var result = res.body;
+                  assert.strictEqual(result.code, 200);
+                  assert.isUndefined(result.error);
+                  assert.isUndefined(result.messageCode);
+                  assert.isDefined(result.setting);
+                  done();
+                });
+            });
+
+            it('should get a sub-item setting for item', function (done) {
               agent
                 .get(url + '/setting/sub?organizationId=' + organizationId + '&itemId=' + projectId)
                 .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
