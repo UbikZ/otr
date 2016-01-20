@@ -45,6 +45,15 @@ module.exports.controller = function (app, config) {
             http.log(req, 'Internal error: get setting', err);
             http.response(res, 500, {}, '-1', err);
           } else if (organization) {
+            /*jshint eqeqeq: false */
+            if (data.lazy == 1) {
+              /*jshint eqeqeq: true */
+              Organization.walkRecursively(organization, function (element) {
+                if (element.entries !== undefined) {
+                  delete element.entries;
+                }
+              });
+            }
             var modelItem;
             if (data.itemId !== undefined && data.itemId !== data.organizationId) {
               Organization.findDeepAttributeById(organization, data.itemId, function (element) {
@@ -125,6 +134,15 @@ module.exports.controller = function (app, config) {
             http.log(req, 'Internal error: edit setting (in organization)', err);
             http.response(res, 500, {}, '-1', err);
           } else if (organization) {
+            /*jshint eqeqeq: false */
+            if (data.lazy == 1) {
+              /*jshint eqeqeq: true */
+              Organization.walkRecursively(organization, function (element) {
+                if (element.entries !== undefined) {
+                  delete element.entries;
+                }
+              });
+            }
             var modelItem;
             if (data.itemId !== undefined && data.itemId !== data.organizationId) {
               Organization.findDeepAttributeById(organization, data.itemId, function (element) {
