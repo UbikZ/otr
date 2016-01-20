@@ -46,9 +46,9 @@
                 <strong ng-if="!child.name">_</strong>
             </td>
         </tr>
-        <tr ng-repeat-start="feature in child.children | orderBy:'ontime_id' | filter:searchList"
+        <tr ng-repeat-start="feature in child.children | orderBy:'ontimeId' | filter:searchList"
             class="priority priority6">
-            <td>{{ feature.ontime_id }}</td>
+            <td>{{ feature.ontimeId }}</td>
             <td>{{ feature.name }}</td>
             <td class="text-center">
                 <span ng-if="setting.estimateType != 'range'">
@@ -81,9 +81,9 @@
                 </span>
             </td>
         </tr>
-        <tr ng-repeat="subFeature in feature.children | orderBy:'ontime_id' | filter:searchList"
+        <tr ng-repeat="subFeature in feature.children | orderBy:'ontimeId' | filter:searchList"
             class="priority priority9">
-            <td><i class="m-l-lg">{{ subFeature.ontime_id }}</i></td>
+            <td><i class="m-l-lg">{{ subFeature.ontimeId }}</i></td>
             <td><i>{{ subFeature.name }}</i></td>
             <td class="text-center"><i>
                 <span ng-if="setting.estimateType != 'range'">
