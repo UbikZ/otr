@@ -1,0 +1,5 @@
+exclude_paths:
+- test/**/*
+- src/client/app/css/main.css
+- gulpfile.js
+- gulp-tasks/**/*
