@@ -83,16 +83,18 @@ module.exports = function (app) {
           var path = config.path.public + '/dist';
           var staticFiles = [];
 
-          it ('check public/dist exists', function (done) {
+          it('check public/dist exists', function (done) {
             assert.isTrue(fs.existsSync(path));
             staticFiles = fs.readdirSync(path).filter(function (file) {
-                return ~file.indexOf('.gz.');
-              });
+              return ~file.indexOf('.gz.');
+            });
             done();
           });
-          
-          staticFiles.forEach(function (staticFile) {
-            it('returns *.gz compiled files', function (done) {
+
+
+          it('returns *.gz compiled files', function (done) {
+            var isDone = 0;
+            staticFiles.forEach(function (staticFile) {
               var contentType = undefined;
               if (~staticFile.indexOf('.js')) {
                 contentType = 'application/javascript';
@@ -107,7 +109,9 @@ module.exports = function (app) {
                 .end(function (err, res) {
                   if (err) return done(err);
                   res.text.should.be.a('string');
-                  done();
+                  if (++isDone == staticFiles.length) {
+                    done();
+                  }
                 });
             });
           });
