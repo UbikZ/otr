@@ -15,7 +15,7 @@ transports.push(new winston.transports.Console({
 
 transports.push(new winston.transports.File({
   level: 'info',
-  filename: config.path.logs + '/' + process.env.NODE_ENV + '.otr.' + moment().format('YYYY-MM-DD') + '.0.log',
+  filename: config.path.logs + '/' + process.env.NODE_ENV + '.access.' + moment().format('YYYY-MM-DD') + '.0.log',
   handleExceptions: true,
   json: true,
   maxsize: 5242880, //5MB
