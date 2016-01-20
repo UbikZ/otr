@@ -13,7 +13,7 @@ module.exports = function (gulp, plugins, npmPackages, config) {
             .pipe(plugins.istanbul.writeReports({dir: config.path.server.coverage}))
             .on('end', function () {
               //if (!process.env.CI) {
-              gulp.src(config.path.coverage.concat('/lcov.info'))
+              gulp.src(config.path.server.coverage.concat('/lcov.info'))
                 .pipe(plugins.coveralls());
               //}
               process.exit();
