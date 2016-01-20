@@ -5,22 +5,21 @@ var mongoose = require('mongoose');
 var should = require('chai').should();
 var assert = require('chai').assert;
 var config = require('../../../config');
-var moment = require('moment');
 var fs = require('fs');
 var OrganizationModel = require('../models/organization');
 var ontimeRequester = require('../controllers/helpers/ontime');
 var sinon = require('sinon');
 
-if (process.env.NODE_ENV != 'staging') {
+if (process.env.NODE_ENV !== 'staging') {
   process.exit(1);
 }
 
 // Generic mocks methods
 function invalidOntimeAPIResponse() {
   var cb;
-  if (typeof (arguments[1]) == 'function') {
+  if (typeof (arguments[1]) === 'function') {
     cb = arguments[1];
-  } else if (typeof (arguments[2]) == 'function') {
+  } else if (typeof (arguments[2]) === 'function') {
     cb = arguments[2];
   }
   cb(JSON.stringify(require('./fixtures/ontime/ko')));
@@ -28,9 +27,9 @@ function invalidOntimeAPIResponse() {
 
 function internalErrorOntimeAPIResponse() {
   var cb;
-  if (typeof (arguments[1]) == 'function') {
+  if (typeof (arguments[1]) === 'function') {
     cb = arguments[1];
-  } else if (typeof (arguments[2]) == 'function') {
+  } else if (typeof (arguments[2]) === 'function') {
     cb = arguments[2];
   }
   cb(JSON.stringify({}));
@@ -50,7 +49,7 @@ function mockModel(model, method, callback, empty) {
       return this;
     },
     exec: function (cb) {
-      cb(empty == true ? null : {error: 'error'});
+      cb(empty === true ? null : {error: 'error'});
     },
   }, callback);
 }
@@ -76,7 +75,9 @@ module.exports = function (app) {
               .expect(200)
               .expect('Content-Type', 'text/html; charset=UTF-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 res.text.should.be.a('string');
                 done();
               });
@@ -99,7 +100,7 @@ module.exports = function (app) {
           it('returns *.gz compiled files', function (done) {
             var isDone = 0;
             staticFiles.forEach(function (staticFile) {
-              var contentType = undefined;
+              var contentType;
               if (~staticFile.indexOf('.js')) {
                 contentType = 'application/javascript';
               } else if (~staticFile.indexOf('.css')) {
@@ -111,9 +112,11 @@ module.exports = function (app) {
                 .expect('Content-Encoding', 'gzip')
                 .expect('Content-Type', contentType)
                 .end(function (err, res) {
-                  if (err) return done(err);
+                  if (err) {
+                    return done(err);
+                  }
                   res.text.should.be.a('string');
-                  if (++isDone == staticFiles.length) {
+                  if (++isDone === staticFiles.length) {
                     done();
                   }
                 });
@@ -128,10 +131,12 @@ module.exports = function (app) {
               .expect(403)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 403);
-                assert.strictEqual(result.messageCode, "-3");
+                assert.strictEqual(result.messageCode, '-3');
                 done();
               });
           });
@@ -144,10 +149,12 @@ module.exports = function (app) {
                 .expect(500)
                 .expect('Content-Type', 'application/json; charset=utf-8')
                 .end(function (err, res) {
-                  if (err) return done(err);
+                  if (err) {
+                    return done(err);
+                  }
                   var result = res.body;
                   assert.strictEqual(result.code, 500);
-                  assert.strictEqual(result.messageCode, "-1");
+                  assert.strictEqual(result.messageCode, '-1');
                   assert.isDefined(result.error);
                   stub.restore();
                   done();
@@ -162,10 +169,12 @@ module.exports = function (app) {
               .expect(404)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 404);
-                assert.strictEqual(result.messageCode, "-2");
+                assert.strictEqual(result.messageCode, '-2');
                 assert.isUndefined(result.error);
                 done();
               });
@@ -185,10 +194,12 @@ module.exports = function (app) {
               .expect(500)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 500);
-                assert.strictEqual(result.messageCode, "-1");
+                assert.strictEqual(result.messageCode, '-1');
                 done();
               });
           });
@@ -197,21 +208,25 @@ module.exports = function (app) {
             var sentData = {username: 'test_stage', password: 'test_stage'};
             var expectedData = require('./fixtures/auth/signup');
             ontimeRequester.requestToken = function (authObject, cb) {
+              /*jshint camelcase: false */
               expectedData.access_token += 'delta';
+              /*jshint camelcase: true */
               cb(JSON.stringify(expectedData));
             };
 
-            mockModel(mongoose.model('User'), "findOne", function (stub) {
+            mockModel(mongoose.model('User'), 'findOne', function (stub) {
               agent
                 .post(url + '/sign-up')
                 .send(sentData)
                 .expect(500)
                 .expect('Content-Type', 'application/json; charset=utf-8')
                 .end(function (err, res) {
-                  if (err) return done(err);
+                  if (err) {
+                    return done(err);
+                  }
                   var result = res.body;
                   assert.strictEqual(result.code, 500);
-                  assert.strictEqual(result.messageCode, "-1");
+                  assert.strictEqual(result.messageCode, '-1');
                   assert.isDefined(result.error);
                   stub.restore();
                   done();
@@ -223,21 +238,25 @@ module.exports = function (app) {
             var sentData = {username: 'test_stage', password: 'test_stage'};
             var expectedData = require('./fixtures/auth/signup');
             ontimeRequester.requestToken = function (authObject, cb) {
+              /*jshint camelcase: false */
               expectedData.access_token += 'delta';
+              /*jshint camelcase: true */
               cb(JSON.stringify(expectedData));
             };
 
-            mockModel(mongoose.model('User'), "update", function (stub) {
+            mockModel(mongoose.model('User'), 'update', function (stub) {
               agent
                 .post(url + '/sign-up')
                 .send(sentData)
                 .expect(500)
                 .expect('Content-Type', 'application/json; charset=utf-8')
                 .end(function (err, res) {
-                  if (err) return done(err);
+                  if (err) {
+                    return done(err);
+                  }
                   var result = res.body;
                   assert.strictEqual(result.code, 500);
-                  assert.strictEqual(result.messageCode, "-1");
+                  assert.strictEqual(result.messageCode, '-1');
                   assert.isDefined(result.error);
                   stub.restore();
                   done();
@@ -249,7 +268,9 @@ module.exports = function (app) {
             var sentData = {username: 'test_stage', password: 'test_stage'};
             var expectedData = require('./fixtures/auth/signup');
             ontimeRequester.requestToken = function (authObject, cb) {
+              /*jshint camelcase: false */
               expectedData.access_token += 'delta';
+              /*jshint camelcase: true */
               cb(JSON.stringify(expectedData));
             };
             agent
@@ -258,17 +279,21 @@ module.exports = function (app) {
               .expect(200)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 200);
                 assert.isUndefined(result.error);
-                assert.strictEqual(result.messageCode, "1");
+                assert.strictEqual(result.messageCode, '1');
                 assert.isDefined(result.user);
                 assert.strictEqual(result.user.info.email, expectedData.data.email);
+                /*jshint camelcase: false */
                 assert.strictEqual(result.user.name.firstname, expectedData.data.first_name);
                 assert.strictEqual(result.user.name.lastname, expectedData.data.last_name);
-                assert.strictEqual(result.user.name.username, sentData.username);
                 assert.strictEqual(result.user.identity.ontimeToken, expectedData.access_token);
+                /*jshint camelcase: true */
+                assert.strictEqual(result.user.name.username, sentData.username);
                 assert.isDefined(result.user.identity.token);
                 tokenOtBearer = result.user.identity.ontimeToken;
                 done();
@@ -284,10 +309,12 @@ module.exports = function (app) {
                 .expect(500)
                 .expect('Content-Type', 'application/json; charset=utf-8')
                 .end(function (err, res) {
-                  if (err) return done(err);
+                  if (err) {
+                    return done(err);
+                  }
                   var result = res.body;
                   assert.strictEqual(result.code, 500);
-                  assert.strictEqual(result.messageCode, "-1");
+                  assert.strictEqual(result.messageCode, '-1');
                   assert.isDefined(result.error);
                   stub.restore();
                   done();
@@ -303,17 +330,21 @@ module.exports = function (app) {
               .expect(200)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body, expectedData = require('./fixtures/auth/signup');
                 assert.strictEqual(result.code, 200);
                 assert.isUndefined(result.error);
-                assert.strictEqual(result.messageCode, "1");
+                assert.strictEqual(result.messageCode, '1');
                 assert.isDefined(result.user);
                 assert.strictEqual(result.user.info.email, expectedData.data.email);
+                /*jshint camelcase: false */
                 assert.strictEqual(result.user.name.firstname, expectedData.data.first_name);
                 assert.strictEqual(result.user.name.lastname, expectedData.data.last_name);
-                assert.strictEqual(result.user.name.username, sentData.username);
                 assert.strictEqual(result.user.identity.ontimeToken, expectedData.access_token);
+                /*jshint camelcase: true */
+                assert.strictEqual(result.user.name.username, sentData.username);
                 assert.isDefined(result.user.identity.token);
                 assert.notEqual(tokenOtBearer, result.user.identity.ontimeToken);
                 // We set tokens for next tests
@@ -332,11 +363,13 @@ module.exports = function (app) {
               .expect(404)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 404);
                 assert.isUndefined(result.error);
-                assert.strictEqual(result.messageCode, "-3");
+                assert.strictEqual(result.messageCode, '-3');
                 done();
               });
           });
@@ -349,11 +382,13 @@ module.exports = function (app) {
                 .expect(500)
                 .expect('Content-Type', 'application/json; charset=utf-8')
                 .end(function (err, res) {
-                  if (err) return done(err);
+                  if (err) {
+                    return done(err);
+                  }
                   var result = res.body;
                   assert.strictEqual(result.code, 500);
                   assert.isDefined(result.error);
-                  assert.strictEqual(result.messageCode, "-1");
+                  assert.strictEqual(result.messageCode, '-1');
                   stub.restore();
                   done();
                 });
@@ -367,15 +402,19 @@ module.exports = function (app) {
               .expect(200)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body, expectedData = require('./fixtures/auth/signup');
                 assert.strictEqual(result.code, 200);
                 assert.isUndefined(result.error);
                 assert.isUndefined(result.messageCode);
                 assert.isDefined(result.user);
                 assert.strictEqual(result.user.info.email, expectedData.data.email);
+                /*jshint camelcase: false */
                 assert.strictEqual(result.user.name.firstname, expectedData.data.first_name);
                 assert.strictEqual(result.user.name.lastname, expectedData.data.last_name);
+                /*jshint camelcase: true */
                 assert.isDefined(result.user.name.username);
                 assert.strictEqual(result.user.identity.ontimeToken, tokenOtBearer);
                 assert.strictEqual(result.user.identity.token, tokenBearer);
@@ -395,11 +434,13 @@ module.exports = function (app) {
                 .expect(500)
                 .expect('Content-Type', 'application/json; charset=utf-8')
                 .end(function (err, res) {
-                  if (err) return done(err);
+                  if (err) {
+                    return done(err);
+                  }
                   var result = res.body;
                   assert.strictEqual(result.code, 500);
                   assert.isDefined(result.error);
-                  assert.strictEqual(result.messageCode, "-1");
+                  assert.strictEqual(result.messageCode, '-1');
                   stub.restore();
                   done();
                 });
@@ -414,11 +455,13 @@ module.exports = function (app) {
                 .expect(404)
                 .expect('Content-Type', 'application/json; charset=utf-8')
                 .end(function (err, res) {
-                  if (err) return done(err);
+                  if (err) {
+                    return done(err);
+                  }
                   var result = res.body;
                   assert.strictEqual(result.code, 404);
                   assert.isUndefined(result.error);
-                  assert.strictEqual(result.messageCode, "-12");
+                  assert.strictEqual(result.messageCode, '-12');
                   stub.restore();
                   done();
                 });
@@ -432,7 +475,9 @@ module.exports = function (app) {
               .expect(200)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 200);
                 assert.isUndefined(result.error);
@@ -455,11 +500,13 @@ module.exports = function (app) {
                 .expect(500)
                 .expect('Content-Type', 'application/json; charset=utf-8')
                 .end(function (err, res) {
-                  if (err) return done(err);
+                  if (err) {
+                    return done(err);
+                  }
                   var result = res.body;
                   assert.strictEqual(result.code, 500);
                   assert.isDefined(result.error);
-                  assert.strictEqual(result.messageCode, "-1");
+                  assert.strictEqual(result.messageCode, '-1');
                   stub.restore();
                   done();
                 });
@@ -476,11 +523,13 @@ module.exports = function (app) {
                 .expect(404)
                 .expect('Content-Type', 'application/json; charset=utf-8')
                 .end(function (err, res) {
-                  if (err) return done(err);
+                  if (err) {
+                    return done(err);
+                  }
                   var result = res.body;
                   assert.strictEqual(result.code, 404);
                   assert.isUndefined(result.error);
-                  assert.strictEqual(result.messageCode, "-12");
+                  assert.strictEqual(result.messageCode, '-12');
                   stub.restore();
                   done();
                 });
@@ -497,11 +546,13 @@ module.exports = function (app) {
                 .expect(500)
                 .expect('Content-Type', 'application/json; charset=utf-8')
                 .end(function (err, res) {
-                  if (err) return done(err);
+                  if (err) {
+                    return done(err);
+                  }
                   var result = res.body;
                   assert.strictEqual(result.code, 500);
                   assert.isDefined(result.error);
-                  assert.strictEqual(result.messageCode, "-1");
+                  assert.strictEqual(result.messageCode, '-1');
                   stub.restore();
                   done();
                 });
@@ -517,11 +568,13 @@ module.exports = function (app) {
               .expect(200)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 200);
                 assert.isUndefined(result.error);
-                assert.strictEqual(result.messageCode, "11");
+                assert.strictEqual(result.messageCode, '11');
                 assert.isDefined(result.user);
                 assert.strictEqual(result.user.name.firstname, sentData.firstname);
                 assert.strictEqual(result.user.name.lastname, sentData.lastname);
@@ -544,11 +597,13 @@ module.exports = function (app) {
                 .expect(500)
                 .expect('Content-Type', 'application/json; charset=utf-8')
                 .end(function (err, res) {
-                  if (err) return done(err);
+                  if (err) {
+                    return done(err);
+                  }
                   var result = res.body;
                   assert.strictEqual(result.code, 500);
                   assert.isDefined(result.error);
-                  assert.strictEqual(result.messageCode, "-1");
+                  assert.strictEqual(result.messageCode, '-1');
                   stub.restore();
                   done();
                 });
@@ -565,11 +620,13 @@ module.exports = function (app) {
                 .expect(500)
                 .expect('Content-Type', 'application/json; charset=utf-8')
                 .end(function (err, res) {
-                  if (err) return done(err);
+                  if (err) {
+                    return done(err);
+                  }
                   var result = res.body;
                   assert.strictEqual(result.code, 500);
                   assert.isDefined(result.error);
-                  assert.strictEqual(result.messageCode, "-1");
+                  assert.strictEqual(result.messageCode, '-1');
                   stub.restore();
                   done();
                 });
@@ -585,11 +642,13 @@ module.exports = function (app) {
               .expect(200)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 200);
                 assert.isUndefined(result.error);
-                assert.strictEqual(result.messageCode, "5");
+                assert.strictEqual(result.messageCode, '5');
                 assert.isDefined(result.organization);
                 assert.strictEqual(result.organization.name, sentData.name);
                 assert.strictEqual(result.organization.description, sentData.description);
@@ -616,11 +675,13 @@ module.exports = function (app) {
                 .expect(500)
                 .expect('Content-Type', 'application/json; charset=utf-8')
                 .end(function (err, res) {
-                  if (err) return done(err);
+                  if (err) {
+                    return done(err);
+                  }
                   var result = res.body;
                   assert.strictEqual(result.code, 500);
                   assert.isDefined(result.error);
-                  assert.strictEqual(result.messageCode, "-1");
+                  assert.strictEqual(result.messageCode, '-1');
                   stub.restore();
                   done();
                 });
@@ -637,11 +698,13 @@ module.exports = function (app) {
               .expect(200)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 200);
                 assert.isUndefined(result.error);
-                assert.strictEqual(result.messageCode, "6");
+                assert.strictEqual(result.messageCode, '6');
                 assert.isDefined(result.organization);
                 assert.strictEqual(result.organization.name, sentData.name);
                 assert.strictEqual(result.organization.description, sentData.description);
@@ -668,11 +731,13 @@ module.exports = function (app) {
               .expect(200)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 200);
                 assert.isUndefined(result.error);
-                assert.strictEqual(result.messageCode, "6");
+                assert.strictEqual(result.messageCode, '6');
                 assert.isDefined(result.organization);
                 assert.strictEqual(result.organization.name, sentData.name);
                 assert.strictEqual(result.organization.description, sentData.description);
@@ -698,11 +763,13 @@ module.exports = function (app) {
                 .expect(500)
                 .expect('Content-Type', 'application/json; charset=utf-8')
                 .end(function (err, res) {
-                  if (err) return done(err);
+                  if (err) {
+                    return done(err);
+                  }
                   var result = res.body;
                   assert.strictEqual(result.code, 500);
                   assert.isDefined(result.error);
-                  assert.strictEqual(result.messageCode, "-1");
+                  assert.strictEqual(result.messageCode, '-1');
                   stub.restore();
                   done();
                 });
@@ -716,7 +783,9 @@ module.exports = function (app) {
               .expect(200)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 200);
                 assert.isUndefined(result.error);
@@ -735,11 +804,13 @@ module.exports = function (app) {
                 .expect(404)
                 .expect('Content-Type', 'application/json; charset=utf-8')
                 .end(function (err, res) {
-                  if (err) return done(err);
+                  if (err) {
+                    return done(err);
+                  }
                   var result = res.body;
                   assert.strictEqual(result.code, 404);
                   assert.isUndefined(result.error);
-                  assert.strictEqual(result.messageCode, "-9");
+                  assert.strictEqual(result.messageCode, '-9');
                   stub.restore();
                   done();
                 });
@@ -753,7 +824,9 @@ module.exports = function (app) {
               .expect(200)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 200);
                 assert.isUndefined(result.error);
@@ -773,7 +846,9 @@ module.exports = function (app) {
               .expect(200)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 200);
                 assert.isUndefined(result.error);
@@ -792,7 +867,9 @@ module.exports = function (app) {
               .expect(200)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 200);
                 assert.isUndefined(result.error);
@@ -815,11 +892,13 @@ module.exports = function (app) {
                 .expect(500)
                 .expect('Content-Type', 'application/json; charset=utf-8')
                 .end(function (err, res) {
-                  if (err) return done(err);
+                  if (err) {
+                    return done(err);
+                  }
                   var result = res.body;
                   assert.strictEqual(result.code, 500);
                   assert.isDefined(result.error);
-                  assert.strictEqual(result.messageCode, "-1");
+                  assert.strictEqual(result.messageCode, '-1');
                   stub.restore();
                   done();
                 });
@@ -834,11 +913,13 @@ module.exports = function (app) {
               .expect(200)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 200);
                 assert.isUndefined(result.error);
-                assert.strictEqual(result.messageCode, "7");
+                assert.strictEqual(result.messageCode, '7');
                 done();
               });
           });
@@ -855,11 +936,13 @@ module.exports = function (app) {
               .expect(403)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 403);
                 assert.isDefined(result.error);
-                assert.strictEqual(result.messageCode, "-3");
+                assert.strictEqual(result.messageCode, '-3');
                 done();
               });
           });
@@ -874,11 +957,13 @@ module.exports = function (app) {
               .expect(500)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 500);
                 assert.isUndefined(result.error);
-                assert.strictEqual(result.messageCode, "-1");
+                assert.strictEqual(result.messageCode, '-1');
                 done();
               });
           });
@@ -891,11 +976,13 @@ module.exports = function (app) {
               .expect(403)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 403);
                 assert.isDefined(result.error);
-                assert.strictEqual(result.messageCode, "-3");
+                assert.strictEqual(result.messageCode, '-3');
                 done();
               });
           });
@@ -911,7 +998,9 @@ module.exports = function (app) {
               .expect(200)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 200);
                 assert.isUndefined(result.error);
@@ -936,11 +1025,13 @@ module.exports = function (app) {
               .expect(403)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 403);
                 assert.isDefined(result.error);
-                assert.strictEqual(result.messageCode, "-3");
+                assert.strictEqual(result.messageCode, '-3');
                 done();
               });
           });
@@ -953,11 +1044,13 @@ module.exports = function (app) {
               .expect(500)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 500);
                 assert.isUndefined(result.error);
-                assert.strictEqual(result.messageCode, "-1");
+                assert.strictEqual(result.messageCode, '-1');
                 done();
               });
           });
@@ -973,7 +1066,9 @@ module.exports = function (app) {
               .expect(200)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 200);
                 assert.isUndefined(result.error);
@@ -998,11 +1093,13 @@ module.exports = function (app) {
               .expect(403)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 403);
                 assert.isDefined(result.error);
-                assert.strictEqual(result.messageCode, "-3");
+                assert.strictEqual(result.messageCode, '-3');
                 done();
               });
           });
@@ -1015,11 +1112,13 @@ module.exports = function (app) {
               .expect(500)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 500);
                 assert.isUndefined(result.error);
-                assert.strictEqual(result.messageCode, "-1");
+                assert.strictEqual(result.messageCode, '-1');
                 done();
               });
           });
@@ -1035,7 +1134,9 @@ module.exports = function (app) {
               .expect(200)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 200);
                 assert.isUndefined(result.error);
@@ -1044,9 +1145,11 @@ module.exports = function (app) {
                 assert.strictEqual(result.items.length, 3);
                 result.items.forEach(function (item, index) {
                   assert.strictEqual(item.parent.id, expectedData.data[index].parent.id);
+                  /*jshint camelcase: false */
                   assert.strictEqual(item.parent_project.id, expectedData.data[index].parent_project.id);
                   assert.strictEqual(item.parent_project.name, expectedData.data[index].parent_project.name);
                   assert.strictEqual(item.parent_project.path, expectedData.data[index].parent_project.path);
+                  /*jshint camelcase: true */
                   assert.strictEqual(item.name, expectedData.data[index].name);
                   assert.strictEqual(item.description, expectedData.data[index].description);
                   assert.strictEqual(item.notes, expectedData.data[index].notes);
@@ -1068,11 +1171,13 @@ module.exports = function (app) {
             .expect(200)
             .expect('Content-Type', 'application/json; charset=utf-8')
             .end(function (err, res) {
-              if (err) return done(err);
+              if (err) {
+                return done(err);
+              }
               var result = res.body;
               assert.strictEqual(result.code, 200);
               assert.isUndefined(result.error);
-              assert.strictEqual(result.messageCode, "5");
+              assert.strictEqual(result.messageCode, '5');
               assert.isDefined(result.organization);
               assert.strictEqual(result.organization.name, sentData.name);
               assert.strictEqual(result.organization.description, sentData.description);
@@ -1098,11 +1203,13 @@ module.exports = function (app) {
               .expect(404)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 404);
                 assert.isUndefined(result.error);
-                assert.strictEqual(result.messageCode, "-1");
+                assert.strictEqual(result.messageCode, '-1');
                 done();
               });
           });
@@ -1116,11 +1223,13 @@ module.exports = function (app) {
               .expect(500)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 500);
                 assert.isDefined(result.error);
-                assert.strictEqual(result.messageCode, "-1");
+                assert.strictEqual(result.messageCode, '-1');
                 done();
               });
           });
@@ -1134,11 +1243,13 @@ module.exports = function (app) {
               .expect(404)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 404);
                 assert.isUndefined(result.error);
-                assert.strictEqual(result.messageCode, "-5");
+                assert.strictEqual(result.messageCode, '-5');
                 done();
               });
           });
@@ -1153,11 +1264,13 @@ module.exports = function (app) {
               .expect(404)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 404);
                 assert.isUndefined(result.error);
-                assert.strictEqual(result.messageCode, "-7");
+                assert.strictEqual(result.messageCode, '-7');
                 done();
               });
           });
@@ -1173,11 +1286,13 @@ module.exports = function (app) {
               .expect(404)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 404);
                 assert.isUndefined(result.error);
-                assert.strictEqual(result.messageCode, "-7");
+                assert.strictEqual(result.messageCode, '-7');
                 done();
               });
           });
@@ -1193,11 +1308,13 @@ module.exports = function (app) {
                 .expect(500)
                 .expect('Content-Type', 'application/json; charset=utf-8')
                 .end(function (err, res) {
-                  if (err) return done(err);
+                  if (err) {
+                    return done(err);
+                  }
                   var result = res.body;
                   assert.strictEqual(result.code, 500);
                   assert.isDefined(result.error);
-                  assert.strictEqual(result.messageCode, "-1");
+                  assert.strictEqual(result.messageCode, '-1');
                   stub.restore();
                   done();
                 });
@@ -1214,11 +1331,13 @@ module.exports = function (app) {
               .expect(200)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 200);
                 assert.isUndefined(result.error);
-                assert.strictEqual(result.messageCode, "2");
+                assert.strictEqual(result.messageCode, '2');
                 assert.isDefined(result.organization);
                 assert.strictEqual(result.organization.projects.length, 1);
                 assert.strictEqual(result.organization.projects[0].name, sentData.name);
@@ -1243,11 +1362,13 @@ module.exports = function (app) {
               .expect(404)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 404);
                 assert.isUndefined(result.error);
-                assert.strictEqual(result.messageCode, "-7");
+                assert.strictEqual(result.messageCode, '-7');
                 done();
               });
           });
@@ -1263,11 +1384,13 @@ module.exports = function (app) {
               .expect(200)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 200);
                 assert.isUndefined(result.error);
-                assert.strictEqual(result.messageCode, "2");
+                assert.strictEqual(result.messageCode, '2');
                 assert.isDefined(result.organization);
                 assert.strictEqual(result.organization.projects.length, 1);
                 assert.strictEqual(result.organization.projects[0].projects.length, 1);
@@ -1293,17 +1416,22 @@ module.exports = function (app) {
               .expect(200)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 200);
                 assert.isUndefined(result.error);
-                assert.strictEqual(result.messageCode, "2");
+                assert.strictEqual(result.messageCode, '2');
                 assert.isDefined(result.organization);
                 assert.strictEqual(result.organization.projects.length, 1);
                 assert.strictEqual(result.organization.projects[0].projects.length, 1);
                 assert.strictEqual(result.organization.projects[0].projects[0].documents.length, 1);
                 assert.strictEqual(result.organization.projects[0].projects[0].documents[0].name, sentData.name);
-                assert.strictEqual(result.organization.projects[0].projects[0].documents[0].description, sentData.description);
+                assert.strictEqual(
+                  result.organization.projects[0].projects[0].documents[0].description,
+                  sentData.description
+                );
                 assert.isDefined(result.item);
                 assert.strictEqual(result.item.name, sentData.name);
                 assert.strictEqual(result.item.description, sentData.description);
@@ -1325,11 +1453,13 @@ module.exports = function (app) {
               .expect(404)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 404);
                 assert.isUndefined(result.error);
-                assert.strictEqual(result.messageCode, "-7");
+                assert.strictEqual(result.messageCode, '-7');
                 done();
               });
           });
@@ -1349,11 +1479,13 @@ module.exports = function (app) {
               .expect(403)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 403);
                 assert.isDefined(result.error);
-                assert.strictEqual(result.messageCode, "-3");
+                assert.strictEqual(result.messageCode, '-3');
                 done();
               });
           });
@@ -1373,11 +1505,13 @@ module.exports = function (app) {
               .expect(500)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 500);
                 assert.isUndefined(result.error);
-                assert.strictEqual(result.messageCode, "-1");
+                assert.strictEqual(result.messageCode, '-1');
                 done();
               });
           });
@@ -1398,11 +1532,13 @@ module.exports = function (app) {
               .expect(200)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 200);
                 assert.isUndefined(result.error);
-                assert.strictEqual(result.messageCode, "2");
+                assert.strictEqual(result.messageCode, '2');
                 assert.isDefined(result.organization);
                 assert.strictEqual(result.organization.projects.length, 1);
                 assert.strictEqual(result.organization.projects[0].projects.length, 1);
@@ -1449,11 +1585,13 @@ module.exports = function (app) {
               .expect(200)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 200);
                 assert.isUndefined(result.error);
-                assert.strictEqual(result.messageCode, "2");
+                assert.strictEqual(result.messageCode, '2');
                 assert.isDefined(result.organization);
                 assert.strictEqual(result.organization.projects.length, 1);
                 assert.strictEqual(result.organization.projects[0].projects.length, 1);
@@ -1468,9 +1606,18 @@ module.exports = function (app) {
                 assert.isDefined(result.item.setting);
                 [versions[1].setting, result.item.setting].forEach(function (element) {
                   assert.strictEqual(element.projectDev.contributorPrice, expectedData.setting.contributorPrice);
-                  assert.strictEqual(element.projectDev.contributorOccupation, expectedData.setting.contributorOccupation);
-                  assert.strictEqual(element.projectManagement.scrummasterPrice, expectedData.setting.scrummasterPrice);
-                  assert.strictEqual(element.projectManagement.scrummasterOccupation, expectedData.setting.scrummasterOccupation);
+                  assert.strictEqual(
+                    element.projectDev.contributorOccupation,
+                    expectedData.setting.contributorOccupation
+                  );
+                  assert.strictEqual(
+                    element.projectManagement.scrummasterPrice,
+                    expectedData.setting.scrummasterPrice
+                  );
+                  assert.strictEqual(
+                    element.projectManagement.scrummasterOccupation,
+                    expectedData.setting.scrummasterOccupation
+                  );
                   assert.strictEqual(element.billing.showDevPrice, expectedData.setting.showDev);
                   assert.strictEqual(element.billing.rateMultiplier, expectedData.setting.rateMultiplier);
                   assert.strictEqual(element.billing.showManagementPrice, expectedData.setting.showManagement);
@@ -1504,11 +1651,13 @@ module.exports = function (app) {
               .expect(200)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 200);
                 assert.isUndefined(result.error);
-                assert.strictEqual(result.messageCode, "2");
+                assert.strictEqual(result.messageCode, '2');
                 assert.isDefined(result.organization);
                 assert.strictEqual(result.organization.projects.length, 1);
                 assert.strictEqual(result.organization.projects[0].projects.length, 1);
@@ -1520,7 +1669,7 @@ module.exports = function (app) {
                 assert.isDefined(result.item.setting._id);
                 assert.isUndefined(result.item.setting.contributorPrice);
                 OrganizationModel.walkRecursively(result.organization, function (element) {
-                  assert(element.entries == undefined || element.entries == null);
+                  assert(element.entries === undefined || element.entries === null);
                 });
                 versionOtherId = result.item._id;
                 done();
@@ -1538,11 +1687,13 @@ module.exports = function (app) {
               .expect(404)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 404);
                 assert.isUndefined(result.error);
-                assert.strictEqual(result.messageCode, "-1");
+                assert.strictEqual(result.messageCode, '-1');
                 done();
               });
           });
@@ -1556,11 +1707,13 @@ module.exports = function (app) {
               .expect(500)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 500);
                 assert.isDefined(result.error);
-                assert.strictEqual(result.messageCode, "-1");
+                assert.strictEqual(result.messageCode, '-1');
                 done();
               });
           });
@@ -1574,11 +1727,13 @@ module.exports = function (app) {
               .expect(404)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 404);
                 assert.isUndefined(result.error);
-                assert.strictEqual(result.messageCode, "-5");
+                assert.strictEqual(result.messageCode, '-5');
                 done();
               });
           });
@@ -1593,11 +1748,13 @@ module.exports = function (app) {
               .expect(404)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 404);
                 assert.isUndefined(result.error);
-                assert.strictEqual(result.messageCode, "-8");
+                assert.strictEqual(result.messageCode, '-8');
                 done();
               });
           });
@@ -1611,11 +1768,13 @@ module.exports = function (app) {
               .expect(404)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 404);
                 assert.isUndefined(result.error);
-                assert.strictEqual(result.messageCode, "-8");
+                assert.strictEqual(result.messageCode, '-8');
                 done();
               });
           });
@@ -1632,11 +1791,13 @@ module.exports = function (app) {
               .expect(404)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 404);
                 assert.isUndefined(result.error);
-                assert.strictEqual(result.messageCode, "-8");
+                assert.strictEqual(result.messageCode, '-8');
                 done();
               });
           });
@@ -1651,11 +1812,13 @@ module.exports = function (app) {
               .expect(200)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 200);
                 assert.isUndefined(result.error);
-                assert.strictEqual(result.messageCode, "3");
+                assert.strictEqual(result.messageCode, '3');
                 assert.isDefined(result.organization);
                 assert.strictEqual(result.organization.projects.length, 1);
                 assert.strictEqual(result.organization.projects[0].projects.length, 1);
@@ -1679,11 +1842,13 @@ module.exports = function (app) {
               .expect(200)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 200);
                 assert.isUndefined(result.error);
-                assert.strictEqual(result.messageCode, "3");
+                assert.strictEqual(result.messageCode, '3');
                 assert.isDefined(result.organization);
                 var version = result.organization.projects[0].projects[0].documents[0].versions[0];
                 assert.isDefined(version);
@@ -1703,11 +1868,13 @@ module.exports = function (app) {
               .expect(404)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 404);
                 assert.isUndefined(result.error);
-                assert.strictEqual(result.messageCode, "-5");
+                assert.strictEqual(result.messageCode, '-5');
                 done();
               });
           });
@@ -1719,11 +1886,13 @@ module.exports = function (app) {
               .expect(500)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 500);
                 assert.isDefined(result.error);
-                assert.strictEqual(result.messageCode, "-1");
+                assert.strictEqual(result.messageCode, '-1');
                 done();
               });
           });
@@ -1735,11 +1904,13 @@ module.exports = function (app) {
               .expect(404)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 404);
                 assert.isUndefined(result.error);
-                assert.strictEqual(result.messageCode, "-5");
+                assert.strictEqual(result.messageCode, '-5');
                 done();
               });
           });
@@ -1751,11 +1922,13 @@ module.exports = function (app) {
               .expect(404)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 404);
                 assert.isUndefined(result.error);
-                assert.strictEqual(result.messageCode, "-6");
+                assert.strictEqual(result.messageCode, '-6');
                 done();
               });
           });
@@ -1767,7 +1940,9 @@ module.exports = function (app) {
               .expect(200)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 200);
                 assert.isUndefined(result.error);
@@ -1789,7 +1964,9 @@ module.exports = function (app) {
               .expect(200)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 200);
                 assert.isUndefined(result.error);
@@ -1811,7 +1988,9 @@ module.exports = function (app) {
               .expect(200)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 200);
                 assert.isUndefined(result.error);
@@ -1834,7 +2013,9 @@ module.exports = function (app) {
               .expect(200)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 200);
                 assert.isUndefined(result.error);
@@ -1854,7 +2035,9 @@ module.exports = function (app) {
               .expect(200)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 200);
                 assert.isUndefined(result.error);
@@ -1877,7 +2060,9 @@ module.exports = function (app) {
               .expect(200)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 200);
                 assert.isUndefined(result.error);
@@ -1903,11 +2088,13 @@ module.exports = function (app) {
               .expect(404)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 404);
                 assert.isUndefined(result.error);
-                assert.strictEqual(result.messageCode, "-1");
+                assert.strictEqual(result.messageCode, '-1');
                 done();
               });
           });
@@ -1921,11 +2108,13 @@ module.exports = function (app) {
               .expect(500)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 500);
                 assert.isDefined(result.error);
-                assert.strictEqual(result.messageCode, "-1");
+                assert.strictEqual(result.messageCode, '-1');
                 done();
               });
           });
@@ -1939,11 +2128,13 @@ module.exports = function (app) {
               .expect(404)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 404);
                 assert.isUndefined(result.error);
-                assert.strictEqual(result.messageCode, "-5");
+                assert.strictEqual(result.messageCode, '-5');
                 done();
               });
           });
@@ -1957,11 +2148,13 @@ module.exports = function (app) {
               .expect(404)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 404);
                 assert.isUndefined(result.error);
-                assert.strictEqual(result.messageCode, "-6");
+                assert.strictEqual(result.messageCode, '-6');
                 done();
               });
           });
@@ -1975,11 +2168,13 @@ module.exports = function (app) {
               .expect(404)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 404);
                 assert.isUndefined(result.error);
-                assert.strictEqual(result.messageCode, "-6");
+                assert.strictEqual(result.messageCode, '-6');
                 done();
               });
           });
@@ -1993,7 +2188,9 @@ module.exports = function (app) {
               .expect(200)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 200);
                 assert.isUndefined(result.error);
@@ -2004,7 +2201,7 @@ module.exports = function (app) {
                   assert.isUndefined(element);
                 });
                 OrganizationModel.walkRecursively(result.organization, function (element) {
-                  assert(element.entries == undefined || element.entries == null);
+                  assert(element.entries === undefined || element.entries === null);
                 });
                 done();
               });
@@ -2019,7 +2216,9 @@ module.exports = function (app) {
               .expect(200)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 200);
                 assert.isUndefined(result.error);
@@ -2042,7 +2241,9 @@ module.exports = function (app) {
               .expect(200)
               .expect('Content-Type', 'application/json; charset=utf-8')
               .end(function (err, res) {
-                if (err) return done(err);
+                if (err) {
+                  return done(err);
+                }
                 var result = res.body;
                 assert.strictEqual(result.code, 200);
                 assert.isUndefined(result.error);
@@ -2070,11 +2271,13 @@ module.exports = function (app) {
                   .expect(500)
                   .expect('Content-Type', 'application/json; charset=utf-8')
                   .end(function (err, res) {
-                    if (err) return done(err);
+                    if (err) {
+                      return done(err);
+                    }
                     var result = res.body;
                     assert.strictEqual(result.code, 500);
                     assert.isDefined(result.error);
-                    assert.strictEqual(result.messageCode, "-1");
+                    assert.strictEqual(result.messageCode, '-1');
                     stub.restore();
                     done();
                   });
@@ -2091,11 +2294,13 @@ module.exports = function (app) {
                   .expect(500)
                   .expect('Content-Type', 'application/json; charset=utf-8')
                   .end(function (err, res) {
-                    if (err) return done(err);
+                    if (err) {
+                      return done(err);
+                    }
                     var result = res.body;
                     assert.strictEqual(result.code, 500);
                     assert.isDefined(result.error);
-                    assert.strictEqual(result.messageCode, "-1");
+                    assert.strictEqual(result.messageCode, '-1');
                     stub.restore();
                     done();
                   });
@@ -2111,16 +2316,21 @@ module.exports = function (app) {
                 .expect(200)
                 .expect('Content-Type', 'application/json; charset=utf-8')
                 .end(function (err, res) {
-                  if (err) return done(err);
+                  if (err) {
+                    return done(err);
+                  }
                   var result = res.body;
                   assert.strictEqual(result.code, 200);
                   assert.isUndefined(result.error);
-                  assert.strictEqual(result.messageCode, "8");
+                  assert.strictEqual(result.messageCode, '8');
                   assert.isDefined(result.setting);
                   assert.strictEqual(result.setting.projectDev.contributorPrice, sentData.contributorPrice);
                   assert.strictEqual(result.setting.projectDev.contributorOccupation, sentData.contributorOccupation);
                   assert.strictEqual(result.setting.projectManagement.scrummasterPrice, sentData.scrummasterPrice);
-                  assert.strictEqual(result.setting.projectManagement.scrummasterOccupation, sentData.scrummasterOccupation);
+                  assert.strictEqual(
+                    result.setting.projectManagement.scrummasterOccupation,
+                    sentData.scrummasterOccupation
+                  );
                   assert.strictEqual(result.setting.billing.showDevPrice, sentData.showDev);
                   assert.strictEqual(result.setting.billing.rateMultiplier, sentData.rateMultiplier);
                   assert.strictEqual(result.setting.billing.showManagementPrice, sentData.showManagement);
@@ -2149,11 +2359,13 @@ module.exports = function (app) {
                   .expect(500)
                   .expect('Content-Type', 'application/json; charset=utf-8')
                   .end(function (err, res) {
-                    if (err) return done(err);
+                    if (err) {
+                      return done(err);
+                    }
                     var result = res.body;
                     assert.strictEqual(result.code, 500);
                     assert.isDefined(result.error);
-                    assert.strictEqual(result.messageCode, "-1");
+                    assert.strictEqual(result.messageCode, '-1');
                     stub.restore();
                     done();
                   });
@@ -2170,16 +2382,21 @@ module.exports = function (app) {
                 .expect(200)
                 .expect('Content-Type', 'application/json; charset=utf-8')
                 .end(function (err, res) {
-                  if (err) return done(err);
+                  if (err) {
+                    return done(err);
+                  }
                   var result = res.body;
                   assert.strictEqual(result.code, 200);
                   assert.isUndefined(result.error);
-                  assert.strictEqual(result.messageCode, "9");
+                  assert.strictEqual(result.messageCode, '9');
                   assert.isDefined(result.setting);
                   assert.strictEqual(result.setting.projectDev.contributorPrice, sentData.contributorPrice);
                   assert.strictEqual(result.setting.projectDev.contributorOccupation, sentData.contributorOccupation);
                   assert.strictEqual(result.setting.projectManagement.scrummasterPrice, sentData.scrummasterPrice);
-                  assert.strictEqual(result.setting.projectManagement.scrummasterOccupation, sentData.scrummasterOccupation);
+                  assert.strictEqual(
+                    result.setting.projectManagement.scrummasterOccupation,
+                    sentData.scrummasterOccupation
+                  );
                   assert.strictEqual(result.setting.billing.showDevPrice, sentData.showDev);
                   assert.strictEqual(result.setting.billing.rateMultiplier, sentData.rateMultiplier);
                   assert.strictEqual(result.setting.billing.showManagementPrice, sentData.showManagement);
@@ -2206,7 +2423,9 @@ module.exports = function (app) {
                   .expect(500)
                   .expect('Content-Type', 'application/json; charset=utf-8')
                   .end(function (err, res) {
-                    if (err) return done(err);
+                    if (err) {
+                      return done(err);
+                    }
                     var result = res.body;
                     assert.strictEqual(result.code, 500);
                     assert.isDefined(result.error);
@@ -2217,24 +2436,28 @@ module.exports = function (app) {
               });
             });
 
-            it('should get an internal error (find) for request a standalone setting (empty response)', function (done) {
-              mockModel(mongoose.model('Setting'), 'find', function (stub) {
-                agent
-                  .get(url + '/setting?id=42')
-                  .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
-                  .expect(404)
-                  .expect('Content-Type', 'application/json; charset=utf-8')
-                  .end(function (err, res) {
-                    if (err) return done(err);
-                    var result = res.body;
-                    assert.strictEqual(result.code, 404);
-                    assert.isUndefined(result.error);
-                    assert.strictEqual(result.messageCode, '-10');
-                    stub.restore();
-                    done();
-                  });
-              }, true);
-            });
+            it('should get an internal error (find) for request a standalone setting (empty response)',
+              function (done) {
+                mockModel(mongoose.model('Setting'), 'find', function (stub) {
+                  agent
+                    .get(url + '/setting?id=42')
+                    .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+                    .expect(404)
+                    .expect('Content-Type', 'application/json; charset=utf-8')
+                    .end(function (err, res) {
+                      if (err) {
+                        return done(err);
+                      }
+                      var result = res.body;
+                      assert.strictEqual(result.code, 404);
+                      assert.isUndefined(result.error);
+                      assert.strictEqual(result.messageCode, '-10');
+                      stub.restore();
+                      done();
+                    });
+                }, true);
+              })
+            ;
 
             it('should request a standalone setting', function (done) {
               agent
@@ -2243,7 +2466,9 @@ module.exports = function (app) {
                 .expect(200)
                 .expect('Content-Type', 'application/json; charset=utf-8')
                 .end(function (err, res) {
-                  if (err) return done(err);
+                  if (err) {
+                    return done(err);
+                  }
                   var result = res.body;
                   assert.strictEqual(result.code, 200);
                   assert.isUndefined(result.error);
@@ -2255,21 +2480,25 @@ module.exports = function (app) {
           });
 
           describe('# [POST] ~sub-item' + url + '/setting/update', function () {
-            it('should get an error request (not found because no organizationId given) a sub-item setting', function (done) {
-              agent
-                .post(url + '/setting/edit')
-                .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
-                .expect(404)
-                .expect('Content-Type', 'application/json; charset=utf-8')
-                .end(function (err, res) {
-                  if (err) return done(err);
-                  var result = res.body;
-                  assert.strictEqual(result.code, 404);
-                  assert.isUndefined(result.error);
-                  assert.strictEqual(result.messageCode, '-1');
-                  done();
-                });
-            });
+            it('should get an error request (not found because no organizationId given) a sub-item setting',
+              function (done) {
+                agent
+                  .post(url + '/setting/edit')
+                  .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+                  .expect(404)
+                  .expect('Content-Type', 'application/json; charset=utf-8')
+                  .end(function (err, res) {
+                    if (err) {
+                      return done(err);
+                    }
+                    var result = res.body;
+                    assert.strictEqual(result.code, 404);
+                    assert.isUndefined(result.error);
+                    assert.strictEqual(result.messageCode, '-1');
+                    done();
+                  });
+              })
+            ;
 
             it('should get an internal error request (findById) a sub-item setting (mongo fail)', function (done) {
               mockModel(mongoose.model('Organization'), 'findById', function (stub) {
@@ -2280,7 +2509,9 @@ module.exports = function (app) {
                   .expect(500)
                   .expect('Content-Type', 'application/json; charset=utf-8')
                   .end(function (err, res) {
-                    if (err) return done(err);
+                    if (err) {
+                      return done(err);
+                    }
                     var result = res.body;
                     assert.strictEqual(result.code, 500);
                     assert.isDefined(result.error);
@@ -2299,7 +2530,9 @@ module.exports = function (app) {
                 .expect(404)
                 .expect('Content-Type', 'application/json; charset=utf-8')
                 .end(function (err, res) {
-                  if (err) return done(err);
+                  if (err) {
+                    return done(err);
+                  }
                   var result = res.body;
                   assert.strictEqual(result.code, 404);
                   assert.isUndefined(result.error);
@@ -2308,27 +2541,31 @@ module.exports = function (app) {
                 });
             });
 
-            it('should get an internal error (update) for create a sub-item setting in organization (mongo fail)', function (done) {
-              var sentData = require('./fixtures/setting/create-ok-1');
-              sentData.organizationId = organizationId;
-              mockModel(mongoose.model('Organization'), 'update', function (stub) {
-                agent
-                  .post(url + '/setting/edit')
-                  .send(sentData)
-                  .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
-                  .expect(500)
-                  .expect('Content-Type', 'application/json; charset=utf-8')
-                  .end(function (err, res) {
-                    if (err) return done(err);
-                    var result = res.body;
-                    assert.strictEqual(result.code, 500);
-                    assert.isDefined(result.error);
-                    assert.strictEqual(result.messageCode, '-1');
-                    stub.restore();
-                    done();
-                  });
-              });
-            });
+            it('should get an internal error (update) for create a sub-item setting in organization (mongo fail)',
+              function (done) {
+                var sentData = require('./fixtures/setting/create-ok-1');
+                sentData.organizationId = organizationId;
+                mockModel(mongoose.model('Organization'), 'update', function (stub) {
+                  agent
+                    .post(url + '/setting/edit')
+                    .send(sentData)
+                    .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+                    .expect(500)
+                    .expect('Content-Type', 'application/json; charset=utf-8')
+                    .end(function (err, res) {
+                      if (err) {
+                        return done(err);
+                      }
+                      var result = res.body;
+                      assert.strictEqual(result.code, 500);
+                      assert.isDefined(result.error);
+                      assert.strictEqual(result.messageCode, '-1');
+                      stub.restore();
+                      done();
+                    });
+                });
+              })
+            ;
 
             it('should create a sub-item setting in organization', function (done) {
               var sentData = require('./fixtures/setting/create-ok-1');
@@ -2340,7 +2577,9 @@ module.exports = function (app) {
                 .expect(200)
                 .expect('Content-Type', 'application/json; charset=utf-8')
                 .end(function (err, res) {
-                  if (err) return done(err);
+                  if (err) {
+                    return done(err);
+                  }
                   var result = res.body;
                   assert.strictEqual(result.code, 200);
                   assert.isUndefined(result.error);
@@ -2348,21 +2587,25 @@ module.exports = function (app) {
                   assert.isDefined(result.organization);
                   assert.isDefined(result.organization.setting);
                   assert.isUndefined(result.setting);
-                  assert.strictEqual(result.organization.setting.projectDev.contributorPrice, sentData.contributorPrice);
-                  assert.strictEqual(result.organization.setting.projectDev.contributorOccupation, sentData.contributorOccupation);
-                  assert.strictEqual(result.organization.setting.projectManagement.scrummasterPrice, sentData.scrummasterPrice);
-                  assert.strictEqual(result.organization.setting.projectManagement.scrummasterOccupation, sentData.scrummasterOccupation);
-                  assert.strictEqual(result.organization.setting.billing.showDevPrice, sentData.showDev);
-                  assert.strictEqual(result.organization.setting.billing.rateMultiplier, sentData.rateMultiplier);
-                  assert.strictEqual(result.organization.setting.billing.showManagementPrice, sentData.showManagement);
-                  assert.strictEqual(result.organization.setting.unit.estimateType, sentData.estimateType);
-                  assert.strictEqual(result.organization.setting.unit.rangeEstimateUnit, sentData.rangeEstimateUnit);
-                  assert.strictEqual(result.organization.setting.unit.label, sentData.label);
-                  assert.strictEqual(result.organization.setting.date.show, sentData.showDate);
-                  assert.strictEqual(result.organization.setting.iteration.contributorAvailable, sentData.contributorAvailable);
-                  assert.strictEqual(result.organization.setting.iteration.hourPerDay, sentData.hourPerDay);
-                  assert.strictEqual(result.organization.setting.iteration.dayPerWeek, sentData.dayPerWeek);
-                  assert.strictEqual(result.organization.setting.iteration.weekPerIteration, sentData.weekPerIteration);
+                  var org = result.organization;
+                  assert.strictEqual(org.setting.projectDev.contributorPrice, sentData.contributorPrice);
+                  assert.strictEqual(org.setting.projectDev.contributorOccupation, sentData.contributorOccupation);
+                  assert.strictEqual(org.setting.projectManagement.scrummasterPrice, sentData.scrummasterPrice);
+                  assert.strictEqual(
+                    org.setting.projectManagement.scrummasterOccupation,
+                    sentData.scrummasterOccupation
+                  );
+                  assert.strictEqual(org.setting.billing.showDevPrice, sentData.showDev);
+                  assert.strictEqual(org.setting.billing.rateMultiplier, sentData.rateMultiplier);
+                  assert.strictEqual(org.setting.billing.showManagementPrice, sentData.showManagement);
+                  assert.strictEqual(org.setting.unit.estimateType, sentData.estimateType);
+                  assert.strictEqual(org.setting.unit.rangeEstimateUnit, sentData.rangeEstimateUnit);
+                  assert.strictEqual(org.setting.unit.label, sentData.label);
+                  assert.strictEqual(org.setting.date.show, sentData.showDate);
+                  assert.strictEqual(org.setting.iteration.contributorAvailable, sentData.contributorAvailable);
+                  assert.strictEqual(org.setting.iteration.hourPerDay, sentData.hourPerDay);
+                  assert.strictEqual(org.setting.iteration.dayPerWeek, sentData.dayPerWeek);
+                  assert.strictEqual(org.setting.iteration.weekPerIteration, sentData.weekPerIteration);
                   done();
                 });
             });
@@ -2378,107 +2621,123 @@ module.exports = function (app) {
                 .expect(200)
                 .expect('Content-Type', 'application/json; charset=utf-8')
                 .end(function (err, res) {
-                  if (err) return done(err);
+                  if (err) {
+                    return done(err);
+                  }
                   var result = res.body;
                   assert.strictEqual(result.code, 200);
                   assert.isUndefined(result.error);
                   assert.strictEqual(result.messageCode, '10');
                   assert.isUndefined(result.organization);
                   assert.isDefined(result.setting);
-                  assert.strictEqual(result.setting.projectDev.contributorPrice, sentData.contributorPrice);
-                  assert.strictEqual(result.setting.projectDev.contributorOccupation, sentData.contributorOccupation);
-                  assert.strictEqual(result.setting.projectManagement.scrummasterPrice, sentData.scrummasterPrice);
-                  assert.strictEqual(result.setting.projectManagement.scrummasterOccupation, sentData.scrummasterOccupation);
-                  assert.strictEqual(result.setting.billing.showDevPrice, sentData.showDev);
-                  assert.strictEqual(result.setting.billing.rateMultiplier, sentData.rateMultiplier);
-                  assert.strictEqual(result.setting.billing.showManagementPrice, sentData.showManagement);
-                  assert.strictEqual(result.setting.unit.estimateType, sentData.estimateType);
-                  assert.strictEqual(result.setting.unit.label, sentData.label);
-                  assert.strictEqual(result.setting.date.show, sentData.showDate);
-                  assert.strictEqual(result.setting.iteration.contributorAvailable, sentData.contributorAvailable);
-                  assert.strictEqual(result.setting.iteration.hourPerDay, sentData.hourPerDay);
-                  assert.strictEqual(result.setting.iteration.dayPerWeek, sentData.dayPerWeek);
-                  assert.strictEqual(result.setting.iteration.weekPerIteration, sentData.weekPerIteration);
+                  var sett = result.setting;
+                  assert.strictEqual(sett.projectDev.contributorPrice, sentData.contributorPrice);
+                  assert.strictEqual(sett.projectDev.contributorOccupation, sentData.contributorOccupation);
+                  assert.strictEqual(sett.projectManagement.scrummasterPrice, sentData.scrummasterPrice);
+                  assert.strictEqual(sett.projectManagement.scrummasterOccupation, sentData.scrummasterOccupation);
+                  assert.strictEqual(sett.billing.showDevPrice, sentData.showDev);
+                  assert.strictEqual(sett.billing.rateMultiplier, sentData.rateMultiplier);
+                  assert.strictEqual(sett.billing.showManagementPrice, sentData.showManagement);
+                  assert.strictEqual(sett.unit.estimateType, sentData.estimateType);
+                  assert.strictEqual(sett.unit.label, sentData.label);
+                  assert.strictEqual(sett.date.show, sentData.showDate);
+                  assert.strictEqual(sett.iteration.contributorAvailable, sentData.contributorAvailable);
+                  assert.strictEqual(sett.iteration.hourPerDay, sentData.hourPerDay);
+                  assert.strictEqual(sett.iteration.dayPerWeek, sentData.dayPerWeek);
+                  assert.strictEqual(sett.iteration.weekPerIteration, sentData.weekPerIteration);
                   done();
                 });
             });
 
-            it('should get an internal error (update) for create a sub-item setting in organization (mongo fail)', function (done) {
-              var sentData = require('./fixtures/setting/create-ok-1');
-              sentData.organizationId = organizationId;
-              sentData.itemId = '56961966de7cbad8ba3be467';
-              agent
-                .post(url + '/setting/edit')
-                .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
-                .send(sentData)
-                .expect(404)
-                .expect('Content-Type', 'application/json; charset=utf-8')
-                .end(function (err, res) {
-                  if (err) return done(err);
-                  var result = res.body;
-                  assert.strictEqual(result.code, 404);
-                  assert.isUndefined(result.error);
-                  assert.strictEqual(result.messageCode, '-11');
-                  done();
-                });
-            });
-
-            it('should get an internal error (update) for create a sub-item setting in organization (mongo fail)', function (done) {
-              var sentData = require('./fixtures/setting/create-ok-1');
-              sentData.organizationId = organizationId;
-              sentData.itemId = projectId;
-              agent
-                .post(url + '/setting/edit')
-                .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
-                .send(sentData)
-                .expect(200)
-                .expect('Content-Type', 'application/json; charset=utf-8')
-                .end(function (err, res) {
-                  if (err) return done(err);
-                  var result = res.body;
-                  assert.strictEqual(result.code, 200);
-                  assert.isUndefined(result.error);
-                  assert.strictEqual(result.messageCode, '10');
-                  assert.isDefined(result.organization);
-                  OrganizationModel.findDeepAttributeById(result.organization, projectId, function (element) {
-                    assert.isDefined(element);
-                    assert.isDefined(element.setting);
-                    assert.strictEqual(element.setting.projectDev.contributorPrice, sentData.contributorPrice);
-                    assert.strictEqual(element.setting.projectDev.contributorOccupation, sentData.contributorOccupation);
-                    assert.strictEqual(element.setting.projectManagement.scrummasterPrice, sentData.scrummasterPrice);
-                    assert.strictEqual(element.setting.projectManagement.scrummasterOccupation, sentData.scrummasterOccupation);
-                    assert.strictEqual(element.setting.billing.showDevPrice, sentData.showDev);
-                    assert.strictEqual(element.setting.billing.rateMultiplier, sentData.rateMultiplier);
-                    assert.strictEqual(element.setting.billing.showManagementPrice, sentData.showManagement);
-                    assert.strictEqual(element.setting.unit.estimateType, sentData.estimateType);
-                    assert.strictEqual(element.setting.unit.label, sentData.label);
-                    assert.strictEqual(element.setting.date.show, sentData.showDate);
-                    assert.strictEqual(element.setting.iteration.contributorAvailable, sentData.contributorAvailable);
-                    assert.strictEqual(element.setting.iteration.hourPerDay, sentData.hourPerDay);
-                    assert.strictEqual(element.setting.iteration.dayPerWeek, sentData.dayPerWeek);
-                    assert.strictEqual(element.setting.iteration.weekPerIteration, sentData.weekPerIteration);
+            it('should get an internal error (update) for create a sub-item setting in organization (mongo fail)',
+              function (done) {
+                var sentData = require('./fixtures/setting/create-ok-1');
+                sentData.organizationId = organizationId;
+                sentData.itemId = '56961966de7cbad8ba3be467';
+                agent
+                  .post(url + '/setting/edit')
+                  .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+                  .send(sentData)
+                  .expect(404)
+                  .expect('Content-Type', 'application/json; charset=utf-8')
+                  .end(function (err, res) {
+                    if (err) {
+                      return done(err);
+                    }
+                    var result = res.body;
+                    assert.strictEqual(result.code, 404);
+                    assert.isUndefined(result.error);
+                    assert.strictEqual(result.messageCode, '-11');
+                    done();
                   });
-                  done();
-                });
-            });
+              })
+            ;
+
+            it('should get an internal error (update) for create a sub-item setting in organization (mongo fail)',
+              function (done) {
+                var sentData = require('./fixtures/setting/create-ok-1');
+                sentData.organizationId = organizationId;
+                sentData.itemId = projectId;
+                agent
+                  .post(url + '/setting/edit')
+                  .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+                  .send(sentData)
+                  .expect(200)
+                  .expect('Content-Type', 'application/json; charset=utf-8')
+                  .end(function (err, res) {
+                    if (err) {
+                      return done(err);
+                    }
+                    var result = res.body;
+                    assert.strictEqual(result.code, 200);
+                    assert.isUndefined(result.error);
+                    assert.strictEqual(result.messageCode, '10');
+                    assert.isDefined(result.organization);
+                    OrganizationModel.findDeepAttributeById(result.organization, projectId, function (element) {
+                      assert.isDefined(element);
+                      assert.isDefined(element.setting);
+                      var sett = element.setting;
+                      assert.strictEqual(sett.projectDev.contributorPrice, sentData.contributorPrice);
+                      assert.strictEqual(sett.projectDev.contributorOccupation, sentData.contributorOccupation);
+                      assert.strictEqual(sett.projectManagement.scrummasterPrice, sentData.scrummasterPrice);
+                      assert.strictEqual(sett.projectManagement.scrummasterOccupation, sentData.scrummasterOccupation);
+                      assert.strictEqual(sett.billing.showDevPrice, sentData.showDev);
+                      assert.strictEqual(sett.billing.rateMultiplier, sentData.rateMultiplier);
+                      assert.strictEqual(sett.billing.showManagementPrice, sentData.showManagement);
+                      assert.strictEqual(sett.unit.estimateType, sentData.estimateType);
+                      assert.strictEqual(sett.unit.label, sentData.label);
+                      assert.strictEqual(sett.date.show, sentData.showDate);
+                      assert.strictEqual(sett.iteration.contributorAvailable, sentData.contributorAvailable);
+                      assert.strictEqual(sett.iteration.hourPerDay, sentData.hourPerDay);
+                      assert.strictEqual(sett.iteration.dayPerWeek, sentData.dayPerWeek);
+                      assert.strictEqual(sett.iteration.weekPerIteration, sentData.weekPerIteration);
+                    });
+                    done();
+                  });
+              })
+            ;
           });
 
           describe('# [GET] ~sub-item' + url + '/setting/sub', function () {
-            it('should get an error request (not found because no organizationId given) a sub-item setting', function (done) {
-              agent
-                .get(url + '/setting/sub')
-                .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
-                .expect(404)
-                .expect('Content-Type', 'application/json; charset=utf-8')
-                .end(function (err, res) {
-                  if (err) return done(err);
-                  var result = res.body;
-                  assert.strictEqual(result.code, 404);
-                  assert.isUndefined(result.error);
-                  assert.strictEqual(result.messageCode, '-1');
-                  done();
-                });
-            });
+            it('should get an error request (not found because no organizationId given) a sub-item setting',
+              function (done) {
+                agent
+                  .get(url + '/setting/sub')
+                  .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+                  .expect(404)
+                  .expect('Content-Type', 'application/json; charset=utf-8')
+                  .end(function (err, res) {
+                    if (err) {
+                      return done(err);
+                    }
+                    var result = res.body;
+                    assert.strictEqual(result.code, 404);
+                    assert.isUndefined(result.error);
+                    assert.strictEqual(result.messageCode, '-1');
+                    done();
+                  });
+              })
+            ;
 
             it('should get an internal error request (findById) a sub-item setting (mongo fail)', function (done) {
               mockModel(mongoose.model('Organization'), 'findById', function (stub) {
@@ -2488,7 +2747,9 @@ module.exports = function (app) {
                   .expect(500)
                   .expect('Content-Type', 'application/json; charset=utf-8')
                   .end(function (err, res) {
-                    if (err) return done(err);
+                    if (err) {
+                      return done(err);
+                    }
                     var result = res.body;
                     assert.strictEqual(result.code, 500);
                     assert.isDefined(result.error);
@@ -2506,7 +2767,9 @@ module.exports = function (app) {
                 .expect(404)
                 .expect('Content-Type', 'application/json; charset=utf-8')
                 .end(function (err, res) {
-                  if (err) return done(err);
+                  if (err) {
+                    return done(err);
+                  }
                   var result = res.body;
                   assert.strictEqual(result.code, 404);
                   assert.isUndefined(result.error);
@@ -2522,7 +2785,9 @@ module.exports = function (app) {
                 .expect(200)
                 .expect('Content-Type', 'application/json; charset=utf-8')
                 .end(function (err, res) {
-                  if (err) return done(err);
+                  if (err) {
+                    return done(err);
+                  }
                   var result = res.body;
                   assert.strictEqual(result.code, 200);
                   assert.isUndefined(result.error);
@@ -2539,7 +2804,9 @@ module.exports = function (app) {
                 .expect(200)
                 .expect('Content-Type', 'application/json; charset=utf-8')
                 .end(function (err, res) {
-                  if (err) return done(err);
+                  if (err) {
+                    return done(err);
+                  }
                   var result = res.body;
                   assert.strictEqual(result.code, 200);
                   assert.isUndefined(result.error);
@@ -2556,7 +2823,9 @@ module.exports = function (app) {
                 .expect(200)
                 .expect('Content-Type', 'application/json; charset=utf-8')
                 .end(function (err, res) {
-                  if (err) return done(err);
+                  if (err) {
+                    return done(err);
+                  }
                   var result = res.body;
                   assert.strictEqual(result.code, 200);
                   assert.isUndefined(result.error);
@@ -2571,7 +2840,9 @@ module.exports = function (app) {
 
       after('# should drop database', function (done) {
         mongoose.connection.db.dropDatabase(function (err) {
-          if (err) throw err;
+          if (err) {
+            throw err;
+          }
           done();
         });
       });
