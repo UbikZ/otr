@@ -33,6 +33,7 @@ module.exports = ['$rootScope', '$scope', 'identifier', 'organizationId', 'setti
       if ($scope.identifier) {
         setting = Object.assign(setting, {itemId: $scope.identifier});
       }
+      setting.lazy = 1;
 
       settingService.edit(setting, function (res) {
         $scope.loading = false;

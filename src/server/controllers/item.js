@@ -174,11 +174,11 @@ module.exports.controller = function (app, config) {
                           } else if (result.data) {
                             var elements = [];
                             result.data.forEach(function (item) {
-                              var indexOfParentProject = elements.pluck('ontime_id').indexOf(item.parent_project.id);
+                              var indexOfParentProject = elements.pluck('ontimeId').indexOf(item.parent_project.id);
                               if (indexOfParentProject === -1) {
                                 elements.push(new EntryModel({
                                   name: item.parent_project.name,
-                                  ontime_id: item.parent_project.id,
+                                  ontimeId: item.parent_project.id,
                                   path: item.parent_project.path ? item.parent_project.path.split('\\') : [],
                                   children: [],
                                 }));
@@ -186,11 +186,11 @@ module.exports.controller = function (app, config) {
                               }
 
                               var indexOfProject =
-                                elements[indexOfParentProject].children.pluck('ontime_id').indexOf(item.project.id);
+                                elements[indexOfParentProject].children.pluck('ontimeId').indexOf(item.project.id);
                               if (indexOfProject === -1) {
                                 elements[indexOfParentProject].children.push(new EntryModel({
                                   name: item.project.name,
-                                  ontime_id: item.project.id,
+                                  ontimeId: item.project.id,
                                   path: item.project.path ? item.project.path.split('\\') : [],
                                   children: [],
                                 }));
@@ -198,7 +198,7 @@ module.exports.controller = function (app, config) {
                               }
 
                               var indexOfEntry =
-                                elements[indexOfParentProject].children[indexOfProject].children.pluck('ontime_id')
+                                elements[indexOfParentProject].children[indexOfProject].children.pluck('ontimeId')
                                   .indexOf(item.parent.id);
 
                               if (indexOfEntry === -1) {
@@ -206,12 +206,12 @@ module.exports.controller = function (app, config) {
                                   name: item.name,
                                   description: item.description,
                                   notes: item.notes,
-                                  ontime_id: item.id,
+                                  ontimeId: item.id,
                                   estimate: {
-                                    duration_minutes: item.estimated_duration.duration_minutes,
-                                    otr_low: item.custom_fields !== undefined ? item.custom_fields.custom_257 : null,
-                                    otr_high: item.custom_fields !== undefined ? item.custom_fields.custom_259 : null,
-                                    otr_isEstimated:
+                                    durationMinutes: item.estimated_duration.duration_minutes,
+                                    otrLow: item.custom_fields !== undefined ? item.custom_fields.custom_257 : null,
+                                    otrHigh: item.custom_fields !== undefined ? item.custom_fields.custom_259 : null,
+                                    otrIsEstimated:
                                       item.custom_fields !== undefined ? item.custom_fields.custom_262 : null,
                                   },
                                 }));
@@ -221,12 +221,12 @@ module.exports.controller = function (app, config) {
                                     name: item.name,
                                     description: item.description,
                                     notes: item.notes,
-                                    ontime_id: item.id,
+                                    ontimeId: item.id,
                                     estimate: {
-                                      duration_minutes: item.estimated_duration.duration_minutes,
-                                      otr_low: item.custom_fields !== undefined ? item.custom_fields.custom_257 : null,
-                                      otr_high: item.custom_fields !== undefined ? item.custom_fields.custom_259 : null,
-                                      otr_isEstimated:
+                                      durationMinutes: item.estimated_duration.duration_minutes,
+                                      otrLow: item.custom_fields !== undefined ? item.custom_fields.custom_257 : null,
+                                      otrHigh: item.custom_fields !== undefined ? item.custom_fields.custom_259 : null,
+                                      otrIsEstimated:
                                         item.custom_fields !== undefined ? item.custom_fields.custom_262 : null,
                                     },
                                   }));
@@ -252,40 +252,40 @@ module.exports.controller = function (app, config) {
                               }
 
                               // Sum of parent project entries
-                              if (elements[indexOfParentProject].estimate.duration_minutes === undefined) {
-                                elements[indexOfParentProject].estimate.duration_minutes = 0;
+                              if (elements[indexOfParentProject].estimate.durationMinutes === undefined) {
+                                elements[indexOfParentProject].estimate.durationMinutes = 0;
                               }
-                              elements[indexOfParentProject].estimate.duration_minutes +=
+                              elements[indexOfParentProject].estimate.durationMinutes +=
                                 item.estimated_duration.duration_minutes;
-                              if (elements[indexOfParentProject].estimate.otr_low === undefined) {
-                                elements[indexOfParentProject].estimate.otr_low = 0;
+                              if (elements[indexOfParentProject].estimate.otrLow === undefined) {
+                                elements[indexOfParentProject].estimate.otrLow = 0;
                               }
-                              elements[indexOfParentProject].estimate.otr_low +=
+                              elements[indexOfParentProject].estimate.otrLow +=
                                 item.custom_fields !== undefined ? item.custom_fields.custom_257 : 0;
-                              if (elements[indexOfParentProject].estimate.otr_high === undefined) {
-                                elements[indexOfParentProject].estimate.otr_high = 0;
+                              if (elements[indexOfParentProject].estimate.otrHigh === undefined) {
+                                elements[indexOfParentProject].estimate.otrHigh = 0;
                               }
-                              elements[indexOfParentProject].estimate.otr_high +=
+                              elements[indexOfParentProject].estimate.otrHigh +=
                                 item.custom_fields !== undefined ? item.custom_fields.custom_259 : 0;
 
                               // Sum of parent project entries
                               if (elements[indexOfParentProject]
-                                  .children[indexOfProject].estimate.duration_minutes === undefined) {
-                                elements[indexOfParentProject].children[indexOfProject].estimate.duration_minutes = 0;
+                                  .children[indexOfProject].estimate.durationMinutes === undefined) {
+                                elements[indexOfParentProject].children[indexOfProject].estimate.durationMinutes = 0;
                               }
-                              elements[indexOfParentProject].children[indexOfProject].estimate.duration_minutes +=
+                              elements[indexOfParentProject].children[indexOfProject].estimate.durationMinutes +=
                                 item.estimated_duration.duration_minutes;
                               if (elements[indexOfParentProject]
-                                  .children[indexOfProject].estimate.otr_low === undefined) {
-                                elements[indexOfParentProject].children[indexOfProject].estimate.otr_low = 0;
+                                  .children[indexOfProject].estimate.otrLow === undefined) {
+                                elements[indexOfParentProject].children[indexOfProject].estimate.otrLow = 0;
                               }
-                              elements[indexOfParentProject].children[indexOfProject].estimate.otr_low +=
+                              elements[indexOfParentProject].children[indexOfProject].estimate.otrLow +=
                                 item.custom_fields !== undefined ? item.custom_fields.custom_257 : 0;
                               if (elements[indexOfParentProject]
-                                  .children[indexOfProject].estimate.otr_high === undefined) {
-                                elements[indexOfParentProject].children[indexOfProject].estimate.otr_high = 0;
+                                  .children[indexOfProject].estimate.otrHigh === undefined) {
+                                elements[indexOfParentProject].children[indexOfProject].estimate.otrHigh = 0;
                               }
-                              elements[indexOfParentProject].children[indexOfProject].estimate.otr_high +=
+                              elements[indexOfParentProject].children[indexOfProject].estimate.otrHigh +=
                                 item.custom_fields !== undefined ? item.custom_fields.custom_259 : 0;
                             });
                             modelItem.entries = elements;

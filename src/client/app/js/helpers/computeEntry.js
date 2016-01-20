@@ -11,11 +11,11 @@ var ESTIM_SM = 1 << 6;
 function getAttributeName(opts) {
   var attrName;
   if (opts & HIGH) {
-    attrName = 'otr_high';
+    attrName = 'otrHigh';
   } else if (opts & LOW) {
-    attrName = 'otr_low';
+    attrName = 'otrLow';
   } else {
-    attrName = 'duration_minutes';
+    attrName = 'durationMinutes';
   }
 
   return attrName;

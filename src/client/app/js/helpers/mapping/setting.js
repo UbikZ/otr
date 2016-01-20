@@ -1,8 +1,8 @@
 'use strict';
 
-function check(item) {
+function check(item, cb) {
   if (item !== undefined) {
-    return item;
+    cb(item);
   }
 }
 
