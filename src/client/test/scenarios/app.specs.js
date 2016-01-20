@@ -14,7 +14,7 @@ module.exports = function (stagingUrl, config) {
         browser.getCurrentUrl().then(function (url) {
           expect(url).to.equal(stagingUrl.concat('/#/login'));
         });
-        
+
         browser.get('http://localhost:'.concat(config.env[process.env.NODE_ENV].port, '/#/nonexistantroute'));
         browser.getCurrentUrl().then(function (url) {
           expect(url).to.equal(stagingUrl.concat('/#/login'));

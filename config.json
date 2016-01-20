@@ -37,7 +37,7 @@
       "app": "./src/client/app",
       "print": "./src/client/print",
       "test": "./src/client/test",
-      "coverage": "./coverage/back"
+      "coverage": "./coverage/front"
     },
     "server": {
       "root": "./src/server",
@@ -46,7 +46,7 @@
       "model": "./src/server/models",
       "prototype": "./src/server/prototypes",
       "test": "./src/server/test",
-      "coverage": "./coverage/front"
+      "coverage": "./coverage/back"
     }
   },
   "particularities": {
