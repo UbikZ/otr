@@ -8,7 +8,7 @@ var logger = require('../../logger');
 function req(url, cb) {
   request(url, function (error, response, body) {
     logger.info('# Ontime Call : ' + url);
-    if (error && response.statusCode != 200) {
+    if (error && response.statusCode !== 200) {
       logger.error('Error while requesting (' + url + ').');
     }
     cb(body);
@@ -16,21 +16,23 @@ function req(url, cb) {
 }
 
 function requestToken(authObject, cb) {
-  var url = ontimeConfig.ontime_url + '/api/oauth2/token?' +
+  var url = ontimeConfig.ontimeUrl + '/api/oauth2/token?' +
     qs.stringify({
+      /*jshint camelcase: false */
       'grant_type': 'password',
       'username': authObject.username,
       'password': authObject.password,
       'client_id': ontimeConfig.client_id,
       'client_secret': ontimeConfig.client_secret,
       'scope': ontimeConfig.scope,
+      /*jshint camelcase: true */
     });
 
   req(url, cb);
 }
 
 function me(accessToken, cb) {
-  var url = ontimeConfig.ontime_url + '/api/v5/me?' +
+  var url = ontimeConfig.ontimeUrl + '/api/v5/me?' +
     qs.stringify({
       /*jshint camelcase: false */
       'access_token': accessToken,
@@ -41,7 +43,7 @@ function me(accessToken, cb) {
 }
 
 function tree(accessToken, cb) {
-  var url = ontimeConfig.ontime_url + '/api/v5/projects?' +
+  var url = ontimeConfig.ontimeUrl + '/api/v5/projects?' +
     qs.stringify({
       /*jshint camelcase: false */
       'access_token': accessToken,
@@ -52,7 +54,7 @@ function tree(accessToken, cb) {
 }
 
 function items(accessToken, projectId, cb) {
-  var url = ontimeConfig.ontime_url + '/api/v5/features/?' +
+  var url = ontimeConfig.ontimeUrl + '/api/v5/features/?' +
     qs.stringify({
       /*jshint camelcase: false */
       'access_token': accessToken,

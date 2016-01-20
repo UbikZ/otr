@@ -30,9 +30,9 @@ function log(req, message, err) {
 
 function ensureAuthorized(req, res, next) {
   var bearerToken, bearerOtToken;
-  var bearerHeader = req.headers["authorization"];
+  var bearerHeader = req.headers.authorization;
   if (typeof bearerHeader !== 'undefined') {
-    var bearer = bearerHeader.split(" ");
+    var bearer = bearerHeader.split(' ');
     bearerToken = bearer[1];
     bearerOtToken = bearer[2];
     req.token = bearerToken;
@@ -40,20 +40,20 @@ function ensureAuthorized(req, res, next) {
     next();
   } else {
     log(req, 'No bearer header provided');
-    response(res, 403, {}, "-3");
+    response(res, 403, {}, '-3');
   }
 }
 
 function checkAuthorized(req, res, cb) {
-  User.findOne({"identity.token": req.token}).lean().exec(function (err, user) {
+  User.findOne({'identity.token': req.token}).lean().exec(function (err, user) {
     if (err) {
       log(req, 'Internal error: check authorization.', err);
-      response(res, 500, {}, "-1", err);
+      response(res, 500, {}, '-1', err);
     } else if (user) {
       cb(user);
     } else {
       log(req, 'Error: token provided is not associated with an account.', err);
-      response(res, 404, {}, "-2");
+      response(res, 404, {}, '-2');
     }
   });
 }
@@ -62,15 +62,17 @@ function ontimeRequestToken(req, res, cb) {
   ontimeRequester.requestToken({username: req.body.username, password: req.body.password}, function (result) {
     result = JSON.parse(result);
     if (result.error) {
+      /*jshint camelcase: false */
       log(req, 'Ontime Error: ' + result.error_description);
-      response(res, 403, {error: result}, "-3", result.error);
+      /*jshint camelcase: true */
+      response(res, 403, {error: result}, '-3', result.error);
       /*jshint camelcase: false */
     } else if (result.access_token) {
       cb(merge(result.data, {accessToken: result.access_token}));
       /*jshint camelcase: true */
     } else {
       log(req, 'Ontime Error: issue during OnTime "/authenticate" request');
-      response(res, 500, {}, "-1");
+      response(res, 500, {}, '-1');
     }
   });
 }

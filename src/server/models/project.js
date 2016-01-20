@@ -2,7 +2,7 @@
 
 var mongoose = require('mongoose');
 var Setting = require('./setting').schema;
-var Document = require('./document').schema;
+var DocumentSchema = require('./document').schema;
 
 var Project = new mongoose.Schema();
 Project.add({
@@ -17,7 +17,7 @@ Project.add({
     user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
     date: {type: Date, default: Date.now},
   },
-  documents: [Document],
+  documents: [DocumentSchema],
   setting: Setting,
   projects: [Project],
 });

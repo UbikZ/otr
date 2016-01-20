@@ -15,7 +15,7 @@ var schema = new mongoose.Schema({
     line1: {type: String, trim: true},
     line2: {type: String, trim: true},
     line3: {type: String, trim: true},
-    post_code: {type: String, trim: true},
+    postCode: {type: String, trim: true},
     region: {type: String, trim: true},
     city: {type: String, trim: true},
     country: {type: String, trim: true}
@@ -40,7 +40,7 @@ schema.statics.findDeepAttributeById = function (model, elementId, cb) {
 
 schema.statics.walkRecursively = function (model, cb) {
   utilsHelper.walkRecursively(model, function(element) {
-    if (element != undefined) {
+    if (element !== undefined) {
       cb(element);
     }
   });

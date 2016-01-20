@@ -28,7 +28,7 @@ var schema = new mongoose.Schema({
   },
   date: {
     show: Boolean,
-    start_date: {type: Date, default: Date.now},
+    startDate: {type: Date, default: Date.now},
   },
   iteration: {
     contributorAvailable: {type: Number, min: 0},
