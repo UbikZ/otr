@@ -7,7 +7,7 @@ var moment = require('moment');
 var transports = [];
 
 transports.push(new winston.transports.Console({
-  level: process.env.NODE_ENV == 'staging' ? 'error' : 'debug',
+  level: process.env.NODE_ENV === 'staging' ? 'error' : 'debug',
   handleExceptions: true,
   json: false,
   colorize: true

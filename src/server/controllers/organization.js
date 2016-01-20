@@ -19,7 +19,9 @@ module.exports.controller = function (app, config) {
       if (data.id) {
         criteria = {_id: new mongoose.Types.ObjectId(data.id)};
       }
+      /*jshint eqeqeq: false */
       if (data.lazy == 1) {
+      /*jshint eqeqeq: true */
         fields = {name: 1, description: 1, active: 1, url: 1, logo: 1, creation: 1};
       }
 
@@ -30,7 +32,9 @@ module.exports.controller = function (app, config) {
           http.log(req, 'Internal error: get organizations', err);
           http.response(res, 500, {}, "-1", err);
         } else if (organizations) {
+          /*jshint eqeqeq: false */
           if (data.lazyVersion == 1) {
+          /*jshint eqeqeq: true */
             organizations.forEach(function (organization) {
               Organization.walkRecursively(organization, function (element) {
                 if (element.entries != undefined) {
@@ -66,7 +70,9 @@ module.exports.controller = function (app, config) {
   app.post(prefix + '/edit', http.ensureAuthorized, function (req, res) {
     var data = req.body, fields = {};
 
-    if (data.lazy) {
+    /*jshint eqeqeq: false */
+    if (data.lazy == 1) {
+    /*jshint eqeqeq: true */
       fields = {name: 1, description: 1, active: 1, url: 1, logo: 1, creation: 1};
     }
 

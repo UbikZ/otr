@@ -150,7 +150,9 @@ module.exports.controller = function (app, config) {
                 http.response(res, 500, {}, "-1", err);
               } else {
                 var result = {};
+                /*jshint eqeqeq: false */
                 if (data.modePreview == 1) {
+                /*jshint eqeqeq: true */
                   result.setting = modelItem;
                 } else {
                   result.organization = organization;
