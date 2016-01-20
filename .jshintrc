@@ -3,6 +3,7 @@
 
 
   "bitwise"       : false,
+  "indent"        : 4,
   "camelcase"     : true,
   "curly"         : true,
   "eqeqeq"        : true,
