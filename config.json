@@ -27,6 +27,7 @@
     "phantomjs": "phantomjs"
   },
   "path": {
+    "node": "./node_modules",
     "public": "./public",
     "scripts": "./scripts",
     "coverage": "./coverage",
@@ -35,7 +36,8 @@
       "views": "./public/views",
       "app": "./src/client/app",
       "print": "./src/client/print",
-      "test": "./src/client/test"
+      "test": "./src/client/test",
+      "coverage": "./coverage/back"
     },
     "server": {
       "root": "./src/server",
@@ -43,7 +45,8 @@
       "socket": "./src/server/sockets",
       "model": "./src/server/models",
       "prototype": "./src/server/prototypes",
-      "test": "./src/server/test"
+      "test": "./src/server/test",
+      "coverage": "./coverage/front"
     }
   },
   "particularities": {

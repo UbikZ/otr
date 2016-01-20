@@ -7,16 +7,18 @@ var expect = require('chai').expect;
 
 module.exports = function (stagingUrl, config) {
   describe('> Initialization', function () {
-    it('should redirect to "/"', function () {
-      browser.get(stagingUrl);
+    describe('> Check default urls', function () {
+      it('should redirect to "/"', function () {
+        browser.get(stagingUrl);
 
-      browser.getCurrentUrl().then(function (url) {
-        expect(url).to.equal(stagingUrl.concat('/#/login'));
-      });
-
-      browser.get('http://localhost:'.concat(config.env[process.env.NODE_ENV].port, '/#/nonexistantroute'));
-      browser.getCurrentUrl().then(function (url) {
-        expect(url).to.equal(stagingUrl.concat('/#/login'));
+        browser.getCurrentUrl().then(function (url) {
+          expect(url).to.equal(stagingUrl.concat('/#/login'));
+        });
+        
+        browser.get('http://localhost:'.concat(config.env[process.env.NODE_ENV].port, '/#/nonexistantroute'));
+        browser.getCurrentUrl().then(function (url) {
+          expect(url).to.equal(stagingUrl.concat('/#/login'));
+        });
       });
     });
   });

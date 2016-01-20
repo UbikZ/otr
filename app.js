@@ -10,8 +10,6 @@ var port = config.env[process.env.NODE_ENV].port;
 
 require('./src/server/middleware')(app, config);
 
-if (!module.parent) {
-  app.listen(port);
-} else {
-  module.exports = app;
-}
+app.listen(port);
+
+module.exports = app;

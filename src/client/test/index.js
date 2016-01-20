@@ -7,7 +7,6 @@ if (process.env.NODE_ENV != 'staging') {
   process.exit(1);
 }
 
-
 describe('> Application', function() {
   var stagingUrl = 'http://localhost:'.concat(config.env[process.env.NODE_ENV].port);
 

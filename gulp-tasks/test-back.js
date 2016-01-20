@@ -10,11 +10,11 @@ module.exports = function (gulp, plugins, npmPackages, config) {
         .on('finish', function () {
           return gulp.src(config.path.server.test + '/index.js')
             .pipe(plugins.mocha({reporter: 'spec'}))
-            .pipe(plugins.istanbul.writeReports())
-            .on('end', function() {
+            .pipe(plugins.istanbul.writeReports({dir: config.path.server.coverage}))
+            .on('end', function () {
               //if (!process.env.CI) {
-                gulp.src(config.path.coverage.concat('/lcov.info'))
-                  .pipe(plugins.coveralls());
+              gulp.src(config.path.coverage.concat('/lcov.info'))
+                .pipe(plugins.coveralls());
               //}
               process.exit();
             });
