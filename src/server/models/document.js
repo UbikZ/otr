@@ -4,8 +4,8 @@ var mongoose = require('mongoose');
 var Setting = require('./setting').schema;
 var Version = require('./version').schema;
 
-var Document = new mongoose.Schema();
-Document.add({
+var DocumentSchema = new mongoose.Schema();
+DocumentSchema.add({
   name: {type: String, trim: true, require: true},
   description: {type: String, trim: true},
   priority: {type: Number, min: 0, max: 2},
@@ -21,4 +21,4 @@ Document.add({
   versions: [Version],
 });
 
-module.exports = mongoose.model('Document', Document);
+module.exports = mongoose.model('Document', DocumentSchema);
