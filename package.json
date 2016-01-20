@@ -73,7 +73,8 @@
     "node": ">= 0.10.0"
   },
   "scripts": {
-    "build": "./node_modules/.bin/gulp pre-clean && ./node_modules/.bin/gulp jshint && ./node_modules/.bin/gulp install",
+    "build": "./node_modules/.bin/gulp pre-clean && ./node_modules/.bin/gulp install",
+    "full-build": "./node_modules/.bin/gulp pre-clean && ./node_modules/.bin/gulp jshint && ./node_modules/.bin/gulp install",
     "test": "export NODE_ENV=staging && ./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha test"
   }
 }
