@@ -1,6 +1,5 @@
 'use strict';
 
-var merge = require('merge');
 var http = require('./helpers/http');
 var ontimeRequester = require('./helpers/ontime');
 
@@ -13,13 +12,15 @@ module.exports.controller = function (app, config) {
       ontimeRequester.me(req.ontimeToken, function (result) {
         result = JSON.parse(result);
         if (result.error) {
+          /*jshint camelcase: false */
           http.log(req, 'Ontime Error: ' + result.error_description);
-          http.response(res, 403, {error: result}, "-3", result.error);
+          /*jshint camelcase: true */
+          http.response(res, 403, {error: result}, '-3', result.error);
         } else if (result.data) {
-          http.response(res, 200, {ontime_user: result.data});
+          http.response(res, 200, {ontimeUser: result.data});
         } else {
           http.log(req, 'Ontime Error: issue during OnTime "/me" request');
-          http.response(res, 500, {}, "-1");
+          http.response(res, 500, {}, '-1');
         }
       });
     });
@@ -30,13 +31,15 @@ module.exports.controller = function (app, config) {
       ontimeRequester.tree(req.ontimeToken, function (result) {
         result = JSON.parse(result);
         if (result.error) {
+          /*jshint camelcase: false */
           http.log(req, 'Ontime Error: ' + result.error_description);
-          http.response(res, 403, {error: result}, "-3", result.error);
+          /*jshint camelcase: true */
+          http.response(res, 403, {error: result}, '-3', result.error);
         } else if (result.data) {
           http.response(res, 200, {tree: result.data});
         } else {
           http.log(req, 'Ontime Error: issue during OnTime "/tree" request');
-          http.response(res, 500, {}, "-1");
+          http.response(res, 500, {}, '-1');
         }
       });
     });
@@ -47,13 +50,15 @@ module.exports.controller = function (app, config) {
       ontimeRequester.items(req.ontimeToken, req.query.projectId, function (result) {
         result = JSON.parse(result);
         if (result.error) {
+          /*jshint camelcase: false */
           http.log(req, 'Ontime Error: ' + result.error_description);
-          http.response(res, 403, {error: result}, "-3", result.error);
+          /*jshint camelcase: true */
+          http.response(res, 403, {error: result}, '-3', result.error);
         } else if (result.data) {
           http.response(res, 200, {items: result.data});
         } else {
           http.log(req, 'Ontime Error: issue during OnTime "/items" request');
-          http.response(res, 500, {}, "-1");
+          http.response(res, 500, {}, '-1');
         }
       });
     });

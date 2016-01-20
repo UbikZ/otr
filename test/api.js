@@ -907,11 +907,11 @@ module.exports = function (app) {
                 assert.strictEqual(result.code, 200);
                 assert.isUndefined(result.error);
                 assert.isUndefined(result.messageCode);
-                assert.isDefined(result.ontime_user);
+                assert.isDefined(result.ontimeUser);
                 ['id', 'login_id', 'is_active', 'is_locked', 'last_login_date_time', 'created_date_time',
                   'culture_info', 'first_name', 'last_name', 'email', 'is_admin']
                   .forEach(function (item) {
-                    assert.strictEqual(result.ontime_user[item], expectedData.data[item]);
+                    assert.strictEqual(result.ontimeUser[item], expectedData.data[item]);
                   });
                 done();
               });
