@@ -88,6 +88,7 @@ module.exports = function (app) {
             staticFiles = fs.readdirSync(path).filter(function (file) {
                 return ~file.indexOf('.gz.');
               });
+            done();
           });
           
           staticFiles.forEach(function (staticFile) {
