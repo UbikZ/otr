@@ -1,11 +1,9 @@
 'use strict';
 
-var fs = require('fs');
 var assert = require('chai').assert;
 var mongoose = require('mongoose');
 
 var helpers = require('./../helpers');
-var ontimeRequester = require('../../controllers/helpers/ontime');
 var OrganizationModel = require('../../models/organization');
 
 module.exports = function (agent, url) {

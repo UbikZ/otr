@@ -1,6 +1,5 @@
 'use strict';
 
-var fs = require('fs');
 var assert = require('chai').assert;
 var mongoose = require('mongoose');
 

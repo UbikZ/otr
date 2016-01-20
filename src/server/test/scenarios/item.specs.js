@@ -1,6 +1,5 @@
 'use strict';
 
-var fs = require('fs');
 var assert = require('chai').assert;
 var mongoose = require('mongoose');
 
@@ -15,7 +14,7 @@ module.exports = function (agent, url) {
       var sentData = require('./../fixtures/organization/create');
       agent
         .post(url + '/organization/edit')
-        .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+        .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
         .send(sentData)
         .expect(200)
         .expect('Content-Type', 'application/json; charset=utf-8')
@@ -48,7 +47,7 @@ module.exports = function (agent, url) {
         agent
           .post(url + '/item/create')
           .send(sentData)
-          .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+          .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(404)
           .expect('Content-Type', 'application/json; charset=utf-8')
           .end(function (err, res) {
@@ -68,7 +67,7 @@ module.exports = function (agent, url) {
         agent
           .post(url + '/item/create')
           .send(sentData)
-          .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+          .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(500)
           .expect('Content-Type', 'application/json; charset=utf-8')
           .end(function (err, res) {
@@ -88,7 +87,7 @@ module.exports = function (agent, url) {
         agent
           .post(url + '/item/create')
           .send(sentData)
-          .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+          .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(404)
           .expect('Content-Type', 'application/json; charset=utf-8')
           .end(function (err, res) {
@@ -109,7 +108,7 @@ module.exports = function (agent, url) {
         agent
           .post(url + '/item/create')
           .send(sentData)
-          .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+          .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(404)
           .expect('Content-Type', 'application/json; charset=utf-8')
           .end(function (err, res) {
@@ -131,7 +130,7 @@ module.exports = function (agent, url) {
         agent
           .post(url + '/item/create')
           .send(sentData)
-          .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+          .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(404)
           .expect('Content-Type', 'application/json; charset=utf-8')
           .end(function (err, res) {
@@ -153,7 +152,7 @@ module.exports = function (agent, url) {
           agent
             .post(url + '/item/create')
             .send(sentData)
-            .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+            .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
             .expect(500)
             .expect('Content-Type', 'application/json; charset=utf-8')
             .end(function (err, res) {
@@ -176,7 +175,7 @@ module.exports = function (agent, url) {
         agent
           .post(url + '/item/create')
           .send(sentData)
-          .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+          .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(200)
           .expect('Content-Type', 'application/json; charset=utf-8')
           .end(function (err, res) {
@@ -207,7 +206,7 @@ module.exports = function (agent, url) {
         agent
           .post(url + '/item/create')
           .send(sentData)
-          .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+          .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(404)
           .expect('Content-Type', 'application/json; charset=utf-8')
           .end(function (err, res) {
@@ -229,7 +228,7 @@ module.exports = function (agent, url) {
         agent
           .post(url + '/item/create')
           .send(sentData)
-          .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+          .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(200)
           .expect('Content-Type', 'application/json; charset=utf-8')
           .end(function (err, res) {
@@ -261,7 +260,7 @@ module.exports = function (agent, url) {
         agent
           .post(url + '/item/create')
           .send(sentData)
-          .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+          .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(200)
           .expect('Content-Type', 'application/json; charset=utf-8')
           .end(function (err, res) {
@@ -298,7 +297,7 @@ module.exports = function (agent, url) {
         agent
           .post(url + '/item/create')
           .send(sentData)
-          .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+          .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(404)
           .expect('Content-Type', 'application/json; charset=utf-8')
           .end(function (err, res) {
@@ -324,7 +323,7 @@ module.exports = function (agent, url) {
         agent
           .post(url + '/item/create')
           .send(sentData)
-          .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+          .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(403)
           .expect('Content-Type', 'application/json; charset=utf-8')
           .end(function (err, res) {
@@ -350,7 +349,7 @@ module.exports = function (agent, url) {
         agent
           .post(url + '/item/create')
           .send(sentData)
-          .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+          .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(500)
           .expect('Content-Type', 'application/json; charset=utf-8')
           .end(function (err, res) {
@@ -377,7 +376,7 @@ module.exports = function (agent, url) {
         agent
           .post(url + '/item/create')
           .send(sentData)
-          .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+          .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(200)
           .expect('Content-Type', 'application/json; charset=utf-8')
           .end(function (err, res) {
@@ -430,7 +429,7 @@ module.exports = function (agent, url) {
         agent
           .post(url + '/item/create')
           .send(sentData)
-          .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+          .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(200)
           .expect('Content-Type', 'application/json; charset=utf-8')
           .end(function (err, res) {
@@ -496,7 +495,7 @@ module.exports = function (agent, url) {
         agent
           .post(url + '/item/create')
           .send(sentData)
-          .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+          .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(200)
           .expect('Content-Type', 'application/json; charset=utf-8')
           .end(function (err, res) {
@@ -532,7 +531,7 @@ module.exports = function (agent, url) {
         agent
           .post(url + '/item/update')
           .send(sentData)
-          .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+          .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(404)
           .expect('Content-Type', 'application/json; charset=utf-8')
           .end(function (err, res) {
@@ -552,7 +551,7 @@ module.exports = function (agent, url) {
         agent
           .post(url + '/item/update')
           .send(sentData)
-          .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+          .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(500)
           .expect('Content-Type', 'application/json; charset=utf-8')
           .end(function (err, res) {
@@ -572,7 +571,7 @@ module.exports = function (agent, url) {
         agent
           .post(url + '/item/update')
           .send(sentData)
-          .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+          .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(404)
           .expect('Content-Type', 'application/json; charset=utf-8')
           .end(function (err, res) {
@@ -593,7 +592,7 @@ module.exports = function (agent, url) {
         agent
           .post(url + '/item/update')
           .send(sentData)
-          .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+          .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(404)
           .expect('Content-Type', 'application/json; charset=utf-8')
           .end(function (err, res) {
@@ -609,11 +608,14 @@ module.exports = function (agent, url) {
       });
 
       it('should get an error because no "data._id" given', function (done) {
-        var sentData = Object.assign(require('./../fixtures/item/update-ok-1'), {organizationId: global.organizationId});
+        var sentData = Object.assign(
+          require('./../fixtures/item/update-ok-1'),
+          {organizationId: global.organizationId}
+        );
         agent
           .post(url + '/item/update')
           .send(sentData)
-          .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+          .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(404)
           .expect('Content-Type', 'application/json; charset=utf-8')
           .end(function (err, res) {
@@ -636,7 +638,7 @@ module.exports = function (agent, url) {
         agent
           .post(url + '/item/update')
           .send(sentData)
-          .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+          .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(404)
           .expect('Content-Type', 'application/json; charset=utf-8')
           .end(function (err, res) {
@@ -657,7 +659,7 @@ module.exports = function (agent, url) {
         agent
           .post(url + '/item/update')
           .send(sentData)
-          .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+          .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(200)
           .expect('Content-Type', 'application/json; charset=utf-8')
           .end(function (err, res) {
@@ -687,7 +689,7 @@ module.exports = function (agent, url) {
         agent
           .post(url + '/item/update')
           .send(sentData)
-          .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+          .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(200)
           .expect('Content-Type', 'application/json; charset=utf-8')
           .end(function (err, res) {
@@ -713,7 +715,7 @@ module.exports = function (agent, url) {
       it('should get an error because no organization identifier given', function (done) {
         agent
           .get(url + '/item?')
-          .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+          .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(404)
           .expect('Content-Type', 'application/json; charset=utf-8')
           .end(function (err, res) {
@@ -731,7 +733,7 @@ module.exports = function (agent, url) {
       it('should get an error because bad organization identifier-type given', function (done) {
         agent
           .get(url + '/item?organizationId=badIdea#joke')
-          .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+          .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(500)
           .expect('Content-Type', 'application/json; charset=utf-8')
           .end(function (err, res) {
@@ -749,7 +751,7 @@ module.exports = function (agent, url) {
       it('should get an error because bad (not known) organization identifier given', function (done) {
         agent
           .get(url + '/item?organizationId=569a498efd2e11a55a2822f4')
-          .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+          .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(404)
           .expect('Content-Type', 'application/json; charset=utf-8')
           .end(function (err, res) {
@@ -767,7 +769,7 @@ module.exports = function (agent, url) {
       it('should get an error because unknown item identifier given', function (done) {
         agent
           .get(url + '/item?organizationId=' + global.organizationId + '&itemId=badIdea#joke')
-          .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+          .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(404)
           .expect('Content-Type', 'application/json; charset=utf-8')
           .end(function (err, res) {
@@ -785,7 +787,7 @@ module.exports = function (agent, url) {
       it('should get an item (project)', function (done) {
         agent
           .get(url + '/item?organizationId=' + global.organizationId + '&itemId=' + global.projectId)
-          .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+          .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(200)
           .expect('Content-Type', 'application/json; charset=utf-8')
           .end(function (err, res) {
@@ -809,7 +811,7 @@ module.exports = function (agent, url) {
       it('should get an item (document)', function (done) {
         agent
           .get(url + '/item?organizationId=' + global.organizationId + '&itemId=' + documentId)
-          .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+          .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(200)
           .expect('Content-Type', 'application/json; charset=utf-8')
           .end(function (err, res) {
@@ -833,7 +835,7 @@ module.exports = function (agent, url) {
       it('should get an item (version)', function (done) {
         agent
           .get(url + '/item?organizationId=' + global.organizationId + '&itemId=' + versionId)
-          .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+          .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(200)
           .expect('Content-Type', 'application/json; charset=utf-8')
           .end(function (err, res) {
@@ -858,7 +860,7 @@ module.exports = function (agent, url) {
       it('should get an item (version) with modePreview', function (done) {
         agent
           .get(url + '/item?modePreview=1&organizationId=' + global.organizationId + '&itemId=' + versionId)
-          .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+          .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(200)
           .expect('Content-Type', 'application/json; charset=utf-8')
           .end(function (err, res) {
@@ -880,7 +882,7 @@ module.exports = function (agent, url) {
       it('should get an item (version) with lazy loading', function (done) {
         agent
           .get(url + '/item?lazy=1&organizationId=' + global.organizationId + '&itemId=' + versionId)
-          .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+          .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(200)
           .expect('Content-Type', 'application/json; charset=utf-8')
           .end(function (err, res) {
@@ -905,7 +907,7 @@ module.exports = function (agent, url) {
       it('should get /organization for versions/entries (with lazy loading)', function (done) {
         agent
           .get(url + '/organization?lazyVersion=1&id=' + global.organizationId)
-          .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+          .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(200)
           .expect('Content-Type', 'application/json; charset=utf-8')
           .end(function (err, res) {
@@ -933,7 +935,7 @@ module.exports = function (agent, url) {
         agent
           .post(url + '/item/delete')
           .send(sentData)
-          .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+          .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(404)
           .expect('Content-Type', 'application/json; charset=utf-8')
           .end(function (err, res) {
@@ -953,7 +955,7 @@ module.exports = function (agent, url) {
         agent
           .post(url + '/item/delete')
           .send(sentData)
-          .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+          .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(500)
           .expect('Content-Type', 'application/json; charset=utf-8')
           .end(function (err, res) {
@@ -973,7 +975,7 @@ module.exports = function (agent, url) {
         agent
           .post(url + '/item/delete')
           .send(sentData)
-          .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+          .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(404)
           .expect('Content-Type', 'application/json; charset=utf-8')
           .end(function (err, res) {
@@ -993,7 +995,7 @@ module.exports = function (agent, url) {
         agent
           .post(url + '/item/delete')
           .send(sentData)
-          .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+          .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(404)
           .expect('Content-Type', 'application/json; charset=utf-8')
           .end(function (err, res) {
@@ -1013,7 +1015,7 @@ module.exports = function (agent, url) {
         agent
           .post(url + '/item/delete')
           .send(sentData)
-          .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+          .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(404)
           .expect('Content-Type', 'application/json; charset=utf-8')
           .end(function (err, res) {
@@ -1033,7 +1035,7 @@ module.exports = function (agent, url) {
         agent
           .post(url + '/item/delete')
           .send(sentData)
-          .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+          .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(200)
           .expect('Content-Type', 'application/json; charset=utf-8')
           .end(function (err, res) {
@@ -1061,7 +1063,7 @@ module.exports = function (agent, url) {
         agent
           .post(url + '/item/delete')
           .send(sentData)
-          .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+          .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(200)
           .expect('Content-Type', 'application/json; charset=utf-8')
           .end(function (err, res) {
@@ -1086,7 +1088,7 @@ module.exports = function (agent, url) {
         agent
           .post(url + '/item/delete')
           .send(sentData)
-          .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)
+          .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(200)
           .expect('Content-Type', 'application/json; charset=utf-8')
           .end(function (err, res) {

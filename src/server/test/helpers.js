@@ -47,4 +47,4 @@ module.exports = {
   internalErrorOntimeAPIResponse: internalErrorOntimeAPIResponse,
   mock: mock,
   mockModel: mockModel,
-}
+};
