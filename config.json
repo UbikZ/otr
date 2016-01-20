@@ -43,7 +43,7 @@
       "socket": "./src/server/sockets",
       "model": "./src/server/models",
       "prototype": "./src/server/prototypes",
-      "test": "./test"
+      "test": "./src/server/test"
     }
   },
   "particularities": {

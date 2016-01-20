@@ -4,11 +4,11 @@ var request = require('supertest');
 var mongoose = require('mongoose');
 var should = require('chai').should();
 var assert = require('chai').assert;
-var config = require('../config');
+var config = require('../../../config');
 var moment = require('moment');
 var fs = require('fs');
-var OrganizationModel = require('../src/server/models/organization');
-var ontimeRequester = require('../src/server/controllers/helpers/ontime');
+var OrganizationModel = require('../models/organization');
+var ontimeRequester = require('../controllers/helpers/ontime');
 var sinon = require('sinon');
 
 // Generic mocks methods

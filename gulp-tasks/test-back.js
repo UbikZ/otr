@@ -3,7 +3,8 @@
 module.exports = function (gulp, plugins, npmPackages, config) {
   return function () {
     if (process.env.NODE_ENV === 'staging') {
-      return gulp.src(['app.js', config.path.server.root + '/**/*.js'])
+      return gulp
+        .src(['app.js', config.path.server.root.concat('/**/*.js'), '!'.concat(config.path.server.root, '/test/**/*')])
         .pipe(plugins.istanbul({includeUntested: true}))
         .pipe(plugins.istanbul.hookRequire())
         .on('finish', function () {

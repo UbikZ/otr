@@ -5,6 +5,7 @@ chai.use(chaiAsPromised);
 var expect = chai.expect;
 
 /*jhint expr:true */
+
 describe('no protractor at all', function() {
   it('should still do normal tests', function() {
     expect(true).to.equal(true);
