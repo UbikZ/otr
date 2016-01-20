@@ -16,10 +16,10 @@ module.exports = function (gulp, plugins, npmPackages, config) {
     return b.bundle()
       .pipe(plugins.source('app.min.js'))
       .pipe(plugins.ifProd(plugins.buffer()))
-      .pipe(plugins.istanbul({
+      .pipe(plugins.ifProd(plugins.istanbul({
         includeUntested: true,
         coverageVariable: '__coverage__'
-      }))
+      })))
       .pipe(plugins.ifProd(plugins.rev()))
       .pipe(plugins.ifProd(plugins.streamify(plugins.uglify({mangle: false}))))
       .pipe(plugins.ifProd(plugins.gzip({gzipOptions: {level: 9}, preExtension: 'gz'})))
