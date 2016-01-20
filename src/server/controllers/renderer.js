@@ -3,6 +3,7 @@
 var path = require('path');
 var childProcess = require('child_process');
 var http = require('./helpers/http');
+var logger = require('../logger');
 
 module.exports.controller = function (app, config) {
 
@@ -30,11 +31,11 @@ module.exports.controller = function (app, config) {
           fullUrl,
         ];
 
-        childProcess.execFile(binPath, childArgs, function (err, stdout, stderr) {
+        childProcess.execFile(binPath, childArgs, function (err, stdout) {
           logger.debug(stdout);
-          if (err != undefined) {
+          if (err !== undefined) {
             logger.error(err);
-            http.response(res, 500, err, "-1");
+            http.response(res, 500, err, '-1');
           } else {
             logger.info('[End] Rendering: ' + fullUrl);
             http.response(res, 200, {});
@@ -42,7 +43,7 @@ module.exports.controller = function (app, config) {
         });
       } else {
         http.log(req, 'Error when user (' + user.name.username + ') rendered url (' + data.url + ')');
-        http.response(res, 404, {}, "-1");
+        http.response(res, 404, {}, '-1');
       }
     });
   });
