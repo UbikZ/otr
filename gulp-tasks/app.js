@@ -21,7 +21,7 @@ module.exports = function (gulp, plugins, npmPackages, config) {
         coverageVariable: '__coverage__'
       })))
     }
-    
+
     return stream.pipe(plugins.ifProd(plugins.rev()))
       .pipe(plugins.ifProd(plugins.streamify(plugins.uglify({mangle: false}))))
       .pipe(plugins.ifProd(plugins.gzip({gzipOptions: {level: 9}, preExtension: 'gz'})))
