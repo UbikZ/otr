@@ -256,6 +256,7 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
     };
 
     $scope.delete = function (objectId) {
+      $scope.loadingItem = true;
       itemService.delete(
         {organizationId: $scope.organization._id, itemId: objectId},
         function (res) {
@@ -269,6 +270,10 @@ module.exports = ['$scope', '$rootScope', 'itemService', 'settingService', '$uib
           });
           changeCurrentOrganization(res.organization);
           mergeFileItems();
+          $scope.loadingItem = false;
+        },
+        function () {
+          $scope.loadingItem = false;
         }
       );
     };

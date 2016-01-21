@@ -93,8 +93,9 @@
                                           <a ng-click="open(fileItem._id)">
                                               <div class="img">
                                                   <div class="icon">
-                                                      <i class="fa"
-                                                         ng-class="fileItem.projects ? 'fa-cube text-success' : 'fa-file-text text-navy'"></i>
+                                                      <i ng-if="fileItem.projects && !loadingItem" class="fa fa-cube text-success"></i>
+                                                      <i ng-if="!fileItem.projects && !loadingItem" class="fa fa-file-text text-navy"></i>
+                                                      <i ng-if="loadingItem" class="fa fa-spinner fa-spin" ng-class="fileItem.projects ? 'text-success' : 'text-navy'"></i>
                                                   </div>
                                               </div>
                                               <div class="info">
@@ -104,7 +105,8 @@
                                       </div>
 
                                       <div class="file-name">
-                                          <div class="btn-group pull-right" uib-dropdown is-open="opened">
+                                          <div ng-if="!loadingItem"
+                                               class="btn-group pull-right" uib-dropdown is-open="opened">
                                               <button id="single-button-project" type="button" class="btn btn-white btn-xs"
                                                       uib-dropdown-toggle ng-disabled="disabled">
                                                   <span class="caret"></span>
@@ -196,15 +198,19 @@
                                         <td class="col-lg-3">{{ version.creation.date | date: $root.const.FORMATS.DATE_TIME }}</td>
                                         <td class="col-lg-6">
                                             <a ui-sref="{{ $root.routes.VERSIONS_PREVIEW }}({organizationId: organization._id, documentId: currentItem._id, itemId: version._id})"
+                                               ng-disabled="loadingItem"
                                                class="btn btn-primary btn-xs">
                                                 <i class="fa fa-eye"></i>
                                                 {{ (ns+'.item.preview') | translate }}
                                             </a>
-                                            <a ng-click="editVersion(version._id)" class="btn btn-success btn-xs">
+                                            <a ng-click="editVersion(version._id)" ng-disabled="loadingItem"
+                                               class="btn btn-success btn-xs">
                                                 <i class="fa fa-pencil"></i> {{ (ns+'.item.edit') | translate }}
                                             </a>
-                                            <a ng-click="delete(version._id)" class="btn btn-danger btn-xs">
-                                                <i class="fa fa-trash"></i> {{ (ns+'.item.delete') | translate }}
+                                            <a ng-click="delete(version._id)" ng-disabled="loadingItem"
+                                               class="btn btn-danger btn-xs">
+                                                <i class="fa" ng-class="loadingItem ? 'fa-spinner fa-spin' : 'fa-trash'"></i>
+                                                {{ (ns+'.item.delete') | translate }}
                                             </a>
                                         </td>
                                     </tr>
