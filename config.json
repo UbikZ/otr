@@ -29,6 +29,7 @@
   "path": {
     "node": "./node_modules",
     "public": "./public",
+    "export": "./public/exports",
     "scripts": "./scripts",
     "coverage": "./coverage",
     "logs": "./logs",

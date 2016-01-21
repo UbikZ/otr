@@ -5,7 +5,7 @@ var system = require('system');
 var page = webPage.create();
 var pdfPage = webPage.create();
 var fs = require('fs');
-var url;
+var url, filePath;
 
 /**
  * Variables Init
@@ -35,13 +35,13 @@ function open(currentPage, url, ownCallback) {
 }
 
 function doRender() {
-  var filePath = 'public/test.html';
+  var tmpFilePath = './public/'.concat(btoa(filePath), '.html');
 
   if (debug) {
-    console.log('Start export PDF...');
+    console.debug('Start export PDF...');
   }
 
-  fs.write(filePath,
+  fs.write(tmpFilePath,
     page.content
       .replace(new RegExp('\\s*<script[^>]*>[\\s\\S]*?</script>\\s*', 'ig'), '')
       .replace(new RegExp('\\s*<div class="pace[^>]*>[\\s\\S]*?</div>\\s*', 'ig'), '')
@@ -49,9 +49,9 @@ function doRender() {
     'w');
   page.close();
 
-  open(pdfPage, filePath, function () {
-    pdfPage.render('public/exports/export.pdf');
-    fs.remove(filePath);
+  open(pdfPage, tmpFilePath, function () {
+    pdfPage.render(filePath);
+    fs.remove(tmpFilePath);
     phantom.exit();
   });
 }
@@ -101,13 +101,14 @@ pdfPage.paperSize = {
   margin: {left: '0.5cm', right: '0.5cm', top: '1cm', bottom: '1cm'},
 };
 
-if (system.args.length < 2 || system.args.length > 3) {
+if (system.args.length < 3 || system.args.length > 4) {
   console.log('Parameter missing');
   phantom.exit(-1);
 } else {
   url = system.args[1];
+  filePath = system.args[2];
   /*jshint eqeqeq: false */
-  debug = system.args[2] == 1;
+  debug = system.args[3] == 1;
   /*jshint eqeqeq: true */
 
   open(page, url, function () {

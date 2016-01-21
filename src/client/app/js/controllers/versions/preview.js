@@ -2,15 +2,16 @@
 
 var mappingSetting = require('../../helpers/mapping/setting');
 var computeEntry = require('../../helpers/computeEntry');
+var env = require('../../env');
 
-module.exports = [
-  '$scope', '$rootScope', '$stateParams', 'itemService', 'settingService', 'rendererService', '$location',
-  function ($scope, $rootScope, $stateParams, itemService, settingService, rendererService, $location) {
+module.exports = ['$scope', '$rootScope', '$stateParams', 'itemService', 'settingService', 'rendererService',
+  '$location', '$localStorage',
+  function ($scope, $rootScope, $stateParams, itemService, settingService, rendererService, $location, $localStorage) {
     var mainSetting = {};
     $scope.setting = {};
     $scope.options = computeEntry.const;
 
-    $scope.submitSetting = function(setting) {
+    $scope.submitSetting = function (setting) {
       $scope.loadingSubmitSetting = true;
       setting.organizationId = $stateParams.organizationId;
       setting.itemId = $scope.item._id;
@@ -23,12 +24,23 @@ module.exports = [
       });
     };
 
-    $scope.restoreSetting = function() {
+    $scope.restoreSetting = function () {
       $scope.setting = mainSetting;
     };
 
-    $scope.download = function() {
-      rendererService.renderPdf({url: $location.path().replace('preview', 'pdf')});
+    $scope.download = function () {
+      rendererService.renderPdf({
+        url: $location.path().replace('preview', 'pdf'),
+        name: $scope.organizationName.concat('-', $scope.documentName, '-', $scope.item.name),
+      }, function (res) {
+        // dirty
+        window.location.href = env.apiUrl.concat(
+          '/download?fileName=',
+          res.fileName,
+          '&authorization=',
+          'Bearer ' + $localStorage.token + ' ' + $localStorage.ontimeToken
+        );
+      });
     };
 
     itemService.get({
@@ -65,41 +77,41 @@ module.exports = [
         /*
          * Resume Functions
          */
-        $scope.resumeTotalTasks = function(opts) {
+        $scope.resumeTotalTasks = function (opts) {
           return computeEntry.computeTotal($scope.item.entries, $scope.setting, computeEntry.const.TASKS | (opts || 0));
         };
-        $scope.resumeTotalEstims = function(opts) {
+        $scope.resumeTotalEstims = function (opts) {
           return computeEntry.computeTotal(
             $scope.item.entries,
             $scope.setting,
             computeEntry.const.ESTIM_DEV | computeEntry.const.ESTIM_SM | (opts || 0)
           );
         };
-        $scope.resumeTotalEstimsDev = function(opts) {
+        $scope.resumeTotalEstimsDev = function (opts) {
           return computeEntry
             .computeTotal($scope.item.entries, $scope.setting, computeEntry.const.ESTIM_DEV | (opts || 0));
         };
-        $scope.resumeTotalEstimsSM = function(opts) {
+        $scope.resumeTotalEstimsSM = function (opts) {
           return computeEntry
             .computeTotal($scope.item.entries, $scope.setting, computeEntry.const.ESTIM_SM | (opts || 0));
         };
-        $scope.resumeTotalPriceDev = function(opts) {
+        $scope.resumeTotalPriceDev = function (opts) {
           return computeEntry.computeTotal(
             $scope.item.entries, $scope.setting,
             computeEntry.const.ESTIM_DEV | computeEntry.const.PRICE | (opts || 0)
           );
         };
-        $scope.resumeTotalPriceSM = function(opts) {
+        $scope.resumeTotalPriceSM = function (opts) {
           return computeEntry.computeTotal(
             $scope.item.entries, $scope.setting,
             computeEntry.const.ESTIM_SM | computeEntry.const.PRICE | (opts || 0)
           );
         };
-        $scope.resumeDayPerPersonPerIter = function() {
+        $scope.resumeDayPerPersonPerIter = function () {
           return computeEntry
             .computeDayPerPersonPerIter($scope.item.entries, $scope.setting);
         };
-        $scope.resumeIterations = function(opts) {
+        $scope.resumeIterations = function (opts) {
           return computeEntry
             .iterations($scope.item.entries, $scope.setting, opts || 0);
         };

@@ -30,7 +30,7 @@ function log(req, message, err) {
 
 function ensureAuthorized(req, res, next) {
   var bearerToken, bearerOtToken;
-  var bearerHeader = req.headers.authorization;
+  var bearerHeader = req.headers.authorization || req.query.authorization;
   if (typeof bearerHeader !== 'undefined') {
     var bearer = bearerHeader.split(' ');
     bearerToken = bearer[1];
