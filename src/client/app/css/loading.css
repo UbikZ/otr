@@ -1,11 +1,12 @@
-#wrapper {
-    display: none;
-}
-
 #wrapper-loader {
-    height: 100%;
-    width: 100%;
     overflow-x: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+    background-color: #2f4050;
 }
 
 #wrapper-loader > span {

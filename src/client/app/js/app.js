@@ -3,8 +3,6 @@
 // Global
 window.$ = window.jQuery = require('jquery');
 
-$('#wrapper').hide();
-
 // External
 var angular = require('angular');
 require('angular-gravatar');
@@ -56,7 +54,6 @@ app
     };
 
     $rootScope.enableUi = function() {
-      $('#wrapper').fadeIn();
       $('#wrapper-loader').fadeOut();
     };
 
