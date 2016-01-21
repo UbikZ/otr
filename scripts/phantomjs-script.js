@@ -51,7 +51,9 @@ function doRender() {
 
   open(pdfPage, tmpFilePath, function () {
     pdfPage.render(filePath);
-    fs.remove(tmpFilePath);
+    if (!debug) {
+      fs.remove(tmpFilePath);
+    }
     phantom.exit();
   });
 }
