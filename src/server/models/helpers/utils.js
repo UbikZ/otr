@@ -59,9 +59,8 @@ function findSpecificRecursivelyById(parentElement, elementId, cb) {
           findSpecificRecursivelyById(subElement, elementId, cb, parentElement);
         });
       } else {
-        cb();
+        return;
       }
-
     } else {
       cb(element, parentElement, type);
     }

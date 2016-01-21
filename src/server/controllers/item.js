@@ -302,7 +302,6 @@ module.exports.controller = function (app, config) {
                         http.log(req, 'Error: item creation (version one) failed (data.ontimeId is undefined).');
                         http.response(res, 404, {}, '-7');
                       }
-
                     } else {
                       http.log(req, 'Error: item creation failed (data.type is undefined).');
                       http.response(res, 404, {}, '-7');
