@@ -99,9 +99,10 @@
                                     <span ng-include="'versions/partials/web/main_resume.html'"></span>
                                 </uib-tab>
                                 <li>
-                                    <a ng-click="download()" uib-tab-heading-transclude="">
+                                    <a ng-click="download()" uib-tab-heading-transclude ng-disabled="downloading">
                                         <tab-heading>
-                                            <i class="fa fa-download"></i> {{ (nsv+'.items.download') | translate }}
+                                            <i class="fa" ng-class="downloading ? 'fa-spinner fa-spin' : 'fa-download'"></i>
+                                            {{ (nsv+'.items.download') | translate }}
                                         </tab-heading>
                                     </a>
                                 </li>

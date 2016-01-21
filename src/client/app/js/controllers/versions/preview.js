@@ -29,10 +29,12 @@ module.exports = ['$scope', '$rootScope', '$stateParams', 'itemService', 'settin
     };
 
     $scope.download = function () {
+      $scope.downloading = true;
       rendererService.renderPdf({
         url: $location.path().replace('preview', 'pdf'),
         name: $scope.organizationName.concat('-', $scope.documentName, '-', $scope.item.name),
       }, function (res) {
+        $scope.downloading = false;
         // dirty
         window.location.href = env.apiUrl.concat(
           '/download?fileName=',
