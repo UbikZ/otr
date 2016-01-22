@@ -10,6 +10,9 @@ module.exports = ['$scope', '$rootScope', '$stateParams', 'itemService', 'settin
     var mainSetting = {};
     $scope.setting = {};
     $scope.options = computeEntry.const;
+    $scope.organizationId = $stateParams.organizationId;
+    $scope.documentId = $stateParams.documentId;
+    $scope.itemId = $stateParams.itemId;
 
     $scope.submitSetting = function (setting) {
       $scope.loadingSubmitSetting = true;
@@ -46,8 +49,8 @@ module.exports = ['$scope', '$rootScope', '$stateParams', 'itemService', 'settin
     };
 
     itemService.get({
-      organizationId: $stateParams.organizationId,
-      itemId: $stateParams.itemId,
+      organizationId: $scope.organizationId,
+      itemId: $scope.itemId,
       modePreview: 1
     }, function (res) {
       if (res.item === undefined) {
