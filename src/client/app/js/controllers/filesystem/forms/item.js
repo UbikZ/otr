@@ -36,6 +36,9 @@ module.exports = [
 
       $scope.selected = undefined;
       $scope.selectedRelease = undefined;
+      $scope.expandedNodes = [];
+      $scope.expandedNodesRelease = [];
+
       $scope.treeOptions = {nodeChildren: 'children', dirSelectable: true};
 
       $scope.toggleSelect = function (node, selected) {
@@ -43,6 +46,7 @@ module.exports = [
         $scope.selected = selected ? node : undefined;
         ontimeService.tree({idProject: selected ? node.id : 0}, function(res) {
           $scope.ontimeItemsRelease = res.tree;
+          $scope.expandReleaseAll();
           $scope.loadingOntimeRelease = false;
         });
       };
@@ -54,9 +58,9 @@ module.exports = [
       $scope.expandAll = function () {
         $scope.expandedNodes = [];
         $scope.ontimeItems.forEach(function (item) {
-          recursiveTool.walkTreeRecursively(item, 'children', 'project', function (element) {
+          recursiveTool.walkTreeRecursively(item, 'children', null, function (element) {
             $scope.expandedNodes.push(element);
-          });
+          }, false);
         });
       };
 
@@ -67,9 +71,9 @@ module.exports = [
       $scope.expandReleaseAll = function () {
         $scope.expandedNodesRelease = [];
         $scope.ontimeItemsRelease.forEach(function (item) {
-          recursiveTool.walkTreeRecursively(item, 'children', 'project', function (element) {
+          recursiveTool.walkTreeRecursively(item, 'children', null, function (element) {
             $scope.expandedNodesRelease.push(element);
-          });
+          }, false);
         });
       };
 

@@ -31,7 +31,7 @@ function findRecursivelyById(parentElement, attributeName, elementId, getParent,
   if (elements !== undefined) {
     elements.forEach(function (subElement) {
       if (subElement !== undefined) {
-        if (subElement._id !==elementId) {
+        if (subElement._id !== elementId) {
           findRecursivelyById(subElement, attributeName, elementId, getParent, cb);
         } else if (parentElement.length === undefined) {
           cb(getParent === true ? parentElement : subElement);
@@ -60,7 +60,7 @@ function findSpecificRecursivelyById(parentElement, elementId, cb, passFirstElem
   if (elements !== undefined) {
     elements.forEach(function (subElement) {
       if (subElement !== undefined) {
-        if (subElement._id !==elementId) {
+        if (subElement._id !== elementId) {
           findSpecificRecursivelyById(subElement, elementId, cb);
         } else {
           cb(subElement);
@@ -76,7 +76,7 @@ function findPathRecursivelyById(elements, elementId, attributeName) {
   function slice(object, properties) {
     var result = {}, props = properties || [];
 
-    props.forEach(function(property) {
+    props.forEach(function (property) {
       if (property !== undefined) {
         result[property] = object[property];
       }
@@ -87,7 +87,7 @@ function findPathRecursivelyById(elements, elementId, attributeName) {
   }
 
   if (elements !== undefined) {
-    for (index = 0; index < elements.length ; index++) {
+    for (index = 0; index < elements.length; index++) {
       if (elements[index]._id === elementId) {
         return [slice(elements[index], ['_id', 'name', 'setting'])];
       } else {
@@ -100,8 +100,10 @@ function findPathRecursivelyById(elements, elementId, attributeName) {
   }
 }
 
-function walkTreeRecursively(element, attributeName, type, cb) {
-  if (element.type !==type || element[attributeName] === undefined || element[attributeName].length === 0) {
+function walkTreeRecursively(element, attributeName, type, cb, checkType) {
+  if ((element.type !== type && checkType !== false) ||
+    element[attributeName] === undefined || element[attributeName] === null ||
+    element[attributeName].length === 0) {
     return;
   }
   element[attributeName].forEach(function (child) {
@@ -116,7 +118,7 @@ function removeRecursivelyById(parentElement, attributeName, elementId, cb) {
   var indexToRemove;
   parentElement[attributeName].forEach(function (subElement, index) {
     if (subElement !== undefined) {
-      if (subElement._id !==elementId) {
+      if (subElement._id !== elementId) {
         removeRecursivelyById(subElement, attributeName, elementId, cb);
       } else {
         indexToRemove = index;
