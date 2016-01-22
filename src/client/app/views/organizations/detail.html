@@ -14,7 +14,7 @@
     </div>
     <div class="row">
         <div class="col-lg-9">
-            <div class="wrapper wrapper-content animated fadeIn">
+            <div class="wrapper wrapper-content animated fadeIn m-b-n-lg">
                 <div class="ibox row">
                     <div class="ibox-content">
                         <div class="row">
@@ -72,11 +72,17 @@
         </div>
         <div class="col-lg-3">
             <div class="wrapper wrapper-content project-manager">
-                <h4 class="m-b-md">{{ (ns+'.organization.description.title') | translate }}</h4>
                 <div class="text-center col-lg-12">
                     <img class="logo-organization" src="{{ organization.logo }}">
                 </div>
-                <p class="small m-t-md">{{ organization.description }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 m-t-n-xl">
+            <div class="bs-callout bs-callout-info">
+                <h4 class="m-b-md">{{ (ns+'.organization.description.title') | translate }}</h4>
+                <p>{{ organization.description }}</p>
             </div>
         </div>
     </div>

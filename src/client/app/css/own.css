@@ -52,7 +52,44 @@
 }
 
 .logo-organization {
-    height: 125px;
+    height: 200px;
+
+}
+
+.bs-callout {
+    margin: 20px 0;
+    padding: 20px;
+    border-left: 3px solid #eee;
+}
+.bs-callout h4 {
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+.bs-callout p:last-child {
+    margin-bottom: 0;
+}
+
+/* Variations */
+.bs-callout-danger {
+    background-color: #fff;
+    border-color: #eed3d7;
+}
+.bs-callout-danger h4 {
+    color: #b94a48;
+}
+.bs-callout-warning {
+    background-color: #fff;
+    border-color: #faebcc;
+}
+.bs-callout-warning h4 {
+    color: #8a6d3b;
+}
+.bs-callout-info {
+    background-color: #fff;
+    border-color: #bce8f1;
+}
+.bs-callout-info h4 {
+    color: #34789a;
 }
 
 .sidebar-panel {
