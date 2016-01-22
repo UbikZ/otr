@@ -34,7 +34,7 @@
             </div>
             <div class="social-body">
                 <div class="m-b-xs">
-                    <strong>{{ (ns+'.ontime.selected') | translate }}:</strong>
+                    <strong class="m-r-sm">{{ (ns+'.ontime.selected') | translate }}:</strong>
                     <span ng-if="selected != undefined" class="label label-success">
                         {{ selected.name }}
                         <a ng-click="toggleSelect()"><i class="fa fa-times-circle text-white m-l-sm"></i></a>
@@ -45,7 +45,7 @@
                     <br/>
                 </div>
                 <div>
-                    <strong>{{ (ns+'.ontime.selected_release') | translate }}:</strong>
+                    <strong class="m-r-sm">{{ (ns+'.ontime.selected_release') | translate }}:</strong>
                     <span ng-if="selectedRelease != undefined" class="label label-danger">
                         {{ selectedRelease.name }}
                         <a ng-click="toggleSelectRelease()"><i class="fa fa-times-circle text-white m-l-sm"></i></a>
