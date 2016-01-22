@@ -75,9 +75,18 @@
     color: #ed5565;
 }
 
+.social-feed-box.modal-version {
+    margin-bottom: -10px;
+}
+
+.social-feed-box.modal-version .row {
+    margin-bottom: -15px;
+}
+
 .social-footer.ontime {
     height: 350px;
-    overflow-x: scroll;
+    overflow-x: auto;
+    overflow-y: auto;
 }
 
 .versions .skin-setttings {
