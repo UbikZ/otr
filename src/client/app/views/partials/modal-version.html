@@ -33,7 +33,7 @@
                 </div>
             </div>
             <div class="social-body">
-                <div>
+                <div class="m-b-xs">
                     <strong>{{ (ns+'.ontime.selected') | translate }}:</strong>
                     <span ng-if="selected != undefined" class="label label-success">
                         {{ selected.name }}
@@ -48,7 +48,7 @@
                     <strong>{{ (ns+'.ontime.selected_release') | translate }}:</strong>
                     <span ng-if="selectedRelease != undefined" class="label label-danger">
                         {{ selectedRelease.name }}
-                        <a ng-click="toggleSelect()"><i class="fa fa-times-circle text-white m-l-sm"></i></a>
+                        <a ng-click="toggleSelectRelease()"><i class="fa fa-times-circle text-white m-l-sm"></i></a>
                     </span>
                     <span ng-if="selectedRelease == undefined" class="text-muted">
                         {{ (ns+'.ontime.no_selection_release') | translate }}
@@ -61,10 +61,9 @@
                         {{ (ns+'.ontime.titles.project') | translate }}
                         <span class="badge badge-success m-l-xs">{{ ontimeItems.length || 0 }}</span>
                         <a class="text-muted pull-right m-l-sm" ng-click="collapseAll()"><i class="fa fa-compress"></i></a>
-                        <a class="text-muted pull-right" ng-click="expandAll()"><i class="fa fa-expand"></i></a>
                     </h4>
                     <hr class="m-sm">
-                    <div ng-if="loadingOntime" ng-include="'partials/spinner.html'"></div>
+                    <div ng-if="loadingOntime" class="text-success" ng-include="'partials/spinner.html'"></div>
                     <div ng-if="!loadingOntime">
                         <div treecontrol class="tree-light"
                              tree-model="ontimeItems"
@@ -83,10 +82,9 @@
                         {{ (ns+'.ontime.titles.release') | translate }}
                         <span class="badge badge-danger m-l-xs">{{ ontimeItemsRelease.length || 0 }}</span>
                         <a class="text-muted pull-right m-l-sm" ng-click="collapseReleaseAll()"><i class="fa fa-compress"></i></a>
-                        <a class="text-muted pull-right" ng-click="expandReleaseAll()"><i class="fa fa-expand"></i></a>
                     </h4>
                     <hr class="m-sm">
-                    <div ng-if="loadingOntimeRelease" ng-include="'partials/spinner.html'"></div>
+                    <div ng-if="loadingOntimeRelease" class="text-danger" ng-include="'partials/spinner.html'"></div>
                     <div ng-if="!loadingOntimeRelease">
                         <div treecontrol class="tree-light"
                              tree-model="ontimeItemsRelease"
@@ -111,7 +109,7 @@
                     <i class="fa fa-reply"></i> <strong>{{ (ns+'.form.quit') | translate }}</strong>
                 </a>
                 <button class="btn btn-sm btn-primary pull-right" type="submit"
-                        ng-if="item.ontimeId != undefined || identifier" ng-disabled="form.$invalid || loading">
+                        ng-if="selected.id || selectedRelease.id || identifier" ng-disabled="form.$invalid || loading">
                     <i class="fa" ng-class="loading ? 'fa-spinner fa-spin' : 'fa-save' "></i>
                     <strong>{{ (ns+'.form.submit') | translate }}</strong>
                 </button>

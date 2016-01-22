@@ -55,39 +55,49 @@ function tree(accessToken, idProject, cb) {
   req(url, cb);
 }
 
-function items(accessToken, projectId, cb) {
-  var url = ontimeConfig.ontimeUrl + '/api/v5/features/?' +
-    qs.stringify({
-      /*jshint camelcase: false */
-      'access_token': accessToken,
-      'project_id': projectId,
-      'sort_fields': 'id',
-      'columns': [
-        'parent',
-        'parent_project',
-        'project',
-        'name',
-        'description',
-        'notes',
-        'estimated_duration',
-        'custom_fields.custom_263', // OTR_ParentId
-        'custom_fields.custom_256', // OTR_EstimateBase
-        'custom_fields.custom_257', // OTR_EstimateLow
-        'custom_fields.custom_259', // OTR_EstimateHigh
-        'custom_fields.custom_262', // OTR_IsEstimated
-        'custom_fields.custom_260', // OTR_ValidatedDev
-        'custom_fields.custom_261', // OTR_ValidatedShipping
-        'custom_fields.custom_296', // Devis Gescom
-        'item_type',
-        'subitems',
-        'parent',
-      ].join(','),
-      'include_sub_projects_items': true,
-      'include_archived': false,
-      'page': 1,
-      'page_size': 1000,
-      /*jshint camelcase: false */
-    });
+function items(accessToken, ids, cb) {
+  var params = {
+    /*jshint camelcase: false */
+    'access_token': accessToken,
+    'sort_fields': 'id',
+    'columns': [
+      'parent',
+      'parent_project',
+      'project',
+      'name',
+      'description',
+      'notes',
+      'estimated_duration',
+      'custom_fields.custom_263', // OTR_ParentId
+      'custom_fields.custom_256', // OTR_EstimateBase
+      'custom_fields.custom_257', // OTR_EstimateLow
+      'custom_fields.custom_259', // OTR_EstimateHigh
+      'custom_fields.custom_262', // OTR_IsEstimated
+      'custom_fields.custom_260', // OTR_ValidatedDev
+      'custom_fields.custom_261', // OTR_ValidatedShipping
+      'custom_fields.custom_296', // Devis Gescom
+      'item_type',
+      'subitems',
+      'parent',
+    ].join(','),
+    'include_sub_projects_items': true,
+    'include_archived': false,
+    'page': 1,
+    'page_size': 1000,
+    /*jshint camelcase: false */
+  };
+  if (ids.projectId !== undefined) {
+    /*jshint camelcase: false */
+    params.project_id = ids.projectId;
+    /*jshint camelcase: true */
+  }
+  if (ids.releaseId !== undefined) {
+    /*jshint camelcase: false */
+    params.release_id = ids.releaseId;
+    /*jshint camelcase: true */
+  }
+  var url = ontimeConfig.ontimeUrl.concat('/api/v5/features/?', qs.stringify(params));
+
   req(url, cb);
 }
 

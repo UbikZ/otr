@@ -42,6 +42,7 @@ module.exports = [
       $scope.treeOptions = {nodeChildren: 'children', dirSelectable: true};
 
       $scope.toggleSelect = function (node, selected) {
+        $scope.selectedRelease = undefined;
         $scope.loadingOntimeRelease = true;
         $scope.selected = selected ? node : undefined;
         ontimeService.tree({idProject: selected ? node.id : 0}, function(res) {
@@ -55,26 +56,19 @@ module.exports = [
         $scope.selectedRelease = selected ? node : undefined;
       };
 
-      $scope.expandAll = function () {
-        $scope.expandedNodes = [];
-        $scope.ontimeItems.forEach(function (item) {
-          recursiveTool.walkTreeRecursively(item, 'children', null, function (element) {
-            $scope.expandedNodes.push(element);
-          }, false);
-        });
-      };
-
       $scope.collapseAll = function () {
         $scope.expandedNodes = [];
       };
 
       $scope.expandReleaseAll = function () {
         $scope.expandedNodesRelease = [];
-        $scope.ontimeItemsRelease.forEach(function (item) {
-          recursiveTool.walkTreeRecursively(item, 'children', null, function (element) {
-            $scope.expandedNodesRelease.push(element);
-          }, false);
-        });
+        if ($scope.ontimeItemsRelease !== undefined && $scope.ontimeItemsRelease.length > 0) {
+          $scope.ontimeItemsRelease.forEach(function (item) {
+            recursiveTool.walkTreeRecursively(item, 'children', null, function (element) {
+              $scope.expandedNodesRelease.push(element);
+            }, false);
+          });
+        }
       };
 
       $scope.collapseReleaseAll = function () {
@@ -85,7 +79,8 @@ module.exports = [
     $scope.submit = function (item) {
       $scope.loading = true;
       if ($scope.identifier === undefined) {
-        item.ontimeId = $scope.selected.id || $scope.selectedRelease.id;
+        item.projectOntimeId = $scope.selected ? $scope.selected.id : undefined;
+        item.releaseOntimeId = $scope.selectedRelease ? $scope.selectedRelease.id : undefined;
       }
 
       if ($scope.organizationId) {

@@ -162,10 +162,11 @@ module.exports.controller = function (app, config) {
                       element.documents.push(modelItem);
                       saveOrganization(res, req, data, organization, modelItem, '2');
                     } else if (data.type === 'version') {
-                      if (data.ontimeId !== undefined) {
+                      if (data.projectOntimeId !== undefined || data.releaseOntimeId !== undefined) {
                         modelItem = new VersionModel(item);
                         modelItem.update = modelItem.creation = {user: user._id, date: new Date()};
-                        ontimeRequester.items(req.ontimeToken, data.ontimeId, function (result) {
+                        var ids = {projectId: data.projectOntimeId, releaseId: data.releaseOntimeId};
+                        ontimeRequester.items(req.ontimeToken, ids, function (result) {
                           /*jshint camelcase: false */
                           result = JSON.parse(result);
                           if (result.error) {

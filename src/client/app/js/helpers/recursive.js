@@ -109,7 +109,7 @@ function walkTreeRecursively(element, attributeName, type, cb, checkType) {
   element[attributeName].forEach(function (child) {
     if (child !== undefined) {
       cb(element);
-      walkTreeRecursively(child, attributeName, type, cb);
+      walkTreeRecursively(child, attributeName, type, cb, checkType);
     }
   });
 }
