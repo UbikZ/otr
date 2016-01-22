@@ -527,10 +527,16 @@
       "update": "Upgrade version"
     },
     "ontime": {
-      "title": "List of projects from OnTime",
-      "description": "Select a project to import it.",
+      "title": "List of projects/releases from OnTime",
+      "description": "Select a project/release to import it.",
       "selected": "Selected project",
-      "no_selection": "Please select a project"
+      "selected_release": "Selected release",
+      "no_selection": "Please select a project",
+      "no_selection_release": "Select a release if needed",
+      "titles": {
+        "project": "Liste des projets",
+        "release": "Liste des lancements"
+      }
     },
     "form": {
       "name": {

@@ -527,10 +527,16 @@
       "update": "Mise à jour de la version"
     },
     "ontime": {
-      "title": "Liste des projets issus d'OnTime",
-      "description": "Sélectionner un projet afin de l'importer.",
+      "title": "Liste des projets/lancements issus d'OnTime",
+      "description": "Sélectionner un projet/lancement afin de l'importer.",
       "selected": "Projet sélectionné",
-      "no_selection": "Veuillez sélectionner un projet"
+      "selected_release": "Lancement sélectionné",
+      "no_selection": "Veuillez sélectionner un projet",
+      "no_selection_release": "Vous pouvez sélectionner un lancement si besoin",
+      "titles": {
+        "project": "Liste des projets",
+        "release": "Liste des lancements"
+      }
     },
     "form": {
       "name": {

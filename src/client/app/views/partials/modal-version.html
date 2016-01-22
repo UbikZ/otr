@@ -33,26 +33,37 @@
                 </div>
             </div>
             <div class="social-body">
-                <strong>
-                    <span class="text-muted">{{ (ns+'.ontime.selected') | translate }}:</span>
-                    <span ng-if="selected != undefined" class="text-navy">
+                <div>
+                    <strong>{{ (ns+'.ontime.selected') | translate }}:</strong>
+                    <span ng-if="selected != undefined" class="label label-success">
                         {{ selected.name }}
+                        <a ng-click="toggleSelect()"><i class="fa fa-times-circle text-white m-l-sm"></i></a>
                     </span>
                     <span ng-if="selected == undefined" class="text-warning">
                         {{ (ns+'.ontime.no_selection') | translate }}
                     </span>
-                </strong>
+                    <br/>
+                </div>
+                <div>
+                    <strong>{{ (ns+'.ontime.selected_release') | translate }}:</strong>
+                    <span ng-if="selectedRelease != undefined" class="text-success">
+                        {{ selectedRelease.name }}
+                    </span>
+                    <span ng-if="selectedRelease == undefined" class="text-muted">
+                        {{ (ns+'.ontime.no_selection_release') | translate }}
+                    </span>
+                </div>
             </div>
             <div class="row p-sm">
                 <div class="social-footer ontime col-lg-6">
-                    <h4 class="text-success">{{ (ns+'.ontime.project_title') | translate }}</h4>
+                    <h4 class="text-success">{{ (ns+'.ontime.titles.project') | translate }}</h4>
                     <hr class="m-sm">
                     <div ng-if="loadingOntime" ng-include="'partials/spinner.html'"></div>
                     <div ng-if="!loadingOntime">
                         <div treecontrol class="tree-light"
                              tree-model="ontimeItems"
                              options="treeOptions"
-                             on-selection="onSelect(node, selected, $parentNode, $index)"
+                             on-selection="toggleSelect(node, selected)"
                              selected-node="selected"
                              expanded-nodes="expandedNodes"
                              order-by="name">
@@ -62,16 +73,16 @@
                     </div>
                 </div>
                 <div class="social-footer ontime col-lg-6">
-                    <h4 class="text-danger">{{ (ns+'.ontime.project_title') | translate }}</h4>
+                    <h4 class="text-danger">{{ (ns+'.ontime.titles.release') | translate }}</h4>
                     <hr class="m-sm">
                     <div ng-if="loadingOntime" ng-include="'partials/spinner.html'"></div>
                     <div ng-if="!loadingOntime">
                         <div treecontrol class="tree-light"
-                             tree-model="ontimeItems"
+                             tree-model="ontimeItemsRelease"
                              options="treeOptions"
-                             on-selection="onSelect(node, selected, $parentNode, $index)"
-                             selected-node="selected"
-                             expanded-nodes="expandedNodes"
+                             on-selection="toggleSelectRelease(node, selected)"
+                             selected-node="selectedRelease"
+                             expanded-nodes="expandedNodesRelease"
                              order-by="name">
                             <span class="fa fa-rocket text-danger" aria-hidden="true"></span>
                             {{node.name}}

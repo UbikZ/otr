@@ -32,7 +32,7 @@ module.exports = [
       $scope.selected = undefined;
       $scope.treeOptions = {nodeChildren: 'children', dirSelectable: true};
 
-      $scope.onSelect = function (node, selected) {
+      $scope.toggleSelect = function (node, selected) {
         if (selected) {
           $scope.selected = node;
           $scope.item.ontimeId = node.id;
