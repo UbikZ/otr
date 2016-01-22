@@ -27,7 +27,7 @@
                                         <i class="fa fa-reply"></i> {{ (ns+'.actions.back') | translate }}
                                     </a>
 
-                                    <h2>{{ organization.name }}</h2>
+                                    <h2><strong>{{ organization.name }}</strong></h2>
                                 </div>
                                 <dl class="dl-horizontal">
                                     <dt>{{ (ns+'.organization.state') | translate }}</dt>
@@ -78,7 +78,7 @@
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row" ng-if="organization.description != ''">
         <div class="col-lg-12 m-t-n-xl">
             <div class="bs-callout bs-callout-info">
                 <h4 class="m-b-md">{{ (ns+'.organization.description.title') | translate }}</h4>

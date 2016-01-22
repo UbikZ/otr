@@ -81,19 +81,19 @@ module.exports.controller = function (app, config) {
           http.log(req, 'Internal error: update organization', err);
           http.response(res, 500, {}, '-1', err);
         } else if (organization) {
-          if (data.name) {
+          if (data.name !== undefined) {
             organization.name = data.name;
           }
-          if (data.description) {
+          if (data.description !== undefined) {
             organization.description = data.description;
           }
           if (data.active !== undefined) {
             organization.active = data.active;
           }
-          if (data.logo) {
+          if (data.logo !== undefined) {
             organization.logo = data.logo;
           }
-          if (data.url) {
+          if (data.url !== undefined) {
             organization.url = data.url;
           }
           organization.update = {user: user._id, date: new Date()};
