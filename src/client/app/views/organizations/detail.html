@@ -73,8 +73,9 @@
         <div class="col-lg-3">
             <div class="wrapper wrapper-content project-manager">
                 <h4 class="m-b-md">{{ (ns+'.organization.description.title') | translate }}</h4>
-                <img src="{{ organization.logo }}" class="img-responsive">
-
+                <div class="text-center col-lg-12">
+                    <img class="logo-organization" src="{{ organization.logo }}">
+                </div>
                 <p class="small m-t-md">{{ organization.description }}</p>
             </div>
         </div>
