@@ -28,18 +28,22 @@ module.exports.controller = function (app, config) {
 
   app.get(prefix + '/tree', http.ensureAuthorized, function (req, res) {
     http.checkAuthorized(req, res, function () {
-      ontimeRequester.tree(req.ontimeToken, function (result) {
+      ontimeRequester.tree(req.ontimeToken, req.query.idProject, function (result) {
         result = JSON.parse(result);
         if (result.error) {
           /*jshint camelcase: false */
           http.log(req, 'Ontime Error: ' + result.error_description);
           /*jshint camelcase: true */
           http.response(res, 403, {error: result}, '-3', result.error);
-        } else if (result.data) {
-          http.response(res, 200, {tree: result.data});
         } else {
-          http.log(req, 'Ontime Error: issue during OnTime "/tree" request');
-          http.response(res, 500, {}, '-1');
+          if (req.query.idProject !== undefined) {
+            http.response(res, 200, {tree: result.data || result});
+          } else if (result.data) {
+            http.response(res, 200, {tree: result.data});
+          } else {
+            http.log(req, 'Ontime Error: issue during OnTime "/tree" request');
+            http.response(res, 500, {}, '-1');
+          }
         }
       });
     });

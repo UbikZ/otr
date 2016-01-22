@@ -137,7 +137,7 @@ module.exports = function (agent, url) {
 
       it('should get ontime tree items', function (done) {
         var expectedData = require('./../fixtures/ontime/tree');
-        ontimeRequester.tree = function (token, cb) {
+        ontimeRequester.tree = function (token, id, cb) {
           cb(JSON.stringify(expectedData));
         };
         agent

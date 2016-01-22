@@ -19,9 +19,14 @@ module.exports = [
     if (identifier.isVersion === true) {
       $scope.refresh = function() {
         $scope.loadingOntime = true;
+        $scope.loadingOntimeRelease = true;
         ontimeService.tree({}, function(res) {
           $scope.ontimeItems = res.tree;
           $scope.loadingOntime = false;
+        });
+        ontimeService.tree({idProject: 0}, function(res) {
+          $scope.ontimeItemsRelease = res.tree;
+          $scope.loadingOntimeRelease = false;
         });
       };
 
@@ -30,16 +35,20 @@ module.exports = [
       }
 
       $scope.selected = undefined;
+      $scope.selectedRelease = undefined;
       $scope.treeOptions = {nodeChildren: 'children', dirSelectable: true};
 
       $scope.toggleSelect = function (node, selected) {
-        if (selected) {
-          $scope.selected = node;
-          $scope.item.ontimeId = node.id;
-        } else {
-          $scope.selected = undefined;
-          $scope.item.ontimeId = undefined;
-        }
+        $scope.loadingOntimeRelease = true;
+        $scope.selected = selected ? node : undefined;
+        ontimeService.tree({idProject: selected ? node.id : 0}, function(res) {
+          $scope.ontimeItemsRelease = res.tree;
+          $scope.loadingOntimeRelease = false;
+        });
+      };
+
+      $scope.toggleSelectRelease = function (node, selected) {
+        $scope.selectedRelease = selected ? node : undefined;
       };
 
       $scope.expandAll = function () {
@@ -54,10 +63,26 @@ module.exports = [
       $scope.collapseAll = function () {
         $scope.expandedNodes = [];
       };
+
+      $scope.expandReleaseAll = function () {
+        $scope.expandedNodesRelease = [];
+        $scope.ontimeItemsRelease.forEach(function (item) {
+          recursiveTool.walkTreeRecursively(item, 'children', 'project', function (element) {
+            $scope.expandedNodesRelease.push(element);
+          });
+        });
+      };
+
+      $scope.collapseReleaseAll = function () {
+        $scope.expandedNodesRelease = [];
+      };
     }
 
     $scope.submit = function (item) {
       $scope.loading = true;
+      if ($scope.identifier === undefined) {
+        item.ontimeId = $scope.selected.id || $scope.selectedRelease.id;
+      }
 
       if ($scope.organizationId) {
         item = Object.assign(item, {organizationId: $scope.organizationId});

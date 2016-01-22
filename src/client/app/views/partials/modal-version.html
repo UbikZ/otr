@@ -46,8 +46,9 @@
                 </div>
                 <div>
                     <strong>{{ (ns+'.ontime.selected_release') | translate }}:</strong>
-                    <span ng-if="selectedRelease != undefined" class="text-success">
+                    <span ng-if="selectedRelease != undefined" class="label label-danger">
                         {{ selectedRelease.name }}
+                        <a ng-click="toggleSelect()"><i class="fa fa-times-circle text-white m-l-sm"></i></a>
                     </span>
                     <span ng-if="selectedRelease == undefined" class="text-muted">
                         {{ (ns+'.ontime.no_selection_release') | translate }}
@@ -56,7 +57,12 @@
             </div>
             <div class="row p-sm">
                 <div class="social-footer ontime col-lg-6">
-                    <h4 class="text-success">{{ (ns+'.ontime.titles.project') | translate }}</h4>
+                    <h4 class="text-success">
+                        {{ (ns+'.ontime.titles.project') | translate }}
+                        <span class="badge badge-success m-l-xs">{{ ontimeItems.length || 0 }}</span>
+                        <a class="text-muted pull-right m-l-sm" ng-click="collapseAll()"><i class="fa fa-compress"></i></a>
+                        <a class="text-muted pull-right" ng-click="expandAll()"><i class="fa fa-expand"></i></a>
+                    </h4>
                     <hr class="m-sm">
                     <div ng-if="loadingOntime" ng-include="'partials/spinner.html'"></div>
                     <div ng-if="!loadingOntime">
@@ -73,10 +79,15 @@
                     </div>
                 </div>
                 <div class="social-footer ontime col-lg-6">
-                    <h4 class="text-danger">{{ (ns+'.ontime.titles.release') | translate }}</h4>
+                    <h4 class="text-danger">
+                        {{ (ns+'.ontime.titles.release') | translate }}
+                        <span class="badge badge-danger m-l-xs">{{ ontimeItemsRelease.length || 0 }}</span>
+                        <a class="text-muted pull-right m-l-sm" ng-click="collapseReleaseAll()"><i class="fa fa-compress"></i></a>
+                        <a class="text-muted pull-right" ng-click="expandReleaseAll()"><i class="fa fa-expand"></i></a>
+                    </h4>
                     <hr class="m-sm">
-                    <div ng-if="loadingOntime" ng-include="'partials/spinner.html'"></div>
-                    <div ng-if="!loadingOntime">
+                    <div ng-if="loadingOntimeRelease" ng-include="'partials/spinner.html'"></div>
+                    <div ng-if="!loadingOntimeRelease">
                         <div treecontrol class="tree-light"
                              tree-model="ontimeItemsRelease"
                              options="treeOptions"

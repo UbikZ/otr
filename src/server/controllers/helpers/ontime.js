@@ -42,13 +42,15 @@ function me(accessToken, cb) {
   req(url, cb);
 }
 
-function tree(accessToken, cb) {
-  var url = ontimeConfig.ontimeUrl + '/api/v5/projects?' +
-    qs.stringify({
-      /*jshint camelcase: false */
-      'access_token': accessToken,
-      /*jshint camelcase: true */
-    });
+function tree(accessToken, idProject, cb) {
+  var requestUrl = idProject === undefined ? 'projects' : 'releases';
+  /*jshint camelcase: false */
+  var params = {'access_token': accessToken};
+  if (idProject !== undefined) {
+    params.filter_by_project_id = idProject ? idProject : 0;
+  }
+  /*jshint camelcase: true */
+  var url = ontimeConfig.ontimeUrl.concat('/api/v5/', requestUrl, '?', qs.stringify(params));
 
   req(url, cb);
 }
