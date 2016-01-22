@@ -19,8 +19,8 @@
     "warning": {},
     "error": {
       "-1": "An internal error occurred.",
-      "-2": "The token used is invalid.",
-      "-3": "An error occurred while connecting to OnTime",
+      "-2": "The token used is invalid. Logout...",
+      "-3": "An error occurred while connecting to OnTime. Logout...",
       "-4": "The user was not found",
       "-5": "The company was not found",
       "-6": "The item was not found",

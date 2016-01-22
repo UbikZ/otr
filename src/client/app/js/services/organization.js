@@ -4,13 +4,13 @@ var env = require('../env');
 
 var callbacks = require('../helpers/callback');
 
-module.exports = ['$http', '$translate',
-  function($http, $translate) {
+module.exports = ['$http', '$translate', '$rootScope',
+  function($http, $translate, $rootScope) {
     var baseUrl = env.apiUrl, currentOrganization;
 
     return {
       get: function(data, success, error) {
-        callbacks.get(baseUrl + '/organization', data, $http, $translate, function(result) {
+        callbacks.get(baseUrl + '/organization', data, $http, $translate, $rootScope, function(result) {
           if (result.organizations.length ===  1) {
             currentOrganization = result.organizations[0];
           }
@@ -18,10 +18,10 @@ module.exports = ['$http', '$translate',
         }, error);
       },
       update: function(data, success, error) {
-        callbacks.post(baseUrl + '/organization/edit', data, $http, $translate, success, error);
+        callbacks.post(baseUrl + '/organization/edit', data, $http, $translate, $rootScope, success, error);
       },
       delete: function(data, success, error) {
-        callbacks.post(baseUrl + '/organization/delete', data, $http, $translate, success, error);
+        callbacks.post(baseUrl + '/organization/delete', data, $http, $translate, $rootScope, success, error);
       }
     };
   }

@@ -19,8 +19,8 @@
     "warning": {},
     "error": {
       "-1": "Une erreur interne s'est produite.",
-      "-2": "Le jeton utilisé n'est pas valide.",
-      "-3": "Une erreur s'est produite lors de la connexion à OnTime",
+      "-2": "Le jeton utilisé n'est pas valide. Déconnexion...",
+      "-3": "Une erreur s'est produite lors de la connexion à OnTime. Déconnexion...",
       "-4": "L'utilisateur n'a pas été trouvé",
       "-5": "La société n'a pas été trouvée",
       "-6": "L'élément n'a pas été trouvé",
