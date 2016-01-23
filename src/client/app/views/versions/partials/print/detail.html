@@ -36,7 +36,7 @@
                         </td>
                         <td class="col-2">
                             <div class="est est-dev">
-                                <h4 translate>{{ '.estimates' }}</h4>
+                                <h4 translate>{{ '.estimate' }}</h4>
                                 <p class="men">
                                     <span class="label label-info">{{ time(feature._id) | currency:setting.label }}</span>
                                     <span class="label label-success">{{ cost(feature._id) | currency }}</span>
@@ -63,7 +63,7 @@
                         </td>
                         <td class="col-2 align-top">
                             <div class="entry-id">
-                                <span class="label label-primary">Story</span> #{{ subFeature.ontimeId }}
+                                <span class="label label-primary">Sub-Story</span> #{{ subFeature.ontimeId }}
                             </div>
                         </td>
                     </tr>
@@ -80,7 +80,7 @@
                         </td>
                         <td class="col-2">
                             <div class="est est-dev">
-                                <h4 translate>{{ '.estimates' }}</h4>
+                                <h4 translate>{{ '.estimate' }}</h4>
                                 <p class="men">
                                     <span class="label label-info-light">{{ time(subFeature._id) | currency:setting.label }}</span>
                                     <span class="label label-success-light">{{ cost(subFeature._id) | currency }}</span>
