@@ -7,8 +7,14 @@
         <tr>
             <th translate>{{ '.header.theme' }}</th>
             <th translate>{{ '.header.feature' }}</th>
-            <th translate class="chiffres">{{ '.header.estimate' }}</th>
-            <th translate class="chiffres">{{ '.header.cost' }}</th>
+            <th translate class="chiffres" ng-if="setting.estimateType != 'range'">{{ '.header.estimate' }}</th>
+            <th translate class="chiffres" ng-if="setting.estimateType != 'range'">{{ '.header.cost' }}</th>
+            <th translate class="chiffres" ng-if="setting.estimateType == 'range'" colspan="2">
+                {{ '.header.estimate_high' }}
+            </th>
+            <th translate class="chiffres" ng-if="setting.estimateType == 'range'" colspan="2">
+                {{ '.header.estimate_low' }}
+            </th>
         </tr>
         </thead>
         <tbody>
@@ -18,14 +24,34 @@
                 {{ theme.name }}
             </td>
             <td>{{ child.name }}</td>
-            <td class="chiffres">
+            <td class="chiffres" ng-if="setting.estimateType != 'range'">
                 <span class="label label-info">
-                    {{ time(child._id) | currency:setting.label }}
+                    <strong>{{ time(child._id) | currency:setting.label }}</strong>
                 </span>
             </td>
-            <td class="chiffres">
+            <td class="chiffres" ng-if="setting.estimateType != 'range'">
                 <span class="label label-success">
-                    {{ cost(child._id) | currency }}
+                        {{ cost(child._id) | currency }}
+                    </span>
+            </td>
+            <td class="chiffres" ng-if="setting.estimateType == 'range'">
+                <span class="label label-info">
+                    {{ time(child._id, options.LOW) | currency:setting.label }}
+                </span>
+            </td>
+            <td class="chiffres" ng-if="setting.estimateType == 'range'">
+                <span class="label label-success">
+                    {{ cost(child._id, options.LOW) | currency }}
+                </span>
+            </td>
+            <td class="chiffres" ng-if="setting.estimateType == 'range'">
+                <span class="label label-info">
+                    {{ time(child._id, options.HIGH) | currency:setting.label }}
+                </span>
+            </td>
+            <td class="chiffres" ng-if="setting.estimateType == 'range'">
+                <span class="label label-success">
+                    {{ cost(child._id, options.HIGH) | currency }}
                 </span>
             </td>
         </tr>
