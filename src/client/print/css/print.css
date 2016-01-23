@@ -659,6 +659,10 @@ div.panel-body {
     padding-bottom: 5px;
 }
 
+#detail-view .sub .row-1 td {
+    background-color: #b5e3f0;
+}
+
 #detail-view .row-2 td {
     color: #ffffff;
     background-color: #98C4D1;
@@ -666,6 +670,10 @@ div.panel-body {
     padding-top: 5px;
     padding-bottom: 15px;
     vertical-align: bottom;
+}
+
+#detail-view .sub .row-2 td {
+    background-color: #b5e3f0;
 }
 
 #detail-view .row-1 td:last-child,

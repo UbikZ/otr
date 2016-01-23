@@ -12,7 +12,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat-start="(index, theme) in item.entries | orderBy:'name'"></tr>
+        <tr ng-repeat-start="(index, theme) in item.entries | orderBy:'ontimeId'"></tr>
         <tr ng-repeat="(index, child) in theme.children | orderBy:'name'">
             <td ng-if="index == 0" rowspan="{{ theme.children.length + 1 }}">
                 {{ theme.name }}

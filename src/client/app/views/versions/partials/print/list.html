@@ -17,7 +17,7 @@
         </tr>
         </tbody>
         <tbody ng-if="item != undefined">
-        <tr ng-repeat-start="(index, theme) in item.entries | orderBy:'name'">
+        <tr ng-repeat-start="(index, theme) in item.entries | orderBy:'ontimeId'">
             <td colspan="5">
                 <strong ng-if="theme.name">{{ theme.name | uppercase }}</strong>
                 <strong ng-if="!theme.name">_</strong>
