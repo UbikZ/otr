@@ -11,13 +11,8 @@
             <th translate class="chiffres">{{ '.header.cost' }}</th>
         </tr>
         </thead>
-        <tbody ng-if="item == undefined">
-        <tr>
-            <td colspan="5" ng-include="'partials/spinner.html'"></td>
-        </tr>
-        </tbody>
-        <tbody ng-if="item != undefined">
-        <tr ng-repeat-start="(index, theme) in item.entries | orderBy:'ontimeId'">
+        <tbody>
+        <tr ng-repeat-start="(index, theme) in item.entries | orderBy:'name'">
             <td colspan="5">
                 <strong ng-if="theme.name">{{ theme.name | uppercase }}</strong>
                 <strong ng-if="!theme.name">_</strong>
@@ -29,7 +24,7 @@
                 <strong ng-if="!child.name">_</strong>
             </td>
         </tr>
-        <tr ng-repeat="feature in child.children | orderBy:'name'" class="priority priority6">
+        <tr ng-repeat-start="feature in child.children | orderBy:'ontimeId'" class="priority priority6">
             <td>{{ feature.ontimeId }}</td>
             <td>{{ feature.name }}</td>
             <td class="chiffres">
@@ -43,6 +38,24 @@
                 </span>
             </td>
         </tr>
+        <tr ng-repeat="subFeature in feature.children | orderBy:'ontimeId'" class="priority priority9">
+            <td>
+                <i class="fa fa-level-down icon-down m-l-sm m-r-xs"></i>
+                <i class="m-l-sm">{{ subFeature.ontimeId }}</i>
+            </td>
+            <td><i>{{ subFeature.name }}</i></td>
+            <td class="chiffres"><i>
+                <span class="label label-info-light">
+                    <strong>{{ time(subFeature._id) | currency:setting.label }}</strong>
+                </span>
+            </i></td>
+            <td class="chiffres"><i>
+                <span class="label label-success-light">
+                    <strong>{{ cost(subFeature._id) | currency }}</strong>
+                </span>
+            </i></td>
+        </tr>
+        <tr ng-repeat-end></tr>
         <tr ng-repeat-end></tr>
         <tr ng-repeat-end></tr>
         </tbody>

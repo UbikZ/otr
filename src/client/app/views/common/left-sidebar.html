@@ -23,26 +23,26 @@
             </li>
             <li ui-sref-active="active">
                 <a ui-sref="{{ $root.routes.APP_HOME }}">
-                    <i class="fa fa-home"></i>
+                    <i class="fa fa-fw fa-home"></i>
                     <span class="nav-label">{{(ns+'.home') | translate }}</span>
                 </a>
             </li>
             <li ng-class="{active: $state.includes($root.routes.ORGANIZATIONS + '.*')}">
                 <a href="">
-                    <i class="fa fa-diamond"></i>
-                    <span class="nav-label">{{ (ns+'.organizations') | translate }}</span> <span class="fa arrow"></span>
+                    <i class="fa fa-fw fa-diamond"></i>
+                    <span class="nav-label">{{ (ns+'.organizations') | translate }}</span> <span class="fa fa-fw arrow"></span>
                 </a>
                 <ul class="nav nav-second-level collapse"
                     ng-class="{in: $state.includes($root.routes.ORGANIZATIONS + '.*')}">
                     <li ui-sref-active="active">
                         <a ui-sref="{{ $root.routes.ORGANIZATIONS_LIST }}">
-                            <i class="fa fa-th-list"></i>
+                            <i class="fa fa-fw fa-th-list"></i>
                             {{ (ns+'.organization.list') | translate }}
                         </a>
                     </li>
                     <li ui-sref-active="active">
                         <a ui-sref="{{ $root.routes.ORGANIZATIONS_SETTINGS }}">
-                            <i class="fa fa-gears"></i>
+                            <i class="fa fa-fw fa-gears"></i>
                             {{ (ns+'.organization.settings') | translate }}
                         </a>
                     </li>
@@ -50,13 +50,13 @@
             </li>
             <li ng-class="{active: $state.includes($root.routes.ACCOUNT + '.*')}">
                 <a href="">
-                    <i class="fa fa-user"></i>
-                    <span class="nav-label">{{ (ns+'.accounts') | translate }}</span> <span class="fa arrow"></span>
+                    <i class="fa fa-fw fa-user"></i>
+                    <span class="nav-label">{{ (ns+'.accounts') | translate }}</span> <span class="fa fa-fw arrow"></span>
                 </a>
                 <ul class="nav nav-second-level collapse" ng-class="{in: $state.includes($root.routes.ACCOUNT + '.*')}">
                     <li ui-sref-active="active">
                         <a ui-sref="{{ $root.routes.ACCOUNT_MANAGE }}">
-                            <i class="fa fa-user"></i>
+                            <i class="fa fa-fw fa-user"></i>
                             {{ (ns+'.account.manage') | translate }}
                         </a>
                     </li>
@@ -64,7 +64,7 @@
                 <ul class="nav nav-second-level collapse" ng-class="{in: $state.includes($root.routes.ACCOUNT + '.*')}">
                     <li ui-sref-active="active">
                         <a ui-sref="{{ $root.routes.ACCOUNT_ONTIME }}">
-                            <i class="fa fa-user-secret"></i>
+                            <i class="fa fa-fw fa-user-secret"></i>
                             {{ (ns+'.account.ontime') | translate }}
                         </a>
                     </li>
@@ -72,7 +72,7 @@
             </li>
             <li ui-sref-active="active">
                 <a ui-sref="app.users">
-                    <i class="fa fa-fw fa-users"></i>
+                    <i class="fa fa-fw fa-fw fa-users"></i>
                     <span class="nav-label">{{(ns+'.users') | translate }}</span>
                 </a>
             </li>

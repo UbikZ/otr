@@ -217,3 +217,10 @@ table.document tr.priority.child td:first-child {
     background-color: #32c7f5;
     color: #FFFFFF;
 }
+
+.icon-down {
+    transform: scale(1, -1) rotate(270deg);
+    -moz-transform: scale(1, -1) rotate(270deg);
+    -webkit-transform: scale(1, -1) rotate(270deg);
+    -ms-transform: scale(1, -1) rotate(270deg);
+}
