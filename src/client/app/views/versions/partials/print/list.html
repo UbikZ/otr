@@ -5,7 +5,7 @@
     <table class="document table">
         <thead>
         <tr>
-            <th translate style="width: 70px;">#</th>
+            <th translate style="width: 80px;">#</th>
             <th translate>{{ '.header.title' }}</th>
             <th translate class="chiffres" ng-if="setting.estimateType != 'range'">{{ '.header.estimate' }}</th>
             <th translate class="chiffres" ng-if="setting.estimateType != 'range'">{{ '.header.cost' }}</th>
@@ -67,38 +67,38 @@
         <tr ng-repeat="subFeature in feature.children | orderBy:'ontimeId'" class="priority priority9">
             <td>
                 <i class="fa fa-level-down icon-down m-r-xs"></i>
-                <i>{{ subFeature.ontimeId }}</i>
+                {{ subFeature.ontimeId }}
             </td>
-            <td><i>{{ subFeature.name }}</i></td>
+            <td>{{ subFeature.name }}</td>
             <td class="chiffres" ng-if="setting.estimateType != 'range'">
-                <i><span class="label label-info-light">
+                <span class="label label-info-light">
                     <strong>{{ time(subFeature._id) | currency:setting.label }}</strong>
-                </span></i>
+                </span>
             </td>
             <td class="chiffres" ng-if="setting.estimateType != 'range'">
-                <i><span class="label label-success-light">
-                        {{ cost(subFeature._id) | currency }}
-                    </span></i>
+                <span class="label label-success-light">
+                    {{ cost(subFeature._id) | currency }}
+                </span>
             </td>
             <td class="chiffres" ng-if="setting.estimateType == 'range'">
-                <i><span class="label label-info-light">
+                <span class="label label-info-light">
                     {{ time(subFeature._id, options.LOW) | currency:setting.label }}
-                </span></i>
+                </span>
             </td>
             <td class="chiffres" ng-if="setting.estimateType == 'range'">
-                <i><span class="label label-success-light">
+                <span class="label label-success-light">
                     {{ cost(subFeature._id, options.LOW) | currency }}
-                </span></i>
+                </span>
             </td>
             <td class="chiffres" ng-if="setting.estimateType == 'range'">
-                <i><span class="label label-info-light">
+                <span class="label label-info-light">
                     {{ time(subFeature._id, options.HIGH) | currency:setting.label }}
-                </span></i>
+                </span>
             </td>
             <td class="chiffres" ng-if="setting.estimateType == 'range'">
-                <i><span class="label label-success-light">
+                <span class="label label-success-light">
                     {{ cost(subFeature._id, options.HIGH) | currency }}
-                </span></i>
+                </span>
             </td>
         </tr>
         <tr ng-repeat-end></tr>
