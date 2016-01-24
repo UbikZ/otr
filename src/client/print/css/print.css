@@ -2,10 +2,10 @@
     counter-increment: pageCounter 1;
     size: A4;
     margin: 10mm 10mm 15mm 10mm;
-    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-@page:first {
+@page :first {
 }
 
 #wrapper {
@@ -19,7 +19,7 @@
 .footer-center,
 .footer-right {
     font-size: 10px;
-    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 .footer-left {
@@ -46,7 +46,7 @@ body {
     color: #323232;
     margin: 0;
     line-height: 100%;
-    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 350;
 }
 
@@ -91,7 +91,6 @@ h2 {
     margin: 0 0 40px 0;
     position: relative;
 }
-
 
 h2 small {
     display: none;
@@ -186,6 +185,7 @@ div.panel-body {
 #document-read #informations-complentaires {
     display: none;
 }
+
 #document-read .ibox {
     margin-bottom: 0;
 }
@@ -198,9 +198,11 @@ div.panel-body {
     background-color: transparent;
 }
 
-@page #document-read .document-headlines h2 {
-          margin-top: 0;
-      }
+@page
+
+#document-read .document-headlines h2 {
+    margin-top: 0;
+}
 
 #document-read #features .row,
 #document-read #global-view .row,
@@ -320,8 +322,9 @@ div.panel-body {
 #document-read .block-description {
     padding: 0;
 }
-#document-read .block-description img{
-    max-width:640px;
+
+#document-read .block-description img {
+    max-width: 640px;
 }
 
 #document-read .long-description {
@@ -436,13 +439,6 @@ div.panel-body {
     vertical-align: bottom;
 }
 
-#detail-view .sub-item {
-    padding-left: 20px;
-    background-image: url(../../img/print/sub-item-bg.png);
-    background-position: 4px 48px;
-    background-repeat: no-repeat;
-}
-
 /* ------------------------------------------------------------------------- */
 
 #detail-view .col-2 {
@@ -488,6 +484,11 @@ div.panel-body {
     margin: 0 0 0 0;
     padding: 10px;
 }
+
+#detail-view .long-description-container {
+    margin: -20px 0 0 0;
+}
+
 
 /* ------------------------------------------------------------------------- */
 
@@ -646,24 +647,24 @@ div.panel-body {
 
 /* ------------------------------------------------------------------------- */
 
-#detail-view .row-1 td,
-#detail-view .row-2 td,
-#detail-view .row-3 td {
+#detail-view .row-1,
+#detail-view .row-2,
+#detail-view .row-3 {
     padding: 10px;
 }
 
-#detail-view .row-1 td {
+#detail-view .row-1 {
     color: #ffffff;
     background-color: #98C4D1;
     padding-top: 15px;
     padding-bottom: 5px;
 }
 
-#detail-view .sub .row-1 td {
+#detail-view .sub .row-1 {
     background-color: #b5e3f0;
 }
 
-#detail-view .row-2 td {
+#detail-view .row-2 {
     color: #ffffff;
     background-color: #98C4D1;
     border-top: 1px solid #ffffff;
@@ -672,7 +673,7 @@ div.panel-body {
     vertical-align: bottom;
 }
 
-#detail-view .sub .row-2 td {
+#detail-view .sub .row-2 {
     background-color: #b5e3f0;
 }
 
@@ -685,12 +686,12 @@ div.panel-body {
     padding: 0;
 }
 
-#detail-view .col-2 .est {
+#detail-view .estimates .est {
     font-size: 14px;
     margin: 0 0 10px 0;
 }
 
-#detail-view .col-2 .est h4 {
+#detail-view .estimates .est h4 {
     font-size: 13px;
     margin: 0;
     color: #555555;
@@ -698,12 +699,12 @@ div.panel-body {
     padding: 0 5px 3px 0;
 }
 
-#detail-view .col-2 .est p {
+#detail-view .estimates .est p {
     text-align: right;
     line-height: 24px;
 }
 
-#detail-view .col-2 .est p span {
+#detail-view .estimates .est p span {
     width: 40%;
     display: inline-block;
     margin: 0 0 0 10px;
@@ -711,7 +712,7 @@ div.panel-body {
     border-radius: 2px;
 }
 
-#detail-view .col-2 .est p small {
+#detail-view .estimates .est p small {
     font-size: 70%;
 }
 
@@ -779,4 +780,16 @@ div.panel-body {
 /* Hackount */
 li p.no-padding {
     padding: 0px;
+}
+
+.unbreakable {
+    display: inline-block;
+    width: 100%;
+}
+
+.unbreakable:after {
+    content: '';
+    display: block;
+    height: 0px;
+    visibility: hidden;
 }

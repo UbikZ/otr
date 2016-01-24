@@ -14,27 +14,11 @@
                 </div>
             </div>
         </header>
-        <div class="row" id="document-read">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div class="panel-heading">
-                    <div class="ibox float-e-margins">
-                        <div class="ibox-content">
-                            <div class="panel-body">
-                                <div class="tab-content">
-                                    <div class="tab-pane">
-                                        <div ng-include="'versions/partials/print/macro.html'"></div>
-                                        <div ng-include="'versions/partials/print/list.html'"></div>
-                                        <div ng-include="'versions/partials/print/detail.html'"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="vision-synthese">
-                                <div ng-include="'versions/partials/print/resume.html'"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div id="document-read">
+            <div class="page-break-after" ng-include="'versions/partials/print/macro.html'"></div>
+            <div class="page-break-after" ng-include="'versions/partials/print/list.html'"></div>
+            <div class="page-break-after" ng-include="'versions/partials/print/detail.html'"></div>
+            <div ng-include="'versions/partials/print/resume.html'"></div>
         </div>
     </div>
 </div>

@@ -208,13 +208,13 @@ table.document tr.priority.child td:first-child {
 
 .label-info-light,
 .badge-info-light {
-    background-color: #3ff5e3;
+    background-color: #3ff5e3 !important;
     color: #FFFFFF;
 }
 
 .label-success-light,
 .badge-success-light {
-    background-color: #32c7f5;
+    background-color: #32c7f5 !important;
     color: #FFFFFF;
 }
 

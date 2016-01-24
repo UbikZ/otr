@@ -1,123 +1,103 @@
 <div class="row" translate-namespace="pdf.detail" id="detail-view">
-    <div class="document-headlines ibox-title">
+    <div class="document-headlines ibox-title m-b-n-xl">
         <h2 translate>{{ '.title' }}</h2>
     </div>
     <div ng-repeat="theme in item.entries | orderBy:'name'">
         <div ng-repeat="child in theme.children | orderBy:'name'">
             <div ng-repeat="feature in child.children | orderBy:'ontimeId'">
-                <table class="entry">
-                    <tbody>
-                    <tr class="row-1">
-                        <td class="col-1 align-bottom">
-                            <div class="theme-feature">{{ theme.name }} → {{ child.name }}</div>
-                        </td>
-                        <td class="col-2 align-bottom align-right"></td>
-                    </tr>
-                    <tr class="row-2">
-                        <td class="col-1">
-                            <h3 class="title">{{ feature.name }}</h3>
-                        </td>
-                        <td class="col-2 align-top">
-                            <div class="entry-id">
-                                <span class="label label-primary">Story</span> #{{ feature.ontimeId }}
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="row-3">
-                        <td class="col-1">
+                <div class="entry unbreakable">
+                    <div class="row row-1 theme-feature">
+                        {{ theme.name }} → {{ child.name }}
+                    </div>
+                    <div class="row row-2">
+                        <h3 class="title">{{ feature.name }}</h3>
+                        <span class="pull-right">Story #{{ feature.ontimeId }}</span>
+                    </div>
+                    <div class="row">
+                        <div style="width: 70%; float: left;">
                             <div class="short-description">
                                 <span ng-bind-html="feature.description | sanitize"></span>
-                            </div>
+                            </div><br/>
                             <div class="long-description-container" ng-if="feature.notes != ''">
                                 <div class="long-description">
                                     <span ng-bind-html="feature.notes | sanitize"></span>
                                 </div>
                             </div>
-                        </td>
-                        <td class="col-2">
-                            <div class="est est-dev" ng-if="setting.estimateType != 'range'">
+                        </div>
+                        <div class="estimates" style="width: 30%; float: left; margin-top: 10px;">
+                            <div class="est" ng-if="setting.estimateType != 'range'">
                                 <h4 translate>{{ '.estimate' }}</h4>
                                 <p class="men">
                                     <span class="label label-info">{{ time(feature._id) | currency:setting.label }}</span>
                                     <span class="label label-success">{{ cost(feature._id) | currency }}</span>
                                 </p>
                             </div>
-                            <div class="est est-dev" ng-if="setting.estimateType == 'range'">
+                            <div class="est" ng-if="setting.estimateType == 'range'">
                                 <h4 translate>{{ '.estimate_low' }}</h4>
                                 <p class="men">
                                     <span class="label label-info">{{ time(feature._id) | currency:setting.label }}</span>
                                     <span class="label label-success">{{ cost(feature._id) | currency }}</span>
                                 </p>
                             </div>
-                            <div class="est est-dev" ng-if="setting.estimateType == 'range'">
+                            <div class="est" ng-if="setting.estimateType == 'range'">
                                 <h4 translate>{{ '.estimate_high' }}</h4>
                                 <p class="men">
                                     <span class="label label-info">{{ time(feature._id) | currency:setting.label }}</span>
                                     <span class="label label-success">{{ cost(feature._id) | currency }}</span>
                                 </p>
                             </div>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-                <table class="entry sub" ng-repeat="(index, subFeature) in feature.children | orderBy:'ontimeId'">
-                    <tbody>
-                    <tr class="row-1">
-                        <td class="col-1 align-bottom">
-                            <div class="theme-subFeature">{{ theme.name }} → {{ child.name }} → {{ feature.name }}</div>
-                        </td>
-                        <td class="col-2 align-bottom align-right"></td>
-                    </tr>
-                    <tr class="row-2">
-                        <td class="col-1">
-                            <h3 class="title">
-                                <i class="fa fa-level-down icon-down m-r-sm"></i>
-                                {{ subFeature.name }}
-                            </h3>
-                        </td>
-                        <td class="col-2 align-top">
-                            <div class="entry-id">
-                                <span class="label label-primary">Sub-Story</span> #{{ subFeature.ontimeId }}
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="row-3">
-                        <td class="col-1">
+                        </div>
+                    </div>
+                </div>
+                <div class="entry sub unbreakable"
+                     ng-if="feature.children.length > 0"
+                     ng-repeat="(index, subFeature) in feature.children | orderBy:'ontimeId'">
+                    <div class="row row-1 theme-feature">
+                        {{ theme.name }} → {{ child.name }} → {{ feature.name }}
+                    </div>
+                    <div class="row row-2">
+                        <h3 class="title">
+                            <i class="fa fa-level-down icon-down m-r-sm"></i>
+                            {{ subFeature.name }}
+                        </h3>
+                        <span class="pull-right">Sub-Story #{{ subFeature.ontimeId }}</span>
+                    </div>
+                    <div class="row">
+                        <div style="width: 70%; float: left;">
                             <div class="short-description">
                                 <span ng-bind-html="subFeature.description | sanitize"></span>
-                            </div>
+                            </div><br/>
                             <div class="long-description-container" ng-if="subFeature.notes != ''">
                                 <div class="long-description">
                                     <span ng-bind-html="subFeature.notes | sanitize"></span>
                                 </div>
                             </div>
-                        </td>
-                        <td class="col-2">
-                            <div class="est est-dev" ng-if="setting.estimateType != 'range'">
+                        </div>
+                        <div class="estimates" style="width: 30%; float: left; margin-top: 10px;">
+                            <div class="est" ng-if="setting.estimateType != 'range'">
                                 <h4 translate>{{ '.estimate' }}</h4>
                                 <p class="men">
-                                    <span class="label label-info-light">{{ time(subFeature._id) | currency:setting.label }}</span>
-                                    <span class="label label-success-light">{{ cost(subFeature._id) | currency }}</span>
+                                    <span class="label label-info">{{ time(subFeature._id) | currency:setting.label }}</span>
+                                    <span class="label label-success">{{ cost(subFeature._id) | currency }}</span>
                                 </p>
                             </div>
-                            <div class="est est-dev" ng-if="setting.estimateType == 'range'">
+                            <div class="est" ng-if="setting.estimateType == 'range'">
                                 <h4 translate>{{ '.estimate_low' }}</h4>
                                 <p class="men">
-                                    <span class="label label-info-light">{{ time(subFeature._id) | currency:setting.label }}</span>
-                                    <span class="label label-success-light">{{ cost(subFeature._id) | currency }}</span>
+                                    <span class="label label-info">{{ time(subFeature._id) | currency:setting.label }}</span>
+                                    <span class="label label-success">{{ cost(subFeature._id) | currency }}</span>
                                 </p>
                             </div>
-                            <div class="est est-dev" ng-if="setting.estimateType == 'range'">
+                            <div class="est" ng-if="setting.estimateType == 'range'">
                                 <h4 translate>{{ '.estimate_high' }}</h4>
                                 <p class="men">
-                                    <span class="label label-info-light">{{ time(subFeature._id) | currency:setting.label }}</span>
-                                    <span class="label label-success-light">{{ cost(subFeature._id) | currency }}</span>
+                                    <span class="label label-info">{{ time(subFeature._id) | currency:setting.label }}</span>
+                                    <span class="label label-success">{{ cost(subFeature._id) | currency }}</span>
                                 </p>
                             </div>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

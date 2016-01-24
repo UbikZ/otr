@@ -42,12 +42,13 @@ function doRender() {
   }
 
   fs.write(tmpFilePath,
+    // We erase the bad stuff... dirty I know... fml
     page.content
       .replace(new RegExp('\\s*<script[^>]*>[\\s\\S]*?</script>\\s*', 'ig'), '')
       .replace(new RegExp('\\s*<div class="pace[^>]*>[\\s\\S]*?</div>\\s*', 'ig'), '')
-      .replace(new RegExp('\\s*<div id="wrapper-loader[^>]*>[\\s\\S]*?</div>\\s*', 'ig'), ''),
+      .replace(new RegExp('\\s*<div id="wrapper-loader[^>]*>[\\s\\S]*?</div>\\s*', 'ig'), '')
+      .replace('wrapper', '').replace('page-wrapper', ''), // classes useless and fucked the print view
     'w');
-  page.close();
 
   open(pdfPage, tmpFilePath, function () {
     pdfPage.render(filePath);
@@ -113,6 +114,9 @@ if (system.args.length < 3 || system.args.length > 4) {
   debug = system.args[3] == 1;
   /*jshint eqeqeq: true */
 
+  /*page.open(url, function(status) {
+    page.render(filePath);
+  });*/
   open(page, url, function () {
     forcedRenderTimeout = setTimeout(function () {
       if (debug) {

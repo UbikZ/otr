@@ -1,11 +1,11 @@
 <div class="row" translate-namespace="pdf.list" id="list-view">
-    <div class="document-headlines ibox-title">
+    <div class="document-headlines ibox-title m-b-n-xl">
         <h2 translate>{{ '.title' }}</h2>
     </div>
     <table class="document table">
         <thead>
         <tr>
-            <th translate>#</th>
+            <th translate style="width: 70px;">#</th>
             <th translate>{{ '.header.title' }}</th>
             <th translate class="chiffres" ng-if="setting.estimateType != 'range'">{{ '.header.estimate' }}</th>
             <th translate class="chiffres" ng-if="setting.estimateType != 'range'">{{ '.header.cost' }}</th>
@@ -66,8 +66,8 @@
         </tr>
         <tr ng-repeat="subFeature in feature.children | orderBy:'ontimeId'" class="priority priority9">
             <td>
-                <i class="fa fa-level-down icon-down m-l-sm m-r-xs"></i>
-                <i class="m-l-sm">{{ subFeature.ontimeId }}</i>
+                <i class="fa fa-level-down icon-down m-r-xs"></i>
+                <i>{{ subFeature.ontimeId }}</i>
             </td>
             <td><i>{{ subFeature.name }}</i></td>
             <td class="chiffres" ng-if="setting.estimateType != 'range'">
