@@ -52,9 +52,9 @@ function doRender() {
 
   open(pdfPage, tmpFilePath, function () {
     pdfPage.render(filePath);
-    if (!debug) {
+    //if (!debug) {
       fs.remove(tmpFilePath);
-    }
+    //}
     phantom.exit();
   });
 }
