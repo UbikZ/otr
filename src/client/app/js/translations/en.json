@@ -556,7 +556,9 @@
         "macro": "Global view",
         "list": "List view",
         "detail": "Detail view",
-        "download": "Download one file"
+        "download": "Download one file",
+        "download_progress": "Download in progress...",
+        "download_already": "PDF rendering in progress... Wait the end please."
       },
       "macro": {
         "header": {

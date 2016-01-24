@@ -556,7 +556,9 @@
         "macro": "Vision macro",
         "list": "Vision liste",
         "detail": "Vision détaillée",
-        "download": "Télécharger un seul fichier"
+        "download": "Télécharger un seul fichier",
+        "download_progress": "Télécharger en cours...",
+        "download_already": "Rendu du PDF en cours... Veuillez attendre la fin du téléchargement."
       },
       "macro": {
         "header": {

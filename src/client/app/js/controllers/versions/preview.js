@@ -1,12 +1,15 @@
 'use strict';
 
+var toastr = require('toastr');
+
 var mappingSetting = require('../../helpers/mapping/setting');
 var computeEntry = require('../../helpers/computeEntry');
 var env = require('../../env');
 
 module.exports = ['$scope', '$rootScope', '$stateParams', 'itemService', 'settingService', 'rendererService',
-  '$location', '$localStorage',
-  function ($scope, $rootScope, $stateParams, itemService, settingService, rendererService, $location, $localStorage) {
+  '$location', '$localStorage', '$translate',
+  function ($scope, $rootScope, $stateParams, itemService, settingService, rendererService, $location, $localStorage,
+            $translate) {
     var mainSetting = {};
     $scope.setting = {};
     $scope.options = computeEntry.const;
@@ -32,20 +35,26 @@ module.exports = ['$scope', '$rootScope', '$stateParams', 'itemService', 'settin
     };
 
     $scope.download = function () {
-      $scope.downloading = true;
-      rendererService.renderPdf({
-        url: $location.path().replace('preview', 'pdf'),
-        name: $scope.organizationName.concat('-', $scope.documentName, '-', $scope.item.name),
-      }, function (res) {
-        $scope.downloading = false;
-        // dirty
-        window.location.href = env.apiUrl.concat(
-          '/download?fileName=',
-          res.fileName,
-          '&authorization=',
-          'Bearer ' + $localStorage.token + ' ' + $localStorage.ontimeToken
-        );
-      });
+      if ($scope.downloading !== true) {
+        $scope.downloading = true;
+        rendererService.renderPdf({
+          url: $location.path().replace('preview', 'pdf'),
+          name: $scope.organizationName.concat('-', $scope.documentName, '-', $scope.item.name),
+        }, function (res) {
+          $scope.downloading = false;
+          // dirty
+          window.location.href = env.apiUrl.concat(
+            '/download?fileName=',
+            res.fileName,
+            '&authorization=',
+            'Bearer ' + $localStorage.token + ' ' + $localStorage.ontimeToken
+          );
+        });
+      } else {
+        $translate('version.view.items.download_already').then(function (msg) {
+          toastr.warning(msg);
+        });
+      }
     };
 
     itemService.get({

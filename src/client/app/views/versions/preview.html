@@ -86,9 +86,11 @@
                                 </uib-tab>
                                 <li>
                                     <a ng-click="download()" uib-tab-heading-transclude ng-disabled="downloading">
-                                        <tab-heading>
-                                            <i class="fa" ng-class="downloading ? 'fa-spinner fa-spin' : 'fa-download'"></i>
-                                            {{ (nsv+'.items.download') | translate }}
+                                        <tab-heading ng-if="!downloading">
+                                            <i class="fa fa-download"></i>{{ (nsv+'.items.download') | translate }}
+                                        </tab-heading>
+                                        <tab-heading ng-if="downloading" class="text-navy">
+                                            <i class="fa fa-spinner fa-spin"></i>{{ (nsv+'.items.download_progress') | translate }}
                                         </tab-heading>
                                     </a>
                                 </li>
