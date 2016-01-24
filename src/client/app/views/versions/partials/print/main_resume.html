@@ -1,0 +1,11 @@
+<div class="document-headlines ibox-title">
+    <h2 translate>{{ '.title' }}</h2>
+</div>
+<span ng-if="setting.estimateType != 'range'">
+    <span ng-include="'versions/partials/print/resume.html'"
+          ng-init="binOpts = [undefined]"></span>
+</span>
+<span ng-if="setting.estimateType == 'range'">
+    <span ng-include="'versions/partials/print/resume.html'"
+          ng-init="binOpts = [options.LOW, options.HIGH]"></span>
+</span>

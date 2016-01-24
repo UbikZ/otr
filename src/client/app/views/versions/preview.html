@@ -1,14 +1,3 @@
-<script type="text/nb-template" id="/main_resume.html">
-    <span ng-if="setting.estimateType != 'range'">
-        <span ng-include="'versions/partials/web/resume.html'"></span>
-    </span>
-    <span ng-if="setting.estimateType == 'range'">
-        <span ng-include="'versions/partials/web/resume.html'"
-              ng-init="binOpt = option.LOW"></span>
-        <span ng-include="'versions/partials/web/resume.html'"
-              ng-init="binOpt = option.HIGH"></span>
-    </span>
-</script>
 <div class="versions" ng-controller="version-preview.controller" ng-init="ns='setting'">
     <div class="theme-config">
         <div class="theme-config-box">
@@ -93,9 +82,6 @@
                                         <i class="fa fa-files-o"></i> {{ (nsv+'.items.detail') | translate }}
                                     </tab-heading>
                                     <span ng-include="'versions/partials/web/detail.html'"></span>
-                                    <span ng-if="setting.estimateType != 'range'">
-                                        <span ng-include="'versions/partials/web/resume.html'"></span>
-                                    </span>
                                     <span ng-include="'versions/partials/web/main_resume.html'"></span>
                                 </uib-tab>
                                 <li>

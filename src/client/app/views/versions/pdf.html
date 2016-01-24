@@ -1,3 +1,6 @@
+<script type="text/nb-template" id="/print/main_resume.html">
+
+</script>
 <div class="versions" ng-class="$root.pdf.loaded ? 'pdf': ''" ng-controller="version-preview.controller"
      translate-namespace="pdf">
     <div id="page-wrapper">
@@ -5,6 +8,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <img style='float:left;height:70px;' src="img/print/galilee-logotype.png"/>
+
                     <h1>
                         <span translate class="clearfix">{{ '.title' }}</span>
                         <small translate translate-values="{org: organizationName, doc: documentName}">
@@ -18,7 +22,7 @@
             <div class="page-break-after" ng-include="'versions/partials/print/macro.html'"></div>
             <div class="page-break-after" ng-include="'versions/partials/print/list.html'"></div>
             <div class="page-break-after" ng-include="'versions/partials/print/detail.html'"></div>
-            <div ng-include="'versions/partials/print/resume.html'"></div>
+            <div ng-include="'versions/partials/print/main_resume.html'"></div>
         </div>
     </div>
 </div>

@@ -1,7 +1,4 @@
-<div class="row" translate-namespace="pdf.resume">
-    <div class="document-headlines ibox-title">
-        <h2 translate>{{ '.title' }}</h2>
-    </div>
+<div class="m-b-md" translate-namespace="pdf.resume" ng-repeat="binOpt in binOpts">
     <div class="row entry-resume-content">
         <div class="resume-block " translate-namespace="pdf.resume.sizing">
             <h3 translate>{{ '.title' }} </h3>
@@ -9,19 +6,19 @@
                 <li class="widget tasks lazur-bg"><i class="fa fa-tasks fa-5x"></i>
                     <p>
                         <span translate>{{ '.tasks' }}</span>
-                        <strong>{{ resumeTotalTasks() | currency:'':0 }}</strong></p>
+                        <strong>{{ resumeTotalTasks(binOpt) | currency:'':0 }}</strong></p>
                 </li>
                 <li class="widget estimate lazur-bg">
                     <i class="fa fa-tachometer fa-5x"></i>
                     <p>
                         <span translate>{{ '.estimates' }}</span>
-                        <strong>{{ resumeTotalEstims() | currency:'' }}</strong></p>
+                        <strong>{{ resumeTotalEstims(binOpt) | currency:'' }}</strong></p>
                 </li>
                 <li class="widget days_iteration lazur-bg">
                     <i class="fa fa-users fa-5x"></i>
                     <p class="no-padding col-lg-4 col-md-4 col-sm-4 col-xs-4 pull-right">
                         <span translate>{{ '.days_per_contributor_per_iteration' }}</span>
-                        <strong>{{ resumeDayPerPersonPerIter() | currency:'' }}</strong>
+                        <strong>{{ resumeDayPerPersonPerIter(binOpt) | currency:'' }}</strong>
                     </p>
 
                     <p class="no-padding col-lg-4 col-md-4 col-sm-4 col-xs-4 pull-right">
@@ -33,7 +30,7 @@
                     <i class="fa fa-refresh fa-5x"></i>
                     <p>
                         <span translate>{{ '.iterations' }}</span>
-                        <strong>{{ resumeIterations() | currency:'' }}</strong>
+                        <strong>{{ resumeIterations(binOpt) | currency:'' }}</strong>
                     </p>
                 </li>
                 <li class="widget date date_begin lazur-bg" ng-if="setting.showDate == true">
@@ -58,35 +55,35 @@
                     <i class="fa fa-users fa-5x"></i>
                     <p>
                         <span translate>{{ '.dev_time' }}</span>
-                        <strong>{{ resumeTotalEstimsDev() | currency:'' }}</strong>
+                        <strong>{{ resumeTotalEstimsDev(binOpt) | currency:'' }}</strong>
                     </p>
                 </li>
                 <li class="widget sm_days red-bg" ng-if="setting.showManagement == true">
                     <i class="fa fa-user fa-5x"></i>
                     <p>
                         <span translate>{{ '.sm_time' }}</span>
-                        <strong>{{ resumeTotalEstimsSM() | currency:'' }}</strong>
+                        <strong>{{ resumeTotalEstimsSM(binOpt) | currency:'' }}</strong>
                     </p>
                 </li>
                 <li class="widget dev_price red-bg" ng-if="setting.showDev == true">
                     <i class="fa fa-eur fa-5x"></i>
                     <p>
                         <span translate>{{ '.dev_price' }}</span>
-                        <strong>{{ resumeTotalPriceDev() | currency:'':0 }}</strong>
+                        <strong>{{ resumeTotalPriceDev(binOpt) | currency:'':0 }}</strong>
                     </p>
                 </li>
                 <li class="widget sm_price red-bg" ng-if="setting.showManagement == true">
                     <i class="fa fa-eur fa-5x"></i>
                     <p>
                         <span translate>{{ '.sm_price' }}</span>
-                        <strong>{{ resumeTotalPriceSM() | currency:'':0 }}</strong>
+                        <strong>{{ resumeTotalPriceSM(binOpt) | currency:'':0 }}</strong>
                     </p>
                 </li>
                 <li class="total_price widget blue-bg" >
                     <i class="fa fa-eur fa-5x"></i>
                     <p>
                         <span translate>{{ '.total' }}</span>
-                        <strong>{{ resumeTotalPriceDev() + resumeTotalPriceSM() | currency:'':0 }}</strong>
+                        <strong>{{ resumeTotalPriceDev(binOpt) + resumeTotalPriceSM(binOpt) | currency:'':0 }}</strong>
                     </p>
                 </li>
             </ul>
