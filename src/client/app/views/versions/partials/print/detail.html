@@ -35,15 +35,15 @@
                             <div class="est" ng-if="setting.estimateType == 'range'">
                                 <h4 translate>{{ '.estimate_low' }}</h4>
                                 <p class="men">
-                                    <span class="label label-info">{{ time(feature._id) | currency:setting.label }}</span>
-                                    <span class="label label-success">{{ cost(feature._id) | currency }}</span>
+                                    <span class="label label-info">{{ time(feature._id, options.LOW) | currency:setting.label }}</span>
+                                    <span class="label label-success">{{ cost(feature._id, options.LOW) | currency }}</span>
                                 </p>
                             </div>
                             <div class="est" ng-if="setting.estimateType == 'range'">
                                 <h4 translate>{{ '.estimate_high' }}</h4>
                                 <p class="men">
-                                    <span class="label label-info">{{ time(feature._id) | currency:setting.label }}</span>
-                                    <span class="label label-success">{{ cost(feature._id) | currency }}</span>
+                                    <span class="label label-info">{{ time(feature._id, options.HIGH) | currency:setting.label }}</span>
+                                    <span class="label label-success">{{ cost(feature._id, options.HIGH) | currency }}</span>
                                 </p>
                             </div>
                         </div>
@@ -84,15 +84,15 @@
                             <div class="est" ng-if="setting.estimateType == 'range'">
                                 <h4 translate>{{ '.estimate_low' }}</h4>
                                 <p class="men">
-                                    <span class="label label-info">{{ time(subFeature._id) | currency:setting.label }}</span>
-                                    <span class="label label-success">{{ cost(subFeature._id) | currency }}</span>
+                                    <span class="label label-info">{{ time(subFeature._id, options.LOW) | currency:setting.label }}</span>
+                                    <span class="label label-success">{{ cost(subFeature._id, options.LOW) | currency }}</span>
                                 </p>
                             </div>
                             <div class="est" ng-if="setting.estimateType == 'range'">
                                 <h4 translate>{{ '.estimate_high' }}</h4>
                                 <p class="men">
-                                    <span class="label label-info">{{ time(subFeature._id) | currency:setting.label }}</span>
-                                    <span class="label label-success">{{ cost(subFeature._id) | currency }}</span>
+                                    <span class="label label-info">{{ time(subFeature._id, options.HIGH) | currency:setting.label }}</span>
+                                    <span class="label label-success">{{ cost(subFeature._id, options.HIGH) | currency }}</span>
                                 </p>
                             </div>
                         </div>
