@@ -12,7 +12,7 @@ module.exports = function (gulp, plugins, npmPackages, config) {
       .pipe(plugins.ifProd(plugins.rev()))
       .pipe(plugins.ifProd(plugins.minifyCss()))
       .pipe(plugins.ifProd(gulp.dest(config.path.public + '/dist')))
-      .pipe(plugins.ifProd(plugins.rev.manifest(config.path.public + '/dist/rev-manifest.json', {
+      .pipe(plugins.ifProd(plugins.rev.manifest(config.path.public + '/dist/rev-manifest.print.json', {
         base: config.path.public + '/dist/',
         merge: true,
       })))
@@ -25,7 +25,7 @@ module.exports = function (gulp, plugins, npmPackages, config) {
       .pipe(plugins.ifProd(plugins.minifyCss()))
       .pipe(plugins.ifProd(plugins.gzip({gzipOptions: {level: 9}, preExtension: 'gz'})))
       .pipe(plugins.ifProd(gulp.dest(config.path.public + '/dist')))
-      .pipe(plugins.ifProd(plugins.rev.manifest(config.path.public + '/dist/rev-manifest.json', {
+      .pipe(plugins.ifProd(plugins.rev.manifest(config.path.public + '/dist/rev-manifest.css.json', {
         base: config.path.public + '/dist/',
         merge: true,
       })))

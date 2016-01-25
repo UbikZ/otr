@@ -26,9 +26,8 @@ module.exports = function (gulp, plugins, npmPackages, config) {
       .pipe(plugins.ifProd(plugins.streamify(plugins.uglify({mangle: false}))))
       .pipe(plugins.ifProd(plugins.gzip({gzipOptions: {level: 9}, preExtension: 'gz'})))
       .pipe(plugins.ifProd(gulp.dest(config.path.public + '/dist')))
-      .pipe(plugins.ifProd(plugins.rev.manifest(config.path.public + '/dist/rev-manifest.json', {
-        base: config.path.public + '/dist/',
-        merge: true,
+      .pipe(plugins.ifProd(plugins.rev.manifest(config.path.public + '/dist/rev-manifest.app.json', {
+        base: config.path.public + '/dist/'
       })))
       .pipe(gulp.dest(config.path.public + '/dist'))
     ;
