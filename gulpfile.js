@@ -8,6 +8,7 @@ config.env.debug = !~['staging', 'production'].indexOf(process.env.NODE_ENV);
 var plugins = {};
 plugins.uglify = require('gulp-uglify');
 plugins.browserify = require('browserify');
+plugins.babelify = require('babelify');
 plugins.nodeResolve = require('resolve');
 plugins.source = require('vinyl-source-stream');
 plugins.streamify = require('gulp-streamify');

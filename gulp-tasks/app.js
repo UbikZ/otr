@@ -2,7 +2,9 @@
 
 module.exports = function (gulp, plugins, npmPackages, config) {
   return function () {
-    var b = plugins.browserify('./src/client/app/js/app.js', {debug: config.env.debug});
+    var b = plugins
+      .browserify('./src/client/app/js/app.js', {debug: config.env.debug})
+      .transform(plugins.babelify, {presets: ["es2015"]});
 
     npmPackages().forEach(function (id) {
       b.external(id);
