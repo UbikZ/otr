@@ -1,43 +1,41 @@
-<div ng-controller="login.controller" ng-init="ns='login'"
+<div ng-controller="login.controller as ctrl" translate-namespace="login"
      class="middle-box text-center loginscreen  animated fadeInDown">
     <div>
         <div>
             <h1 class="logo-name">OTR</h1>
         </div>
-        <h3>{{ (ns+'.welcome') | translate }}</h3>
+        <h3 translate>{{ '.welcome' }}</h3>
 
-        <p>{{ (ns+'.description') | translate }}
-        </p>
-
-        <p>{{ (ns+'.login') | translate }}</p>
+        <p translate>{{ '.description' }}</p>
+        <p translate>{{ '.login' }}</p>
 
         <form class="m-t" role="form" name="loginForm" novalidate>
             <div class="form-group"
                  ng-class="{ 'has-error': loginForm.username.$invalid && loginForm.username.$dirty }">
-                <input ng-model="userLogin.username" name="username"
-                       type="text" class="form-control" placeholder="{{ (ns+'.form.username.placeholder') | translate }}" required>
+                <input ng-model="ctrl.userLogin.username" name="username" required
+                       type="text" class="form-control" placeholder="{{ 'login.form.username.placeholder' | translate }}">
 
-                <p class="help-block has-error"
+                <p class="help-block has-error" translate
                    ng-show="loginForm.username.$dirty && loginForm.username.$error.required">
-                    {{ (ns+'.form.username.errors.required') | translate }}
+                    {{ '.form.username.errors.required' }}
                 </p>
             </div>
             <div class="form-group"
                  ng-class="{ 'has-error': loginForm.password.$invalid && loginForm.password.$dirty }">
-                <input ng-model="userLogin.password" name="password"
-                       type="password" class="form-control" placeholder="{{ (ns+'.form.password.placeholder') | translate }}" required>
+                <input ng-model="ctrl.userLogin.password" name="password" required
+                       type="password" class="form-control" placeholder="{{ 'login.form.password.placeholder' | translate }}">
 
-                <p class="help-block has-error"
+                <p class="help-block has-error" translate
                    ng-show="loginForm.password.$dirty && loginForm.password.$error.required">
-                    {{ (ns+'.form.password.errors.required') | translate }}
+                    {{ '.form.password.errors.required' }}
                 </p>
             </div>
-            <button ng-click="login(userLogin)" ng-disabled="!loginForm.$valid || loading"
-                    type="submit" class="btn btn-primary block full-width m-b">
-                {{ (ns+'.form.submit') | translate }}
+            <button ng-click="ctrl.login(ctrl.userLogin)" ng-disabled="!loginForm.$valid || ctrl.loading"
+                    type="submit" class="btn btn-primary block full-width m-b" translate>
+                {{ '.form.submit' }}
             </button>
             <p class="help-block">
-                <span ng-if="loading" ng-include="'partials/spinner.html'"></span>
+                <span ng-if="ctrl.loading" ng-include="'partials/spinner.html'"></span>
             </p>
         </form>
         <p class="m-t">
