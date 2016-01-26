@@ -10,7 +10,8 @@ class LoginController {
     this.$rootScope = $rootScope;
     this.$inject = ['$rootScope', 'authService', '$location', '$localStorage'];
   }
-  login (user) {
+
+  login(user) {
     this.loading = true;
     this.authService.login(user, (res) => {
       this.loading = false;
