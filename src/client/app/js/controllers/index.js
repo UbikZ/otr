@@ -1,10 +1,14 @@
 'use strict';
 
+import MainController from './MainController';
+import LoginController from './LoginController';
+import HomeController from './HomeController';
+
 module.exports = function(app) {
 // Global controllers
-  app.controller('main.controller', require('./main'));
-  app.controller('login.controller', require('./login'));
-  app.controller('home.controller', require('./home'));
+  app.controller('main.controller', MainController);
+  app.controller('login.controller', LoginController);
+  app.controller('home.controller', HomeController);
   app.controller('translate.controller', require('./translate'));
 
 // Organizations
@@ -30,6 +34,12 @@ module.exports = function(app) {
 // Versions
   app.controller('version-preview.controller', require('./versions/preview'));
 };
+
+/*export default [
+  MainController,
+  LoginController,
+  HomeController
+];*/
 
 
 
