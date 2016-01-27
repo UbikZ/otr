@@ -7,6 +7,7 @@ import AbstractOrganizationsController from './AbstractOrganizationsController';
  */
 class OrganizationsDetailController extends AbstractOrganizationsController {
   /**
+   * @param $scope
    * @param $rootScope
    * @param $stateParams
    * @param organizationService
