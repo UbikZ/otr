@@ -6,6 +6,7 @@ import HomeController from './HomeController';
 import TranslateController from './TranslateController';
 import OrganizationsListController from './organizations/OrganizationsListController';
 import OrganizationsDetailController from './organizations/OrganizationsDetailController';
+import OrganizationsFormEditController from './organizations/forms/OrganizationsFormEditController';
 
 module.exports = function(app) {
 // Global controllers
@@ -17,7 +18,7 @@ module.exports = function(app) {
 // Organizations
   app.controller('organization.controller', OrganizationsListController);
   app.controller('organization-detail.controller', OrganizationsDetailController);
-  app.controller('form.organization.controller', require('./organizations/forms/edit'));
+  app.controller('form.organization.controller', OrganizationsFormEditController);
 
 // Filesystem
   app.controller('filesystem.controller', require('./filesystem/tree'));

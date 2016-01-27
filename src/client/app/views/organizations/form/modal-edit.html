@@ -1,0 +1,74 @@
+<form role="form" name="formOrganization" novalidate translate-namespace="organization.edit"
+      ng-submit="ctrl.submitOrganization(ctrl.organization)">
+    <div class="modal-header">
+        <h3 ng-if="!ctrl.identifier" class="modal-title" translate>{{ '.title.create' }}</h3>
+        <h3 ng-if="identifier" class="modal-title" translate>{{ '.title.edit' }}</h3>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label translate>{{ '.form.name.label' }} *</label>
+            <input type="text" placeholder="{{ 'organization.edit.form.name.placeholder' | translate }}"
+                   class="form-control" name="name" ng-model="ctrl.organization.name" required>
+            <div class="m-t-xs" ng-show="formOrganization.name.$invalid && formOrganization.name.$dirty">
+                <small class="text-danger help-block" ng-show="formOrganization.name.$error.required" translate>
+                    {{ '.form.name.errors.required' }}
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label translate>{{ '.form.logo.label' }}</label>
+            <input type="url" placeholder="{{ 'organization.edit.form.logo.placeholder' | translate }}"
+                   class="form-control" name="logo" ng-model="ctrl.organization.logo">
+            <div class="m-t-xs" ng-show="formOrganization.logo.$invalid && formOrganization.logo.$dirty">
+                <small class="text-danger help-block" ng-show="formOrganization.logo.$error.url" translate>
+                    {{ '.form.logo.errors.url' }}
+                </small>
+            </div>
+            <div class="contact-box text-center" ng-if="formOrganization.logo.$valid && ctrl.organization.logo">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <img src="{{ ctrl.organization.logo }}" class="logo-organization">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label translate>{{ '.form.url.label' }}</label>
+            <input type="url" placeholder="{{ 'organization.edit.form.url.placeholder' | translate }}"
+                   class="form-control" name="url" ng-model="ctrl.organization.url">
+            <div class="m-t-xs" ng-show="formOrganization.url.$invalid && formOrganization.url.$dirty">
+                <small class="text-danger help-block" ng-show="formOrganization.url.$error.url" translate>
+                    {{ '.form.url.errors.url' }}
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label translate>{{ '.form.description.label' }}</label>
+            <textarea type="text" placeholder="{{ 'organization.edit.form.description.placeholder' | translate }}"
+                      class="form-control" name="description" rows="5" ng-model="ctrl.organization.description">
+            </textarea>
+        </div>
+        <div class="form-group">
+            <div class="checkbox m-r-xs">
+                <input type="checkbox" id="active" ng-model="ctrl.organization.active">
+                <label for="active" translate>{{ '.form.active.label' }}</label>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="row">
+            <div class="col-lg-12">
+                <a ng-click="ctrl.exitModal()" class="btn btn-sm btn-success pull-right m-l-lg"
+                   ng-disabled="ctrl.loading">
+                    <i class="fa fa-reply"></i>
+                    <strong translate>{{ '.form.quit' }}</strong>
+                </a>
+                <button class="btn btn-sm btn-primary pull-right" type="submit"
+                        ng-disabled="formOrganization.$invalid || ctrl.loading">
+                    <i class="fa fa-save"></i>
+                    <strong translate>{{ '.form.submit' }}</strong>
+                </button>
+            </div>
+        </div>
+    </div>
+</form>

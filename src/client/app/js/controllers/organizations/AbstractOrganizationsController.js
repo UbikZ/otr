@@ -12,7 +12,7 @@ class AbstractOrganizationsController extends AbstractController {
   constructor($uibModal) {
     super();
     // Disable instance create from AbstractOrganizationsController
-    if (new.target === AbstractOrganizationsController) {
+    if (new .target === AbstractOrganizationsController) {
       throw new TypeError('AbstractOrganizationsController can\'t not be constructed');
     }
     this.$uibModal = $uibModal;
@@ -26,10 +26,13 @@ class AbstractOrganizationsController extends AbstractController {
   _edit(objectId) {
     return this.$uibModal.open({
       animation: true,
-      templateUrl: 'partials/modal-organization.html',
+      templateUrl: 'organizations/form/modal-edit.html',
       controller: 'form.organization.controller',
+      controllerAs: 'ctrl',
       resolve: {
-        identifier: () => objectId,
+        modalParameters: () => {
+          return {id: objectId};
+        },
       }
     });
   }

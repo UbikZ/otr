@@ -43,7 +43,7 @@ class OrganizationsDetailController extends AbstractOrganizationsController {
   }
 
   /**
-   * Edit one organization (calling modal)
+   * @action Edit one organization (calling modal)
    * @param objectId
    */
   editDetail(objectId) {

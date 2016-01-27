@@ -34,7 +34,7 @@ class OrganizationsListController extends AbstractOrganizationsController {
   }
 
   /**
-   * Edit one organization (calling modal)
+   * @action Edit one organization (calling modal)
    * @param objectId
    */
   editOrganization(objectId) {
@@ -52,7 +52,7 @@ class OrganizationsListController extends AbstractOrganizationsController {
   }
 
   /**
-   * Delete one organization (calling organizationService)
+   * @action Delete one organization (calling organizationService)
    * @param objectId
    */
   deleteOrganization(objectId) {
