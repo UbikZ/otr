@@ -8,6 +8,7 @@ import OrganizationsListController from './organizations/OrganizationsListContro
 import OrganizationsDetailController from './organizations/OrganizationsDetailController';
 import OrganizationsFormEditController from './organizations/forms/OrganizationsFormEditController';
 import UsersListController from './users/UsersListController';
+import AccountOntimeController from './account/AccountOntimeController';
 
 module.exports = function(app) {
 // Global controllers
@@ -29,7 +30,7 @@ module.exports = function(app) {
   app.controller('user.controller', UsersListController);
 
 // Account
-  app.controller('ontime.controller', require('./account/ontime'));
+  app.controller('ontime.controller', AccountOntimeController);
   app.controller('form.profile.controller', require('./account/forms/edit'));
 
 // Settings
