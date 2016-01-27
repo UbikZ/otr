@@ -1,4 +1,4 @@
-<div class="row border-bottom" ng-init="ns='base.header'">
+<div class="row border-bottom" translate-namespace="base.header">
     <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
         <div class="navbar-header">
             <span minimize-sidebar></span>
@@ -16,7 +16,7 @@
             <li>
                 <a ui-sref="login" ng-click="$root.logout()">
                     <i class="fa fa-sign-out"></i>
-                    <span class="text-muted">{{ (ns+'.logout') | translate }}</span>
+                    <span class="text-muted" translate>{{ '.logout' }}</span>
                 </a>
             </li>
             <!--<li>
