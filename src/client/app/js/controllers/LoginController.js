@@ -1,6 +1,6 @@
 'use strict';
 
-import AbstractController from './AbstractController';
+import AbstractController from 'AbstractController';
 
 /**
  * Login controller

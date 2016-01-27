@@ -1,6 +1,6 @@
 'use strict';
 
-import AbstractOrganizationsController from './AbstractOrganizationsController';
+import AbstractOrganizationsController from 'AbstractOrganizationsController';
 
 /**
  *  Controller for list organizations
