@@ -20,6 +20,8 @@ class OrganizationsFormEditController extends AbstractController {
    * @private
    */
   _init() {
+    this.loading = false;
+    this.organization = {};
     if (this.modalParameters.id !== undefined) {
       this.organizationService.get({id: this.modalParameters.id, lazy: 1}, (res) => {
         this.organization = res.organizations[0];
