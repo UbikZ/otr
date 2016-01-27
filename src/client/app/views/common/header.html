@@ -15,7 +15,8 @@
             <li class="dropdown" uib-dropdown ng-include="'common/partials/alerts.html'"></li>-->
             <li>
                 <a ui-sref="login" ng-click="$root.logout()">
-                    <i class="fa fa-sign-out"></i> {{ (ns+'.logout') | translate }}
+                    <i class="fa fa-sign-out"></i>
+                    <span class="text-muted">{{ (ns+'.logout') | translate }}</span>
                 </a>
             </li>
             <!--<li>
