@@ -1,8 +1,22 @@
 'use strict';
 
-class HomeController {
+import AbstractController from './AbstractController';
+
+/**
+ * Controller for Home page (nothing here for now)
+ */
+class HomeController extends AbstractController {
+  /**
+   * @param $rootScope
+   */
   constructor($rootScope) {
-    $rootScope.enableUi();
+    super();
+    this.$rootScope = $rootScope;
+    this._init();
+  }
+
+  _init() {
+    this.$rootScope.enableUi();
     this.$inject = ['$rootScope'];
   }
 }

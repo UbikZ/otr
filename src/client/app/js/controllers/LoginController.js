@@ -1,16 +1,40 @@
 'use strict';
 
-class LoginController {
+import AbstractController from './AbstractController';
+
+/**
+ * Login controller
+ */
+class LoginController extends AbstractController {
+  /**
+   * @param $rootScope
+   * @param authService
+   * @param $location
+   * @param $localStorage
+   */
   constructor($rootScope, authService, $location, $localStorage) {
-    $rootScope.enableUi();
-    this.loading = false;
+    super();
     this.authService = authService;
     this.$location = $location;
     this.$localStorage = $localStorage;
     this.$rootScope = $rootScope;
+    this._init();
+  }
+
+  /**
+   * Init the controller
+   * @private
+   */
+  _init() {
+    this.loading = false;
+    this.$rootScope.enableUi();
     this.$inject = ['$rootScope', 'authService', '$location', '$localStorage'];
   }
 
+  /**
+   * Login user with authService call
+   * @param user
+   */
   login(user) {
     this.loading = true;
     this.authService.login(user, (res) => {

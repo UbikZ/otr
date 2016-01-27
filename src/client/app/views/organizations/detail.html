@@ -1,13 +1,16 @@
-<div class="ng-scope" ng-controller="organization-detail.controller" ng-init="ns='organization.detail'">
+<div class="ng-scope" ng-controller="organization-detail.controller as ctrl"
+     translate-namespace="organization.detail">
     <div class="row wrapper border-bottom white-bg page-heading ng-scope">
         <div class="col-sm-12">
-            <h2>{{ (ns+'.title') | translate }}</h2>
+            <h2 translate>{{ '.title' }}</h2>
             <ol class="breadcrumb">
                 <li>
-                    <a ui-sref="{{ $root.routes.ORGANIZATIONS_LIST }}" class="text-muted">{{ (ns+'.list') | translate }}</a>
+                    <a ui-sref="{{ $root.routes.ORGANIZATIONS_LIST }}" class="text-muted" translate>
+                        {{ '.list' }}
+                    </a>
                 </li>
                 <li class="active">
-                    <strong>{{ organization.name }}</strong>
+                    <strong>{{ ctrl.organization.name }}</strong>
                 </li>
             </ol>
         </div>
@@ -20,23 +23,27 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="m-b-md">
-                                    <a ng-click="edit(organization._id)" class="btn btn-primary btn-xs pull-right">
-                                        <i class="fa fa-pencil"></i> {{ (ns+'.actions.edit') | translate }}
+                                    <a ng-click="ctrl.editDetail(ctrl.organization._id)"
+                                       class="btn btn-primary btn-xs pull-right">
+                                        <i class="fa fa-pencil"></i>
+                                        <span translate>{{ '.actions.edit' }}</span>
                                     </a>
-                                    <a ui-sref="{{ $root.routes.ORGANIZATIONS_LIST }}" class="btn btn-success btn-xs pull-right m-r-md">
-                                        <i class="fa fa-reply"></i> {{ (ns+'.actions.back') | translate }}
+                                    <a ui-sref="{{ $root.routes.ORGANIZATIONS_LIST }}"
+                                       class="btn btn-success btn-xs pull-right m-r-md">
+                                        <i class="fa fa-reply"></i>
+                                        <span translate>{{ '.actions.back' }}</span>
                                     </a>
 
-                                    <h2><strong>{{ organization.name }}</strong></h2>
+                                    <h2><strong>{{ ctrl.organization.name }}</strong></h2>
                                 </div>
                                 <dl class="dl-horizontal">
-                                    <dt>{{ (ns+'.organization.state') | translate }}</dt>
+                                    <dt translate>{{ '.organization.state' }}</dt>
                                     <dd>
-                                    <span ng-if="organization.active" class="label label-primary">
-                                        {{ (ns+'.organization.states.active') | translate }}
+                                    <span ng-if="ctrl.organization.active" class="label label-primary" translate>
+                                        {{ '.organization.states.active' }}
                                     </span>
-                                    <span ng-if="!organization.active" class="label label-default">
-                                        {{ (ns+'.organization.states.unactive') | translate }}
+                                    <span ng-if="!ctrl.organization.active" class="label label-default" translate>
+                                        {{ '.organization.states.unactive' }}
                                     </span>
                                     </dd>
                                 </dl>
@@ -45,24 +52,27 @@
                         <div class="row">
                             <div class="col-lg-5">
                                 <dl class="dl-horizontal">
-                                    <dt>{{ (ns+'.organization.created_by') | translate }}:</dt>
+                                    <dt translate>{{ '.organization.created_by' }}:</dt>
                                     <dd>
-                                        {{ organization.creation.user.name.firstname }}
-                                        {{ organization.creation.user.name.lastname }}
+                                        {{ ctrl.organization.creation.user.name.firstname }}
+                                        {{ ctrl.organization.creation.user.name.lastname }}
                                     </dd>
-                                    <dt>{{ (ns+'.organization.projects_number') | translate }}:</dt>
-                                    <dd> {{ organization.projects.length }}</dd>
-                                    <dt>{{ (ns+'.organization.website') | translate }}:</dt>
-                                    <dd><a href="{{ organization.url }}" class="text-navy"> {{ organization.url }}</a>
+                                    <dt translate>{{ '.organization.projects_number' }}:</dt>
+                                    <dd> {{ ctrl.organization.projects.length }}</dd>
+                                    <dt translate>{{ '.organization.website' }}:</dt>
+                                    <dd>
+                                        <a href="{{ ctrl.organization.url }}" class="text-navy">
+                                            {{ ctrl.organization.url }}
+                                        </a>
                                     </dd>
                                 </dl>
                             </div>
                             <div class="col-lg-7" id="date_info">
                                 <dl class="dl-horizontal">
-                                    <dt>{{ (ns+'.organization.creation_date') | translate }}:</dt>
-                                    <dd>{{ organization.creation.date | date: $root.const.FORMATS.DATE_TIME }}</dd>
-                                    <dt>{{ (ns+'.organization.update_date') | translate }}:</dt>
-                                    <dd>{{ organization.update.date | date: $root.const.FORMATS.DATE_TIME }}</dd>
+                                    <dt translate>{{ '.organization.creation_date' }}:</dt>
+                                    <dd>{{ ctrl.organization.creation.date | date: $root.const.FORMATS.DATE_TIME }}</dd>
+                                    <dt translate>{{ '.organization.update_date' }}:</dt>
+                                    <dd>{{ ctrl.organization.update.date | date: $root.const.FORMATS.DATE_TIME }}</dd>
                                 </dl>
                             </div>
                         </div>
@@ -73,16 +83,16 @@
         <div class="col-lg-3">
             <div class="wrapper wrapper-content project-manager">
                 <div class="text-center col-lg-12">
-                    <img class="logo-organization" src="{{ organization.logo }}">
+                    <img class="logo-organization" src="{{ ctrl.organization.logo }}">
                 </div>
             </div>
         </div>
     </div>
-    <div class="row" ng-if="organization.description != ''">
+    <div class="row" ng-if="ctrl.organization.description != ''">
         <div class="col-lg-12 m-t-n-xl">
             <div class="bs-callout bs-callout-info">
-                <h4 class="m-b-md">{{ (ns+'.organization.description.title') | translate }}</h4>
-                <p>{{ organization.description }}</p>
+                <h4 class="m-b-md" translate>{{ '.organization.description.title' }}</h4>
+                <p>{{ ctrl.organization.description }}</p>
             </div>
         </div>
     </div>

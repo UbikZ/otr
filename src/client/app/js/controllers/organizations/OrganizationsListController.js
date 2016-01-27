@@ -1,14 +1,28 @@
 'use strict';
 
-class OrganizationsListController {
+import AbstractOrganizationsController from './AbstractOrganizationsController';
+
+/**
+ *  Controller for list organizations
+ */
+class OrganizationsListController extends AbstractOrganizationsController {
+  /**
+   * @param $rootScope
+   * @param organizationService
+   * @param $uibModal
+   */
   constructor($rootScope, organizationService, $uibModal) {
+    super($uibModal);
     this.$rootScope = $rootScope;
     this.organizationService = organizationService;
-    this.$uibModal = $uibModal;
     this._init();
-    this.$inject = ['$rootScope', 'organizationService', '$uibModal'];
   }
 
+  /**
+   * Init the controller with organization service call
+   * - Get all organizations
+   * @private
+   */
   _init() {
     this.loading = false;
     this.organizationService.get({lazy: 1}, (res) => {
@@ -16,19 +30,15 @@ class OrganizationsListController {
       this.loading = false;
       this.organizations = res.organizations;
     });
+    this.$inject = ['$rootScope', 'organizationService', '$uibModal'];
   }
 
+  /**
+   * Edit one organization (calling modal)
+   * @param objectId
+   */
   editOrganization(objectId) {
-    var modalInstance = this.$uibModal.open({
-      animation: true,
-      templateUrl: 'partials/modal-organization.html',
-      controller: 'form.organization.controller',
-      resolve: {
-        identifier: () => objectId,
-      }
-    });
-
-    modalInstance.result.then((organization) => {
+    this._edit(objectId).result.then((organization) => {
       if (objectId) {
         this.organizations.forEach((org, index) => {
           if (org._id === organization._id) {
@@ -41,6 +51,10 @@ class OrganizationsListController {
     });
   }
 
+  /**
+   * Delete one organization (calling organizationService)
+   * @param objectId
+   */
   deleteOrganization(objectId) {
     this.deleteLoading = true;
     this.organizationService.delete({id: objectId}, (res) => {
