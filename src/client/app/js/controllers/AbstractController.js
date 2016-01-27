@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- *
+ * Abstract Controller to handle "same methods" or stuff like this
  */
 class AbstractController {
   /**
