@@ -40,9 +40,9 @@ module.exports = [
         url: '/ontime',
         templateUrl: 'account/ontime.html',
       })
-      .state(routes.ACCOUNT_MANAGE, {
-        url: '/manage',
-        templateUrl: 'account/manage.html',
+      .state(routes.ACCOUNT_EDIT, {
+        url: '/edit',
+        templateUrl: 'account/forms/edit.html',
       })
       .state(routes.ORGANIZATIONS, {
         abstract: true,

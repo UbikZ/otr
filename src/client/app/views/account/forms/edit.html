@@ -1,0 +1,110 @@
+<div class="wrapper wrapper-content animated fadeIn"
+     ng-controller="form.profile.controller as ctrl"translate-namespace="account.manage">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="ibox">
+                <div class="ibox-content">
+                    <h4 translate>{{ '.title' }}</h4>
+
+                    <form role="form" name="formProfile" novalidate ng-submit="ctrl.updateAccount(ctrl.profile)">
+                        <div class="form-group">
+                            <label translate>{{ '.identity.email' }}</label>
+
+                            <p class="form-control-static">{{ $root.user.info.email }}</p>
+                        </div>
+                        <div class="form-group">
+                            <label translate>{{ '.identity.username' }}</label>
+
+                            <p class="form-control-static">{{ $root.user.name.username }}</p>
+                        </div>
+                        <div class="form-group">
+                            <label translate>{{ '.form.firstname.label' }} *</label>
+                            <input type="text" class="form-control" name="firstname"
+                                   placeholder="{{ 'account.manage.form.firstname.placeholder' | translate }}"
+                                   ng-model="ctrl.profile.firstname" required>
+
+                            <div class="m-t-xs"
+                                 ng-show="formProfile.firstname.$invalid && formProfile.firstname.$dirty">
+                                <small class="text-danger help-block" translate
+                                       ng-show="formProfile.firstname.$error.required">
+                                    {{ '.form.firstname.errors.required' }}
+                                </small>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label translate>{{ '.form.lastname.label' }} *</label>
+                            <input type="text" placeholder="{{ 'account.manage.form.lastname.placeholder' }}"
+                                   class="form-control" name="lastname" ng-model="ctrl.profile.lastname" required>
+
+                            <div class="m-t-xs" ng-show="formProfile.lastname.$invalid && formProfile.lastname.$dirty">
+                                <small class="text-danger help-block" translate
+                                       ng-show="formProfile.lastname.$error.required">
+                                    {{ '.form.lastname.errors.required' }}
+                                </small>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label translate>{{ '.form.job.label' }}</label>
+                            <span class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-suitcase"></i></span>
+                                <input type="text" class="form-control" name="job" ng-model="ctrl.profile.job"
+                                       placeholder="{{ 'account.manage.form.job.placeholder' | translate }}">
+                            </span>
+                        </div>
+                        <div class="form-group">
+                            <label translate>{{ '.form.skype.label' }}</label>
+                            <span class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-skype"></i></span>
+                               <input type="text" class="form-control" name="skype" ng-model="ctrl.profile.skype"
+                                      placeholder="{{ 'account.manage.form.skype.placeholder'  | translate }}">
+                            </span>
+                        </div>
+                        <div class="form-group">
+                            <label translate>{{ '.form.location.label' }}</label>
+                            <span class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+                               <input type="text" class="form-control" name="location" ng-model="ctrl.profile.location"
+                                      placeholder="{{ 'account.manage.form.location.placeholder' | translate }}">
+                            </span>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <a ui-sref="{{ $root.routes.APP_HOME }}"
+                                   class="btn btn-sm btn-success pull-right m-l-lg" ng-disabled="ctrl.loading">
+                                    <i class="fa fa-reply"></i>
+                                    <strong translate>{{ '.form.quit' }}</strong>
+                                </a>
+                                <button class="btn btn-sm btn-primary pull-right" type="submit"
+                                        ng-disabled="formProfile.$invalid || ctrl.loading">
+                                    <i class="fa fa-save"></i>
+                                    <strong translate>{{ '.form.submit' }}</strong>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="ibox">
+                <div class="ibox-content">
+                    <h4 tranlate>{{ '.avatar.title' }}</h4>
+
+                    <div class="contact-box text-center">
+                        <img gravatar-src="'{{ $root.user.info.email }}'" gravatar-size="200" class="img-circle">
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="pull-right">
+                                <strong>
+                                    <a href="http://gravatar.com/">Gravatar</a>
+                                    <span translate>{{ '.avatar.gravatar' }}</span>
+                                </strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

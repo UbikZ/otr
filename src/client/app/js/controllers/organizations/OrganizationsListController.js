@@ -1,5 +1,8 @@
 'use strict';
 
+/**
+ * Abstract controller for Organizations
+ */
 import AbstractOrganizationsController from './AbstractOrganizationsController';
 
 /**

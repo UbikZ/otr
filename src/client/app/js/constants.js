@@ -12,7 +12,7 @@ module.exports = {
     'APP_USERS': 'app.users',
     'ACCOUNT': 'account',
     'ACCOUNT_ONTIME': 'account.ontime',
-    'ACCOUNT_MANAGE': 'account.manage',
+    'ACCOUNT_EDIT': 'account.edit',
     'ORGANIZATIONS': 'organizations',
     'ORGANIZATIONS_LIST': 'organizations.list',
     'ORGANIZATIONS_SETTINGS': 'organizations.settings',

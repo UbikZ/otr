@@ -14,7 +14,7 @@
                             </span>
                     </a>
                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                        <li><a ui-sref="{{ $root.routes.ACCOUNT_MANAGE }}">{{ (ns + ".account.manage") | translate }}</a></li>
+                        <li><a ui-sref="{{ $root.routes.ACCOUNT_EDIT }}">{{ (ns + ".account.manage") | translate }}</a></li>
                     </ul>
                 </div>
                 <div class="logo-element">
@@ -55,7 +55,7 @@
                 </a>
                 <ul class="nav nav-second-level collapse" ng-class="{in: $state.includes($root.routes.ACCOUNT + '.*')}">
                     <li ui-sref-active="active">
-                        <a ui-sref="{{ $root.routes.ACCOUNT_MANAGE }}">
+                        <a ui-sref="{{ $root.routes.ACCOUNT_EDIT }}">
                             <i class="fa fa-fw fa-user"></i>
                             {{ (ns+'.account.manage') | translate }}
                         </a>

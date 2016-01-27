@@ -9,6 +9,7 @@ import OrganizationsDetailController from './organizations/OrganizationsDetailCo
 import OrganizationsFormEditController from './organizations/forms/OrganizationsFormEditController';
 import UsersListController from './users/UsersListController';
 import AccountOntimeController from './account/AccountOntimeController';
+import AccountFormEditController from './account/forms/AccountFormEditController';
 
 module.exports = function(app) {
 // Global controllers
@@ -31,7 +32,7 @@ module.exports = function(app) {
 
 // Account
   app.controller('ontime.controller', AccountOntimeController);
-  app.controller('form.profile.controller', require('./account/forms/edit'));
+  app.controller('form.profile.controller', AccountFormEditController);
 
 // Settings
   app.controller('form.setting.controller', require('./setting/forms/edit'));
