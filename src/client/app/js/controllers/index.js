@@ -5,17 +5,18 @@ import LoginController from './LoginController';
 import HomeController from './HomeController';
 import TranslateController from './TranslateController';
 import OrganizationsListController from './organizations/OrganizationsListController';
+import OrganizationsDetailController from './organizations/OrganizationsDetailController';
 
 module.exports = function(app) {
 // Global controllers
   app.controller('main.controller', MainController);
   app.controller('login.controller', LoginController);
-  app.controller('home.controller', HomeController);
+  app.controller('HomeController', HomeController);
   app.controller('translate.controller', TranslateController);
 
 // Organizations
   app.controller('organization.controller', OrganizationsListController);
-  app.controller('organization-detail.controller', require('./organizations/detail'));
+  app.controller('organization-detail.controller', OrganizationsDetailController);
   app.controller('form.organization.controller', require('./organizations/forms/edit'));
 
 // Filesystem
