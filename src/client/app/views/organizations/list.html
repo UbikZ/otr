@@ -1,13 +1,13 @@
-<div class="row ng-scope" ng-controller="organization.controller" ng-init="ns='organization.list'">
+<div class="row ng-scope" ng-controller="organization.controller as ctrl" translate-namespace="organization.list">
     <div class="col-lg-12">
         <div class="wrapper wrapper-content animated fadeIn">
             <div class="ibox">
                 <div class="ibox-title">
-                    <h5>{{ (ns + ".title") | translate }}</h5>
+                    <h5 translate>{{ '.title' }}</h5>
 
-                    <div class="ibox-tools" ng-if="organizations.length > 0">
-                        <button type="button" ng-click="edit()" class="btn btn-primary btn-xs">
-                            {{ (ns + ".create") | translate }}
+                    <div class="ibox-tools" ng-if="ctrl.organizations.length > 0">
+                        <button type="button" ng-click="ctrl.editOrganization()" class="btn btn-primary btn-xs">
+                            <span translate>{{ '.create' }}</span>
                         </button>
                     </div>
                 </div>
@@ -16,14 +16,14 @@
                         <div class="input-group">
                             <span class="input-group-addon" id="search">
                                 <i class="fa fa-search"></i>
-                                {{ (ns+'.search.title') | translate }}
+                                <span translate>{{ '.search.title' }}</span>
                             </span>
                             <input type="text" ng-model="search.name"
-                                   placeholder="{{ (ns+'.search.placeholder') | translate }}"
+                                   placeholder="{{ 'organization.list.search.placeholder' | translate }}"
                                    class="form-control">
                         </div>
                     </div>
-                    <div ng-if="loading">
+                    <div ng-if="ctrl.loading">
                         <div class="col-lg-12">
                             <div class="contact-box">
                                 <div class="sk-folding-cube">
@@ -35,61 +35,67 @@
                             </div>
                         </div>
                     </div>
-                    <div ng-if="!loading">
+                    <div ng-if="!ctrl.loading">
                         <div class="project-list">
                             <div class="pull-rigth">
                                 <span class="pull-right small text-muted">
                                     {{ organizationsFiltered.length }}
-                                    {{ (ns + ".organizations_found") | translate }}
+                                    <span translate>{{ '.organizations_found' }}</span>
                                 </span>
                             </div>
                             <table class="table table-hover">
                                 <thead>
                                 <tr class="text-center">
-                                    <th>{{ (ns+'.items.head.logo') | translate }}</th>
-                                    <th>{{ (ns+'.items.head.state') | translate }}</th>
-                                    <th>{{ (ns+'.items.head.name') | translate }}</th>
-                                    <th>{{ (ns+'.items.head.creator') | translate }}</th>
-                                    <th>{{ (ns+'.items.head.actions') | translate }}</th>
+                                    <th translate>{{ '.items.head.logo' }}</th>
+                                    <th translate>{{ '.items.head.state' }}</th>
+                                    <th translate>{{ '.items.head.name' }}</th>
+                                    <th translate>{{ '.items.head.creator' }}</th>
+                                    <th translate>{{ '.items.head.actions' }}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr ng-if="organizations.length == 0">
+                                <tr ng-if="ctrl.organizations.length == 0">
                                     <td colspan="5" class="text-center">
-                                        <strong class="text-muted">{{ (ns+'.item.no_organization') | translate }}</strong><br/>
-                                        <button type="button" ng-click="edit()" class="btn btn-primary m-sm">
-                                            {{ (ns + ".create") | translate }}
+                                        <strong class="text-muted" translate>{{ '.item.no_organization' }}</strong>
+                                        <br/>
+                                        <button type="button" ng-click="ctrl.editOrganization()" class="btn btn-primary m-sm">
+                                            <span translate>{{ '.create' }}</span>
                                         </button>
                                     </td>
                                 </tr>
-                                <tr ng-if="organizations.length > 0 && organizationsFiltered.length == 0">
+                                <tr ng-if="ctrl.organizations.length > 0 && organizationsFiltered.length == 0">
                                     <td colspan="5" class="text-center">
-                                        <strong class="text-warning">{{ (ns+'.item.no_organization_filter') | translate }}</strong>
+                                        <strong class="text-warning" translate>
+                                            {{ '.item.no_organization_filter' }}
+                                        </strong>
                                     </td>
                                 </tr>
-                                <tr ng-if="organizations.length > 0"
-                                    ng-repeat="(id,organization) in organizationsFiltered = (organizations | orderBy:'name' | filter:search)">
+                                <tr ng-if="ctrl.organizations.length > 0"
+                                    ng-repeat="(id, organization) in organizationsFiltered = (ctrl.organizations | orderBy:'name' | filter:search)">
                                     <td class="col-md-2">
                                         <a ui-sref="{{ $root.routes.ORGANIZATIONS_DETAIL }}({id: organization._id})">
                                             <img ng-src="{{ organization.logo }}" class="img-responsive height-fix-md">
                                         </a>
                                     </td>
                                     <td class="project-status">
-                                        <span ng-if="organization.active" class="label label-primary">
-                                            {{ (ns+'.item.active') | translate }}
+                                        <span ng-if="organization.active" class="label label-primary" translate>
+                                            {{ '.item.active' }}
                                         </span>
-                                        <span ng-if="!organization.active" class="label label-default">
-                                            {{ (ns+'.item.unactive') | translate }}
+                                        <span ng-if="!organization.active" class="label label-default" translate>
+                                            {{ '.item.unactive' }}
                                         </span>
                                     </td>
                                     <td class="project-title">
                                         <strong>{{ organization.name }}</strong>
                                         <br>
-                                        <small>{{ (ns+'.item.create') | translate }} {{ organization.creation.date | date: $root.const.FORMATS.DATE_TIME }}</small>
+                                        <small>
+                                            <span translate>{{ '.item.create' }}</span>
+                                            {{ organization.creation.date | date: $root.const.FORMATS.DATE_TIME }}
+                                        </small>
                                     </td>
                                     <td>
                                         <small>
-                                            {{ (ns+'.item.created_by') | translate }}
+                                            <span translate>{{ '.item.created_by' }}</span>
                                             <strong>
                                                 {{ organization.creation.user.name.firstname}}
                                                 {{ organization.creation.user.name.lastname }}
@@ -97,9 +103,21 @@
                                         </small>
                                     </td>
                                     <td class="project-actions">
-                                        <a ui-sref="{{ $root.routes.ORGANIZATIONS_DETAIL }}({id: organization._id})" class="btn btn-primary btn-sm"><i class="fa fa-folder-open"></i> {{ (ns+'.item.open') | translate }}</a>
-                                        <a ng-click="edit(organization._id)" class="btn btn-success btn-sm"><i class="fa fa-pencil"></i> {{ (ns+'.item.edit') | translate }}</a>
-                                        <a ng-click="delete(organization._id)" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> {{ (ns+'.item.delete') | translate }}</a>
+                                        <a ui-sref="{{ $root.routes.ORGANIZATIONS_DETAIL }}({id: organization._id})"
+                                           class="btn btn-primary btn-sm">
+                                            <i class="fa fa-folder-open"></i>
+                                            <span translate>{{ '.item.open' }}</span>
+                                        </a>
+                                        <a ng-click="ctrl.editOrganization(organization._id)"
+                                           class="btn btn-success btn-sm">
+                                            <i class="fa fa-pencil"></i>
+                                            <span translate>{{ '.item.edit' }}</span>
+                                        </a>
+                                        <a ng-click="ctrl.deleteOrganization(organization._id)"
+                                           class="btn btn-danger btn-sm">
+                                            <i class="fa fa-trash"></i>
+                                            <span translate>{{ '.item.delete' }}</span>
+                                        </a>
                                     </td>
                                 </tr>
                                 </tbody>

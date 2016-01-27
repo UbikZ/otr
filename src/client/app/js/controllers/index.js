@@ -4,6 +4,7 @@ import MainController from './MainController';
 import LoginController from './LoginController';
 import HomeController from './HomeController';
 import TranslateController from './TranslateController';
+import OrganizationsListController from './organizations/OrganizationsListController';
 
 module.exports = function(app) {
 // Global controllers
@@ -13,7 +14,7 @@ module.exports = function(app) {
   app.controller('translate.controller', TranslateController);
 
 // Organizations
-  app.controller('organization.controller', require('./organizations/list'));
+  app.controller('organization.controller', OrganizationsListController);
   app.controller('organization-detail.controller', require('./organizations/detail'));
   app.controller('form.organization.controller', require('./organizations/forms/edit'));
 
