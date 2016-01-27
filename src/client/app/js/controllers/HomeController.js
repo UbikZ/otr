@@ -15,6 +15,10 @@ class HomeController extends AbstractController {
     this._init();
   }
 
+  /**
+   * Init the controller
+   * @private
+   */
   _init() {
     this.$rootScope.enableUi();
     this.$inject = ['$rootScope'];
