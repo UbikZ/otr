@@ -74,7 +74,7 @@ h5 {
 .navbar-top-links li {
     display: inline-block;
 }
-.navbar-top-links li:last-child {
+.navbar-top-links > li:last-child {
     margin-right: 40px;
 }
 .body-small .navbar-top-links li:last-child {

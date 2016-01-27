@@ -1,8 +1,8 @@
 'use strict';
 
 module.exports = function($translateProvider) {
-  $translateProvider.translations('en', require('./en.json'));
-  $translateProvider.translations('fr', require('./fr.json'));
+  $translateProvider.translations('gb', require('./gb'));
+  $translateProvider.translations('fr', require('./fr'));
 
   $translateProvider.preferredLanguage('fr');
 };

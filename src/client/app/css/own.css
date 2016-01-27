@@ -224,3 +224,7 @@ table.document tr.priority.child td:first-child {
     -webkit-transform: scale(1, -1) rotate(270deg);
     -ms-transform: scale(1, -1) rotate(270deg);
 }
+
+.navbar .dropdown-menu {
+    margin-top: 20px !important;
+}

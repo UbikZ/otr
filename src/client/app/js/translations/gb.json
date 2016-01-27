@@ -61,8 +61,8 @@
       "language": {
         "title": "Languages",
         "items": {
-          "english": "English",
-          "french": "French"
+          "gb": "English",
+          "fr": "French"
         }
       }
     },

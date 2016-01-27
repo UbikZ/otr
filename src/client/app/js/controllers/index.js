@@ -3,13 +3,14 @@
 import MainController from './MainController';
 import LoginController from './LoginController';
 import HomeController from './HomeController';
+import TranslateController from './TranslateController';
 
 module.exports = function(app) {
 // Global controllers
   app.controller('main.controller', MainController);
   app.controller('login.controller', LoginController);
   app.controller('home.controller', HomeController);
-  app.controller('translate.controller', require('./translate'));
+  app.controller('translate.controller', TranslateController);
 
 // Organizations
   app.controller('organization.controller', require('./organizations/list'));

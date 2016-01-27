@@ -1,24 +1,21 @@
-<a class="dropdown-toggle" uib-dropdown-toggle ng-init="ns='base.header.language'">
-    <i class="flag-icon"
-       ng-class="{
-        'flag-icon-gb' : currentLanguage == 'en',
-        'flag-icon-fr' : !currentLanguage || currentLanguage == 'fr',
-        }"></i>
-    {{ (ns+'.title') | translate }}
-</a>
-<ul class="dropdown-menu animated fadeInRight m-t-xs">
-    <li>
-        <a ng-click="changeLanguage('fr')">
-            <i class="flag-icon flag-icon-fr"></i>
-            <span ng-if="currentLanguage && currentLanguage != 'fr'">{{ (ns+'.items.french') | translate }}</span>
-            <strong ng-if="!currentLanguage || currentLanguage == 'fr'">{{ (ns+'.items.french') | translate }}</strong>
+<ul ng-controller="translate.controller as ctrl" translate-namespace="base.header.language">
+    <li class="dropdown" uib-dropdown>
+        <a class="dropdown-toggle" uib-dropdown-toggle>
+            <i class="flag-icon flag-icon-{{ctrl.currentLanguage}} m-r-xs"></i>
+            <strong class="text-muted" translate>{{ '.title' }}</strong>
         </a>
-    </li>
-    <li>
-        <a ng-click="changeLanguage('en')">
-            <i class="flag-icon flag-icon-gb"></i>
-            <span ng-if="currentLanguage != 'en'">{{ (ns+'.items.english') | translate }}</span>
-            <strong ng-if="currentLanguage == 'en'">{{ (ns+'.items.english') | translate }}</strong>
-        </a>
+        <ul class="dropdown-menu animated fadeInRight">
+            <li ng-repeat="language in ctrl.languages">
+                <a ng-click="ctrl.changeLanguage(language.locale)">
+                    <i class="flag-icon flag-icon-{{language.locale}}"></i>
+                    <span translate ng-if="ctrl.currentLanguage != language.locale">
+                        {{ '.items.' + language.locale }}
+                    </span>
+                    <strong translate ng-if="ctrl.currentLanguage == language.locale">
+                        {{ '.items.' + language.locale }}
+                    </strong>
+                </a>
+            </li>
+        </ul>
     </li>
 </ul>

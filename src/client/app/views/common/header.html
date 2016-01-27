@@ -10,11 +10,10 @@
             </form>-->
         </div>
         <ul class="nav navbar-top-links navbar-right">
-            <li class="dropdown" uib-dropdown ng-controller="translate.controller"
-                ng-include="'common/partials/languages.html'"></li>
+            <li ng-include="'common/partials/languages.html'"></li>
             <!--<li class="dropdown" uib-dropdown ng-include="'common/partials/messages.html'"></li>
             <li class="dropdown" uib-dropdown ng-include="'common/partials/alerts.html'"></li>-->
-            <li ng-controller="login.controller">
+            <li>
                 <a ui-sref="login" ng-click="$root.logout()">
                     <i class="fa fa-sign-out"></i> {{ (ns+'.logout') | translate }}
                 </a>
