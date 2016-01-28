@@ -30,6 +30,7 @@ class OrganizationsDetailController extends AbstractOrganizationsController {
    * @private
    */
   _init() {
+    this.organization = {};
     this.organizationService.get({id: this.$stateParams.id, lazyVersion: 1}, (res) => {
       if (res.organizations.length === 0) {
         this.$location.path('/');

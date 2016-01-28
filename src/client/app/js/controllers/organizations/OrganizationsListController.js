@@ -28,6 +28,7 @@ class OrganizationsListController extends AbstractOrganizationsController {
    */
   _init() {
     this.loading = false;
+    this.organization = {};
     this.organizationService.get({lazy: 1}, (res) => {
       this.$rootScope.enableUi();
       this.loading = false;

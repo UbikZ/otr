@@ -12,7 +12,7 @@ class AbstractOrganizationsController extends AbstractController {
   constructor($uibModal) {
     super();
     // Disable instance create from AbstractOrganizationsController
-    if (new .target === AbstractOrganizationsController) {
+    if (new.target === AbstractOrganizationsController) {
       throw new TypeError('AbstractOrganizationsController can\'t not be constructed');
     }
     this.$uibModal = $uibModal;

@@ -20,6 +20,7 @@ class UsersListController extends AbstractController {
    */
   _init() {
     this.loading = false;
+    this.users = {};
     this.userService.get({}, (res) => {
       this.$rootScope.enableUi();
       this.users = res.users;

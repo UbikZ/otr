@@ -18,18 +18,27 @@ class AccountOntimeController extends AbstractController {
   }
 
   /**
-   * Init the controller with ontime service call
-   * - Get dirty data from Ontime
+   * Init attributes
    * @private
    */
   _init() {
     this.loading = false;
+    this.json = JSON.stringify({}, null, 4);
+    this._onInit();
+    this.$inject = ['$rootScope', 'ontimeService'];
+  }
+
+  /**
+   * Init the controller with ontime service call
+   * - Get dirty data from Ontime
+   * @private
+   */
+  _onInit() {
     this.ontimeService.meOntime({}, (res) => {
       this.$rootScope.enableUi();
       this.json = JSON.stringify(res, null, 4);
       this.loading = false;
     });
-    this.$inject = ['$rootScope', 'ontimeService'];
   }
 }
 
