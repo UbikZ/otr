@@ -1,7 +1,21 @@
 'use strict';
 
-module.exports = function (gulp, plugins, npmPackages, config) {
-  return function () {
+/**
+ * Task for application css
+ * - include all css from external libraries (web & print version)
+ * - concat all files
+ * - If production
+ *    > minify
+ *    > gzip lvl 9
+ *    > add revision
+ * @param gulp
+ * @param plugins
+ * @param npmPackages
+ * @param config
+ * @returns {Function}
+ */
+export default (gulp, plugins, npmPackages, config) => {
+  return () => {
     gulp.src([
       config.path.public + '/lib/font-awesome/dist/css/**/*.css',
       config.path.public + '/lib/bootstrap/dist/css/**/*.css',

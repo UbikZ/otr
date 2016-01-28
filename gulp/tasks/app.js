@@ -1,23 +1,41 @@
 'use strict';
 
-module.exports = function (gulp, plugins, npmPackages, config) {
-  return function () {
-    var b = plugins
+/**
+ * Task for application javascript
+ * - exclude vendor
+ * - transpile TypeScript
+ * - use EcmaScript 6
+ * - babel es6 to es5
+ * - browserify (one final file)
+ * - If production
+ *    > uglify
+ *    > gzip lvl 9
+ *    > add revision
+ * @param gulp
+ * @param plugins
+ * @param npmPackages
+ * @param config
+ * @returns {Function}
+ */
+export default (gulp, plugins, npmPackages, config) => {
+  return () => {
+    let b = plugins
       .browserify('./src/client/app/js/app.js', {debug: config.env.debug})
+      //.plugin(plugins.tsify, { target: 'es6' })
       .transform(plugins.babelify, {presets: ["es2015"]});
 
-    npmPackages().forEach(function (id) {
+    npmPackages().forEach(id => {
       b.external(id);
     });
 
-    npmPackages().forEach(function (id) {
-      var extendId = Object.keys(config.particularities).indexOf(id) == -1 ? id : config.particularities[id];
+    npmPackages().forEach(id => {
+      let extendId = !~Object.keys(config.particularities).indexOf(id) ? id : config.particularities[id];
       b.external(extendId);
     });
 
-    var stream = b.bundle().pipe(plugins.source('app.min.js')).pipe(plugins.ifProd(plugins.buffer()));
+    let stream = b.bundle().pipe(plugins.source('app.min.js')).pipe(plugins.ifProd(plugins.buffer()));
 
-    if (process.env.NODE_ENV == 'staging') {
+    if (process.env.NODE_ENV === 'staging') {
       stream.pipe(plugins.ifProd(plugins.istanbul({
         includeUntested: true,
         coverageVariable: '__coverage__'

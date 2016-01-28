@@ -53,7 +53,7 @@ app
       delete $localStorage.ontimeToken;
     };
 
-    $rootScope.enableUi = function() {
+    $rootScope.enableUi = function () {
       $('#wrapper-loader').fadeOut();
     };
 

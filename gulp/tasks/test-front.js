@@ -1,7 +1,17 @@
 'use strict';
 
-module.exports = function (gulp, plugins, npmPackages, config) {
-  return function () {
+/**
+ * ONLY IN STAGE ENV
+ * Task to execute FRONT-END e2e tests
+ * - Use Protractor for AngularJS
+ * @param gulp
+ * @param plugins
+ * @param npmPackages
+ * @param config
+ * @returns {Function}
+ */
+export default (gulp, plugins, npmPackages, config) => {
+  return () => {
     if (process.env.NODE_ENV === 'staging') {
       return gulp.src([config.path.client.test])
         .pipe(plugins.angularProtractor({
@@ -9,8 +19,8 @@ module.exports = function (gulp, plugins, npmPackages, config) {
           'autoStartStopServer': true,
           'debug': true
         }))
-        .on('error', function (e) {
-          throw e
+        .on('error', error => {
+          throw error
         });
     }
     return;
