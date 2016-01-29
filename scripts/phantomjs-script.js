@@ -35,7 +35,7 @@ function open(currentPage, url, ownCallback) {
 }
 
 function doRender() {
-  var tmpFilePath = './public/'.concat(btoa(filePath), '.html');
+  var tmpFilePath = './public/' + btoa(filePath) + '.html';
 
   if (debug) {
     console.debug('Start export PDF...');
@@ -44,7 +44,7 @@ function doRender() {
   fs.write(tmpFilePath,
     // We erase the bad stuff... dirty I know... fml
     page.content
-      .replace(new RegExp('\\s*<script[^>]*>[\\s\\S]*?</script>\\s*', 'ig'), '')
+      //.replace(new RegExp('\\s*<script[^>]*>[\\s\\S]*?</script>\\s*', 'ig'), '')
       .replace(new RegExp('\\s*<div class="pace[^>]*>[\\s\\S]*?</div>\\s*', 'ig'), '')
       .replace(new RegExp('\\s*<div id="wrapper-loader[^>]*>[\\s\\S]*?</div>\\s*', 'ig'), '')
       .replace('wrapper', '').replace('page-wrapper', ''), // classes useless and fucked the print view
@@ -52,9 +52,9 @@ function doRender() {
 
   open(pdfPage, tmpFilePath, function () {
     pdfPage.render(filePath);
-    //if (!debug) {
+    if (!debug) {
       fs.remove(tmpFilePath);
-    //}
+    }
     phantom.exit();
   });
 }
@@ -63,6 +63,7 @@ function onResourceRequested(req) {
   count += 1;
   if (debug) {
     console.log('> ' + req.id + ' - ' + req.url);
+    console.log(JSON.stringify(req));
   }
   clearTimeout(renderTimeout);
 }
@@ -114,9 +115,9 @@ if (system.args.length < 3 || system.args.length > 4) {
   debug = system.args[3] == 1;
   /*jshint eqeqeq: true */
 
-  /*page.open(url, function(status) {
-    page.render(filePath);
-  });*/
+  /*pdfPage.open(url, function(status) {
+    pdfPage.render(filePath);
+   });*/
   open(page, url, function () {
     forcedRenderTimeout = setTimeout(function () {
       if (debug) {
