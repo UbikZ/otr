@@ -91,7 +91,7 @@
     "serve-dev": "export NODE_ENV=development && npm start",
     "serve-stage": "export NODE_ENV=staging && npm start",
     "serve-prod": "export NODE_ENV=production && npm start",
-    "test-back": "export NODE_ENV=staging && ./node_modules/.bin/gulp test-back",
+    "test-back": "export NODE_ENV=staging && npm run build && ./node_modules/.bin/gulp test-back",
     "test-front": "export NODE_ENV=staging && ./node_modules/.bin/gulp test-front",
     "test": "export NODE_ENV=staging && ./node_modules/.bin/gulp test-back && ./node_modules/.bin/gulp test-front"
   }
