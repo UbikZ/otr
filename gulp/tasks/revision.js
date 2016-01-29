@@ -20,7 +20,7 @@ export default (gulp, plugins, npmPackages, config) => {
         if (!config.env.debug) {
           let manifest = {};
           ['app', 'vendor', 'css', 'print'].forEach(function (el) {
-            manifest = merge(manifest , require('../' + config.path.public + '/dist/rev-manifest.' + el + '.json'));
+            manifest = merge(manifest , require('../../' + config.path.public + '/dist/rev-manifest.' + el + '.json'));
           });
           Object.keys(manifest).forEach(element => {
             data = data.replace(element, manifest[element]);

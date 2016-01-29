@@ -1,5 +1,7 @@
 'use strict';
 
+const babel = require('babel-core/register');
+
 /**
  * ONLY IN STAGE ENV
  * Task to execute BACK-END unit tests
@@ -21,7 +23,7 @@ export default (gulp, plugins, npmPackages, config) => {
         .pipe(plugins.istanbul.hookRequire())
         .on('finish', () => {
           return gulp.src(config.path.server.test + '/index.js')
-            .pipe(plugins.mocha({reporter: 'spec'}))
+            .pipe(plugins.mocha({reporter: 'spec', compilers: ['js:babel-core/register']}))
             .pipe(plugins.istanbul.writeReports({dir: config.path.server.coverage}))
             .on('end', () => {
               //if (!process.env.CI) {
