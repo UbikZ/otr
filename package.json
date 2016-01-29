@@ -34,7 +34,7 @@
     "request": "^2.69.0",
     "resolve": "^1.1.7",
     "sinon": "^1.17.3",
-    "supertest": "^1.1.0",
+    "supertest-as-promised": "^2.0.2",
     "tsify": "^0.13.2",
     "typescript": "^1.9.0-dev.20160128",
     "vinyl-source-stream": "^1.1.0"
@@ -83,10 +83,14 @@
     "node": ">= 0.10.0"
   },
   "scripts": {
-    "build-dev": "export NODE_ENV=development && ./node_modules/.bin/gulp pre-clean && ./node_modules/.bin/gulp jshint && ./node_modules/.bin/gulp install",
-    "build-stage": "export NODE_ENV=staging && ./node_modules/.bin/gulp pre-clean && ./node_modules/.bin/gulp jshint && ./node_modules/.bin/gulp install",
-    "build-prod": "export NODE_ENV=production && ./node_modules/.bin/gulp pre-clean && ./node_modules/.bin/gulp jshint && ./node_modules/.bin/gulp install",
+    "start": "node app.js",
+    "build-dev": "export NODE_ENV=development && npm run build",
+    "build-stage": "export NODE_ENV=staging && npm run build",
+    "build-prod": "export NODE_ENV=production && npm run build",
     "build": "./node_modules/.bin/gulp pre-clean && ./node_modules/.bin/gulp jshint && ./node_modules/.bin/gulp install",
+    "serve-dev": "export NODE_ENV=development && npm start",
+    "serve-stage": "export NODE_ENV=staging && npm start",
+    "serve-prod": "export NODE_ENV=production && npm start",
     "test-back": "export NODE_ENV=staging && ./node_modules/.bin/gulp test-back",
     "test-front": "export NODE_ENV=staging && ./node_modules/.bin/gulp test-front",
     "test": "export NODE_ENV=staging && ./node_modules/.bin/gulp test-back && ./node_modules/.bin/gulp test-front"
