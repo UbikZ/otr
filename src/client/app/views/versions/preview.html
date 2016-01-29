@@ -64,34 +64,35 @@
                         <div class="ibox-content">
                             <uib-tabset>
                                 <uib-tab>
-                                    <tab-heading>
+                                    <uib-tab-heading>
                                         <i class="fa fa-sitemap"></i> {{ (nsv+'.items.macro') | translate }}
-                                    </tab-heading>
+                                    </uib-tab-heading>
                                     <span ng-include="'versions/partials/web/macro.html'"></span>
                                     <span ng-include="'versions/partials/web/main_resume.html'"></span>
                                 </uib-tab>
                                 <uib-tab>
-                                    <tab-heading>
+                                    <uib-tab-heading>
                                         <i class="fa fa-list"></i> {{ (nsv+'.items.list') | translate }}
-                                    </tab-heading>
+                                    </uib-tab-heading>
                                     <span ng-include="'versions/partials/web/list.html'"></span>
                                     <span ng-include="'versions/partials/web/main_resume.html'"></span>
                                 </uib-tab>
                                 <uib-tab>
-                                    <tab-heading>
+                                    <uib-tab-heading>
                                         <i class="fa fa-files-o"></i> {{ (nsv+'.items.detail') | translate }}
-                                    </tab-heading>
+                                    </uib-tab-heading>
                                     <span ng-include="'versions/partials/web/detail.html'"></span>
                                     <span ng-include="'versions/partials/web/main_resume.html'"></span>
                                 </uib-tab>
                                 <li>
-                                    <a ng-click="download()" uib-tab-heading-transclude ng-disabled="downloading">
-                                        <tab-heading ng-if="!downloading">
+                                    <a ng-click="download()" ng-disabled="downloading">
+                                        <uib-tab-heading ng-if="!downloading">
                                             <i class="fa fa-download"></i>{{ (nsv+'.items.download') | translate }}
-                                        </tab-heading>
-                                        <tab-heading ng-if="downloading" class="text-navy">
-                                            <i class="fa fa-spinner fa-spin"></i>{{ (nsv+'.items.download_progress') | translate }}
-                                        </tab-heading>
+                                        </uib-tab-heading>
+                                        <uib-tab-heading ng-if="downloading" class="text-navy">
+                                            <i class="fa fa-spinner fa-spin"></i>
+                                            {{ (nsv+'.items.download_progress') | translate }}
+                                        </uib-tab-heading>
                                     </a>
                                 </li>
                             </uib-tabset>
