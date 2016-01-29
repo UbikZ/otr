@@ -1,13 +1,13 @@
 'use strict';
 
-var fs = require('fs');
-var assert = require('chai').assert;
-var mongoose = require('mongoose');
+const fs = require('fs');
+const assert = require('chai').assert;
+const mongoose = require('mongoose');
 
-var helpers = require('./../helpers');
+const helpers = require('./../helpers');
 
 module.exports = (agent, url, config) => {
-  var tokenBearer, tokenOtBearer;
+  let tokenBearer, tokenOtBearer;
 
   describe('> Init API', () => {
     describe('# [GET] /', () => {
