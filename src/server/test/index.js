@@ -9,6 +9,19 @@ const ApplicationClass = require('../ApplicationTest');
 let Application = new ApplicationClass(config);
 Application.run();
 
+
+function dropDatabase(done) {
+  mongoose.connection.db.dropDatabase(err => {
+    if (err) {
+      throw err;
+    }
+    if (typeof done === 'function') {
+      done();
+    }
+  });
+}
+dropDatabase();
+
 describe('> Application', () => {
   const agent = request.agent(Application.app);
   const url = '/api/v' + Application.config.api.version;
@@ -23,11 +36,6 @@ describe('> Application', () => {
   });
 
   after('# should drop database', done => {
-    mongoose.connection.db.dropDatabase(err => {
-      if (err) {
-        throw err;
-      }
-      done();
-    });
+    dropDatabase(done);
   });
 });
