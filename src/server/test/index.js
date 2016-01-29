@@ -1,33 +1,29 @@
 'use strict';
 
-var should = require('chai').should();
-var mongoose = require('mongoose');
-var config = require('../../../config');
-var request = require('supertest');
+const should = require('chai').should();
+const mongoose = require('mongoose');
+const request = require('supertest-as-promised');
+const config = require('../../../config.json');
+const ApplicationClass = require('../ApplicationTest');
 
-var app = require('../../../app');
+let Application = new ApplicationClass(config);
+Application.run();
 
-if (process.env.NODE_ENV !== 'staging') {
-  process.exit(1);
-}
+describe('> Application', () => {
+  const agent = request.agent(Application.app);
+  const url = '/api/v' + Application.config.api.version;
 
-describe('> Application', function () {
-  var agent = request.agent(app);
-  var url = '/api/v' + config.api.version;
-
-  //
-  it('# should exist', function (done) {
-    should.exist(app);
+  it('# should exist', done => {
+    should.exist(Application.app);
     done();
   });
 
-  ['init', 'auth', 'user', 'org', 'ot', 'item', 'setting'].forEach(function (spec) {
-    require('./scenarios/'.concat(spec, '.specs'))(agent, url, config);
+  ['init', 'auth', 'user', 'org', 'ot', 'item', 'setting'].forEach(spec => {
+    require('./scenarios/' + spec + '.specs')(agent, url, Application.config);
   });
 
-  //
-  after('# should drop database', function (done) {
-    mongoose.connection.db.dropDatabase(function (err) {
+  after('# should drop database', done => {
+    mongoose.connection.db.dropDatabase(err => {
       if (err) {
         throw err;
       }
