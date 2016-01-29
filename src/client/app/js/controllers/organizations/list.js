@@ -35,9 +35,9 @@ module.exports = ['$scope', '$rootScope', 'organizationService', '$uibModal',
       });
     };
 
-    $scope.delete = function(objectId) {
+    $scope.delete = function (objectId) {
       $scope.deleteLoading = true;
-      organizationService.delete({id: objectId}, function(res) {
+      organizationService.delete({id: objectId}, function (res) {
         $scope.organizations.forEach(function (org, index) {
           if (org._id === res.id) {
             $scope.organizations.splice(index, 1);

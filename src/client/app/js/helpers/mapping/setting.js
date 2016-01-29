@@ -10,65 +10,65 @@ function check(item, cb) {
 function dalToDTO(item) {
   var result = {};
 
-  check(item, function(setting) {
+  check(item, function (setting) {
     result._id = setting._id;
 
-    check(setting.projectDev, function(projectDev) {
-      check(projectDev.contributorPrice, function(contributorPrice) {
+    check(setting.projectDev, function (projectDev) {
+      check(projectDev.contributorPrice, function (contributorPrice) {
         result.contributorPrice = contributorPrice;
       });
-      check(projectDev.contributorOccupation, function(contributorOccupation) {
+      check(projectDev.contributorOccupation, function (contributorOccupation) {
         result.contributorOccupation = contributorOccupation;
       });
     });
-    check(setting.projectManagement, function(projectManagement) {
-      check(projectManagement.scrummasterPrice, function(scrummasterPrice) {
+    check(setting.projectManagement, function (projectManagement) {
+      check(projectManagement.scrummasterPrice, function (scrummasterPrice) {
         result.scrummasterPrice = scrummasterPrice;
       });
-      check(projectManagement.scrummasterOccupation, function(scrummasterOccupation) {
+      check(projectManagement.scrummasterOccupation, function (scrummasterOccupation) {
         result.scrummasterOccupation = scrummasterOccupation;
       });
     });
-    check(setting.billing, function(billing) {
-      check(billing.rateMultiplier, function(rateMultiplier) {
+    check(setting.billing, function (billing) {
+      check(billing.rateMultiplier, function (rateMultiplier) {
         result.rateMultiplier = rateMultiplier;
       });
-      check(billing.showDevPrice, function(showDevPrice) {
+      check(billing.showDevPrice, function (showDevPrice) {
         result.showDev = showDevPrice;
       });
-      check(billing.showManagementPrice, function(showManagementPrice) {
+      check(billing.showManagementPrice, function (showManagementPrice) {
         result.showManagement = showManagementPrice;
       });
     });
-    check(setting.unit, function(unit) {
-      check(unit.estimateType, function(estimateType) {
+    check(setting.unit, function (unit) {
+      check(unit.estimateType, function (estimateType) {
         result.estimateType = estimateType;
       });
-      check(unit.rangeEstimateUnit, function(rangeEstimateUnit) {
+      check(unit.rangeEstimateUnit, function (rangeEstimateUnit) {
         result.rangeEstimateUnit = rangeEstimateUnit;
       });
-      check(unit.label, function(label) {
+      check(unit.label, function (label) {
         if (label !== '') {
           result.label = label;
         }
       });
     });
-    check(setting.date, function(date) {
-      check(date.show, function(show) {
+    check(setting.date, function (date) {
+      check(date.show, function (show) {
         result.showDate = show;
       });
     });
-    check(setting.iteration, function(iteration) {
-      check(iteration.contributorAvailable, function(contributorAvailable) {
+    check(setting.iteration, function (iteration) {
+      check(iteration.contributorAvailable, function (contributorAvailable) {
         result.contributorAvailable = contributorAvailable;
       });
-      check(iteration.hourPerDay, function(hourPerDay) {
+      check(iteration.hourPerDay, function (hourPerDay) {
         result.hourPerDay = hourPerDay;
       });
-      check(iteration.dayPerWeek, function(dayPerWeek) {
+      check(iteration.dayPerWeek, function (dayPerWeek) {
         result.dayPerWeek = dayPerWeek;
       });
-      check(iteration.weekPerIteration, function(weekPerIteration) {
+      check(iteration.weekPerIteration, function (weekPerIteration) {
         result.weekPerIteration = weekPerIteration;
       });
     });

@@ -53,7 +53,7 @@ function doRender() {
   open(pdfPage, tmpFilePath, function () {
     pdfPage.render(filePath);
     //if (!debug) {
-      fs.remove(tmpFilePath);
+    fs.remove(tmpFilePath);
     //}
     phantom.exit();
   });
@@ -115,8 +115,8 @@ if (system.args.length < 3 || system.args.length > 4) {
   /*jshint eqeqeq: true */
 
   /*page.open(url, function(status) {
-    page.render(filePath);
-  });*/
+   page.render(filePath);
+   });*/
   open(page, url, function () {
     forcedRenderTimeout = setTimeout(function () {
       if (debug) {

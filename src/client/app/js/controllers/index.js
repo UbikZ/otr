@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function(app) {
+module.exports = function (app) {
 // Global controllers
   app.controller('main.controller', require('./main'));
   app.controller('login.controller', require('./login'));

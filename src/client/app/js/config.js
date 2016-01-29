@@ -5,7 +5,7 @@ module.exports = [
   function ($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, $translateProvider, $httpProvider, _CONST) {
 
     var routes = _CONST.ROUTES;
-    
+
     $ocLazyLoadProvider.config({
       debug: true
     });

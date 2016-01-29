@@ -18,7 +18,7 @@ module.exports = ['$rootScope', '$scope', 'identifier', 'organizationId', 'setti
     angular.extend($scope.setting, {parent: identifier.parent});
 
     // Default value for checkboxes / select
-    ['showDev', 'showManagement', 'showDate', 'estimateType', 'rangeEstimateUnit'].forEach(function(item) {
+    ['showDev', 'showManagement', 'showDate', 'estimateType', 'rangeEstimateUnit'].forEach(function (item) {
       if ($scope.setting[item] === undefined && identifier.parent !== undefined) {
         $scope.setting[item] = identifier.parent[item];
       }

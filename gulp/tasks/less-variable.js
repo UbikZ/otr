@@ -1,8 +1,15 @@
 'use strict';
 
-module.exports = function(gulp, plugins, npmPackages, config) {
-  return function() {
-
+/**
+ * Task to copy less variables files in the temporary folder
+ * @param gulp
+ * @param plugins
+ * @param npmPackages
+ * @param config
+ * @returns {Function}
+ */
+export default (gulp, plugins, npmPackages, config) => {
+  return () => {
     // Font Awesome
     gulp.src('src/client/app/less/font-awesome/variables.less')
       .pipe(gulp.dest(config.path.public + '/lib/font-awesome/less'));

@@ -5,6 +5,7 @@ window.$ = window.jQuery = require('jquery');
 
 // External
 var angular = require('angular');
+require('angular-i18n/angular-locale_fr-fr');
 require('angular-gravatar');
 require('angular-ui-router');
 require('angular-translate');
@@ -53,7 +54,7 @@ app
       delete $localStorage.ontimeToken;
     };
 
-    $rootScope.enableUi = function() {
+    $rootScope.enableUi = function () {
       $('#wrapper-loader').fadeOut();
     };
 

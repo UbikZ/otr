@@ -61,10 +61,12 @@
     padding: 20px;
     border-left: 3px solid #eee;
 }
+
 .bs-callout h4 {
     margin-top: 0;
     margin-bottom: 5px;
 }
+
 .bs-callout p:last-child {
     margin-bottom: 0;
 }
@@ -74,20 +76,25 @@
     background-color: #fff;
     border-color: #eed3d7;
 }
+
 .bs-callout-danger h4 {
     color: #b94a48;
 }
+
 .bs-callout-warning {
     background-color: #fff;
     border-color: #faebcc;
 }
+
 .bs-callout-warning h4 {
     color: #8a6d3b;
 }
+
 .bs-callout-info {
     background-color: #fff;
     border-color: #bce8f1;
 }
+
 .bs-callout-info h4 {
     color: #34789a;
 }
@@ -136,6 +143,7 @@
     border-bottom: 1px solid #1ab394;
     background: #fff;
 }
+
 .versions .skin-setttings .title {
     background: #f7f7f7;
 }
@@ -223,4 +231,8 @@ table.document tr.priority.child td:first-child {
     -moz-transform: scale(1, -1) rotate(270deg);
     -webkit-transform: scale(1, -1) rotate(270deg);
     -ms-transform: scale(1, -1) rotate(270deg);
+}
+
+.navbar .dropdown-menu {
+    margin-top: 20px !important;
 }

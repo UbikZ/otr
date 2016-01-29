@@ -22,7 +22,7 @@ module.exports.controller = function (app, config) {
       } else {
         /*jshint eqeqeq: false */
         if (data.lazy == 1) {
-        /*jshint eqeqeq: true */
+          /*jshint eqeqeq: true */
           OrganizationModel.walkRecursively(organization, function (element) {
             if (element.entries !== undefined) {
               delete element.entries;
@@ -54,7 +54,7 @@ module.exports.controller = function (app, config) {
       } else if (organization) {
         /*jshint eqeqeq: false */
         if (data.lazy == 1) {
-        /*jshint eqeqeq: true */
+          /*jshint eqeqeq: true */
           OrganizationModel.walkRecursively(organization, function (element) {
             if (element.entries !== undefined) {
               delete element.entries;
@@ -66,7 +66,7 @@ module.exports.controller = function (app, config) {
             var result = {};
             /*jshint eqeqeq: false */
             if (data.modePreview == 1) {
-            /*jshint eqeqeq: true */
+              /*jshint eqeqeq: true */
               result.item = element;
               result.documentName = parentElement.name;
               result.organizationName = organization.name;
@@ -74,7 +74,7 @@ module.exports.controller = function (app, config) {
               result.item = element;
               /*jshint eqeqeq: false */
               if (data.lazy == 1) {
-              /*jshint eqeqeq: true */
+                /*jshint eqeqeq: true */
                 delete result.item.entries;
               }
               result.organization = organization;

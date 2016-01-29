@@ -1,8 +1,17 @@
 'use strict';
 
-module.exports = function(gulp, plugins, npmPackages, config) {
-  return function() {
-    var nodePath = 'node_modules/';
+/**
+ * Task to copy files from external libraries which will not change
+ * - exclude variables.less then
+ * @param gulp
+ * @param plugins
+ * @param npmPackages
+ * @param config
+ * @returns {Function}
+ */
+export default (gulp, plugins, npmPackages, config) => {
+  return () => {
+    const nodePath = 'node_modules/';
 
     // Font-Awesome & Print
     gulp.src([nodePath + '/font-awesome/fonts/*.*', config.path.client.print + '/font/*.*'])
@@ -32,7 +41,7 @@ module.exports = function(gulp, plugins, npmPackages, config) {
         nodePath + '/ihover/src/ihover.css',
         // Flags
         nodePath + '/flag-icon-css/css/flag-icon.css',
-      ], { base: nodePath }
+      ], {base: nodePath}
     ).pipe(gulp.dest(config.path.public + '/lib'));
   };
 };

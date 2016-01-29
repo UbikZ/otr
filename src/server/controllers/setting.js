@@ -169,7 +169,7 @@ module.exports.controller = function (app, config) {
                 var result = {};
                 /*jshint eqeqeq: false */
                 if (data.modePreview == 1) {
-                /*jshint eqeqeq: true */
+                  /*jshint eqeqeq: true */
                   result.setting = modelItem;
                 } else {
                   result.organization = organization;

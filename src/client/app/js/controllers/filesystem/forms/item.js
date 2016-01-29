@@ -17,14 +17,14 @@ module.exports = [
     }
 
     if (identifier.isVersion === true) {
-      $scope.refresh = function() {
+      $scope.refresh = function () {
         $scope.loadingOntime = true;
         $scope.loadingOntimeRelease = true;
-        ontimeService.tree({}, function(res) {
+        ontimeService.tree({}, function (res) {
           $scope.ontimeItems = res.tree;
           $scope.loadingOntime = false;
         });
-        ontimeService.tree({idProject: 0}, function(res) {
+        ontimeService.tree({idProject: 0}, function (res) {
           $scope.ontimeItemsRelease = res.tree;
           $scope.loadingOntimeRelease = false;
         });
@@ -45,7 +45,7 @@ module.exports = [
         $scope.selectedRelease = undefined;
         $scope.loadingOntimeRelease = true;
         $scope.selected = selected ? node : undefined;
-        ontimeService.tree({idProject: selected ? node.id : 0}, function(res) {
+        ontimeService.tree({idProject: selected ? node.id : 0}, function (res) {
           $scope.ontimeItemsRelease = res.tree;
           $scope.expandReleaseAll();
           $scope.loadingOntimeRelease = false;
@@ -102,7 +102,7 @@ module.exports = [
       itemService.edit(item, function (res) {
         $scope.loading = false;
         $uibModalInstance.close({organization: res.organization, item: res.item, type: res.type});
-      }, function() {
+      }, function () {
         $scope.loading = false;
       });
     };

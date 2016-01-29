@@ -21,7 +21,7 @@ describe('> Application', function () {
     done();
   });
 
-  ['init', 'auth', 'user', 'org', 'ot', 'item', 'setting'].forEach(function(spec) {
+  ['init', 'auth', 'user', 'org', 'ot', 'item', 'setting'].forEach(function (spec) {
     require('./scenarios/'.concat(spec, '.specs'))(agent, url, config);
   });
 

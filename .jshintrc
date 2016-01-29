@@ -1,6 +1,6 @@
 {
   "maxerr"        : 50,
-
+  "esversion"     : 6,
 
   "bitwise"       : false,
   "indent"        : 4,

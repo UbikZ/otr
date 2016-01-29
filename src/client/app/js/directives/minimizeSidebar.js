@@ -1,13 +1,12 @@
 'use strict';
 
 module.exports = [
-  function() {
+  function () {
     return {
       restrict: 'A',
-      template:
-        '<a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="" ng-click="minimalize()">' +
-        '<i class="fa fa-bars"></i>' +
-        '</a>',
+      template: '<a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="" ng-click="minimalize()">' +
+      '<i class="fa fa-bars"></i>' +
+      '</a>',
       controller: function ($scope) {
         $scope.minimalize = function () {
           var $body = window.$('body');
@@ -18,7 +17,7 @@ module.exports = [
               function () {
                 $('#side-menu').fadeIn(500);
               }, 100);
-          } else if ($body.hasClass('fixed-sidebar')){
+          } else if ($body.hasClass('fixed-sidebar')) {
             $('#side-menu').hide();
             setTimeout(
               function () {

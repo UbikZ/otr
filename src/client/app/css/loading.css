@@ -115,6 +115,7 @@
         transform: scale(1);
     }
 }
+
 @keyframes up-2 {
     0%, 6.76471% {
         -webkit-transform: scale(0);

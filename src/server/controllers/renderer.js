@@ -67,7 +67,7 @@ module.exports.controller = function (app, config) {
         if (!fs.existsSync(config.path.export.concat('/', data.fileName))) {
           http.response(res, 500, {}, '-1');
         } else {
-          res.download(config.path.export.concat('/', data.fileName), function(err) {
+          res.download(config.path.export.concat('/', data.fileName), function (err) {
             if (err) {
               logger.error(err);
             } else {

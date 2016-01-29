@@ -17,7 +17,7 @@ module.exports = function (app, config) {
 
   app.use(function (req, res, next) {
     // For staging/production test (nginx will deliver statics files with specific rule)
-    if (!config.env.debug && req.url.indexOf('.gz.') !==  -1) {
+    if (!config.env.debug && req.url.indexOf('.gz.') !== -1) {
       res.setHeader('Content-Encoding', 'gzip');
     }
     //res.setHeader('Access-Control-Allow-Origin', '*');

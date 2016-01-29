@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function(app) {
+module.exports = function (app) {
   app.factory('authService', require('./auth'));
   app.factory('ontimeService', require('./ontime'));
   app.factory('userService', require('./user'));

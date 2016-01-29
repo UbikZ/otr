@@ -5,5 +5,7 @@ module.exports = {
   baseTemplateDir: '/views/',
   apiUrl: '/api/v1',
 
-  templatePath: function (view) { return [this.baseTemplateDir, view].join(''); }
+  templatePath: function (view) {
+    return [this.baseTemplateDir, view].join('');
+  }
 };

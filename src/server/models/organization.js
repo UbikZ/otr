@@ -39,7 +39,7 @@ schema.statics.findDeepAttributeById = function (model, elementId, cb) {
 };
 
 schema.statics.walkRecursively = function (model, cb) {
-  utilsHelper.walkRecursively(model, function(element) {
+  utilsHelper.walkRecursively(model, function (element) {
     if (element !== undefined) {
       cb(element);
     }

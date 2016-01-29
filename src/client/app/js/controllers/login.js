@@ -14,7 +14,7 @@ module.exports = ['$scope', '$rootScope', 'authService', '$location', '$localSto
         $rootScope.user = res.user;
         $rootScope.isAuthenticated = true;
         $location.path('/');
-      }, function() {
+      }, function () {
         $scope.loading = false;
       });
     };
