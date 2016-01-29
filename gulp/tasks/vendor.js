@@ -17,7 +17,8 @@
  */
 export default (gulp, plugins, npmPackages, config) => {
   return () => {
-    let b = plugins.browserify({ debug: config.env.debug });
+    let b = plugins.browserify({ debug: con
+      fig.env.debug });
 
     npmPackages().forEach(id => {
       if (Object.keys(config.particularities).indexOf(id) == -1) {
