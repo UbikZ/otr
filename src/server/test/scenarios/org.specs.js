@@ -5,9 +5,10 @@ const mongoose = require('mongoose');
 
 const helpers = require('./../helpers');
 
-module.exports = function (agent, url) {
+module.exports = (agent, url) => {
   describe('> Organization API', () => {
     let organizationId;
+
     describe('# [POST] ' + url + '/organization/edit', () => {
       it('should get an internal error on "findById" (mongo fail)', done => {
         helpers.mockModel(mongoose.model('Organization'), 'findById', stub => {
