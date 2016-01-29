@@ -1,15 +1,7 @@
 'use strict';
 
-var express = require('express');
-var config = require('./config.json');
-var app = express();
+const config = require('./config.json');
+const ApplicationClass = require(config.path.server.root + '/Application');
 
-config.env.debug = !~['staging', 'production'].indexOf(process.env.NODE_ENV);
-
-var port = config.env[process.env.NODE_ENV].port;
-
-require('./src/server/middleware')(app, config);
-
-app.listen(port);
-
-module.exports = app;
+let Application = new ApplicationClass(config);
+Application.run();
