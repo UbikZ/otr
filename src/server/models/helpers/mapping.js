@@ -1,7 +1,7 @@
 'use strict';
 
 function settingDtoToDal(object, data) {
-  var result = object || {};
+  let result = object || {};
 
   if (data !== undefined) {
     if (typeof data.contributorPrice !== 'undefined') {
