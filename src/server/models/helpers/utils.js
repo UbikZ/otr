@@ -1,19 +1,5 @@
 'use strict';
 
-// Can't use arrow notation ('this' scope from 'this.filter'...)
-Array.prototype.id = function (elementId) {
-  const result =
-    this.filter(obj => {
-      /*jshint eqeqeq: false */
-      if (obj !== undefined && obj._id == elementId) {
-        /*jshint eqeqeq: true */
-        return obj;
-      }
-    }) || [];
-
-  return result.length === 1 ? result[0] : undefined;
-};
-
 function walkRecursively(element, cb) {
   const elements = [];
   if (element !== undefined) {
