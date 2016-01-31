@@ -4,12 +4,12 @@ const assert = require('chai').assert;
 const mongoose = require('mongoose');
 
 const helpers = require('./../helpers');
-const ontimeRequester = require('../../controllers/helpers/ontime');
+//const ontimeRequester = require('../../controllers/helpers/ontime');
 const OrganizationModel = require('../../models/organization');
 
 module.exports = (agent, url) => {
   describe('> Item API', () => {
-    let documentId, versionId, versionOtherId;
+    let documentId/*, versionId, versionOtherId*/;
     before('should create new organization', done => {
       const sentData = require('./../fixtures/organization/create');
       agent
