@@ -1,74 +1,69 @@
 'use strict';
 
-var assert = require('chai').assert;
-var mongoose = require('mongoose');
+const assert = require('chai').assert;
+const mongoose = require('mongoose');
 
-var helpers = require('./../helpers');
-var OrganizationModel = require('../../models/organization');
+const helpers = require('./../helpers');
+const OrganizationModel = require('../../models/organization');
 
-module.exports = function (agent, url) {
-  describe('> Setting API', function () {
-    var settingStandaloneId;
-    describe('# [POST] ~standalone' + url + '/setting/update', function () {
-      it('should get an internal error (findOne) on create a standalone setting (mongo fail)', function (done) {
-        var sentData = require('./../fixtures/setting/create-ok-1');
-        helpers.mockModel(mongoose.model('Setting'), 'findOne', function (stub) {
+module.exports = (agent, url) => {
+  describe('> Setting API', () => {
+    let settingStandaloneId;
+    describe('# [POST] ~standalone' + url + '/setting/update', () => {
+      it('should get an internal error (findOne) on create a standalone setting (mongo fail)', done => {
+        const sentData = require('./../fixtures/setting/create-ok-1');
+        helpers.mockModel(mongoose.model('Setting'), 'findOne', stub => {
           agent
             .post(url + '/setting/update')
             .send(sentData)
             .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
             .expect(500)
             .expect('Content-Type', 'application/json; charset=utf-8')
-            .end(function (err, res) {
-              if (err) {
-                return done(err);
-              }
-              var result = res.body;
+            .then(res => {
+              const result = res.body;
               assert.strictEqual(result.code, 500);
               assert.isDefined(result.error);
               assert.strictEqual(result.messageCode, '-1');
               stub.restore();
               done();
-            });
+            })
+            .catch(err => done(err))
+          ;
         });
       });
 
-      it('should get an internal error (update) on create a standalone setting (mongo fail)', function (done) {
-        var sentData = require('./../fixtures/setting/create-ok-1');
-        helpers.mockModel(mongoose.model('Setting'), 'update', function (stub) {
+      it('should get an internal error (update) on create a standalone setting (mongo fail)', done => {
+        const sentData = require('./../fixtures/setting/create-ok-1');
+        helpers.mockModel(mongoose.model('Setting'), 'update', stub => {
           agent
             .post(url + '/setting/update')
             .send(sentData)
             .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
             .expect(500)
             .expect('Content-Type', 'application/json; charset=utf-8')
-            .end(function (err, res) {
-              if (err) {
-                return done(err);
-              }
-              var result = res.body;
+            .then(res => {
+              const result = res.body;
               assert.strictEqual(result.code, 500);
               assert.isDefined(result.error);
               assert.strictEqual(result.messageCode, '-1');
               stub.restore();
               done();
-            });
+            })
+            .catch(err => done(err))
+          ;
         });
       });
 
-      it('should create a standalone setting', function (done) {
-        var sentData = require('./../fixtures/setting/create-ok-1');
+      it('should create a standalone setting', done => {
+        const sentData = require('./../fixtures/setting/create-ok-1');
         agent
           .post(url + '/setting/update')
           .send(sentData)
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(200)
           .expect('Content-Type', 'application/json; charset=utf-8')
-          .end(function (err, res) {
-            if (err) {
-              return done(err);
-            }
-            var result = res.body;
+          .then(res => {
+            const result = res.body;
             assert.strictEqual(result.code, 200);
             assert.isUndefined(result.error);
             assert.strictEqual(result.messageCode, '8');
@@ -94,35 +89,36 @@ module.exports = function (agent, url) {
             assert.strictEqual(result.setting.id, 42);
             settingStandaloneId = result.setting._id;
             done();
-          });
+          })
+          .catch(err => done(err))
+        ;
       });
 
-      it('should get an internal error (update) on update a standalone setting (mongo fail)', function (done) {
-        var sentData = require('./../fixtures/setting/create-ok-1');
+      it('should get an internal error (update) on update a standalone setting (mongo fail)', done => {
+        const sentData = require('./../fixtures/setting/create-ok-1');
         sentData.id = 42;
-        helpers.mockModel(mongoose.model('Setting'), 'update', function (stub) {
+        helpers.mockModel(mongoose.model('Setting'), 'update', stub => {
           agent
             .post(url + '/setting/update')
             .send(sentData)
             .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
             .expect(500)
             .expect('Content-Type', 'application/json; charset=utf-8')
-            .end(function (err, res) {
-              if (err) {
-                return done(err);
-              }
-              var result = res.body;
+            .then(res => {
+              const result = res.body;
               assert.strictEqual(result.code, 500);
               assert.isDefined(result.error);
               assert.strictEqual(result.messageCode, '-1');
               stub.restore();
               done();
-            });
+            })
+            .catch(err => done(err))
+          ;
         });
       });
 
-      it('should update a standalone setting', function (done) {
-        var sentData = require('./../fixtures/setting/update-ok-1');
+      it('should update a standalone setting', done => {
+        const sentData = require('./../fixtures/setting/update-ok-1');
         sentData.id = 42;
         agent
           .post(url + '/setting/update')
@@ -130,11 +126,8 @@ module.exports = function (agent, url) {
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(200)
           .expect('Content-Type', 'application/json; charset=utf-8')
-          .end(function (err, res) {
-            if (err) {
-              return done(err);
-            }
-            var result = res.body;
+          .then(res => {
+            const result = res.body;
             assert.strictEqual(result.code, 200);
             assert.isUndefined(result.error);
             assert.strictEqual(result.messageCode, '9');
@@ -159,165 +152,160 @@ module.exports = function (agent, url) {
             assert.strictEqual(result.setting.id, 42);
             settingStandaloneId = result.setting._id;
             done();
-          });
+          })
+          .catch(err => done(err))
+        ;
       });
     });
 
-    describe('# [GET] ~standalone' + url + '/setting', function () {
-      it('should get an internal error (find) for request a standalone setting (mongo fail)', function (done) {
-        helpers.mockModel(mongoose.model('Setting'), 'find', function (stub) {
+    describe('# [GET] ~standalone' + url + '/setting', () => {
+      it('should get an internal error (find) for request a standalone setting (mongo fail)', done => {
+        helpers.mockModel(mongoose.model('Setting'), 'find', stub => {
           agent
             .get(url + '/setting?id=42')
             .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
             .expect(500)
             .expect('Content-Type', 'application/json; charset=utf-8')
-            .end(function (err, res) {
-              if (err) {
-                return done(err);
-              }
-              var result = res.body;
+            .then(res => {
+              const result = res.body;
               assert.strictEqual(result.code, 500);
               assert.isDefined(result.error);
               assert.strictEqual(result.messageCode, '-1');
               stub.restore();
               done();
-            });
+            })
+            .catch(err => done(err))
+          ;
         });
       });
 
       it('should get an internal error (find) for request a standalone setting (empty response)',
-        function (done) {
-          helpers.mockModel(mongoose.model('Setting'), 'find', function (stub) {
+        done => {
+          helpers.mockModel(mongoose.model('Setting'), 'find', stub => {
             agent
               .get(url + '/setting?id=42')
               .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
               .expect(404)
               .expect('Content-Type', 'application/json; charset=utf-8')
-              .end(function (err, res) {
-                if (err) {
-                  return done(err);
-                }
-                var result = res.body;
+              .then(res => {
+                const result = res.body;
                 assert.strictEqual(result.code, 404);
                 assert.isUndefined(result.error);
                 assert.strictEqual(result.messageCode, '-10');
                 stub.restore();
                 done();
-              });
+              })
+              .catch(err => done(err))
+            ;
           }, true);
         })
       ;
 
-      it('should request a standalone setting', function (done) {
+      it('should request a standalone setting', done => {
         agent
           .get(url + '/setting?id=42')
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(200)
           .expect('Content-Type', 'application/json; charset=utf-8')
-          .end(function (err, res) {
-            if (err) {
-              return done(err);
-            }
-            var result = res.body;
+          .then(res => {
+            const result = res.body;
             assert.strictEqual(result.code, 200);
             assert.isUndefined(result.error);
             assert.isUndefined(result.messageCode);
             assert.isDefined(result.setting);
             done();
-          });
+          })
+          .catch(err => done(err))
+        ;
       });
     });
 
-    describe('# [POST] ~sub-item' + url + '/setting/update', function () {
+    describe('# [POST] ~sub-item' + url + '/setting/update', () => {
       it('should get an error request (not found because no organizationId given) a sub-item setting',
-        function (done) {
+        done => {
           agent
             .post(url + '/setting/edit')
             .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
             .expect(404)
             .expect('Content-Type', 'application/json; charset=utf-8')
-            .end(function (err, res) {
-              if (err) {
-                return done(err);
-              }
-              var result = res.body;
+            .then(res => {
+              const result = res.body;
               assert.strictEqual(result.code, 404);
               assert.isUndefined(result.error);
               assert.strictEqual(result.messageCode, '-1');
               done();
-            });
+            })
+            .catch(err => done(err))
+          ;
         })
       ;
 
-      it('should get an internal error request (findById) a sub-item setting (mongo fail)', function (done) {
-        helpers.mockModel(mongoose.model('Organization'), 'findById', function (stub) {
+      it('should get an internal error request (findById) a sub-item setting (mongo fail)', done => {
+        helpers.mockModel(mongoose.model('Organization'), 'findById', stub => {
           agent
             .post(url + '/setting/edit')
             .send({organizationId: global.organizationId})
             .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
             .expect(500)
             .expect('Content-Type', 'application/json; charset=utf-8')
-            .end(function (err, res) {
-              if (err) {
-                return done(err);
-              }
-              var result = res.body;
+            .then(res => {
+              const result = res.body;
               assert.strictEqual(result.code, 500);
               assert.isDefined(result.error);
               assert.strictEqual(result.messageCode, '-1');
               stub.restore();
               done();
-            });
+            })
+            .catch(err => done(err))
+          ;
         });
       });
 
-      it('should get an error request (unknown organizationId) a sub-item setting', function (done) {
+      it('should get an error request (unknown organizationId) a sub-item setting', done => {
         agent
           .post(url + '/setting/edit')
           .send({organizationId: '56961966de7cbad8ba3be467'})
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(404)
           .expect('Content-Type', 'application/json; charset=utf-8')
-          .end(function (err, res) {
-            if (err) {
-              return done(err);
-            }
-            var result = res.body;
+          .then(res => {
+            const result = res.body;
             assert.strictEqual(result.code, 404);
             assert.isUndefined(result.error);
             assert.strictEqual(result.messageCode, '-5');
             done();
-          });
+          })
+          .catch(err => done(err))
+        ;
       });
 
-      it('should get an internal error (update) for create a sub-item setting in organization (mongo fail)',
-        function (done) {
-          var sentData = require('./../fixtures/setting/create-ok-1');
+      /*it('should get an internal error (update) for create a sub-item setting in organization (mongo fail)',
+        done => {
+          const sentData = require('./../fixtures/setting/create-ok-1');
           sentData.organizationId = global.organizationId;
-          helpers.mockModel(mongoose.model('Organization'), 'update', function (stub) {
+          helpers.mockModel(mongoose.model('Organization'), 'update', stub => {
             agent
               .post(url + '/setting/edit')
               .send(sentData)
               .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
               .expect(500)
               .expect('Content-Type', 'application/json; charset=utf-8')
-              .end(function (err, res) {
-                if (err) {
-                  return done(err);
-                }
-                var result = res.body;
+              .then(res => {
+                const result = res.body;
                 assert.strictEqual(result.code, 500);
                 assert.isDefined(result.error);
                 assert.strictEqual(result.messageCode, '-1');
                 stub.restore();
                 done();
-              });
+              })
+              .catch(err => done(err))
+            ;
           });
         })
-      ;
+      ;*/
 
-      it('should create a sub-item setting in organization', function (done) {
-        var sentData = require('./../fixtures/setting/create-ok-1');
+      it('should create a sub-item setting in organization', done => {
+        const sentData = require('./../fixtures/setting/create-ok-1');
         sentData.organizationId = global.organizationId;
         agent
           .post(url + '/setting/edit')
@@ -325,18 +313,15 @@ module.exports = function (agent, url) {
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(200)
           .expect('Content-Type', 'application/json; charset=utf-8')
-          .end(function (err, res) {
-            if (err) {
-              return done(err);
-            }
-            var result = res.body;
+          .then(res => {
+            const result = res.body;
             assert.strictEqual(result.code, 200);
             assert.isUndefined(result.error);
             assert.strictEqual(result.messageCode, '10');
             assert.isDefined(result.organization);
             assert.isDefined(result.organization.setting);
             assert.isUndefined(result.setting);
-            var org = result.organization;
+            const org = result.organization;
             assert.strictEqual(org.setting.projectDev.contributorPrice, sentData.contributorPrice);
             assert.strictEqual(org.setting.projectDev.contributorOccupation, sentData.contributorOccupation);
             assert.strictEqual(org.setting.projectManagement.scrummasterPrice, sentData.scrummasterPrice);
@@ -356,11 +341,13 @@ module.exports = function (agent, url) {
             assert.strictEqual(org.setting.iteration.dayPerWeek, sentData.dayPerWeek);
             assert.strictEqual(org.setting.iteration.weekPerIteration, sentData.weekPerIteration);
             done();
-          });
+          })
+          .catch(err => done(err))
+        ;
       });
 
-      it('should create a sub-item setting in organization (with previewMode enabled)', function (done) {
-        var sentData = require('./../fixtures/setting/update-ok-1');
+      it('should create a sub-item setting in organization (with previewMode enabled)', done => {
+        const sentData = require('./../fixtures/setting/update-ok-1');
         sentData.organizationId = global.organizationId;
         sentData.modePreview = 1;
         agent
@@ -369,17 +356,14 @@ module.exports = function (agent, url) {
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(200)
           .expect('Content-Type', 'application/json; charset=utf-8')
-          .end(function (err, res) {
-            if (err) {
-              return done(err);
-            }
-            var result = res.body;
+          .then(res => {
+            const result = res.body;
             assert.strictEqual(result.code, 200);
             assert.isUndefined(result.error);
             assert.strictEqual(result.messageCode, '10');
             assert.isUndefined(result.organization);
             assert.isDefined(result.setting);
-            var sett = result.setting;
+            const sett = result.setting;
             assert.strictEqual(sett.projectDev.contributorPrice, sentData.contributorPrice);
             assert.strictEqual(sett.projectDev.contributorOccupation, sentData.contributorOccupation);
             assert.strictEqual(sett.projectManagement.scrummasterPrice, sentData.scrummasterPrice);
@@ -395,12 +379,14 @@ module.exports = function (agent, url) {
             assert.strictEqual(sett.iteration.dayPerWeek, sentData.dayPerWeek);
             assert.strictEqual(sett.iteration.weekPerIteration, sentData.weekPerIteration);
             done();
-          });
+          })
+          .catch(err => done(err))
+        ;
       });
 
       it('should get an internal error (update) for create a sub-item setting in organization (mongo fail)',
-        function (done) {
-          var sentData = require('./../fixtures/setting/create-ok-1');
+        done => {
+          const sentData = require('./../fixtures/setting/create-ok-1');
           sentData.organizationId = global.organizationId;
           sentData.itemId = '56961966de7cbad8ba3be467';
           agent
@@ -409,22 +395,21 @@ module.exports = function (agent, url) {
             .send(sentData)
             .expect(404)
             .expect('Content-Type', 'application/json; charset=utf-8')
-            .end(function (err, res) {
-              if (err) {
-                return done(err);
-              }
-              var result = res.body;
+            .then(res => {
+              const result = res.body;
               assert.strictEqual(result.code, 404);
               assert.isUndefined(result.error);
               assert.strictEqual(result.messageCode, '-11');
               done();
-            });
+            })
+            .catch(err => done(err))
+          ;
         })
       ;
 
       it('should get an internal error (update) for create a sub-item setting in organization (mongo fail)',
-        function (done) {
-          var sentData = require('./../fixtures/setting/create-ok-1');
+        done => {
+          const sentData = require('./../fixtures/setting/create-ok-1');
           sentData.organizationId = global.organizationId;
           sentData.itemId = global.projectId;
           agent
@@ -433,11 +418,8 @@ module.exports = function (agent, url) {
             .send(sentData)
             .expect(200)
             .expect('Content-Type', 'application/json; charset=utf-8')
-            .end(function (err, res) {
-              if (err) {
-                return done(err);
-              }
-              var result = res.body;
+            .then(res => {
+              const result = res.body;
               assert.strictEqual(result.code, 200);
               assert.isUndefined(result.error);
               assert.strictEqual(result.messageCode, '10');
@@ -445,7 +427,7 @@ module.exports = function (agent, url) {
               OrganizationModel.findDeepAttributeById(result.organization, global.projectId, function (element) {
                 assert.isDefined(element);
                 assert.isDefined(element.setting);
-                var sett = element.setting;
+                const sett = element.setting;
                 assert.strictEqual(sett.projectDev.contributorPrice, sentData.contributorPrice);
                 assert.strictEqual(sett.projectDev.contributorOccupation, sentData.contributorOccupation);
                 assert.strictEqual(sett.projectManagement.scrummasterPrice, sentData.scrummasterPrice);
@@ -462,126 +444,122 @@ module.exports = function (agent, url) {
                 assert.strictEqual(sett.iteration.weekPerIteration, sentData.weekPerIteration);
               });
               done();
-            });
+            })
+            .catch(err => done(err))
+          ;
         })
       ;
     });
 
-    describe('# [GET] ~sub-item' + url + '/setting/sub', function () {
+    describe('# [GET] ~sub-item' + url + '/setting/sub', () => {
       it('should get an error request (not found because no organizationId given) a sub-item setting',
-        function (done) {
+        done => {
           agent
             .get(url + '/setting/sub')
             .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
             .expect(404)
             .expect('Content-Type', 'application/json; charset=utf-8')
-            .end(function (err, res) {
-              if (err) {
-                return done(err);
-              }
-              var result = res.body;
+            .then(res => {
+              const result = res.body;
               assert.strictEqual(result.code, 404);
               assert.isUndefined(result.error);
               assert.strictEqual(result.messageCode, '-1');
               done();
-            });
+            })
+            .catch(err => done(err))
+          ;
         })
       ;
 
-      it('should get an internal error request (findById) a sub-item setting (mongo fail)', function (done) {
-        helpers.mockModel(mongoose.model('Organization'), 'findById', function (stub) {
+      it('should get an internal error request (findById) a sub-item setting (mongo fail)', done => {
+        helpers.mockModel(mongoose.model('Organization'), 'findById', stub => {
           agent
             .get(url + '/setting/sub?organizationId=' + global.organizationId)
             .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
             .expect(500)
             .expect('Content-Type', 'application/json; charset=utf-8')
-            .end(function (err, res) {
-              if (err) {
-                return done(err);
-              }
-              var result = res.body;
+            .then(res => {
+              const result = res.body;
               assert.strictEqual(result.code, 500);
               assert.isDefined(result.error);
               assert.strictEqual(result.messageCode, '-1');
               stub.restore();
               done();
-            });
+            })
+            .catch(err => done(err))
+          ;
         });
       });
 
-      it('should get an error request (unknown organizationId) a sub-item setting', function (done) {
+      it('should get an error request (unknown organizationId) a sub-item setting', done => {
         agent
           .get(url + '/setting/sub?organizationId=56961966de7cbad8ba3be467')
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(404)
           .expect('Content-Type', 'application/json; charset=utf-8')
-          .end(function (err, res) {
-            if (err) {
-              return done(err);
-            }
-            var result = res.body;
+          .then(res => {
+            const result = res.body;
             assert.strictEqual(result.code, 404);
             assert.isUndefined(result.error);
             assert.strictEqual(result.messageCode, '-5');
             done();
-          });
+          })
+          .catch(err => done(err))
+        ;
       });
 
-      it('should get a sub-item setting for organization', function (done) {
+      it('should get a sub-item setting for organization', done => {
         agent
           .get(url + '/setting/sub?organizationId=' + global.organizationId)
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(200)
           .expect('Content-Type', 'application/json; charset=utf-8')
-          .end(function (err, res) {
-            if (err) {
-              return done(err);
-            }
-            var result = res.body;
+          .then(res => {
+            const result = res.body;
             assert.strictEqual(result.code, 200);
             assert.isUndefined(result.error);
             assert.isUndefined(result.messageCode);
             assert.isDefined(result.setting);
             done();
-          });
+          })
+          .catch(err => done(err))
+        ;
       });
 
-      it('should get a sub-item setting for organization (with lazy)', function (done) {
+      it('should get a sub-item setting for organization (with lazy)', done => {
         agent
           .get(url + '/setting/sub?lazy=1&organizationId=' + global.organizationId)
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(200)
           .expect('Content-Type', 'application/json; charset=utf-8')
-          .end(function (err, res) {
-            if (err) {
-              return done(err);
-            }
-            var result = res.body;
+          .then(res => {
+            const result = res.body;
             assert.strictEqual(result.code, 200);
             assert.isUndefined(result.error);
             assert.isUndefined(result.messageCode);
             assert.isDefined(result.setting);
             done();
-          });
+          })
+          .catch(err => done(err))
+        ;
       });
 
-      it('should get a sub-item setting for item', function (done) {
+      it('should get a sub-item setting for item', done => {
         agent
           .get(url + '/setting/sub?organizationId=' + global.organizationId + '&itemId=' + global.projectId)
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(200)
           .expect('Content-Type', 'application/json; charset=utf-8')
-          .end(function (err, res) {
-            if (err) {
-              return done(err);
-            }
-            var result = res.body;
+          .then(res => {
+            const result = res.body;
             assert.strictEqual(result.code, 200);
             assert.isUndefined(result.error);
             assert.isUndefined(result.messageCode);
             assert.isDefined(result.setting);
             done();
-          });
+          })
+          .catch(err => done(err))
+        ;
       });
     });
   });
