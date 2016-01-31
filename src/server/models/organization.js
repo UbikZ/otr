@@ -1,11 +1,11 @@
 'use strict';
 
-var mongoose = require('mongoose');
-var Project = require('./project').schema;
-var Setting = require('./setting').schema;
-var utilsHelper = require('./helpers/utils');
+const mongoose = require('mongoose');
+const Project = require('./project').schema;
+const Setting = require('./setting').schema;
+const utilsHelper = require('./helpers/utils');
 
-var schema = new mongoose.Schema({
+const schema = new mongoose.Schema({
   name: {type: String, index: {unique: true}, trim: true, require: true},
   description: {type: String, trim: true},
   active: Boolean,
@@ -32,14 +32,14 @@ var schema = new mongoose.Schema({
   setting: Setting,
 });
 
-schema.statics.findDeepAttributeById = function (model, elementId, cb) {
-  utilsHelper.findSpecificRecursivelyById(model, elementId, function (element, parentElement, type) {
+schema.statics.findDeepAttributeById = (model, elementId, cb) => {
+  utilsHelper.findSpecificRecursivelyById(model, elementId, (element, parentElement, type) => {
     cb(element, parentElement, type);
   });
 };
 
-schema.statics.walkRecursively = function (model, cb) {
-  utilsHelper.walkRecursively(model, function (element) {
+schema.statics.walkRecursively = (model, cb) => {
+  utilsHelper.walkRecursively(model, (element) => {
     if (element !== undefined) {
       cb(element);
     }

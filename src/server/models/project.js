@@ -1,10 +1,10 @@
 'use strict';
 
-var mongoose = require('mongoose');
-var Setting = require('./setting').schema;
-var DocumentSchema = require('./document').schema;
+const mongoose = require('mongoose');
+const Setting = require('./setting').schema;
+const DocumentSchema = require('./document').schema;
 
-var Project = new mongoose.Schema();
+const Project = new mongoose.Schema();
 Project.add({
   name: {type: String, trim: true, require: true},
   description: {type: String, trim: true},

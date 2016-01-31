@@ -1,8 +1,8 @@
 'use strict';
 
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-var Entry = new mongoose.Schema();
+const Entry = new mongoose.Schema();
 Entry.add({
   name: {type: String, trim: true, require: true},
   ontimeId: {type: Number, index: true},

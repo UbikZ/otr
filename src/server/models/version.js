@@ -1,10 +1,10 @@
 'use strict';
 
-var mongoose = require('mongoose');
-var Setting = require('./setting').schema;
-var Entry = require('./entry').schema;
+const mongoose = require('mongoose');
+const Setting = require('./setting').schema;
+const Entry = require('./entry').schema;
 
-var Version = new mongoose.Schema();
+const Version = new mongoose.Schema();
 Version.add({
   name: {type: String, trim: true, require: true},
   creation: {

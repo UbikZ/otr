@@ -1,8 +1,9 @@
 'use strict';
 
+// Can't use arrow notation ('this' scope from 'this.filter'...)
 Array.prototype.id = function (elementId) {
-  var result =
-    this.filter(function (obj) {
+  const result =
+    this.filter(obj => {
       /*jshint eqeqeq: false */
       if (obj !== undefined && obj._id == elementId) {
         /*jshint eqeqeq: true */
@@ -14,7 +15,7 @@ Array.prototype.id = function (elementId) {
 };
 
 function walkRecursively(element, cb) {
-  var elements = [];
+  const elements = [];
   if (element !== undefined) {
     if (element.projects !== undefined && element.projects.length > 0) {
       elements.push.apply(elements, element.projects);
@@ -29,7 +30,7 @@ function walkRecursively(element, cb) {
     if (elements.length === 0) {
       return;
     }
-    elements.forEach(function (element) {
+    elements.forEach(element => {
       cb(element);
       walkRecursively(element, cb);
     });
@@ -37,15 +38,15 @@ function walkRecursively(element, cb) {
 }
 
 function findSpecificRecursivelyById(parentElement, elementId, cb) {
-  var type;
+  let type;
   if (parentElement.projects !== undefined) {
-    var element = parentElement.projects.id(elementId);
+    let element = parentElement.projects.id(elementId);
     type = 'project';
     if ((element === undefined || element === null) && parentElement.documents !== undefined) {
       element = parentElement.documents.id(elementId);
       type = 'document';
       if (element === undefined || element === null) {
-        parentElement.documents.forEach(function (document) {
+        parentElement.documents.forEach(document => {
           if (document.versions !== undefined) {
             element = document.versions.id(elementId);
             type = 'version';
@@ -55,7 +56,7 @@ function findSpecificRecursivelyById(parentElement, elementId, cb) {
     }
     if (element === undefined || element === null) {
       if (parentElement.projects !== undefined && parentElement.projects.length > 0) {
-        parentElement.projects.forEach(function (subElement) {
+        parentElement.projects.forEach(subElement => {
           findSpecificRecursivelyById(subElement, elementId, cb, parentElement);
         });
       } else {
