@@ -1,9 +1,17 @@
 'use strict';
 
-var path = require('path');
+const path = require('path');
 
-module.exports.controller = function (app, config) {
-  app.get('/', function (req, res) {
+/**
+ * Index controller: just to point on index.html
+ * @param app
+ * @param config
+ */
+module.exports.controller = (app, config) => {
+  /**
+   * Base url for all the application
+   */
+  app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, config.path.public + '/index.html'));
   });
 };
