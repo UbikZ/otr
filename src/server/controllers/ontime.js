@@ -1,15 +1,24 @@
 'use strict';
 
-var http = require('./helpers/http');
-var ontimeRequester = require('./helpers/ontime');
+const http = require('./helpers/http');
+const ontimeRequester = require('./helpers/ontime');
 
-module.exports.controller = function (app, config) {
+/**
+ * Ontime controller
+ * - Abstraction layer for Ontime Requests
+ * @param app
+ * @param config
+ */
+module.exports.controller = (app, config) => {
 
-  var prefix = '/api/v' + config.api.version + '/ontime';
+  const prefix = '/api/v' + config.api.version + '/ontime';
 
-  app.get(prefix + '/me', http.ensureAuthorized, function (req, res) {
-    http.checkAuthorized(req, res, function () {
-      ontimeRequester.me(req.ontimeToken, function (result) {
+  /**
+   * Get information about logged ontime user
+   */
+  app.get(prefix + '/me', http.ensureAuthorized, (req, res) => { 
+    http.checkAuthorized(req, res, () => { 
+      ontimeRequester.me(req.ontimeToken, result => {
         result = JSON.parse(result);
         if (result.error) {
           /*jshint camelcase: false */
@@ -26,32 +35,38 @@ module.exports.controller = function (app, config) {
     });
   });
 
-  app.get(prefix + '/tree', http.ensureAuthorized, function (req, res) {
-    http.checkAuthorized(req, res, function () {
-      ontimeRequester.tree(req.ontimeToken, req.query.idProject, function (result) {
+  /**
+   * Get elements from projects or release from Ontime Requests
+   * - Project: no idProject
+   * - Release: one idProject
+   */
+  app.get(prefix + '/tree', http.ensureAuthorized, (req, res) => { 
+    http.checkAuthorized(req, res, () => { 
+      ontimeRequester.tree(req.ontimeToken, req.query.idProject, result => {
         result = JSON.parse(result);
         if (result.error) {
           /*jshint camelcase: false */
           http.log(req, 'Ontime Error: ' + result.error_description);
           /*jshint camelcase: true */
           http.response(res, 403, {error: result}, '-3', result.error);
+        } else if (req.query.idProject !== undefined) {
+          http.response(res, 200, {tree: result.data || result});
+        } else if (result.data) {
+          http.response(res, 200, {tree: result.data});
         } else {
-          if (req.query.idProject !== undefined) {
-            http.response(res, 200, {tree: result.data || result});
-          } else if (result.data) {
-            http.response(res, 200, {tree: result.data});
-          } else {
-            http.log(req, 'Ontime Error: issue during OnTime "/tree" request');
-            http.response(res, 500, {}, '-1');
-          }
+          http.log(req, 'Ontime Error: issue during OnTime "/tree" request');
+          http.response(res, 500, {}, '-1');
         }
       });
     });
   });
 
-  app.get(prefix + '/items', http.ensureAuthorized, function (req, res) {
-    http.checkAuthorized(req, res, function () {
-      ontimeRequester.items(req.ontimeToken, req.query.projectId, function (result) {
+  /**
+   * Get features from Ontime Request
+   */
+  app.get(prefix + '/items', http.ensureAuthorized, (req, res) => { 
+    http.checkAuthorized(req, res, () => { 
+      ontimeRequester.items(req.ontimeToken, req.query.projectId, result => {
         result = JSON.parse(result);
         if (result.error) {
           /*jshint camelcase: false */
@@ -67,5 +82,4 @@ module.exports.controller = function (app, config) {
       });
     });
   });
-
 };
