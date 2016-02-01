@@ -1,10 +1,11 @@
 'use strict';
 
-var sinon = require('sinon');
+const sinon = require('sinon');
+const promise = require('bluebird');
 
 // Generic mocks methods
 function invalidOntimeAPIResponse() {
-  var cb;
+  let cb;
   if (typeof (arguments[1]) === 'function') {
     cb = arguments[1];
   } else if (typeof (arguments[2]) === 'function') {
@@ -14,7 +15,7 @@ function invalidOntimeAPIResponse() {
 }
 
 function internalErrorOntimeAPIResponse() {
-  var cb;
+  let cb;
   if (typeof (arguments[1]) === 'function') {
     cb = arguments[1];
   } else if (typeof (arguments[2]) === 'function') {
@@ -39,6 +40,7 @@ function mockModel(model, method, callback, empty) {
     exec: function (cb) {
       cb(empty === true ? null : {error: 'error'});
     },
+    execAsync: () => promise.reject({error: 'error'}),
   }, callback);
 }
 

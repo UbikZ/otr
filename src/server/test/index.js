@@ -1,7 +1,6 @@
 'use strict';
 
 const should = require('chai').should();
-const mongoose = require('mongoose');
 const request = require('supertest-as-promised');
 const config = require('../../../config.json');
 const ApplicationClass = require('../ApplicationTest');
@@ -11,7 +10,7 @@ Application.run();
 
 
 function dropDatabase(done) {
-  mongoose.connection.db.dropDatabase(err => {
+  Application.mongoose.connection.db.dropDatabase(err => {
     if (err) {
       throw err;
     }
