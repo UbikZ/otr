@@ -1,10 +1,10 @@
 'use strict';
 
-const Promise = require('bluebird');
+const promise = require('bluebird');
 const bodyParser = require('body-parser');
 const express = require('express');
 const fs = require('fs');
-const mongoose = Promise.promisifyAll(require('mongoose'));
+const mongoose = promise.promisifyAll(require('mongoose'));
 const morgan = require('morgan');
 
 /**
@@ -19,6 +19,8 @@ class AbstractApplication {
     this.app = express();
     this.port = config.env[process.env.NODE_ENV].port;
     this.config = config;
+    // we need to keep mongoose promised by bluebird
+    this.mongoose = mongoose;
     /*if (!new.target) {
       throw 'Can\'t instantiate Abstract Class';
     }*/
@@ -82,9 +84,9 @@ class AbstractApplication {
   }
 
   _registerDatabasse() {
-    mongoose.connect(this.config.env[process.env.NODE_ENV].mongo.uri);
+    this.mongoose.connect(this.config.env[process.env.NODE_ENV].mongo.uri);
 
-    const database = mongoose.connection;
+    const database = this.mongoose.connection;
     database.on('error', console.error.bind(console, 'Connection error:'));
     database.once('open', () => {
       this.logger.info('Mongo connection is ok');
