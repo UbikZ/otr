@@ -18,6 +18,7 @@ class AbstractApplication {
     config.env.debug = !~['staging', 'production'].indexOf(process.env.NODE_ENV);
     this.app = express();
     this.port = config.env[process.env.NODE_ENV].port;
+    this.apiUrl = '/api/v' + config.api.version;
     this.config = config;
     // we need to keep mongoose promised by bluebird
     this.mongoose = mongoose;
@@ -102,11 +103,7 @@ class AbstractApplication {
   }
 
   _loadControllers() {
-    fs.readdirSync(this.config.path.server.controller).forEach(file => {
-      if (file.substr(-3) === '.js') {
-        require('./controllers/' + file).controller(this.app, this.config);
-      }
-    });
+    require('./controllers/router')(this);
   }
 
   _loadHelpers() {
