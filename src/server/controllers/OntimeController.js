@@ -4,7 +4,6 @@ const AbstractController = require('./AbstractController');
 const Http = require('./helpers/Http');
 const Ontime = require('./helpers/Ontime');
 
-
 /**
  * Ontime controller
  * - Abstraction layer for Ontime Requests
@@ -25,8 +24,8 @@ class OntimeController extends AbstractController {
    * @method  GET
    */
   meAction(request, response) {
-    Http.checkAuthorized(req, res, () => {
-      Ontime.me(req.ontimeToken, result => {
+    Http.checkAuthorized(request, response, () => {
+      Ontime.me(request.ontimeToken, result => {
         result = JSON.parse(result);
         if (result.error) {
           /*jshint camelcase: false */
