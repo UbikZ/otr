@@ -3,7 +3,7 @@
 const assert = require('chai').assert;
 const mongoose = require('mongoose');
 
-const helpers = require('./../helpers');
+const Helper = require('./../Helper');
 //const ontimeRequester = require('../../controllers/helpers/ontime');
 const OrganizationModel = require('../../models/organization');
 
@@ -140,7 +140,7 @@ module.exports = (agent, url) => {
       });*/
 
       it('should get an internal error (mongo fail)', done => {
-        helpers.mockModel(mongoose.model('Organization'), 'update', stub => {
+        Helper.mockModel(mongoose.model('Organization'), 'update', stub => {
           const sentData = require('./../fixtures/item/create-ok-1');
           sentData.organizationId = global.organizationId;
           agent

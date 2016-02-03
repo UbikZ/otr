@@ -3,7 +3,7 @@
 const assert = require('chai').assert;
 const mongoose = require('mongoose');
 
-const helpers = require('./../helpers');
+const Helper = require('./../Helper');
 
 module.exports = (agent, url) => {
   describe('> Organization API', () => {
@@ -11,7 +11,7 @@ module.exports = (agent, url) => {
 
     describe('# [POST] ' + url + '/organization/edit', () => {
       it('should get an internal error on "findById" (mongo fail)', done => {
-        helpers.mockModel(mongoose.model('Organization'), 'findById', stub => {
+        Helper.mockModel(mongoose.model('Organization'), 'findById', stub => {
           agent
             .post(url + '/organization/edit')
             .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
@@ -32,7 +32,7 @@ module.exports = (agent, url) => {
 
       it('should get an internal error on create (mongo fail)', done => {
         const sentData = require('./../fixtures/organization/create');
-        helpers.mockModel(mongoose.model('Organization'), 'update', stub => {
+        Helper.mockModel(mongoose.model('Organization'), 'update', stub => {
           agent
             .post(url + '/organization/edit')
             .send(sentData)
@@ -85,7 +85,7 @@ module.exports = (agent, url) => {
       it('should get an internal error on update (mongo fail)', done => {
         const sentData = require('./../fixtures/organization/update');
         sentData._id = organizationId;
-        helpers.mockModel(mongoose.model('Organization'), 'update', stub => {
+        Helper.mockModel(mongoose.model('Organization'), 'update', stub => {
           agent
             .post(url + '/organization/edit')
             .send(sentData)
@@ -171,7 +171,7 @@ module.exports = (agent, url) => {
 
     describe('# [GET] ' + url + '/organization', () => {
       it('should get an internal error (mongo fail)', done => {
-        helpers.mockModel(mongoose.model('Organization'), 'find', stub => {
+        Helper.mockModel(mongoose.model('Organization'), 'find', stub => {
           agent
             .get(url + '/organization')
             .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
@@ -210,7 +210,7 @@ module.exports = (agent, url) => {
       });
 
       it('should get an error 404 not found (query issue)', done => {
-        helpers.mockModel(mongoose.model('Organization'), 'find', stub => {
+        Helper.mockModel(mongoose.model('Organization'), 'find', stub => {
           agent
             .get(url + '/organization?id=' + organizationId)
             .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
@@ -293,7 +293,7 @@ module.exports = (agent, url) => {
 
     describe('# [DELETE] ' + url + '/organization/delete', () => {
       it('should get an internal error (mongo fail)', done => {
-        helpers.mockModel(mongoose.model('Organization'), 'findByIdAndRemove', stub => {
+        Helper.mockModel(mongoose.model('Organization'), 'findByIdAndRemove', stub => {
           agent
             .post(url + '/organization/delete')
             .send({id: organizationId})

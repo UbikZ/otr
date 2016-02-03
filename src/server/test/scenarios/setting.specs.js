@@ -3,7 +3,7 @@
 const assert = require('chai').assert;
 const mongoose = require('mongoose');
 
-const helpers = require('./../helpers');
+const Helper = require('./../Helper');
 const OrganizationModel = require('../../models/organization');
 
 module.exports = (agent, url) => {
@@ -12,7 +12,7 @@ module.exports = (agent, url) => {
     describe('# [POST] ~standalone' + url + '/setting/update', () => {
       it('should get an internal error (findOne) on create a standalone setting (mongo fail)', done => {
         const sentData = require('./../fixtures/setting/create-ok-1');
-        helpers.mockModel(mongoose.model('Setting'), 'findOne', stub => {
+        Helper.mockModel(mongoose.model('Setting'), 'findOne', stub => {
           agent
             .post(url + '/setting/update')
             .send(sentData)
@@ -34,7 +34,7 @@ module.exports = (agent, url) => {
 
       it('should get an internal error (update) on create a standalone setting (mongo fail)', done => {
         const sentData = require('./../fixtures/setting/create-ok-1');
-        helpers.mockModel(mongoose.model('Setting'), 'update', stub => {
+        Helper.mockModel(mongoose.model('Setting'), 'update', stub => {
           agent
             .post(url + '/setting/update')
             .send(sentData)
@@ -97,7 +97,7 @@ module.exports = (agent, url) => {
       it('should get an internal error (update) on update a standalone setting (mongo fail)', done => {
         const sentData = require('./../fixtures/setting/create-ok-1');
         sentData.id = 42;
-        helpers.mockModel(mongoose.model('Setting'), 'update', stub => {
+        Helper.mockModel(mongoose.model('Setting'), 'update', stub => {
           agent
             .post(url + '/setting/update')
             .send(sentData)
@@ -160,7 +160,7 @@ module.exports = (agent, url) => {
 
     describe('# [GET] ~standalone' + url + '/setting', () => {
       it('should get an internal error (find) for request a standalone setting (mongo fail)', done => {
-        helpers.mockModel(mongoose.model('Setting'), 'find', stub => {
+        Helper.mockModel(mongoose.model('Setting'), 'find', stub => {
           agent
             .get(url + '/setting?id=42')
             .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
@@ -181,7 +181,7 @@ module.exports = (agent, url) => {
 
       it('should get an internal error (find) for request a standalone setting (empty response)',
         done => {
-          helpers.mockModel(mongoose.model('Setting'), 'find', stub => {
+          Helper.mockModel(mongoose.model('Setting'), 'find', stub => {
             agent
               .get(url + '/setting?id=42')
               .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
@@ -241,7 +241,7 @@ module.exports = (agent, url) => {
       ;
 
       it('should get an internal error request (findById) a sub-item setting (mongo fail)', done => {
-        helpers.mockModel(mongoose.model('Organization'), 'findById', stub => {
+        Helper.mockModel(mongoose.model('Organization'), 'findById', stub => {
           agent
             .post(url + '/setting/edit')
             .send({organizationId: global.organizationId})
@@ -283,7 +283,7 @@ module.exports = (agent, url) => {
         done => {
           const sentData = require('./../fixtures/setting/create-ok-1');
           sentData.organizationId = global.organizationId;
-          helpers.mockModel(mongoose.model('Organization'), 'update', stub => {
+          Helper.mockModel(mongoose.model('Organization'), 'update', stub => {
             agent
               .post(url + '/setting/edit')
               .send(sentData)
@@ -472,7 +472,7 @@ module.exports = (agent, url) => {
       ;
 
       it('should get an internal error request (findById) a sub-item setting (mongo fail)', done => {
-        helpers.mockModel(mongoose.model('Organization'), 'findById', stub => {
+        Helper.mockModel(mongoose.model('Organization'), 'findById', stub => {
           agent
             .get(url + '/setting/sub?organizationId=' + global.organizationId)
             .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)

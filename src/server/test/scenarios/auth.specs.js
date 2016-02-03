@@ -3,7 +3,7 @@
 const assert = require('chai').assert;
 const mongoose = require('mongoose');
 
-const helpers = require('./../helpers');
+const Helper = require('./../Helper');
 const OntimeRequester = require('../../controllers/helpers/Ontime');
 
 module.exports = (agent, url) => {
@@ -40,7 +40,7 @@ module.exports = (agent, url) => {
           cb(JSON.stringify(expectedData));
         };
 
-        helpers.mockModel(mongoose.model('User'), 'findOne', stub => {
+        Helper.mockModel(mongoose.model('User'), 'findOne', stub => {
           agent
             .post(url + '/sign-up')
             .send(sentData)
@@ -69,7 +69,7 @@ module.exports = (agent, url) => {
           cb(JSON.stringify(expectedData));
         };
 
-        helpers.mockModel(mongoose.model('User'), 'update', stub => {
+        Helper.mockModel(mongoose.model('User'), 'update', stub => {
           agent
             .post(url + '/sign-up')
             .send(sentData)
@@ -125,7 +125,7 @@ module.exports = (agent, url) => {
 
       it('should get an internal error on sign-up same user the others times (mongo fail)', done => {
         const sentData = {username: 'test_stage', password: 'test_stage'};
-        helpers.mockModel(mongoose.model('User'), 'update', stub => {
+        Helper.mockModel(mongoose.model('User'), 'update', stub => {
           agent
             .post(url + '/sign-up')
             .send(sentData)
@@ -195,7 +195,7 @@ module.exports = (agent, url) => {
       });
 
       it('should get an internal error on request information for logged user (mongo fail)', done => {
-        helpers.mockModel(mongoose.model('User'), 'findOne', stub => {
+        Helper.mockModel(mongoose.model('User'), 'findOne', stub => {
           agent
             .get(url + '/me')
             .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)

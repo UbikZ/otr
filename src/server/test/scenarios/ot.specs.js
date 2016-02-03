@@ -2,14 +2,14 @@
 
 const assert = require('chai').assert;
 
-const helpers = require('./../helpers');
+const Helper = require('./../Helper');
 const ontimeRequester = require('../../controllers/helpers/ontime');
 
 module.exports = (agent, url) => {
   describe('> Ontime API', () => {
     describe('# [POST] Request token generic error', () => {
       it('should get an error for request token', done => {
-        ontimeRequester.requestToken = helpers.invalidOntimeAPIResponse;
+        ontimeRequester.requestToken = Helper.invalidOntimeAPIResponse;
         agent
           .post(url + '/sign-up')
           .send({})
@@ -29,7 +29,7 @@ module.exports = (agent, url) => {
 
     describe('# [GET] ' + url + '/ontime/me', () => {
       it('should get an error with token', done => {
-        ontimeRequester.me = helpers.internalErrorOntimeAPIResponse;
+        ontimeRequester.me = Helper.internalErrorOntimeAPIResponse;
         agent
           .get(url + '/ontime/me')
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
@@ -47,7 +47,7 @@ module.exports = (agent, url) => {
       });
 
       it('should get an internal error', done => {
-        ontimeRequester.me = helpers.invalidOntimeAPIResponse;
+        ontimeRequester.me = Helper.invalidOntimeAPIResponse;
         agent
           .get(url + '/ontime/me')
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
@@ -94,7 +94,7 @@ module.exports = (agent, url) => {
 
     describe('# [GET] ' + url + '/ontime/tree', () => {
       it('should get an error with token', done => {
-        ontimeRequester.tree = helpers.invalidOntimeAPIResponse;
+        ontimeRequester.tree = Helper.invalidOntimeAPIResponse;
         agent
           .get(url + '/ontime/tree')
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
@@ -112,7 +112,7 @@ module.exports = (agent, url) => {
       });
 
       it('should get an error with token', done => {
-        ontimeRequester.tree = helpers.internalErrorOntimeAPIResponse;
+        ontimeRequester.tree = Helper.internalErrorOntimeAPIResponse;
         agent
           .get(url + '/ontime/tree')
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
@@ -159,7 +159,7 @@ module.exports = (agent, url) => {
 
     describe('# [GET] ' + url + '/ontime/items', () => {
       it('should get an error with token', done => {
-        ontimeRequester.items = helpers.invalidOntimeAPIResponse;
+        ontimeRequester.items = Helper.invalidOntimeAPIResponse;
         agent
           .get(url + '/ontime/items')
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
@@ -177,7 +177,7 @@ module.exports = (agent, url) => {
       });
 
       it('should get an error with token', done => {
-        ontimeRequester.items = helpers.internalErrorOntimeAPIResponse;
+        ontimeRequester.items = Helper.internalErrorOntimeAPIResponse;
         agent
           .get(url + '/ontime/items')
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)

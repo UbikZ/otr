@@ -4,7 +4,7 @@ const fs = require('fs');
 const assert = require('chai').assert;
 const mongoose = require('mongoose');
 
-const helpers = require('./../helpers');
+const Helper = require('./../Helper');
 
 module.exports = (agent, url, config) => {
   let tokenBearer, tokenOtBearer;
@@ -78,7 +78,7 @@ module.exports = (agent, url, config) => {
       });
 
       it('returns an internal error (checkAuthorized fail)', done => {
-        helpers.mockModel(mongoose.model('User'), 'findOne', stub => {
+        Helper.mockModel(mongoose.model('User'), 'findOne', stub => {
           agent
             .get(url + '/user')
             .set('Authorization', 'Bearer ' + tokenBearer + ' ' + tokenOtBearer)

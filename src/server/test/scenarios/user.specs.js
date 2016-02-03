@@ -3,13 +3,13 @@
 const assert = require('chai').assert;
 const mongoose = require('mongoose');
 
-const helpers = require('./../helpers');
+const Helper = require('./../Helper');
 
 module.exports = (agent, url) => {
   describe('> User API', () => {
     describe('# [GET] ' + url + '/user', () => {
       it('should get an internal error (mongo fail)', done => {
-        helpers.mockModel(mongoose.model('User'), 'find', stub => {
+        Helper.mockModel(mongoose.model('User'), 'find', stub => {
           agent
             .get(url + '/user')
             .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
@@ -29,7 +29,7 @@ module.exports = (agent, url) => {
       });
 
       it('should get an error (empty response)', done => {
-        helpers.mockModel(mongoose.model('User'), 'find', stub => {
+        Helper.mockModel(mongoose.model('User'), 'find', stub => {
           agent
             .get(url + '/user')
             .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
@@ -71,7 +71,7 @@ module.exports = (agent, url) => {
     describe('# [POST] ' + url + '/user/update', () => {
       it('should get an internal error (findOne) for update current user (mongo fail)', done => {
         const sentData = require('./../fixtures/user/update');
-        helpers.mockModel(mongoose.model('User'), 'findOne', stub => {
+        Helper.mockModel(mongoose.model('User'), 'findOne', stub => {
           agent
             .post(url + '/user/update')
             .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
@@ -93,7 +93,7 @@ module.exports = (agent, url) => {
 
       it('should get an error (empty response) for update current user', done => {
         const sentData = require('./../fixtures/user/update');
-        helpers.mockModel(mongoose.model('User'), 'findOne', stub => {
+        Helper.mockModel(mongoose.model('User'), 'findOne', stub => {
           agent
             .post(url + '/user/update')
             .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
@@ -115,7 +115,7 @@ module.exports = (agent, url) => {
 
       it('should get an internal error (update) for update current user (mongo fail)', done => {
         const sentData = require('./../fixtures/user/update');
-        helpers.mockModel(mongoose.model('User'), 'update', stub => {
+        Helper.mockModel(mongoose.model('User'), 'update', stub => {
           agent
             .post(url + '/user/update')
             .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
