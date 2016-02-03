@@ -4,7 +4,7 @@ const assert = require('chai').assert;
 const mongoose = require('mongoose');
 
 const helpers = require('./../helpers');
-const ontimeRequester = require('../../controllers/helpers/ontime');
+const OntimeRequester = require('../../controllers/helpers/Ontime');
 
 module.exports = (agent, url) => {
   let tokenBearer, tokenOtBearer;
@@ -12,7 +12,7 @@ module.exports = (agent, url) => {
   describe('> Authentication API', () => {
     describe('# [POST] ' + url + '/sign-up', () => {
       it('should get an error on sign-up for bad user data', done => {
-        ontimeRequester.requestToken = (authObject, cb) => {
+        OntimeRequester.requestToken = (authObject, cb) => {
           cb(JSON.stringify({}));
         };
         agent
@@ -33,7 +33,7 @@ module.exports = (agent, url) => {
       it('should get an internal error on sign-up (mongo fail)', done => {
         const sentData = {username: 'test_stage', password: 'test_stage'};
         const expectedData = require('./../fixtures/auth/signup');
-        ontimeRequester.requestToken = (authObject, cb) => {
+        OntimeRequester.requestToken = (authObject, cb) => {
           /*jshint camelcase: false */
           expectedData.access_token += 'delta';
           /*jshint camelcase: true */
@@ -62,7 +62,7 @@ module.exports = (agent, url) => {
       it('should get an internal error on the create (mongo fail)', done => {
         const sentData = {username: 'test_stage', password: 'test_stage'};
         const expectedData = require('./../fixtures/auth/signup');
-        ontimeRequester.requestToken = (authObject, cb) => {
+        OntimeRequester.requestToken = (authObject, cb) => {
           /*jshint camelcase: false */
           expectedData.access_token += 'delta';
           /*jshint camelcase: true */
@@ -91,7 +91,7 @@ module.exports = (agent, url) => {
       it('should sign-up new user the first time', done => {
         const sentData = {username: 'test_stage', password: 'test_stage'};
         const expectedData = require('./../fixtures/auth/signup');
-        ontimeRequester.requestToken = (authObject, cb) => {
+        OntimeRequester.requestToken = (authObject, cb) => {
           /*jshint camelcase: false */
           expectedData.access_token += 'delta';
           /*jshint camelcase: true */

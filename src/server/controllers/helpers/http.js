@@ -1,88 +1,140 @@
 'use strict';
 
-var moment = require('moment');
-var merge = require('merge');
-var User = require('../../models/user');
-var ontimeRequester = require('./ontime');
-var logger = require('../../logger');
+const moment = require('moment');
+const merge = require('merge');
+const Promise = require('bluebird');
 
-function response(res, status, data, message, err) {
-  var dat = merge({
-    date: moment().format('YYYY-MM-DD HH:mm:SS'),
-    code: status,
-    error: err,
-    messageCode: message,
-    data: {},
-  }, data);
+const User = require('../../models/user');
+const OntimeRequester = require('./Ontime');
+const logger = require('../../logger');
 
-  res.status(status).json(dat);
-}
-
-function log(req, message, err) {
-  var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-  logger.debug('*** ' + ip + ' ***');
-  logger.debug('[' + moment().format('YYYY-MM-DD HH:mm:SS') + '] Msg: ' + message);
-  if (err) {
-    logger.debug('[' + moment().format('YYYY-MM-DD HH:mm:SS') + '] Err: ' + err);
+/**
+ * Http helper to handle requests, responses, logging etc.
+ */
+class Http {
+  /**
+   * Global method to send and log a formated/standard json object response
+   * @param request
+   * @param res
+   * @param status
+   * @param data
+   * @param msgCode
+   * @param msgLog
+   * @param err
+   */
+  static sendResponse(request, res, status, data, msgCode, msgLog, err) {
+    if (status !== 200) {
+      Http.log(request, msgLog, err);
+    }
+    Http.response(res, status, data, msgCode, err);
   }
-  logger.debug('******');
-}
 
-function ensureAuthorized(req, res, next) {
-  var bearerToken, bearerOtToken;
-  var bearerHeader = req.headers.authorization || req.query.authorization;
-  if (typeof bearerHeader !== 'undefined') {
-    var bearer = bearerHeader.split(' ');
-    bearerToken = bearer[1];
-    bearerOtToken = bearer[2];
-    req.token = bearerToken;
-    req.ontimeToken = bearerOtToken;
-    next();
-  } else {
-    log(req, 'No bearer header provided');
-    response(res, 403, {}, '-3');
+  /**
+   * Global method to send a formated/standard json object response
+   * @param response
+   * @param status
+   * @param data
+   * @param message
+   * @param err
+   */
+  static response(response, status, data, message, err) {
+    const dat = merge({
+      date: moment().format('YYYY-MM-DD HH:mm:SS'),
+      code: status,
+      error: err,
+      messageCode: message,
+      data: {},
+    }, data);
+
+    response.status(status).json(dat);
   }
-}
 
-function checkAuthorized(req, res, cb) {
-  User.findOne({'identity.token': req.token}).lean().exec(function (err, user) {
+  /**
+   * Global method to log any message from the application
+   * @param request
+   * @param message
+   * @param err
+   */
+  static log(request, message, err) {
+    const ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
+    logger.debug('*** ' + ip + ' ***');
+    logger.debug('[' + moment().format('YYYY-MM-DD HH:mm:SS') + '] Msg: ' + message);
     if (err) {
-      log(req, 'Internal error: check authorization.', err);
-      response(res, 500, {}, '-1', err);
-    } else if (user) {
-      cb(user);
-    } else {
-      log(req, 'Error: token provided is not associated with an account.', err);
-      response(res, 404, {}, '-2');
+      logger.debug('[' + moment().format('YYYY-MM-DD HH:mm:SS') + '] Err: ' + err);
     }
-  });
+    logger.debug('******');
+  }
+
+  /**
+   * Global method to check http headers sent (or get param)
+   * @param request
+   * @param response
+   * @param next
+   */
+  static ensureAuthorized(request, response, next) {
+    let bearerToken, bearerOtToken;
+    const bearerHeader = request.headers.authorization || request.query.authorization;
+    if (typeof bearerHeader !== 'undefined') {
+      const bearer = bearerHeader.split(' ');
+      bearerToken = bearer[1];
+      bearerOtToken = bearer[2];
+      request.token = bearerToken;
+      request.ontimeToken = bearerOtToken;
+      next();
+    } else {
+      Http.sendResponse(request, response, 403, {}, '-3', 'No bearer header provided');
+    }
+  }
+
+  /**
+   * Global method to check authorization to access a method
+   * @param request
+   * @param response
+   * @param callback
+   */
+  static checkAuthorized(request, response, callback) {
+    User.findOne({'identity.token': request.token}).lean().execAsync()
+      .then(user => {
+        if (user) {
+          callback(user);
+        } else {
+          Http.sendResponse(request, response, 404, {}, '-2', 'Error: token provided is not associated with an account.');
+        }
+      })
+      .catch(err => {
+        Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: check authorization.', err);
+      })
+    ;
+  }
+
+  /**
+   * Global method to request a token from OnTime service
+   * @param request
+   * @param response
+   * @param callback
+   */
+  static ontimeRequestToken(request, response, callback) {
+    OntimeRequester.requestToken({username: request.body.username, password: request.body.password}, result => {
+      result = JSON.parse(result);
+      if (result.error) {
+        /*jshint camelcase: false */
+        Http.sendResponse(
+          request, response, 403, {error: result}, '-3', 'Ontime Error: ' + result.error_description, result.error
+        );
+      } else if (result.access_token) {
+        callback(merge(result.data, {accessToken: result.access_token}));
+        /*jshint camelcase: true */
+      } else {
+        Http.sendResponse(
+          request, response, 500, {}, '-1', 'Ontime Error: issue during OnTime "/authenticate" request'
+        );
+      }
+    });
+  }
 }
 
-function ontimeRequestToken(req, res, cb) {
-  ontimeRequester.requestToken({username: req.body.username, password: req.body.password}, function (result) {
-    result = JSON.parse(result);
-    if (result.error) {
-      /*jshint camelcase: false */
-      log(req, 'Ontime Error: ' + result.error_description);
-      /*jshint camelcase: true */
-      response(res, 403, {error: result}, '-3', result.error);
-      /*jshint camelcase: false */
-    } else if (result.access_token) {
-      cb(merge(result.data, {accessToken: result.access_token}));
-      /*jshint camelcase: true */
-    } else {
-      log(req, 'Ontime Error: issue during OnTime "/authenticate" request');
-      response(res, 500, {}, '-1');
-    }
-  });
-}
+module.exports = Http;
 
-module.exports = {
-  response: response,
-  log: log,
-  ensureAuthorized: ensureAuthorized,
-  checkAuthorized: checkAuthorized,
-  ontimeRequestToken: ontimeRequestToken,
-};
+
 
 

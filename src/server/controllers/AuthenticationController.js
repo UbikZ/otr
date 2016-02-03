@@ -1,7 +1,7 @@
 'use strict';
 
 const AbstractController = require('./AbstractController');
-const http = require('./helpers/http');
+const Http = require('./helpers/Http');
 const User = require('../models/user');
 
 /**
@@ -17,7 +17,7 @@ class AuthenticationController extends AbstractController {
    * @method  POST
    */
   signUpAction(request, response) {
-    http.ontimeRequestToken(request, response, userData => {
+    Http.ontimeRequestToken(request, response, userData => {
       let userModel = {};
       User.findOne({'info.email': userData.email}).lean().execAsync()
         .then(user => {
@@ -40,10 +40,10 @@ class AuthenticationController extends AbstractController {
           return User.update({_id: userModel._id}, userModel, options).lean().execAsync();
         })
         .then(() => {
-          AbstractController.sendResponse(request, response, 200, {user: userModel}, '1');
+          Http.sendResponse(request, response, 200, {user: userModel}, '1');
         })
         .catch(err => {
-          AbstractController.sendResponse(request, response, 500, {}, '-1', 'Internal error: check /sign-up.', err);
+          Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: check /sign-up.', err);
         })
       ;
     });
@@ -59,13 +59,13 @@ class AuthenticationController extends AbstractController {
     User.findOne({'identity.token': request.token}).lean().execAsync()
       .then(user => {
         if (user) {
-          AbstractController.sendResponse(request, response, 200, {user: user});
+          Http.sendResponse(request, response, 200, {user: user});
         } else {
-          AbstractController.sendResponse(request, response, 404, {}, '-3', 'Error: token (' + request.token + ') not found.');
+          Http.sendResponse(request, response, 404, {}, '-3', 'Error: token (' + request.token + ') not found.');
         }
       })
       .catch(err => {
-        AbstractController.sendResponse(request, response, 500, {}, '-1', 'Internal error: check /me', err);
+        Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: check /me', err);
       })
     ;
   }

@@ -16,6 +16,7 @@ module.exports = (Application) => {
   const IndexController = new IndexControllerClass(config);
   const AuthenticationController = new AuthenticationControllerClass(config);
 
+  // Bindings
   app.get(apiUrl + '/', IndexController.indexAction);
   app.post(apiUrl + '/sign-up', AuthenticationController.signUpAction);
   app.get(apiUrl + '/me', AuthenticationController.meAction);
