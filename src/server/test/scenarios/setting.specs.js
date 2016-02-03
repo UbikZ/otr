@@ -6,6 +6,11 @@ const mongoose = require('mongoose');
 const Helper = require('./../Helper');
 const OrganizationModel = require('../../models/organization');
 
+/**
+ * Setting Scenario
+ * @param agent
+ * @param url
+ */
 module.exports = (agent, url) => {
   describe('> Setting API', () => {
     let settingStandaloneId;

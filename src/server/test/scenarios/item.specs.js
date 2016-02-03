@@ -7,6 +7,11 @@ const Helper = require('./../Helper');
 //const ontimeRequester = require('../../controllers/helpers/ontime');
 const OrganizationModel = require('../../models/organization');
 
+/**
+ * Items Scenario
+ * @param agent
+ * @param url
+ */
 module.exports = (agent, url) => {
   describe('> Item API', () => {
     let documentId/*, versionId, versionOtherId*/;

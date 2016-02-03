@@ -5,6 +5,11 @@ const mongoose = require('mongoose');
 
 const Helper = require('./../Helper');
 
+/**
+ * Organization Scenario
+ * @param agent
+ * @param url
+ */
 module.exports = (agent, url) => {
   describe('> Organization API', () => {
     let organizationId;

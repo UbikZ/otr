@@ -5,6 +5,11 @@ const assert = require('chai').assert;
 const Helper = require('./../Helper');
 const ontimeRequester = require('../../controllers/helpers/ontime');
 
+/**
+ * OnTime Scenario
+ * @param agent
+ * @param url
+ */
 module.exports = (agent, url) => {
   describe('> Ontime API', () => {
     describe('# [POST] Request token generic error', () => {

@@ -6,6 +6,11 @@ const mongoose = require('mongoose');
 const Helper = require('./../Helper');
 const OntimeRequester = require('../../controllers/helpers/Ontime');
 
+/**
+ * Authentication Scenario
+ * @param agent
+ * @param url
+ */
 module.exports = (agent, url) => {
   let tokenBearer, tokenOtBearer;
 

@@ -9,6 +9,10 @@ let Application = new ApplicationClass(config);
 Application.run();
 
 
+/**
+ * Function which drop database to prepare  tests
+ * @param done
+ */
 function dropDatabase(done) {
   Application.mongoose.connection.db.dropDatabase(err => {
     if (err) {

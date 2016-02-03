@@ -6,6 +6,12 @@ const mongoose = require('mongoose');
 
 const Helper = require('./../Helper');
 
+/**
+ * Initiate Scenario
+ * @param agent
+ * @param url
+ * @param config
+ */
 module.exports = (agent, url, config) => {
   let tokenBearer, tokenOtBearer;
 
