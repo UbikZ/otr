@@ -1,8 +1,11 @@
 'use strict';
 
+const jwt = require('jsonwebtoken');
+
 const AbstractController = require('./AbstractController');
 const Http = require('./helpers/Http');
 const User = require('../models/user');
+const otrConf = require('../config/ontime');
 
 /**
  * Authentication controller
