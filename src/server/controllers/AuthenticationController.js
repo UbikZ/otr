@@ -63,7 +63,6 @@ class AuthenticationController extends AbstractController {
   meAction(request, response) {
     User.findOne({'identity.token': request.token}).lean().execAsync()
       .then(user => {
-        console.error(user);
         if (!user) {
           throw new EmptyUserError();
         }

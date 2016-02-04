@@ -7,3 +7,5 @@
 class EmptyUserError extends Error {
 }
 /*jshint unused: false */
+
+module.exports = EmptyUserError;
