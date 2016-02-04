@@ -28,7 +28,7 @@ module.exports = (Application) => {
 
   /* Authentication */
   app.post(apiUrl + '/sign-up', AuthenticationController.signUpAction);
-  app.get(apiUrl + '/me', AuthenticationController.meAction);
+  app.get(apiUrl + '/me', Http.ensureAuthorized, AuthenticationController.meAction);
 
   /* User */
   app.get(apiUrl + '/user', Http.ensureAuthorized, UserController.indexAction);

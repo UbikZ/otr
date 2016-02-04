@@ -55,7 +55,7 @@ class Helper {
       exec: function (cb) {
         cb(empty === true ? null : {error: 'error'});
       },
-      execAsync: () => promise.reject({error: 'error'}),
+      execAsync: () => promise.reject(new Error({error: 'error'})),
     }, callback);
   }
 }

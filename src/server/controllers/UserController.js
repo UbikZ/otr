@@ -3,6 +3,7 @@
 const AbstractController = require('./AbstractController');
 const Http = require('./helpers/Http');
 const Ontime = require('./helpers/Ontime');
+const User = require('../models/user');
 
 const EmptyUserError = require('./../Errors/EmptyUserError');
 
@@ -53,7 +54,7 @@ class UserController extends AbstractController {
     const data = request.body;
     User.findOne({'identity.token': request.token}).lean().execAsync()
       .then(user => {
-        if (user._id === undefined) {
+        if (!user) {
           throw new EmptyUserError({});
         }
         if (data.firstname) {
@@ -74,12 +75,12 @@ class UserController extends AbstractController {
         return User.update({_id: user._id}, user, {}).lean().execAsync();
       })
       .then(user => {
-        if (user._id === undefined) {
-          throw new EmptyUserError({});
+        if (!user) {
+          throw new EmptyUserError();
         }
         Http.sendResponse(request, response, 200, {user: user}, '11');
       })
-      .catch(EmptyUserError, err => {
+      .catch(EmptyUserError, () => {
         Http.sendResponse(request, response, 404, {}, '-12');
       })
       .catch(err => {

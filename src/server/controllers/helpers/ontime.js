@@ -1,7 +1,6 @@
 'use strict';
 
 const request = require('request-promise');
-const Promise = require('bluebird');
 const qs = require('querystring');
 
 const ontimeConfig = require('../../config/ontime.json');
@@ -23,7 +22,7 @@ class Ontime {
         if (response.statusCode !== 200) {
           throw new Error({});
         }
-        callback(body);
+        callback(response.body);
       })
       .catch(err => {
         logger.error('Error while requesting (' + url + ').');

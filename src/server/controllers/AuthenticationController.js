@@ -7,6 +7,8 @@ const Http = require('./helpers/Http');
 const User = require('../models/user');
 const otrConf = require('../config/ontime');
 
+const EmptyUserError = require('../errors/EmptyUserError');
+
 /**
  * Authentication controller
  */
@@ -61,11 +63,14 @@ class AuthenticationController extends AbstractController {
   meAction(request, response) {
     User.findOne({'identity.token': request.token}).lean().execAsync()
       .then(user => {
-        if (user) {
-          Http.sendResponse(request, response, 200, {user: user});
-        } else {
-          Http.sendResponse(request, response, 404, {}, '-3', 'Error: token (' + request.token + ') not found.');
+        console.error(user);
+        if (!user) {
+          throw new EmptyUserError();
         }
+        Http.sendResponse(request, response, 200, {user: user});
+      })
+      .catch(EmptyUserError, () => {
+        Http.sendResponse(request, response, 404, {}, '-3', 'Error: token (' + request.token + ') not found.');
       })
       .catch(err => {
         Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: check /me', err);

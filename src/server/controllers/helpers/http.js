@@ -2,11 +2,12 @@
 
 const moment = require('moment');
 const merge = require('merge');
-const Promise = require('bluebird');
 
 const User = require('../../models/user');
 const OntimeRequester = require('./Ontime');
 const logger = require('../../logger');
+
+const EmptyUserError = require('../../errors/EmptyUserError');
 
 /**
  * Http helper to handle requests, responses, logging etc.
@@ -95,11 +96,13 @@ class Http {
   static checkAuthorized(request, response, callback) {
     User.findOne({'identity.token': request.token}).lean().execAsync()
       .then(user => {
-        if (user) {
-          callback(user);
-        } else {
-          Http.sendResponse(request, response, 404, {}, '-2', 'Error: token provided is not associated with an account.');
+        if (!user) {
+          throw new EmptyUserError();
         }
+        callback(user);
+      })
+      .catch(EmptyUserError, () => {
+        Http.sendResponse(request, response, 404, {}, '-2', 'Error: token provided is not associated with an account.');
       })
       .catch(err => {
         Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: check authorization.', err);
