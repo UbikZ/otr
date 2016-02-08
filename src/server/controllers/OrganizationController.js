@@ -91,8 +91,9 @@ class OrganizationController extends AbstractController {
    * Edit one organizaiton
    * - create
    * - update (if not found: "upsert")
-   * @param request
-   * @param response
+   * @param   request
+   * @param   response
+   * @method  POST
    */
   editAction(request, response) {
     const data = request.body;
