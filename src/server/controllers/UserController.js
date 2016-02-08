@@ -47,33 +47,32 @@ class UserController extends AbstractController {
    */
   updateAction(request, response) {
     const data = request.body;
+    let userModel = {};
     User.findOne({'identity.token': request.token}).lean().execAsync()
       .then(user => {
+        userModel = user;
         if (!user) {
           throw new EmptyUserError({});
         }
         if (data.firstname) {
-          user.name.firstname = data.firstname;
+          userModel.name.firstname = data.firstname;
         }
         if (data.lastname) {
-          user.name.lastname = data.lastname;
+          userModel.name.lastname = data.lastname;
         }
         if (data.skype) {
-          user.info.skype = data.skype;
+          userModel.info.skype = data.skype;
         }
         if (data.location) {
-          user.info.location = data.location;
+          userModel.info.location = data.location;
         }
         if (data.job) {
-          user.info.job = data.job;
+          userModel.info.job = data.job;
         }
-        return User.update({_id: user._id}, user, {}).lean().execAsync();
+        return User.update({_id: userModel._id}, userModel, {}).lean().execAsync();
       })
-      .then(user => {
-        if (!user) {
-          throw new EmptyUserError();
-        }
-        Http.sendResponse(request, response, 200, {user: user}, '11');
+      .then(() => {
+        Http.sendResponse(request, response, 200, {user: userModel}, '11');
       })
       .catch(EmptyUserError, () => {
         Http.sendResponse(request, response, 404, {}, '-12');
