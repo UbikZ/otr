@@ -6,6 +6,7 @@ const logger = require('../logger');
 const IndexControllerClass = require('./IndexController');
 const AuthenticationControllerClass = require('./AuthenticationController');
 const UserControllerClass = require('./UserController');
+const OrganizationControllerClass = require('./OrganizationController');
 
 const methods = {GET: 'GET', POST: 'POST'};
 
@@ -18,6 +19,7 @@ module.exports = (Application) => {
   const app = Application.app;
 
   const routes = [
+    /* Index */
     {
       url: IndexControllerClass.patternUrl,
       method: methods.GET,
@@ -26,6 +28,7 @@ module.exports = (Application) => {
       action: 'indexAction',
       checkSecurity: false,
     },
+    /* Authentication */
     {
       url: AuthenticationControllerClass.patternUrl + '/sign-up',
       method: methods.POST,
@@ -42,6 +45,7 @@ module.exports = (Application) => {
       action: 'meAction',
       checkSecurity: true,
     },
+    /* User */
     {
       url: UserControllerClass.patternUrl,
       method: methods.GET,
@@ -56,6 +60,15 @@ module.exports = (Application) => {
       instance: new UserControllerClass(config),
       name: 'UserController',
       action: 'updateAction',
+      checkSecurity: true,
+    },
+    /* Organization */
+    {
+      url: OrganizationControllerClass.patternUrl,
+      method: methods.GET,
+      instance: new OrganizationControllerClass(config),
+      name: 'OrganizationController',
+      action: 'indexAction',
       checkSecurity: true,
     },
   ];
