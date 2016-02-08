@@ -8,6 +8,7 @@ const AuthenticationControllerClass = require('./AuthenticationController');
 const UserControllerClass = require('./UserController');
 const OrganizationControllerClass = require('./OrganizationController');
 const OnTimeControllerClass = require('./OnTimeController');
+const ItemControllerClass = require('./ItemController');
 
 const methods = {GET: 'GET', POST: 'POST'};
 
@@ -122,6 +123,20 @@ module.exports = (Application) => {
           method: methods.GET,
           pattern: OnTimeControllerClass.patterns.actions.items,
           name: 'itemsAction',
+          checkSecurity: true,
+        },
+      ],
+    },
+    /* Item */
+    {
+      url: ItemControllerClass.patterns.controller,
+      instance: new ItemControllerClass(config),
+      name: 'ItemController',
+      subRoutes: [
+        {
+          method: methods.GET,
+          pattern: ItemControllerClass.patterns.actions.index,
+          name: 'indexAction',
           checkSecurity: true,
         },
       ],
