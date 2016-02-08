@@ -10,7 +10,7 @@ const Ontime = require('./helpers/Ontime');
  * - treeAction
  * - itemsAction
  */
-class OntimeController extends AbstractController {
+class OnTimeController extends AbstractController {
   /**
    * Scope routes patterns
    * @returns {{controller: string, actions: {me: string, tree: string, items: string}}}
@@ -97,21 +97,13 @@ class OntimeController extends AbstractController {
           );
           /*jshint camelcase: true */
         } else if (result.data) {
-          Http.sendResponse(request, response, 200, {tree: result.data});
+          Http.sendResponse(request, response, 200, {items: result.data});
         } else {
           Http.sendResponse(request, response, 500, {}, '-1', 'Ontime Error: issue during OnTime "/items" request');
         }
       });
     });
   }
-
-  /**
-   * Controller Name
-   * @returns {string}
-   */
-  static get patternUrl() {
-    return 'ontime';
-  }
 }
 
-module.exports = OntimeController;
+module.exports = OnTimeController;

@@ -3,7 +3,7 @@
 const assert = require('chai').assert;
 
 const Helper = require('./../Helper');
-const ontimeRequester = require('../../controllers/helpers/ontime');
+const Ontime = require('../../controllers/helpers/Ontime');
 
 /**
  * OnTime Scenario
@@ -11,12 +11,16 @@ const ontimeRequester = require('../../controllers/helpers/ontime');
  * @param url
  */
 module.exports = (agent, url) => {
+  const apiUrl = url;
+
+  url += '/on-time';
+
   describe('> Ontime API', () => {
     describe('# [POST] Request token generic error', () => {
       it('should get an error for request token', done => {
-        ontimeRequester.requestToken = Helper.invalidOntimeAPIResponse;
+        Ontime.requestToken = Helper.invalidOntimeAPIResponse;
         agent
-          .post(url + '/sign-up')
+          .post(apiUrl + '/authentication/sign-up')
           .send({})
           .expect(403)
           .expect('Content-Type', 'application/json; charset=utf-8')
@@ -32,11 +36,11 @@ module.exports = (agent, url) => {
       });
     });
 
-    describe('# [GET] ' + url + '/ontime/me', () => {
+    describe('# [GET] ' + url + '/me', () => {
       it('should get an error with token', done => {
-        ontimeRequester.me = Helper.internalErrorOntimeAPIResponse;
+        Ontime.me = Helper.internalErrorOntimeAPIResponse;
         agent
-          .get(url + '/ontime/me')
+          .get(url + '/me')
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(500)
           .expect('Content-Type', 'application/json; charset=utf-8')
@@ -52,9 +56,9 @@ module.exports = (agent, url) => {
       });
 
       it('should get an internal error', done => {
-        ontimeRequester.me = Helper.invalidOntimeAPIResponse;
+        Ontime.me = Helper.invalidOntimeAPIResponse;
         agent
-          .get(url + '/ontime/me')
+          .get(url + '/me')
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(403)
           .expect('Content-Type', 'application/json; charset=utf-8')
@@ -71,11 +75,11 @@ module.exports = (agent, url) => {
 
       it('should get ontime user information', done => {
         const expectedData = require('./../fixtures/ontime/me');
-        ontimeRequester.me = (token, cb) => {
+        Ontime.me = (token, cb) => {
           cb(JSON.stringify(expectedData));
         };
         agent
-          .get(url + '/ontime/me')
+          .get(url + '/me')
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(200)
           .expect('Content-Type', 'application/json; charset=utf-8')
@@ -97,11 +101,11 @@ module.exports = (agent, url) => {
       });
     });
 
-    describe('# [GET] ' + url + '/ontime/tree', () => {
+    describe('# [GET] ' + url + '/tree', () => {
       it('should get an error with token', done => {
-        ontimeRequester.tree = Helper.invalidOntimeAPIResponse;
+        Ontime.tree = Helper.invalidOntimeAPIResponse;
         agent
-          .get(url + '/ontime/tree')
+          .get(url + '/tree')
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(403)
           .expect('Content-Type', 'application/json; charset=utf-8')
@@ -117,9 +121,9 @@ module.exports = (agent, url) => {
       });
 
       it('should get an error with token', done => {
-        ontimeRequester.tree = Helper.internalErrorOntimeAPIResponse;
+        Ontime.tree = Helper.internalErrorOntimeAPIResponse;
         agent
-          .get(url + '/ontime/tree')
+          .get(url + '/tree')
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(500)
           .expect('Content-Type', 'application/json; charset=utf-8')
@@ -136,11 +140,11 @@ module.exports = (agent, url) => {
 
       it('should get ontime tree items', done => {
         const expectedData = require('./../fixtures/ontime/tree');
-        ontimeRequester.tree = (token, id, cb) => {
+        Ontime.tree = (token, id, cb) => {
           cb(JSON.stringify(expectedData));
         };
         agent
-          .get(url + '/ontime/tree')
+          .get(url + '/tree')
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(200)
           .expect('Content-Type', 'application/json; charset=utf-8')
@@ -162,11 +166,11 @@ module.exports = (agent, url) => {
       });
     });
 
-    describe('# [GET] ' + url + '/ontime/items', () => {
+    describe('# [GET] ' + url + '/items', () => {
       it('should get an error with token', done => {
-        ontimeRequester.items = Helper.invalidOntimeAPIResponse;
+        Ontime.items = Helper.invalidOntimeAPIResponse;
         agent
-          .get(url + '/ontime/items')
+          .get(url + '/items')
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(403)
           .expect('Content-Type', 'application/json; charset=utf-8')
@@ -182,9 +186,9 @@ module.exports = (agent, url) => {
       });
 
       it('should get an error with token', done => {
-        ontimeRequester.items = Helper.internalErrorOntimeAPIResponse;
+        Ontime.items = Helper.internalErrorOntimeAPIResponse;
         agent
-          .get(url + '/ontime/items')
+          .get(url + '/items')
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(500)
           .expect('Content-Type', 'application/json; charset=utf-8')
@@ -201,11 +205,11 @@ module.exports = (agent, url) => {
 
       it('should get ontime tree items', done => {
         const expectedData = require('./../fixtures/ontime/items');
-        ontimeRequester.items = (token, projectId, cb) => {
+        Ontime.items = (token, projectId, cb) => {
           cb(JSON.stringify(expectedData));
         };
         agent
-          .get(url + '/ontime/items')
+          .get(url + '/items')
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(200)
           .expect('Content-Type', 'application/json; charset=utf-8')

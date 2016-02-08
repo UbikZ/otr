@@ -7,6 +7,7 @@ const IndexControllerClass = require('./IndexController');
 const AuthenticationControllerClass = require('./AuthenticationController');
 const UserControllerClass = require('./UserController');
 const OrganizationControllerClass = require('./OrganizationController');
+const OnTimeControllerClass = require('./OnTimeController');
 
 const methods = {GET: 'GET', POST: 'POST'};
 
@@ -97,6 +98,32 @@ module.exports = (Application) => {
           name: 'deleteAction',
           checkSecurity: true,
         }
+      ],
+    },
+    /* OnTime */
+    {
+      url: OnTimeControllerClass.patterns.controller,
+      instance: new OnTimeControllerClass(config),
+      name: 'OnTimeController',
+      subRoutes: [
+        {
+          method: methods.GET,
+          pattern: OnTimeControllerClass.patterns.actions.me,
+          name: 'meAction',
+          checkSecurity: true,
+        },
+        {
+          method: methods.GET,
+          pattern: OnTimeControllerClass.patterns.actions.tree,
+          name: 'treeAction',
+          checkSecurity: true,
+        },
+        {
+          method: methods.GET,
+          pattern: OnTimeControllerClass.patterns.actions.items,
+          name: 'itemsAction',
+          checkSecurity: true,
+        },
       ],
     },
   ];

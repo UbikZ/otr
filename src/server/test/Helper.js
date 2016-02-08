@@ -11,13 +11,13 @@ class Helper {
    *  Simulate invalid response from Ontime API
    */
   static invalidOntimeAPIResponse() {
-    let cb;
+    let callback;
     if (typeof (arguments[1]) === 'function') {
-      cb = arguments[1];
+      callback = arguments[1];
     } else if (typeof (arguments[2]) === 'function') {
-      cb = arguments[2];
+      callback = arguments[2];
     }
-    cb(JSON.stringify(require('./fixtures/ontime/ko')));
+    callback(JSON.stringify(require('./fixtures/ontime/ko')));
   }
 
   /**
