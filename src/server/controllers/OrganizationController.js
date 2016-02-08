@@ -110,6 +110,7 @@ class OrganizationController extends AbstractController {
           isNew = !organization;
           orgModel = organization || new Organization();
 
+          orgModel.name = data.name || orgModel.name;
           orgModel.description = data.description || orgModel.description;
           orgModel.active = data.active !== undefined ? data.active : orgModel.active;
           orgModel.logo = data.logo || orgModel.logo;
