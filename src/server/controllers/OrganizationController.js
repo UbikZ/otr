@@ -115,7 +115,7 @@ class OrganizationController extends AbstractController {
           orgModel.active = data.active !== undefined ? data.active : orgModel.active;
           orgModel.logo = data.logo || orgModel.logo;
           orgModel.url = data.url || orgModel.url;
-          orgModel.creation = orgModel.creation || {user: user._id, date: new Date()};
+          orgModel.creation = {user: user._id, date: new Date()};
           orgModel.update = {user: user._id, date: new Date()};
 
           return Organization.update({_id: orgModel._id}, orgModel, {upsert: true}).lean().execAsync();
