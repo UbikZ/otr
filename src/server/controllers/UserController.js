@@ -1,24 +1,20 @@
 'use strict';
 
+const promise = require('bluebird');
+
 const AbstractController = require('./AbstractController');
 const Http = require('./helpers/Http');
 const Ontime = require('./helpers/Ontime');
 const User = require('../models/user');
 
-const EmptyUserError = require('./../Errors/EmptyUserError');
+const EmptyUserError = require('./../errors/EmptyUserError');
 
 /**
- *
+ *  User Controller
+ *  - indexAction
+ *  - updateAction
  */
 class UserController extends AbstractController {
-  /**
-   * @param config
-   */
-  constructor(config) {
-    super(config);
-    this.apiCtrlName = '/user';
-  }
-
   /**
    * Get information about logged ontime user
    * @param   request
@@ -27,20 +23,19 @@ class UserController extends AbstractController {
    */
   indexAction(request, response) {
     Http.checkAuthorized(request, response, () => {
-      Ontime.me(request.ontimeToken, result => {
-        result = JSON.parse(result);
-        if (result.error) {
-          /*jshint camelcase: false */
-          Http.sendResponse(
-            request, response, 403, {error: result}, '-3', 'Ontime Error: ' + result.error_description, result.error
-          );
-          /*jshint camelcase: true */
-        } else if (result.data) {
-          Http.sendResponse(request, response, 200, {ontimeUser: result.data});
-        } else {
-          Http.sendResponse(request, response, 500, {}, '-1', 'Ontime Error: issue during OnTime "/me" request');
-        }
-      });
+      User.find({}).lean().execAsync()
+        .then(users => {
+          if (!users) {
+            throw new EmptyUserError();
+          }
+          Http.sendResponse(request, response, 200, {users: users});
+        })
+        .catch(EmptyUserError, () => {
+          Http.sendResponse(request, response, 404, {}, '-12', 'Error: users is undefined (criteria = ' + {} + ').');
+        })
+        .catch(err => {
+          Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: get users', err);
+        });
     });
   }
 
@@ -87,6 +82,14 @@ class UserController extends AbstractController {
         Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: update user', err);
       })
     ;
+  }
+
+  /**
+   * Controller Name
+   * @returns {string}
+   */
+  static get patternUrl() {
+    return '/user';
   }
 }
 

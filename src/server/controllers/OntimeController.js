@@ -5,18 +5,12 @@ const Http = require('./helpers/Http');
 const Ontime = require('./helpers/Ontime');
 
 /**
- * Ontime controller
- * - Abstraction layer for Ontime Requests
+ * Ontime controller (abstraction layer for Ontime Requests)
+ * - meAction
+ * - treeAction
+ * - itemsAction
  */
 class OntimeController extends AbstractController {
-  /**
-   * @param config
-   */
-  constructor(config) {
-    super(config);
-    this.apiCtrlName = '/ontime';
-  }
-
   /**
    * Get information about logged ontime user
    * @param   request
@@ -94,6 +88,14 @@ class OntimeController extends AbstractController {
         }
       });
     });
+  }
+
+  /**
+   * Controller Name
+   * @returns {string}
+   */
+  static get patternUrl() {
+    return 'ontime';
   }
 }
 

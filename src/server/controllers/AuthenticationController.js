@@ -11,6 +11,8 @@ const EmptyUserError = require('../errors/EmptyUserError');
 
 /**
  * Authentication controller
+ * - signUpAction
+ * - meAction
  */
 class AuthenticationController extends AbstractController {
   /**
@@ -75,6 +77,14 @@ class AuthenticationController extends AbstractController {
         Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: check /me', err);
       })
     ;
+  }
+
+  /**
+   * Controller Name
+   * @returns {string}
+   */
+  static get patternUrl() {
+    return '/auth';
   }
 }
 
