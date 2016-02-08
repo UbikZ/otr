@@ -95,7 +95,7 @@ class OrganizationController extends AbstractController {
    * @param response
    */
   editAction(request, response) {
-    const data = req.body;
+    const data = request.body;
     let fields = {}, orgModel = {}, isNew = false;
 
     /*jshint eqeqeq: false */
@@ -104,7 +104,7 @@ class OrganizationController extends AbstractController {
       fields = {name: 1, description: 1, active: 1, url: 1, logo: 1, creation: 1};
     }
 
-    http.checkAuthorized(req, res, user => {
+    Http.checkAuthorized(request, response, user => {
       Organization.findById(data._id, fields).lean().populate('creation.user').execAsync()
         .then(organization => {
           isNew = !organization;
