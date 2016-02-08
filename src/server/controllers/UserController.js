@@ -16,6 +16,20 @@ const EmptyUserError = require('./../errors/EmptyUserError');
  */
 class UserController extends AbstractController {
   /**
+   * Scope routes patterns
+   * @returns {{controller: string, actions: {index: string, update: string}}}
+   */
+  static get patterns() {
+    return {
+      controller: '/user',
+      actions: {
+        index: '/',
+        update: '/update',
+      }
+    };
+  }
+
+  /**
    * Get information about logged ontime user
    * @param   request
    * @param   response
@@ -48,6 +62,7 @@ class UserController extends AbstractController {
   updateAction(request, response) {
     const data = request.body;
     let userModel = {};
+
     User.findOne({'identity.token': request.token}).lean().execAsync()
       .then(user => {
         userModel = user;
@@ -81,14 +96,6 @@ class UserController extends AbstractController {
         Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: update user', err);
       })
     ;
-  }
-
-  /**
-   * Controller Name
-   * @returns {string}
-   */
-  static get patternUrl() {
-    return '/user';
   }
 }
 

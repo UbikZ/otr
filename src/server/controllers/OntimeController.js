@@ -12,6 +12,21 @@ const Ontime = require('./helpers/Ontime');
  */
 class OntimeController extends AbstractController {
   /**
+   * Scope routes patterns
+   * @returns {{controller: string, actions: {me: string, tree: string, items: string}}}
+   */
+  static get patterns() {
+    return {
+      controller: '/on-time',
+      actions: {
+        me: '/me',
+        tree: '/tree',
+        items: '/items',
+      }
+    };
+  }
+
+  /**
    * Get information about logged ontime user
    * @param   request
    * @param   response

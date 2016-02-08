@@ -15,6 +15,21 @@ const EmptyUserError = require('../errors/EmptyUserError');
  * - meAction
  */
 class AuthenticationController extends AbstractController {
+
+  /**
+   * Scoped routes patterns
+   * @returns {{controller: string, actions: {index: string, me: string}}}
+   */
+  static get patterns() {
+    return {
+      controller: '/authentication',
+      actions: {
+        signUp: '/sign-up',
+        me: '/me',
+      }
+    };
+  }
+
   /**
    * Register or connect a user
    * - Get new Ontime token (for each sign-up)
@@ -77,14 +92,6 @@ class AuthenticationController extends AbstractController {
         Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: check /me', err);
       })
     ;
-  }
-
-  /**
-   * Controller Name
-   * @returns {string}
-   */
-  static get patternUrl() {
-    return '/auth';
   }
 }
 

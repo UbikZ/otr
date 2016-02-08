@@ -17,11 +17,11 @@ class AbstractController {
   }
 
   /**
-   * Controller Name
-   * @returns {string}
+   * Scoped routes patterns
+   * @returns {{controller: string, actions: {}}}
    */
-  static get patternUrl() {
-    return '/';
+  static get patterns() {
+    return {controller: '/', actions: {}};
   }
 }
 

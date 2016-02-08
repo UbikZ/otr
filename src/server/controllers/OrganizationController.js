@@ -1,31 +1,50 @@
 'use strict';
 
 const promise = require('bluebird');
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
 const AbstractController = require('./AbstractController');
 const Http = require('./helpers/Http');
 const Ontime = require('./helpers/Ontime');
 const User = require('../models/user');
-var Organization = require('../models/organization');
+const Organization = require('../models/organization');
 
 const EmptyOrganizationError = require('./../errors/EmptyOrganizationError');
 
 /**
  * Organization Controller
  * - indexAction
+ * - editAction
+ * - deleteAction
  */
 class OrganizationController extends AbstractController {
+  /**
+   * Scoped routes patterns
+   * @returns {{controller: string, actions: {index: string, edit: string, delete: string}}}
+   */
+  static get patterns() {
+    return {
+      controller: '/organization',
+      actions: {
+        index: '/',
+        edit: '/edit',
+        'delete': '/delete',
+      }
+    };
+  }
+
   /**
    * Get organizations information
    * - use "id" as criteria (request ONE organization)
    * - use "lazy" as criteria (get only simple elements from organizations)
    * - use "lazyVersion" as criteria (get complex elements from organizations without no-need one: versions && entries)
-   * @param request
-   * @param response
+   * @param   request
+   * @param   response
+   * @method  GET
    */
   indexAction(request, response) {
     const data = request.query;
+
     Http.checkAuthorized(request, response, () => {
       let criteria = {}, fields = {};
       if (data.id) {
@@ -69,11 +88,69 @@ class OrganizationController extends AbstractController {
   }
 
   /**
-   * Controller Name
-   * @returns {string}
+   * Edit one organizaiton
+   * - create
+   * - update (if not found: "upsert")
+   * @param request
+   * @param response
    */
-  static get patternUrl() {
-    return '/organization';
+  editAction(request, response) {
+    const data = req.body;
+    let fields = {}, orgModel = {}, isNew = false;
+
+    /*jshint eqeqeq: false */
+    if (data.lazy == 1) {
+      /*jshint eqeqeq: true */
+      fields = {name: 1, description: 1, active: 1, url: 1, logo: 1, creation: 1};
+    }
+
+    http.checkAuthorized(req, res, user => {
+      Organization.findById(data._id, fields).lean().populate('creation.user').execAsync()
+        .then(organization => {
+          isNew = !organization;
+          orgModel = organization || new Organization();
+
+          orgModel.description = data.description || orgModel.description;
+          orgModel.active = data.active !== undefined ? data.active : orgModel.active;
+          orgModel.logo = data.logo || orgModel.logo;
+          orgModel.url = data.url || orgModel.url;
+          orgModel.creation = orgModel.creation || {user: user._id, date: new Date()};
+          orgModel.update = {user: user._id, date: new Date()};
+
+          return Organization.update({_id: orgModel._id}, orgModel, {upsert: true}).lean().execAsync();
+        })
+        .then(() => {
+          Http.sendResponse(request, response, 200, {organization: orgModel}, isNew ? '5' : '6');
+        })
+        .catch(EmptyOrganizationError, () => {
+          Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: edit -> save organization');
+        })
+        .catch(err => {
+          Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: edit organization', err);
+        })
+      ;
+    });
+  }
+
+  /**
+   * Delete one organization
+   * @param   request
+   * @param   response
+   * @method  POST (FIXME: change to GET -> /:id)
+   */
+  deleteAction(request, response) {
+    const data = request.body;
+
+    Http.checkAuthorized(request, response, () => {
+      Organization.findByIdAndRemove(data.id).lean().execAsync()
+        .then(() => {
+          Http.sendResponse(request, response, 200, {id: data.id}, '7');
+        })
+        .catch(err => {
+          Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: delete organization', err);
+        })
+      ;
+    });
   }
 }
 

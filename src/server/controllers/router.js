@@ -21,80 +21,110 @@ module.exports = (Application) => {
   const routes = [
     /* Index */
     {
-      url: IndexControllerClass.patternUrl,
-      method: methods.GET,
+      url: IndexControllerClass.patterns.controller,
       instance: new IndexControllerClass(config),
       name: 'IndexController',
-      action: 'indexAction',
-      checkSecurity: false,
+      subRoutes: [
+        {
+          method: methods.GET,
+          pattern: IndexControllerClass.patterns.actions.index,
+          name: 'indexAction',
+          checkSecurity: false,
+        }
+      ],
     },
     /* Authentication */
     {
-      url: AuthenticationControllerClass.patternUrl + '/sign-up',
-      method: methods.POST,
+      url: AuthenticationControllerClass.patterns.controller,
       instance: new AuthenticationControllerClass(config),
       name: 'AuthenticationController',
-      action: 'signUpAction',
-      checkSecurity: false,
-    },
-    {
-      url: AuthenticationControllerClass.patternUrl + '/me',
-      method: methods.GET,
-      instance: new AuthenticationControllerClass(config),
-      name: 'AuthenticationController',
-      action: 'meAction',
-      checkSecurity: true,
+      subRoutes: [
+        {
+          method: methods.POST,
+          pattern: AuthenticationControllerClass.patterns.actions.signUp,
+          name: 'signUpAction',
+          checkSecurity: false,
+        },
+        {
+          method: methods.GET,
+          pattern: AuthenticationControllerClass.patterns.actions.me,
+          name: 'meAction',
+          checkSecurity: true,
+        },
+      ],
     },
     /* User */
     {
-      url: UserControllerClass.patternUrl,
-      method: methods.GET,
+      url: UserControllerClass.patterns.controller,
       instance: new UserControllerClass(config),
       name: 'UserController',
-      action: 'indexAction',
-      checkSecurity: true,
-    },
-    {
-      url: UserControllerClass.patternUrl + '/update',
-      method: methods.POST,
-      instance: new UserControllerClass(config),
-      name: 'UserController',
-      action: 'updateAction',
-      checkSecurity: true,
+      subRoutes: [
+        {
+          method: methods.GET,
+          pattern: UserControllerClass.patterns.actions.index,
+          name: 'indexAction',
+          checkSecurity: true,
+        },
+        {
+          method: methods.POST,
+          pattern: UserControllerClass.patterns.actions.update,
+          name: 'updateAction',
+          checkSecurity: true,
+        }
+      ],
     },
     /* Organization */
     {
-      url: OrganizationControllerClass.patternUrl,
-      method: methods.GET,
+      url: OrganizationControllerClass.patterns.controller,
       instance: new OrganizationControllerClass(config),
       name: 'OrganizationController',
-      action: 'indexAction',
-      checkSecurity: true,
+      subRoutes: [
+        {
+          method: methods.GET,
+          pattern: OrganizationControllerClass.patterns.actions.index,
+          name: 'indexAction',
+          checkSecurity: true,
+        },
+        {
+          method: methods.POST,
+          pattern: OrganizationControllerClass.patterns.actions.edit,
+          name: 'editAction',
+          checkSecurity: true,
+        },
+        {
+          method: methods.POST,
+          pattern: OrganizationControllerClass.patterns.actions.delete,
+          name: 'deleteAction',
+          checkSecurity: true,
+        }
+      ],
     },
   ];
 
   /**
    * Register all routes
    */
-  routes.forEach(function(controller) {
-    const args = [Application.apiUrl + controller.url];
-    if (controller.checkSecurity === true) {
-      args.push(Http.ensureAuthorized);
-    }
-    args.push(controller.instance.__proto__[controller.action]);
+  routes.forEach(function (controller) {
+    controller.subRoutes.forEach(function (action) {
+      const args = [Application.apiUrl + controller.url + action.pattern];
+      if (action.checkSecurity === true) {
+        args.push(Http.ensureAuthorized);
+      }
+      args.push(controller.instance.__proto__[action.name]);
 
-    logger.info('[ ' + controller.method + ' ] ' + args[0] + ' -> ' + controller.name + '/' + controller.action);
+      logger.info('[ ' + action.method + ' ] ' + args[0] + ' -> ' + controller.name + '/' + action.name);
 
-    switch (controller.method) {
-      case methods.POST:
-        app.post.apply(app, args);
-        break;
-      case methods.GET:
-        app.get.apply(app, args);
-        break;
-      default:
-        throw new Error('Invalid Method : ' + controller.method);
-        break;
-    }
+      switch (action.method) {
+        case methods.POST:
+          app.post.apply(app, args);
+          break;
+        case methods.GET:
+          app.get.apply(app, args);
+          break;
+        default:
+          throw new Error('Invalid Method : ' + action.method);
+          break;
+      }
+    });
   });
 };

@@ -14,7 +14,7 @@ const OntimeRequester = require('../../controllers/helpers/Ontime');
 module.exports = (agent, url) => {
   let tokenBearer, tokenOtBearer;
 
-  url += '/auth';
+  url += '/authentication';
 
   describe('> Authentication API', () => {
     describe('# [POST] ' + url + '/sign-up', () => {
