@@ -1,10 +1,7 @@
 'use strict';
 
-const BPromise = require('bluebird');
-
 const AbstractController = require('./AbstractController');
 const Http = require('./helpers/Http');
-const Ontime = require('./helpers/Ontime');
 const User = require('../models/user');
 
 const EmptyUserError = require('./../errors/EmptyUserError');

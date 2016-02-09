@@ -1,12 +1,9 @@
 'use strict';
 
-const BPromise = require('bluebird');
 const mongoose = require('mongoose');
 
 const AbstractController = require('./AbstractController');
 const Http = require('./helpers/Http');
-const Ontime = require('./helpers/Ontime');
-const User = require('../models/user');
 const Organization = require('../models/organization');
 
 const EmptyOrganizationError = require('../errors/EmptyOrganizationError');

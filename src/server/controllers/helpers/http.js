@@ -126,7 +126,9 @@ class Http {
       .then(result => {
         if (result.error) {
           throw new OnTimeError(result);
+          /* jshint camelcase: false */
         } else if (!result.access_token) {
+          /* jshint camelcase: true */
           throw new Error(result);
         }
 

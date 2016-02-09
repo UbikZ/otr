@@ -1,6 +1,5 @@
 'use strict';
 
-const BPromise = require('bluebird');
 const assert = require('chai').assert;
 const mongoose = require('mongoose');
 
@@ -148,7 +147,7 @@ module.exports = (agent, url) => {
 
       it('should sign-up same user the others times', done => {
         const sentData = {username: 'test_stage', password: 'test_stage'};
-        let expectedData = require('./../fixtures/auth/signup')
+        let expectedData = require('./../fixtures/auth/signup');
         /*jshint camelcase: false */
         expectedData.access_token += 'delta';
         /*jshint camelcase: true */

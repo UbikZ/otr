@@ -152,7 +152,10 @@ module.exports = (Application) => {
       if (action.checkSecurity === true) {
         args.push(Http.ensureAuthorized);
       }
+      /* jshint proto: true */
+      // ES6 __proto__ is not deprecated
       args.push(controller.instance.__proto__[action.name]);
+      /* jshint proto: false */
 
       logger.info('[ ' + action.method + ' ] ' + args[0] + ' -> ' + controller.name + '/' + action.name);
 
@@ -165,7 +168,6 @@ module.exports = (Application) => {
           break;
         default:
           throw new Error('Invalid Method : ' + action.method);
-          break;
       }
     });
   });
