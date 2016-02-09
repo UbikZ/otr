@@ -18,6 +18,7 @@ class Helper {
 
   /**
    *  Simulate internal error response from Ontime API
+   *  - to use with wrap function (ex: () => internalErrorOntimeAPIResponse(data))
    */
   static internalErrorOntimeAPIResponse(data) {
     return new Promise(resolve => {

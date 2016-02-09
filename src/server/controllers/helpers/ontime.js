@@ -10,7 +10,7 @@ const logger = require('../../logger');
 const OnTimeError = require('../../errors/OnTimeError');
 
 /**
- *  TODO: use full promises
+ *  Ontime Helper
  */
 class Ontime {
   /**
@@ -47,9 +47,9 @@ class Ontime {
   /**
    *
    * @param authObject
-   * @param callback
+   * @returns {*}
    */
-  static requestToken(authObject, callback) {
+  static requestToken(authObject) {
     const url = ontimeConfig.ontimeUrl + '/api/oauth2/token?' +
       qs.stringify({
         /*jshint camelcase: false */
@@ -62,10 +62,15 @@ class Ontime {
         /*jshint camelcase: true */
       });
 
-    return Ontime.execRequest(url, callback);
+    return Ontime.execRequest(url);
   }
 
-  static me(accessToken, callback) {
+  /**
+   *
+   * @param accessToken
+   * @returns {*}
+   */
+  static me(accessToken) {
     const url = ontimeConfig.ontimeUrl + '/api/v5/me?' +
       qs.stringify({
         /*jshint camelcase: false */
@@ -73,10 +78,16 @@ class Ontime {
         /*jshint camelcase: true */
       });
 
-    return Ontime.execRequest(url, callback);
+    return Ontime.execRequest(url);
   }
 
-  static tree(accessToken, idProject, callback) {
+  /**
+   *
+   * @param accessToken
+   * @param idProject
+   * @returns {*}
+   */
+  static tree(accessToken, idProject) {
     const requestUrl = idProject === undefined ? 'projects' : 'releases';
     /*jshint camelcase: false */
     const params = {'access_token': accessToken};
@@ -86,10 +97,16 @@ class Ontime {
     /*jshint camelcase: true */
     const url = ontimeConfig.ontimeUrl.concat('/api/v5/', requestUrl, '?', qs.stringify(params));
 
-    return Ontime.execRequest(url, callback);
+    return Ontime.execRequest(url);
   }
 
-  static items(accessToken, ids, callback) {
+  /**
+   *
+   * @param accessToken
+   * @param ids
+   * @returns {*}
+   */
+  static items(accessToken, ids) {
     const params = {
       /*jshint camelcase: false */
       'access_token': accessToken,
@@ -132,7 +149,7 @@ class Ontime {
     }
     const url = ontimeConfig.ontimeUrl + '/api/v5/features/?' + qs.stringify(params);
 
-    return Ontime.execRequest(url, callback);
+    return Ontime.execRequest(url);
   }
 }
 

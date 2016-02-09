@@ -112,7 +112,7 @@ class Http {
       .catch(err => {
         Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: check authorization.', err);
       })
-      ;
+    ;
   }
 
   /**
@@ -124,9 +124,12 @@ class Http {
   static ontimeRequestToken(request, response) {
     return OntimeRequester.requestToken({username: request.body.username, password: request.body.password})
       .then(result => {
-        if (!result.access_token) {
-          throw new Error();
+        if (result.error) {
+          throw new OnTimeError(result);
+        } else if (!result.access_token) {
+          throw new Error(result);
         }
+
         return new Promise(resolve => {
           /* jshint camelcase: false */
           resolve(merge(result.data, {accessToken: result.access_token}));
