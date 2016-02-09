@@ -51,8 +51,8 @@ class OnTimeController extends AbstractController {
         );
         /*jshint camelcase: true */
       })
-      .catch(err => {
-        Http.sendResponse(request, response, 500, {}, '-1', 'Ontime Error: issue during OnTime "/me" request', err);
+      .catch(() => {
+        Http.sendResponse(request, response, 500, {}, '-1', 'Ontime Error: issue during OnTime "/me" request');
       })
     ;
   }
@@ -73,6 +73,9 @@ class OnTimeController extends AbstractController {
         return Ontime.tree(request.ontimeToken, request.query.idProject);
       })
       .then(result => {
+        if (!result.data) {
+          throw new Error();
+        }
         const returnObj = request.query.idProject !== undefined ? {tree: result.data || result} : {tree: result.data};
         Http.sendResponse(request, response, 200, returnObj);
       })
@@ -83,8 +86,8 @@ class OnTimeController extends AbstractController {
         );
         /*jshint camelcase: true */
       })
-      .catch(err => {
-        Http.sendResponse(request, response, 500, {}, '-1', 'Ontime Error: issue during OnTime "/tree" request', err);
+      .catch(() => {
+        Http.sendResponse(request, response, 500, {}, '-1', 'Ontime Error: issue during OnTime "/tree" request');
       })
     ;
   }
@@ -103,6 +106,9 @@ class OnTimeController extends AbstractController {
         return Ontime.items(request.ontimeToken, request.query.projectId);
       })
       .then(result => {
+        if (!result.data) {
+          throw new Error();
+        }
         Http.sendResponse(request, response, 200, {items: result.data});
       })
       .catch(OnTimeError, err => {
@@ -112,8 +118,8 @@ class OnTimeController extends AbstractController {
         );
         /*jshint camelcase: true */
       })
-      .catch(err => {
-        Http.sendResponse(request, response, 500, {}, '-1', 'Ontime Error: issue during OnTime "/items" request', err);
+      .catch(() => {
+        Http.sendResponse(request, response, 500, {}, '-1', 'Ontime Error: issue during OnTime "/items" request');
       })
     ;
   }

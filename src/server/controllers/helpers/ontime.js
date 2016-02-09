@@ -29,6 +29,8 @@ class Ontime {
         return new Promise((resolve, reject) => {
           if (result.error) {
             reject(new OnTimeError(result));
+          } else if (!result.data) {
+            reject(new Error());
           } else {
             resolve(result);
           }

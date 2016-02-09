@@ -20,7 +20,7 @@ module.exports = (agent, url) => {
   describe('> Authentication API', () => {
     describe('# [POST] ' + url + '/sign-up', () => {
       it('should get an error on sign-up for bad user data', done => {
-        OntimeRequester.requestToken = () => Helper.internalErrorOntimeAPIResponse();
+        OntimeRequester.requestToken = () => Helper.mockOnTimeAPIResponse();
         agent
           .post(url + '/sign-up')
           .send({})
@@ -43,7 +43,7 @@ module.exports = (agent, url) => {
         expectedData.access_token += 'delta';
         /*jshint camelcase: true */
 
-        OntimeRequester.requestToken = () => Helper.internalErrorOntimeAPIResponse(expectedData);
+        OntimeRequester.requestToken = () => Helper.mockOnTimeAPIResponse(expectedData);
 
         Helper.mockModel(mongoose.model('User'), 'findOne', stub => {
           agent
@@ -70,7 +70,7 @@ module.exports = (agent, url) => {
         /*jshint camelcase: false */
         expectedData.access_token += 'delta';
         /*jshint camelcase: true */
-        OntimeRequester.requestToken = () => Helper.internalErrorOntimeAPIResponse(expectedData);
+        OntimeRequester.requestToken = () => Helper.mockOnTimeAPIResponse(expectedData);
 
         Helper.mockModel(mongoose.model('User'), 'update', stub => {
           agent
@@ -97,7 +97,7 @@ module.exports = (agent, url) => {
         /*jshint camelcase: false */
         expectedData.access_token += 'delta';
         /*jshint camelcase: true */
-        OntimeRequester.requestToken = () => Helper.internalErrorOntimeAPIResponse(expectedData);
+        OntimeRequester.requestToken = () => Helper.mockOnTimeAPIResponse(expectedData);
 
         agent
           .post(url + '/sign-up')

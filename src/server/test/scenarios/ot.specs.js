@@ -18,7 +18,8 @@ module.exports = (agent, url) => {
   describe('> Ontime API', () => {
     describe('# [POST] Request token generic error', () => {
       it('should get an error for request token', done => {
-        Ontime.requestToken = Helper.invalidOntimeAPIResponse;
+        Ontime.requestToken = () => Helper.mockOnTimeAPIResponse(require('../fixtures/ontime/ko'));
+
         agent
           .post(apiUrl + '/authentication/sign-up')
           .send({})
@@ -38,7 +39,8 @@ module.exports = (agent, url) => {
 
     describe('# [GET] ' + url + '/me', () => {
       it('should get an error with token', done => {
-        Ontime.me = Helper.internalErrorOntimeAPIResponse;
+        Ontime.me = () => Helper.mockOnTimeAPIResponse();
+
         agent
           .get(url + '/me')
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
@@ -56,7 +58,8 @@ module.exports = (agent, url) => {
       });
 
       it('should get an internal error', done => {
-        Ontime.me = Helper.invalidOntimeAPIResponse;
+        Ontime.me = () => Helper.mockOnTimeAPIResponse(require('../fixtures/ontime/ko'));
+
         agent
           .get(url + '/me')
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
@@ -75,9 +78,8 @@ module.exports = (agent, url) => {
 
       it('should get ontime user information', done => {
         const expectedData = require('./../fixtures/ontime/me');
-        Ontime.me = (token, cb) => {
-          cb(JSON.stringify(expectedData));
-        };
+        Ontime.me = () => Helper.mockOnTimeAPIResponse(expectedData);
+
         agent
           .get(url + '/me')
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
@@ -103,7 +105,8 @@ module.exports = (agent, url) => {
 
     describe('# [GET] ' + url + '/tree', () => {
       it('should get an error with token', done => {
-        Ontime.tree = Helper.invalidOntimeAPIResponse;
+        Ontime.tree = () => Helper.mockOnTimeAPIResponse(require('../fixtures/ontime/ko'));
+
         agent
           .get(url + '/tree')
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
@@ -121,7 +124,8 @@ module.exports = (agent, url) => {
       });
 
       it('should get an error with token', done => {
-        Ontime.tree = Helper.internalErrorOntimeAPIResponse;
+        Ontime.tree = () => Helper.mockOnTimeAPIResponse();
+
         agent
           .get(url + '/tree')
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
@@ -140,9 +144,8 @@ module.exports = (agent, url) => {
 
       it('should get ontime tree items', done => {
         const expectedData = require('./../fixtures/ontime/tree');
-        Ontime.tree = (token, id, cb) => {
-          cb(JSON.stringify(expectedData));
-        };
+        Ontime.tree = () => Helper.mockOnTimeAPIResponse(expectedData);
+
         agent
           .get(url + '/tree')
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
@@ -168,7 +171,8 @@ module.exports = (agent, url) => {
 
     describe('# [GET] ' + url + '/items', () => {
       it('should get an error with token', done => {
-        Ontime.items = Helper.invalidOntimeAPIResponse;
+        Ontime.items = () => Helper.mockOnTimeAPIResponse(require('../fixtures/ontime/ko'));
+
         agent
           .get(url + '/items')
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
@@ -186,7 +190,8 @@ module.exports = (agent, url) => {
       });
 
       it('should get an error with token', done => {
-        Ontime.items = Helper.internalErrorOntimeAPIResponse;
+        Ontime.items = () => Helper.mockOnTimeAPIResponse();
+
         agent
           .get(url + '/items')
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
@@ -205,9 +210,8 @@ module.exports = (agent, url) => {
 
       it('should get ontime tree items', done => {
         const expectedData = require('./../fixtures/ontime/items');
-        Ontime.items = (token, projectId, cb) => {
-          cb(JSON.stringify(expectedData));
-        };
+        Ontime.items = () => Helper.mockOnTimeAPIResponse(expectedData);
+
         agent
           .get(url + '/items')
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)

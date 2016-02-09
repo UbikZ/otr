@@ -3,26 +3,25 @@
 const sinon = require('sinon');
 var Promise = require('bluebird');
 
+const OnTimeError = require('../errors/OnTimeError');
+
 /**
  *  Helper methods with "mock"
  */
 class Helper {
   /**
-   *  Simulate invalid response from Ontime API
-   */
-  static invalidOntimeAPIResponse() {
-    return new Promise(resolve => {
-      resolve(require('./fixtures/ontime/ko'));
-    });
-  }
-
-  /**
    *  Simulate internal error response from Ontime API
-   *  - to use with wrap function (ex: () => internalErrorOntimeAPIResponse(data))
+   *  - to use with wrap function (ex: () => mockOnTimeAPIResponse(data))
    */
-  static internalErrorOntimeAPIResponse(data) {
-    return new Promise(resolve => {
-      resolve(data || {});
+  static mockOnTimeAPIResponse(result) {
+    return new Promise((resolve, reject) => {
+      if (result.error) {
+        reject(new OnTimeError(result));
+      } else if (!result.data) {
+        reject(new Error());
+      } else {
+        resolve(result);
+      }
     });
   }
 
