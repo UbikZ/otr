@@ -104,7 +104,7 @@ module.exports = (agent, url) => {
     });
 
     describe('# [GET] ' + url + '/tree', () => {
-      it('should get an error with token', done => {
+      it('should get an error with token (onTime fail)', done => {
         Ontime.tree = () => Helper.mockOnTimeAPIResponse(require('../fixtures/ontime/ko'));
 
         agent
@@ -123,7 +123,7 @@ module.exports = (agent, url) => {
         ;
       });
 
-      it('should get an error with token', done => {
+      it('should get an error with token (empty response)', done => {
         Ontime.tree = () => Helper.mockOnTimeAPIResponse();
 
         agent
