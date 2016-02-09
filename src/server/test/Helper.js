@@ -11,26 +11,18 @@ class Helper {
    *  Simulate invalid response from Ontime API
    */
   static invalidOntimeAPIResponse() {
-    let callback;
-    if (typeof (arguments[1]) === 'function') {
-      callback = arguments[1];
-    } else if (typeof (arguments[2]) === 'function') {
-      callback = arguments[2];
-    }
-    callback(JSON.stringify(require('./fixtures/ontime/ko')));
+    return new Promise(resolve => {
+      resolve(require('./fixtures/ontime/ko'));
+    });
   }
 
   /**
    *  Simulate internal error response from Ontime API
    */
-  static internalErrorOntimeAPIResponse() {
-    let callback;
-    if (typeof (arguments[1]) === 'function') {
-      callback = arguments[1];
-    } else if (typeof (arguments[2]) === 'function') {
-      callback = arguments[2];
-    }
-    callback(JSON.stringify({}));
+  static internalErrorOntimeAPIResponse(data) {
+    return new Promise(resolve => {
+      resolve(data || {});
+    });
   }
 
   /**

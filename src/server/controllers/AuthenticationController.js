@@ -39,36 +39,38 @@ class AuthenticationController extends AbstractController {
    * @method  POST
    */
   signUpAction(request, response) {
-    Http.ontimeRequestToken(request, response, userData => {
-      let userModel = {};
-      User.findOne({'info.email': userData.email}).lean().execAsync()
-        .then(user => {
-          let options = {};
-          if (user) {
-            userModel = user;
-            userModel.identity.ontimeToken = userData.accessToken;
-          } else {
-            userModel = new User();
-            userModel.identity.ontimeToken = userData.accessToken;
-            userModel.identity.token = jwt.sign(userModel._id, otrConf.jwtSecret);
-            userModel.info.email = userData.email;
-            userModel.name.username = request.body.username;
-            /*jshint camelcase: false */
-            userModel.name.firstname = userData.first_name;
-            userModel.name.lastname = userData.last_name;
-            /*jshint camelcase: true */
-            options.upsert = true;
-          }
-          return User.update({_id: userModel._id}, userModel, options).lean().execAsync();
-        })
-        .then(() => {
-          Http.sendResponse(request, response, 200, {user: userModel}, '1');
-        })
-        .catch(err => {
-          Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: check /sign-up.', err);
-        })
-      ;
-    });
+    let userModel = {}, data = {};
+    Http.ontimeRequestToken(request, response)
+      .then(userData => {
+        data = userData;
+        return User.findOne({'info.email': userData.email}).lean().execAsync();
+      })
+      .then(user => {
+        let options = {};
+        if (user) {
+          userModel = user;
+          userModel.identity.ontimeToken = data.accessToken;
+        } else {
+          userModel = new User();
+          userModel.identity.ontimeToken = data.accessToken;
+          userModel.identity.token = jwt.sign(userModel._id, otrConf.jwtSecret);
+          userModel.info.email = data.email;
+          userModel.name.username = request.body.username;
+          /*jshint camelcase: false */
+          userModel.name.firstname = data.first_name;
+          userModel.name.lastname = data.last_name;
+          /*jshint camelcase: true */
+          options.upsert = true;
+        }
+        return User.update({_id: userModel._id}, userModel, options).lean().execAsync();
+      })
+      .then(() => {
+        Http.sendResponse(request, response, 200, {user: userModel}, '1');
+      })
+      .catch(err => {
+        Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: check /sign-up.', err);
+      })
+    ;
   }
 
   /**

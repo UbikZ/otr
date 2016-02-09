@@ -1,5 +1,6 @@
 'use strict';
 
+var Promise = require('bluebird');
 const assert = require('chai').assert;
 const mongoose = require('mongoose');
 
@@ -19,9 +20,7 @@ module.exports = (agent, url) => {
   describe('> Authentication API', () => {
     describe('# [POST] ' + url + '/sign-up', () => {
       it('should get an error on sign-up for bad user data', done => {
-        OntimeRequester.requestToken = (authObject, cb) => {
-          cb(JSON.stringify({}));
-        };
+        OntimeRequester.requestToken = () => Helper.internalErrorOntimeAPIResponse();
         agent
           .post(url + '/sign-up')
           .send({})
@@ -40,12 +39,11 @@ module.exports = (agent, url) => {
       it('should get an internal error on sign-up (mongo fail)', done => {
         const sentData = {username: 'test_stage', password: 'test_stage'};
         const expectedData = require('./../fixtures/auth/signup');
-        OntimeRequester.requestToken = (authObject, cb) => {
-          /*jshint camelcase: false */
-          expectedData.access_token += 'delta';
-          /*jshint camelcase: true */
-          cb(JSON.stringify(expectedData));
-        };
+        /*jshint camelcase: false */
+        expectedData.access_token += 'delta';
+        /*jshint camelcase: true */
+
+        OntimeRequester.requestToken = () => Helper.internalErrorOntimeAPIResponse(expectedData);
 
         Helper.mockModel(mongoose.model('User'), 'findOne', stub => {
           agent
@@ -69,12 +67,10 @@ module.exports = (agent, url) => {
       it('should get an internal error on the create (mongo fail)', done => {
         const sentData = {username: 'test_stage', password: 'test_stage'};
         const expectedData = require('./../fixtures/auth/signup');
-        OntimeRequester.requestToken = (authObject, cb) => {
-          /*jshint camelcase: false */
-          expectedData.access_token += 'delta';
-          /*jshint camelcase: true */
-          cb(JSON.stringify(expectedData));
-        };
+        /*jshint camelcase: false */
+        expectedData.access_token += 'delta';
+        /*jshint camelcase: true */
+        OntimeRequester.requestToken = () => Helper.internalErrorOntimeAPIResponse(expectedData);
 
         Helper.mockModel(mongoose.model('User'), 'update', stub => {
           agent
@@ -98,12 +94,11 @@ module.exports = (agent, url) => {
       it('should sign-up new user the first time', done => {
         const sentData = {username: 'test_stage', password: 'test_stage'};
         const expectedData = require('./../fixtures/auth/signup');
-        OntimeRequester.requestToken = (authObject, cb) => {
-          /*jshint camelcase: false */
-          expectedData.access_token += 'delta';
-          /*jshint camelcase: true */
-          cb(JSON.stringify(expectedData));
-        };
+        /*jshint camelcase: false */
+        expectedData.access_token += 'delta';
+        /*jshint camelcase: true */
+        OntimeRequester.requestToken = () => Helper.internalErrorOntimeAPIResponse(expectedData);
+
         agent
           .post(url + '/sign-up')
           .send(sentData)
@@ -153,13 +148,17 @@ module.exports = (agent, url) => {
 
       it('should sign-up same user the others times', done => {
         const sentData = {username: 'test_stage', password: 'test_stage'};
+        let expectedData = require('./../fixtures/auth/signup')
+        /*jshint camelcase: false */
+        expectedData.access_token += 'delta';
+        /*jshint camelcase: true */
         agent
           .post(url + '/sign-up')
           .send(sentData)
           .expect(200)
           .expect('Content-Type', 'application/json; charset=utf-8')
           .then(res => {
-            const result = res.body, expectedData = require('./../fixtures/auth/signup');
+            const result = res.body;
             assert.strictEqual(result.code, 200);
             assert.isUndefined(result.error);
             assert.strictEqual(result.messageCode, '1');

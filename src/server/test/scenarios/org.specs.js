@@ -67,7 +67,6 @@ module.exports = (agent, url) => {
           .expect('Content-Type', 'application/json; charset=utf-8')
           .then(res => {
             const result = res.body;
-            console.log(result.organization);
             assert.strictEqual(result.code, 200);
             assert.isUndefined(result.error);
             assert.strictEqual(result.messageCode, '5');
@@ -122,7 +121,6 @@ module.exports = (agent, url) => {
           .expect('Content-Type', 'application/json; charset=utf-8')
           .then(res => {
             const result = res.body;
-            console.log(result);
             assert.strictEqual(result.code, 200);
             assert.isUndefined(result.error);
             assert.strictEqual(result.messageCode, '6');

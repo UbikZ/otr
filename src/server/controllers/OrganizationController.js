@@ -63,7 +63,6 @@ class OrganizationController extends AbstractController {
       })
       .then(organizations => {
         if (!organizations) {
-          console.log('throw EmptyOrganizationError');
           throw new EmptyOrganizationError();
         }
         /*jshint eqeqeq: false */
@@ -80,13 +79,11 @@ class OrganizationController extends AbstractController {
         Http.sendResponse(request, response, 200, {organizations: organizations});
       })
       .catch(EmptyOrganizationError, () => {
-        console.log('catch EmptyOrganizationError');
         Http.sendResponse(
           request, response, 404, {}, '-9', 'Error: organizations is undefined (criteria = ' + criteria + ').'
         );
       })
       .catch(err => {
-        console.log('catch Error');
         Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: get organizations.', err);
       })
     ;

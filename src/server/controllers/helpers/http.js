@@ -9,6 +9,8 @@ const OntimeRequester = require('./Ontime');
 const logger = require('../../logger');
 
 const EmptyUserError = require('../../errors/EmptyUserError');
+const OnTimeError = require('../../errors/OnTimeError');
+
 
 /**
  * Http helper to handle requests, responses, logging etc.
@@ -110,32 +112,40 @@ class Http {
       .catch(err => {
         Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: check authorization.', err);
       })
-    ;
+      ;
   }
 
   /**
    * Global method to request a token from OnTime service
    * @param request
    * @param response
-   * @param callback
+   * @returns {*}
    */
-  static ontimeRequestToken(request, response, callback) {
-    OntimeRequester.requestToken({username: request.body.username, password: request.body.password}, result => {
-      result = JSON.parse(result);
-      if (result.error) {
-        /*jshint camelcase: false */
+  static ontimeRequestToken(request, response) {
+    return OntimeRequester.requestToken({username: request.body.username, password: request.body.password})
+      .then(result => {
+        if (!result.access_token) {
+          throw new Error();
+        }
+        return new Promise(resolve => {
+          /* jshint camelcase: false */
+          resolve(merge(result.data, {accessToken: result.access_token}));
+          /* jshint camelcase: true */
+        });
+      })
+      .catch(OnTimeError, err => {
         Http.sendResponse(
-          request, response, 403, {error: result}, '-3', 'Ontime Error: ' + result.error_description, result.error
+          /* jshint camelcase: false */
+          request, response, 403, {error: err}, '-3', 'Ontime Error: ' + err.error_description, err.error
+          /* jshint camelcase: true */
         );
-      } else if (result.access_token) {
-        callback(merge(result.data, {accessToken: result.access_token}));
-        /*jshint camelcase: true */
-      } else {
+      })
+      .catch(err => {
         Http.sendResponse(
-          request, response, 500, {}, '-1', 'Ontime Error: issue during OnTime "/authenticate" request'
+          request, response, 500, {}, '-1', 'Ontime Error: issue during OnTime "/authenticate" request', err
         );
-      }
-    });
+      })
+    ;
   }
 }
 

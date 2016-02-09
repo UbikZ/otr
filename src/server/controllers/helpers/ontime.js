@@ -1,33 +1,45 @@
 'use strict';
 
+var Promise = require('bluebird');
 const request = require('request-promise');
 const qs = require('querystring');
 
 const ontimeConfig = require('../../config/ontime.json');
 const logger = require('../../logger');
 
+const OnTimeError = require('../../errors/OnTimeError');
+
 /**
  *  TODO: use full promises
  */
 class Ontime {
   /**
-   *
+   * Execute ontime requests
    * @param url
-   * @param callback
+   * @returns {*}
    */
-  static execRequest(url, callback) {
+  static execRequest(url) {
     logger.info('# Ontime Call : ' + url);
-    request({uri: url, method: 'GET', resolveWithFullResponse: true})
+    return request({uri: url, method: 'GET', resolveWithFullResponse: true})
       .then(response => {
+        const result = JSON.parse(response.body);
         if (response.statusCode !== 200) {
-          throw new Error({});
+          throw new Error({error : 'StatusCode = ' + response.statusCode});
         }
-        callback(response.body);
+        return new Promise((resolve, reject) => {
+          if (result.error) {
+            reject(new OnTimeError(result));
+          } else {
+            resolve(result);
+          }
+        });
       })
       .catch(err => {
         logger.error('Error while requesting (' + url + ').');
         logger.error('Error detail :' + err);
-        callback({});
+        return new Promise((resolve, reject) => {
+          reject(new Error(err));
+        });
       })
     ;
   }
@@ -50,7 +62,7 @@ class Ontime {
         /*jshint camelcase: true */
       });
 
-    Ontime.execRequest(url, callback);
+    return Ontime.execRequest(url, callback);
   }
 
   static me(accessToken, callback) {
@@ -61,7 +73,7 @@ class Ontime {
         /*jshint camelcase: true */
       });
 
-    Ontime.execRequest(url, callback);
+    return Ontime.execRequest(url, callback);
   }
 
   static tree(accessToken, idProject, callback) {
@@ -74,7 +86,7 @@ class Ontime {
     /*jshint camelcase: true */
     const url = ontimeConfig.ontimeUrl.concat('/api/v5/', requestUrl, '?', qs.stringify(params));
 
-    Ontime.execRequest(url, callback);
+    return Ontime.execRequest(url, callback);
   }
 
   static items(accessToken, ids, callback) {
@@ -120,7 +132,7 @@ class Ontime {
     }
     const url = ontimeConfig.ontimeUrl + '/api/v5/features/?' + qs.stringify(params);
 
-    Ontime.execRequest(url, callback);
+    return Ontime.execRequest(url, callback);
   }
 }
 

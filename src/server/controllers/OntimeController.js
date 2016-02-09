@@ -4,6 +4,8 @@ const AbstractController = require('./AbstractController');
 const Http = require('./helpers/Http');
 const Ontime = require('./helpers/Ontime');
 
+const OnTimeError = require('../errors/OnTimeError');
+
 /**
  * Ontime controller (abstraction layer for Ontime Requests)
  * - meAction
@@ -33,22 +35,24 @@ class OnTimeController extends AbstractController {
    * @method  GET
    */
   meAction(request, response) {
+    let userModel = {};
     Http.checkAuthorized(request, response)
-      .then(() => {
-        Ontime.me(request.ontimeToken, result => {
-          result = JSON.parse(result);
-          if (result.error) {
-            /*jshint camelcase: false */
-            Http.sendResponse(
-              request, response, 403, {error: result}, '-3', 'Ontime Error: ' + result.error_description, result.error
-            );
-            /*jshint camelcase: true */
-          } else if (result.data) {
-            Http.sendResponse(request, response, 200, {ontimeUser: result.data});
-          } else {
-            Http.sendResponse(request, response, 500, {}, '-1', 'Ontime Error: issue during OnTime "/me" request');
-          }
-        });
+      .then(user => {
+        userModel = user;
+        return Ontime.me(request.ontimeToken);
+      })
+      .then(result => {
+        Http.sendResponse(request, response, 200, {ontimeUser: result.data});
+      })
+      .catch(OnTimeError, err => {
+        /*jshint camelcase: false */
+        Http.sendResponse(
+          request, response, 403, {error: result}, '-3', 'Ontime Error: ' + err.error_description, err.error
+        );
+        /*jshint camelcase: true */
+      })
+      .catch(err => {
+        Http.sendResponse(request, response, 500, {}, '-1', 'Ontime Error: issue during OnTime "/me" request', err);
       })
     ;
   }
@@ -62,24 +66,25 @@ class OnTimeController extends AbstractController {
    * @method  GET
    */
   treeAction(request, response) {
+    let userModel = {};
     Http.checkAuthorized(request, response)
-      .then(() => {
-        Ontime.tree(request.ontimeToken, request.query.idProject, result => {
-          result = JSON.parse(result);
-          if (result.error) {
-            /*jshint camelcase: false */
-            Http.sendResponse(
-              request, response, 403, {error: result}, '-3', 'Ontime Error: ' + result.error_description, result.error
-            );
-            /*jshint camelcase: true */
-          } else if (request.query.idProject !== undefined) {
-            Http.sendResponse(request, response, 200, {tree: result.data || result});
-          } else if (result.data) {
-            Http.sendResponse(request, response, 200, {tree: result.data});
-          } else {
-            Http.sendResponse(request, response, 500, {}, '-1', 'Ontime Error: issue during OnTime "/tree" request');
-          }
-        });
+      .then(user => {
+        userModel = user;
+        return Ontime.tree(request.ontimeToken, request.query.idProject);
+      })
+      .then(result => {
+        const returnObj = request.query.idProject !== undefined ? {tree: result.data || result} : {tree: result.data};
+        Http.sendResponse(request, response, 200, returnObj);
+      })
+      .catch(OnTimeError, err => {
+        /*jshint camelcase: false */
+        Http.sendResponse(
+          request, response, 403, {error: result}, '-3', 'Ontime Error: ' + err.error_description, err.error
+        );
+        /*jshint camelcase: true */
+      })
+      .catch(err => {
+        Http.sendResponse(request, response, 500, {}, '-1', 'Ontime Error: issue during OnTime "/tree" request', err);
       })
     ;
   }
@@ -91,22 +96,24 @@ class OnTimeController extends AbstractController {
    * @method  GET
    */
   itemsAction(request, response) {
+    let userModel = {};
     Http.checkAuthorized(request, response)
-      .then(() => {
-        Ontime.items(request.ontimeToken, request.query.projectId, result => {
-          result = JSON.parse(result);
-          if (result.error) {
-            /*jshint camelcase: false */
-            Http.sendResponse(
-              request, response, 403, {error: result}, '-3', 'Ontime Error: ' + result.error_description, result.error
-            );
-            /*jshint camelcase: true */
-          } else if (result.data) {
-            Http.sendResponse(request, response, 200, {items: result.data});
-          } else {
-            Http.sendResponse(request, response, 500, {}, '-1', 'Ontime Error: issue during OnTime "/items" request');
-          }
-        });
+      .then(user => {
+        userModel = user;
+        return Ontime.items(request.ontimeToken, request.query.projectId);
+      })
+      .then(result => {
+        Http.sendResponse(request, response, 200, {items: result.data});
+      })
+      .catch(OnTimeError, err => {
+        /*jshint camelcase: false */
+        Http.sendResponse(
+          request, response, 403, {error: result}, '-3', 'Ontime Error: ' + err.error_description, err.error
+        );
+        /*jshint camelcase: true */
+      })
+      .catch(err => {
+        Http.sendResponse(request, response, 500, {}, '-1', 'Ontime Error: issue during OnTime "/items" request', err);
       })
     ;
   }
