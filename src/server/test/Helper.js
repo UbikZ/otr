@@ -1,7 +1,7 @@
 'use strict';
 
 const sinon = require('sinon');
-var Promise = require('bluebird');
+const BPromise = require('bluebird');
 
 const OnTimeError = require('../errors/OnTimeError');
 
@@ -14,7 +14,7 @@ class Helper {
    *  - to use with wrap function (ex: () => mockOnTimeAPIResponse(data))
    */
   static mockOnTimeAPIResponse(result) {
-    return new Promise((resolve, reject) => {
+    return new BPromise((resolve, reject) => {
       if (result.error) {
         reject(new OnTimeError(result));
       } else if (!result.data) {
@@ -54,7 +54,7 @@ class Helper {
       lean: function () {
         return this;
       },
-      execAsync: () => new Promise((resolve, reject) => {
+      execAsync: () => new BPromise((resolve, reject) => {
           if (empty === true) {
             resolve();
           } else {

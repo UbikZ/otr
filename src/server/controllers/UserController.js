@@ -1,6 +1,6 @@
 'use strict';
 
-const promise = require('bluebird');
+const BPromise = require('bluebird');
 
 const AbstractController = require('./AbstractController');
 const Http = require('./helpers/Http');

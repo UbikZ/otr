@@ -1,6 +1,6 @@
 'use strict';
 
-var Promise = require('bluebird');
+const BPromise = require('bluebird');
 const request = require('request-promise');
 const qs = require('querystring');
 
@@ -26,7 +26,7 @@ class Ontime {
         if (response.statusCode !== 200) {
           throw new Error({error : 'StatusCode = ' + response.statusCode});
         }
-        return new Promise((resolve, reject) => {
+        return new BPromise((resolve, reject) => {
           if (result.error) {
             reject(new OnTimeError(result));
           } else if (!result.data) {
@@ -39,7 +39,7 @@ class Ontime {
       .catch(err => {
         logger.error('Error while requesting (' + url + ').');
         logger.error('Error detail :' + err);
-        return new Promise((resolve, reject) => {
+        return new BPromise((resolve, reject) => {
           reject(new Error(err));
         });
       })

@@ -2,7 +2,7 @@
 
 const moment = require('moment');
 const merge = require('merge');
-var Promise = require('bluebird');
+const BPromise = require('bluebird');
 
 const User = require('../../models/user');
 const OntimeRequester = require('./Ontime');
@@ -102,7 +102,7 @@ class Http {
         if (!user) {
           throw new EmptyUserError();
         }
-        return new Promise(resolve => {
+        return new BPromise(resolve => {
           resolve(user);
         });
       })
@@ -130,7 +130,7 @@ class Http {
           throw new Error(result);
         }
 
-        return new Promise(resolve => {
+        return new BPromise(resolve => {
           /* jshint camelcase: false */
           resolve(merge(result.data, {accessToken: result.access_token}));
           /* jshint camelcase: true */

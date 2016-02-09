@@ -1,6 +1,6 @@
 'use strict';
 
-const promise = require('bluebird');
+const BPromise = require('bluebird');
 const mongoose = require('mongoose');
 
 const AbstractController = require('./AbstractController');

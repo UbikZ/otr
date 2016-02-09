@@ -1,6 +1,6 @@
 'use strict';
 
-var Promise = require('bluebird');
+const BPromise = require('bluebird');
 const assert = require('chai').assert;
 const mongoose = require('mongoose');
 

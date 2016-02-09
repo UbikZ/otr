@@ -1,6 +1,6 @@
 'use strict';
 
-const promise = require('bluebird');
+const BPromise = require('bluebird');
 const mongoose = require('mongoose');
 
 const AbstractController = require('./AbstractController');
@@ -104,7 +104,7 @@ class ItemController extends AbstractController {
         }
 
         // FIXME: implement native promises on 'Organization.findDeepAttributeById'
-        return promise.promisify(Organization.findDeepAttributeById(organization, data.itemId));
+        return BPromise.promisify(Organization.findDeepAttributeById(organization, data.itemId));
       })
       .then((element, parentElement) => {
         const result = {};
