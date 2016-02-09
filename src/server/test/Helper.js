@@ -1,7 +1,7 @@
 'use strict';
 
 const sinon = require('sinon');
-const promise = require('bluebird');
+var Promise = require('bluebird');
 
 /**
  *  Helper methods with "mock"
@@ -62,11 +62,14 @@ class Helper {
       lean: function () {
         return this;
       },
-      execAsync: () => {
-        return (empty === true)
-          ? promise.resolve()
-          : promise.reject(new Error({error: 'error'}));
-      }
+      execAsync: () => new Promise((resolve, reject) => {
+          if (empty === true) {
+            resolve();
+          } else {
+            reject(new Error({error: 'error'}));
+          }
+        }
+      ),
     }, callback);
   }
 }

@@ -36,21 +36,23 @@ class UserController extends AbstractController {
    * @method  GET
    */
   indexAction(request, response) {
-    Http.checkAuthorized(request, response, () => {
-      User.find({}).lean().execAsync()
-        .then(users => {
-          if (!users) {
-            throw new EmptyUserError();
-          }
-          Http.sendResponse(request, response, 200, {users: users});
-        })
-        .catch(EmptyUserError, () => {
-          Http.sendResponse(request, response, 404, {}, '-12', 'Error: users is undefined (criteria = ' + {} + ').');
-        })
-        .catch(err => {
-          Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: get users', err);
-        });
-    });
+    Http.checkAuthorized(request, response)
+      .then(() => {
+        return User.find({}).lean().execAsync();
+      })
+      .then(users => {
+        if (!users) {
+          throw new EmptyUserError();
+        }
+        Http.sendResponse(request, response, 200, {users: users});
+      })
+      .catch(EmptyUserError, () => {
+        Http.sendResponse(request, response, 404, {}, '-12', 'Error: users is undefined (criteria = ' + {} + ').');
+      })
+      .catch(err => {
+        Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: get users', err);
+      })
+    ;
   }
 
   /**

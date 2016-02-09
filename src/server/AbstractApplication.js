@@ -1,10 +1,10 @@
 'use strict';
 
-const promise = require('bluebird');
+var Promise = require('bluebird');
 const bodyParser = require('body-parser');
 const express = require('express');
 const fs = require('fs');
-const mongoose = promise.promisifyAll(require('mongoose'));
+const mongoose = Promise.promisifyAll(require('mongoose'));
 const morgan = require('morgan');
 
 /**

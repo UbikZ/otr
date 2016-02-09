@@ -2,6 +2,7 @@
 
 const moment = require('moment');
 const merge = require('merge');
+var Promise = require('bluebird');
 
 const User = require('../../models/user');
 const OntimeRequester = require('./Ontime');
@@ -91,15 +92,17 @@ class Http {
    * Global method to check authorization to access a method
    * @param request
    * @param response
-   * @param callback
+   * @returns {*}
    */
-  static checkAuthorized(request, response, callback) {
-    User.findOne({'identity.token': request.token}).lean().execAsync()
+  static checkAuthorized(request, response) {
+    return User.findOne({'identity.token': request.token}).lean().execAsync()
       .then(user => {
         if (!user) {
           throw new EmptyUserError();
         }
-        callback(user);
+        return new Promise(resolve => {
+          resolve(user);
+        });
       })
       .catch(EmptyUserError, () => {
         Http.sendResponse(request, response, 404, {}, '-2', 'Error: token provided is not associated with an account.');
