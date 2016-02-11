@@ -32,12 +32,14 @@ const schema = new mongoose.Schema({
   setting: Setting,
 });
 
+// FIXME: try to use only promises (NO CALLBACKS)
 schema.statics.findDeepAttributeById = (model, elementId, cb) => {
   utilsHelper.findSpecificRecursivelyById(model, elementId, (element, parentElement, type) => {
     cb(element, parentElement, type);
   });
 };
 
+// FIXME: try to use only promises (NO CALLBACKS)
 schema.statics.walkRecursively = (model, cb) => {
   utilsHelper.walkRecursively(model, (element) => {
     if (element !== undefined) {
