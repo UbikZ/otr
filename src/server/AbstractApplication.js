@@ -103,7 +103,7 @@ class AbstractApplication {
   }
 
   _loadControllers() {
-    require('./controllers/router')(this.app, require('./config/routes'));
+    require('./router')(this.app, require('./config/routes'));
   }
 
   _loadHelpers() {

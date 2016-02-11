@@ -1,15 +1,15 @@
 'use strict';
 
-const Http = require('./helpers/Http');
-const logger = require('../logger');
+const Http = require('./controllers/helpers/Http');
+const logger = require('./logger');
 
 const controllers = {
-  "IndexController": require('./IndexController'),
-  "AuthenticationController": require('./AuthenticationController'),
-  "UserController": require('./UserController'),
-  "OrganizationController": require('./OrganizationController'),
-  "OnTimeController": require('./OnTimeController'),
-  "ItemController": require('./ItemController'),
+  "IndexController": require('./controllers/IndexController'),
+  "AuthenticationController": require('./controllers/AuthenticationController'),
+  "UserController": require('./controllers/UserController'),
+  "OrganizationController": require('./controllers/OrganizationController'),
+  "OnTimeController": require('./controllers/OnTimeController'),
+  "ItemController": require('./controllers/ItemController'),
 };
 
 const methods = {GET: 'GET', POST: 'POST'};
