@@ -14,7 +14,7 @@ class IndexController extends AbstractController {
    * @param   response
    * @method  GET
    */
-  indexAction(request, response) {
+  static indexAction(request, response) {
     response.sendFile(path.join(__dirname, this.config.path.public + '/index.html'));
   }
 }

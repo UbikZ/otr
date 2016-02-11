@@ -14,27 +14,12 @@ const OnTimeError = require('../errors/OnTimeError');
  */
 class OnTimeController extends AbstractController {
   /**
-   * Scope routes patterns
-   * @returns {{controller: string, actions: {me: string, tree: string, items: string}}}
-   */
-  static get patterns() {
-    return {
-      controller: '/on-time',
-      actions: {
-        me: '/me',
-        tree: '/tree',
-        items: '/items',
-      }
-    };
-  }
-
-  /**
    * Get information about logged ontime user
    * @param   request
    * @param   response
    * @method  GET
    */
-  meAction(request, response) {
+  static meAction(request, response) {
     let userModel = {};
     Http.checkAuthorized(request, response)
       .then(user => {
@@ -66,7 +51,7 @@ class OnTimeController extends AbstractController {
    * @param   response
    * @method  GET
    */
-  treeAction(request, response) {
+  static treeAction(request, response) {
     let userModel = {};
     Http.checkAuthorized(request, response)
       .then(user => {
@@ -97,7 +82,7 @@ class OnTimeController extends AbstractController {
    * @param   response
    * @method  GET
    */
-  itemsAction(request, response) {
+  static itemsAction(request, response) {
     let userModel = {};
     Http.checkAuthorized(request, response)
       .then(user => {

@@ -15,21 +15,6 @@ const EmptyUserError = require('../errors/EmptyUserError');
  * - meAction
  */
 class AuthenticationController extends AbstractController {
-
-  /**
-   * Scoped routes patterns
-   * @returns {{controller: string, actions: {index: string, me: string}}}
-   */
-  static get patterns() {
-    return {
-      controller: '/authentication',
-      actions: {
-        signUp: '/sign-up',
-        me: '/me',
-      }
-    };
-  }
-
   /**
    * Register or connect a user
    * - Get new Ontime token (for each sign-up)
@@ -38,7 +23,7 @@ class AuthenticationController extends AbstractController {
    * @param   response
    * @method  POST
    */
-  signUpAction(request, response) {
+  static signUpAction(request, response) {
     let userModel = {}, data = {};
     Http.ontimeRequestToken(request, response)
       .then(userData => {
@@ -79,7 +64,7 @@ class AuthenticationController extends AbstractController {
    * @param   response
    * @method  GET
    */
-  meAction(request, response) {
+  static meAction(request, response) {
     User.findOne({'identity.token': request.token}).lean().execAsync()
       .then(user => {
         if (!user) {

@@ -13,26 +13,12 @@ const EmptyUserError = require('./../errors/EmptyUserError');
  */
 class UserController extends AbstractController {
   /**
-   * Scope routes patterns
-   * @returns {{controller: string, actions: {index: string, update: string}}}
-   */
-  static get patterns() {
-    return {
-      controller: '/user',
-      actions: {
-        index: '/',
-        update: '/update',
-      }
-    };
-  }
-
-  /**
    * Get information about logged ontime user
    * @param   request
    * @param   response
    * @method  GET
    */
-  indexAction(request, response) {
+  static indexAction(request, response) {
     Http.checkAuthorized(request, response)
       .then(() => {
         return User.find({}).lean().execAsync();
@@ -58,7 +44,7 @@ class UserController extends AbstractController {
    * @param   response
    * @method  POST
    */
-  updateAction(request, response) {
+  static updateAction(request, response) {
     const data = request.body;
     let userModel = {};
 

@@ -3,163 +3,37 @@
 const Http = require('./helpers/Http');
 const logger = require('../logger');
 
-const IndexControllerClass = require('./IndexController');
-const AuthenticationControllerClass = require('./AuthenticationController');
-const UserControllerClass = require('./UserController');
-const OrganizationControllerClass = require('./OrganizationController');
-const OnTimeControllerClass = require('./OnTimeController');
-const ItemControllerClass = require('./ItemController');
+const controllers = {
+  "IndexController": require('./IndexController'),
+  "AuthenticationController": require('./AuthenticationController'),
+  "UserController": require('./UserController'),
+  "OrganizationController": require('./OrganizationController'),
+  "OnTimeController": require('./OnTimeController'),
+  "ItemController": require('./ItemController'),
+};
 
 const methods = {GET: 'GET', POST: 'POST'};
 
 /**
  * Router
- * @param Application
+ * @param app
+ * @param router
  */
-module.exports = (Application) => {
-  const config = Application.config;
-  const app = Application.app;
-
-  const routes = [
-    /* Index */
-    {
-      url: IndexControllerClass.patterns.controller,
-      instance: new IndexControllerClass(config),
-      name: 'IndexController',
-      subRoutes: [
-        {
-          method: methods.GET,
-          pattern: IndexControllerClass.patterns.actions.index,
-          name: 'indexAction',
-          checkSecurity: false,
-        }
-      ],
-    },
-    /* Authentication */
-    {
-      url: AuthenticationControllerClass.patterns.controller,
-      instance: new AuthenticationControllerClass(config),
-      name: 'AuthenticationController',
-      subRoutes: [
-        {
-          method: methods.POST,
-          pattern: AuthenticationControllerClass.patterns.actions.signUp,
-          name: 'signUpAction',
-          checkSecurity: false,
-        },
-        {
-          method: methods.GET,
-          pattern: AuthenticationControllerClass.patterns.actions.me,
-          name: 'meAction',
-          checkSecurity: true,
-        },
-      ],
-    },
-    /* User */
-    {
-      url: UserControllerClass.patterns.controller,
-      instance: new UserControllerClass(config),
-      name: 'UserController',
-      subRoutes: [
-        {
-          method: methods.GET,
-          pattern: UserControllerClass.patterns.actions.index,
-          name: 'indexAction',
-          checkSecurity: true,
-        },
-        {
-          method: methods.POST,
-          pattern: UserControllerClass.patterns.actions.update,
-          name: 'updateAction',
-          checkSecurity: true,
-        }
-      ],
-    },
-    /* Organization */
-    {
-      url: OrganizationControllerClass.patterns.controller,
-      instance: new OrganizationControllerClass(config),
-      name: 'OrganizationController',
-      subRoutes: [
-        {
-          method: methods.GET,
-          pattern: OrganizationControllerClass.patterns.actions.index,
-          name: 'indexAction',
-          checkSecurity: true,
-        },
-        {
-          method: methods.POST,
-          pattern: OrganizationControllerClass.patterns.actions.edit,
-          name: 'editAction',
-          checkSecurity: true,
-        },
-        {
-          method: methods.POST,
-          pattern: OrganizationControllerClass.patterns.actions.delete,
-          name: 'deleteAction',
-          checkSecurity: true,
-        }
-      ],
-    },
-    /* OnTime */
-    {
-      url: OnTimeControllerClass.patterns.controller,
-      instance: new OnTimeControllerClass(config),
-      name: 'OnTimeController',
-      subRoutes: [
-        {
-          method: methods.GET,
-          pattern: OnTimeControllerClass.patterns.actions.me,
-          name: 'meAction',
-          checkSecurity: true,
-        },
-        {
-          method: methods.GET,
-          pattern: OnTimeControllerClass.patterns.actions.tree,
-          name: 'treeAction',
-          checkSecurity: true,
-        },
-        {
-          method: methods.GET,
-          pattern: OnTimeControllerClass.patterns.actions.items,
-          name: 'itemsAction',
-          checkSecurity: true,
-        },
-      ],
-    },
-    /* Item */
-    {
-      url: ItemControllerClass.patterns.controller,
-      instance: new ItemControllerClass(config),
-      name: 'ItemController',
-      subRoutes: [
-        {
-          method: methods.GET,
-          pattern: ItemControllerClass.patterns.actions.index,
-          name: 'indexAction',
-          checkSecurity: true,
-        },
-      ],
-    },
-  ];
-
+module.exports = (app, router) => {
   /**
    * Register all routes
    */
-  routes.forEach(function (controller) {
-    controller.subRoutes.forEach(function (action) {
-      const args = [Application.apiUrl + controller.url + action.pattern];
-      if (action.checkSecurity === true) {
+  router.routes.forEach(function (route) {
+    route.subRoutes.forEach(function (subRoute) {
+      const args = [app.apiUrl + route.pattern + subRoute.pattern];
+      if (subRoute.checkSecurity === true) {
         args.push(Http.ensureAuthorized);
       }
-      /* jshint proto: true */
-      // ES6 __proto__ is not deprecated
-      args.push(controller.instance.__proto__[action.name]);
-      /* jshint proto: false */
+      args.push(controllers[route.controllerName][subRoute.actionName]);
 
-      logger.info('[ ' + action.method + ' ] ' + args[0] + ' -> ' + controller.name + '/' + action.name);
+      logger.info('[ ' + subRoute.method + ' ] ' + args[0] + ' -> ' + route.controllerName + '/' + subRoute.actionName);
 
-      switch (action.method) {
+      switch (subRoute.method) {
         case methods.POST:
           app.post.apply(app, args);
           break;

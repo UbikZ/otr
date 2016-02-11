@@ -1,0 +1,137 @@
+{
+  "routes": [
+    {
+      "name": "Root access",
+      "pattern": "/",
+      "controllerName": "IndexController",
+      "subRoutes": [
+        {
+          "name": "Forward index.html",
+          "method": "GET",
+          "pattern": "/",
+          "actionName": "indexAction",
+          "checkSecurity": false
+        }
+      ]
+    },
+    {
+      "name": "Authentication",
+      "pattern": "/authentication",
+      "controllerName": "AuthenticationController",
+      "subRoutes": [
+        {
+          "name": "Register or Login",
+          "method": "POST",
+          "pattern": "/sign-up",
+          "actionName": "signUpAction",
+          "checkSecurity": false
+        },
+        {
+          "name": "Get logged user information",
+          "method": "GET",
+          "pattern": "/me",
+          "actionName": "meAction",
+          "checkSecurity": true
+        }
+      ]
+    },
+    {
+      "name": "User",
+      "pattern": "/user",
+      "controllerName": "UserController",
+      "subRoutes": [
+        {
+          "name": "Get user(s)",
+          "method": "GET",
+          "pattern": "/",
+          "actionName": "indexAction",
+          "checkSecurity": true
+        },
+        {
+          "name": "Update user information",
+          "method": "POST",
+          "pattern": "/update",
+          "actionName": "updateAction",
+          "checkSecurity": true
+        }
+      ]
+    },
+    {
+      "name": "Organization",
+      "pattern": "/organization",
+      "controllerName": "OrganizationController",
+      "subRoutes": [
+        {
+          "name": "Get organization(s)",
+          "method": "GET",
+          "pattern": "/",
+          "actionName": "indexAction",
+          "checkSecurity": true
+        },
+        {
+          "name": "Edit organization",
+          "method": "POST",
+          "pattern": "/edit",
+          "actionName": "editAction",
+          "checkSecurity": true
+        },
+        {
+          "name": "Delete organization",
+          "method": "POST",
+          "pattern": "/delete",
+          "actionName": "deleteAction",
+          "checkSecurity": true
+        }
+      ]
+    },
+    {
+      "name": "OnTime",
+      "pattern": "/on-time",
+      "controllerName": "OnTimeController",
+      "subRoutes": [
+        {
+          "name": "Get OnTime user information",
+          "method": "GET",
+          "pattern": "/me",
+          "actionName": "meAction",
+          "checkSecurity": true
+        },
+        {
+          "name": "Get OnTime projects/release tree",
+          "method": "GET",
+          "pattern": "/tree",
+          "actionName": "treeAction",
+          "checkSecurity": true
+        },
+        {
+          "name": "Get OnTime stories",
+          "method": "GET",
+          "pattern": "/items",
+          "actionName": "itemsAction",
+          "checkSecurity": true
+        }
+      ]
+    },
+    {
+      "name": "Item",
+      "pattern": "/item",
+      "controllerName": "ItemController",
+      "subRoutes": [
+        {
+          "name": "Get an item",
+          "method": "GET",
+          "pattern": "/",
+          "actionName": "indexAction",
+          "checkSecurity": true
+        },
+        {
+          "name": "Create an item",
+          "method": "POST",
+          "pattern": "/create",
+          "actionName": "createAction",
+          "checkSecurity": true
+        }
+      ]
+    }
+  ]
+}

@@ -16,21 +16,6 @@ const EmptyOrganizationError = require('../errors/EmptyOrganizationError');
  */
 class OrganizationController extends AbstractController {
   /**
-   * Scoped routes patterns
-   * @returns {{controller: string, actions: {index: string, edit: string, delete: string}}}
-   */
-  static get patterns() {
-    return {
-      controller: '/organization',
-      actions: {
-        index: '/',
-        edit: '/edit',
-        'delete': '/delete',
-      }
-    };
-  }
-
-  /**
    * Get organizations information
    * - use "id" as criteria (request ONE organization)
    * - use "lazy" as criteria (get only simple elements from organizations)
@@ -39,7 +24,7 @@ class OrganizationController extends AbstractController {
    * @param   response
    * @method  GET
    */
-  indexAction(request, response) {
+  static indexAction(request, response) {
     const data = request.query;
     let criteria = {};
 
@@ -94,7 +79,7 @@ class OrganizationController extends AbstractController {
    * @param   response
    * @method  POST
    */
-  editAction(request, response) {
+  static editAction(request, response) {
     const data = request.body;
     let userModel = {}, fields = {}, orgModel = {}, isNew = false;
 
@@ -141,7 +126,7 @@ class OrganizationController extends AbstractController {
    * @param   response
    * @method  POST (FIXME: change to GET -> /:id)
    */
-  deleteAction(request, response) {
+  static deleteAction(request, response) {
     const data = request.body;
 
     Http.checkAuthorized(request, response)
