@@ -8,3 +8,4 @@ public/lib
 coverage
 npm-debug.log
 .DS_Store
+.vscode
