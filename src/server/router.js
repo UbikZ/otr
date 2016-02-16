@@ -4,12 +4,12 @@ const Http = require('./controllers/helpers/Http');
 const logger = require('./logger');
 
 const controllers = {
-  "IndexController": require('./controllers/IndexController'),
-  "AuthenticationController": require('./controllers/AuthenticationController'),
-  "UserController": require('./controllers/UserController'),
-  "OrganizationController": require('./controllers/OrganizationController'),
-  "OnTimeController": require('./controllers/OnTimeController'),
-  "ItemController": require('./controllers/ItemController'),
+  'IndexController': require('./controllers/IndexController'),
+  'AuthenticationController': require('./controllers/AuthenticationController'),
+  'UserController': require('./controllers/UserController'),
+  'OrganizationController': require('./controllers/OrganizationController'),
+  'OnTimeController': require('./controllers/OnTimeController'),
+  'ItemController': require('./controllers/ItemController'),
 };
 
 const methods = {GET: 'GET', POST: 'POST'};
@@ -41,7 +41,7 @@ module.exports = (app, router) => {
           app.get.apply(app, args);
           break;
         default:
-          throw new Error('Invalid Method : ' + action.method);
+          throw new Error('Invalid Method : ' + subRoute.method);
       }
     });
   });
