@@ -64,7 +64,11 @@ class Http {
     logger.debug('*** ' + ip + ' ***');
     logger.debug('[' + moment().format('YYYY-MM-DD HH:mm:SS') + '] Msg: ' + message);
     if (err) {
-      logger.debug('[' + moment().format('YYYY-MM-DD HH:mm:SS') + '] Err: ' + err);
+      const errors = err ? err.stack.split('\n') : [];
+      logger.debug('[' + moment().format('YYYY-MM-DD HH:mm:SS') + ']');
+      errors.forEach(function(error) {
+        logger.debug(error);
+      });
     }
     logger.debug('******');
   }
