@@ -1,9 +1,11 @@
 'use strict';
 
 const mongoose = require('mongoose');
+const BPromise = require('bluebird');
+
 const Project = require('./project').schema;
 const Setting = require('./setting').schema;
-const utilsHelper = require('./helpers/utils');
+const Find = require('./helpers/Find');
 
 const schema = new mongoose.Schema({
   name: {type: String, index: {unique: true}, trim: true, require: true},
@@ -32,18 +34,30 @@ const schema = new mongoose.Schema({
   setting: Setting,
 });
 
-// FIXME: try to use only promises (NO CALLBACKS)
-schema.statics.findDeepAttributeById = (model, elementId, cb) => {
-  utilsHelper.findSpecificRecursivelyById(model, elementId, (element, parentElement, type) => {
-    cb(element, parentElement, type);
+/**
+ *
+ * @param model
+ * @param elementId
+ * @returns {*|void}
+ */
+schema.statics.findDeepAttributeById = (model, elementId) => {
+  return new BPromise(resolve => {
+    Find.findRecursively(model, elementId, (element, parentElement, type) => {
+      resolve({element, parentElement, type});
+    });
   });
 };
 
-// FIXME: try to use only promises (NO CALLBACKS)
-schema.statics.walkRecursively = (model, cb) => {
-  utilsHelper.walkRecursively(model, (element) => {
+/**
+ * No promise here (will see after)
+ * - hard recursive method (performance needed)
+ * @param model
+ * @param callback
+ */
+schema.statics.walkRecursively = (model, callback) => {
+  Find.walkRecursively(model, element => {
     if (element !== undefined) {
-      cb(element);
+      callback(element);
     }
   });
 };

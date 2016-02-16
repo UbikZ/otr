@@ -1,13 +1,9 @@
 'use strict';
 
-const BPromise = require('bluebird');
-const mongoose = require('mongoose');
-
 const AbstractController = require('./AbstractController');
 const Http = require('./helpers/Http');
 const Ontime = require('./helpers/Ontime');
 
-const User = require('../models/user');
 const Organization = require('../models/organization');
 const SettingModel = require('../models/setting');
 const ProjectModel = require('../models/project');
@@ -25,6 +21,7 @@ const NotFoundItemError = require('../errors/NotFoundItemError');
 const InvalidTypeItemError = require('../errors/InvalidTypeItemError');
 const UndefinedOnTimeIdVersionError = require('../errors/UndefinedOnTimeIdVersionError');
 const OnTimeError = require('../errors/OnTimeError');
+const Success = require('../errors/Success');
 
 /**
  * Item Controller
@@ -36,16 +33,15 @@ class ItemController extends AbstractController {
    * Generic save method
    * - update organization
    * - "lazy" for delete entries
-   * @param request
-   * @param response
    * @param data
-   * @param organization
-   * @param modelItem
+   * @param org
+   * @param item
    * @param returnCode
    * @returns {*}
    * @private
    */
-  static _save(request, response, data, organization, modelItem, returnCode) {
+  static _save(data, org, item, returnCode) {
+    let organization = org;
     return Organization.update({_id: organization._id}, organization, {}).lean().execAsync()
       .then(() => {
         /*jshint eqeqeq: false */
@@ -59,20 +55,14 @@ class ItemController extends AbstractController {
               }
             }
           });
-          delete modelItem.entries;
-          if (modelItem.entries !== undefined) {
-            modelItem.entries = null;
+          delete item.entries;
+          if (item.entries !== undefined) {
+            item.entries = null;
           }
         }
-        Http.sendResponse(
-          // FIXME: do something for ugly type stuff
-          request, response, 200, {organization: organization, item: modelItem, type: data.type + 's'}, returnCode
-        );
+        throw new Success({organization, item, type: data.type + 's', returnCode});
       })
-      .catch(err => {
-        Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: create item -> save organization', err);
-      })
-      ;
+    ;
   }
 
   /**
@@ -85,9 +75,11 @@ class ItemController extends AbstractController {
    */
   static indexAction(request, response) {
     const data = request.query;
+    let organization = {};
 
     Organization.findById(data.organizationId).lean().execAsync()
-      .then(organization => {
+      .then(org => {
+        organization = org;
         if (!organization) {
           throw new EmptyOrganizationError();
         }
@@ -101,10 +93,11 @@ class ItemController extends AbstractController {
           });
         }
 
-        // FIXME: implement native promises on 'Organization.findDeepAttributeById'
-        return BPromise.promisify(Organization.findDeepAttributeById(organization, data.itemId));
+        return Organization.findDeepAttributeById(organization, data.itemId);
       })
-      .then((element, parentElement) => {
+      .then(data => {
+        const element = data.element;
+        const parentElement = data.parentElement;
         const result = {};
 
         if (element === undefined) {
@@ -277,10 +270,13 @@ class ItemController extends AbstractController {
    */
   static createAction(request, response) {
     const data = request.body;
-    let modelItem = {}, user = {};
+    let modelItem = {}, user = {}, organization = {};
 
     Http.checkAuthorized(request, response)
+      // Result of checkAuthorize
       .then(userData => {
+        console.log('then - userData');
+
         user = userData;
         if (!data.organizationId) {
           throw new UndefinedOrganizationIdItemError();
@@ -288,7 +284,11 @@ class ItemController extends AbstractController {
 
         return Organization.findById(data.organizationId).lean().populate('creation.user').execAsync();
       })
-      .then(organization => {
+      // Result of Organization.findById
+      .then(org => {
+        console.log('then - org');
+
+        organization = org;
         modelItem = {
           name: data.name,
           description: data.description,
@@ -297,36 +297,46 @@ class ItemController extends AbstractController {
         };
 
         if (!organization) {
+          console.log('!organization');
+
           throw new NotFoundOrganizationIdItemError();
-        } else if (data.parentId === undefined && data.type !== 'project') {
-          throw new UndefinedParentIdOrTypeItemError();
-        } else if (data.parentId === undefined && data.type === 'project') {
+        } else if (data.parentId !== undefined) {
+          console.log('data.parentId !== undefined');
+
+          return Organization.findDeepAttributeById(organization, data.parentId);
+        } else if (data.type === 'project') {
+          console.log('data.type === \'project\'');
+
           modelItem = new ProjectModel(modelItem);
           organization.projects.push(modelItem);
+          
+          return ItemController._save(data, organization, modelItem, '2');
+        } else {
+          console.log('else');
 
-          return ItemController._save(request, response, data, organization, modelItem, '2');
+          throw new UndefinedParentIdOrTypeItemError();
         }
-
-        return BPromise.promisify(Organization.findDeepAttributeById(organization, data.parentId));
       })
-      .then(element => {
-        if (element === undefined) {
+      // Result of Organization.findDeepAttributeById
+      .then(result => {
+        if (!result || !result.element) {
           throw new NotFoundItemError();
         }
+        let element = result.element;
 
         // Switch-like
         const cases = {
           project: () => {
-            modelItem = new ProjectModel(item);
+            modelItem = new ProjectModel(modelItem);
             element.projects.push(modelItem);
 
-            return ItemController._save(request, response, data, organization, modelItem, '2');
+            return ItemController._save(data, organization, modelItem, '2');
           },
           document: () => {
-            modelItem = new DocumentModel(item);
+            modelItem = new DocumentModel(modelItem);
             element.documents.push(modelItem);
 
-            return ItemController._save(request, response, data, organization, modelItem, '2');
+            return ItemController._save(data, organization, modelItem, '2');
           },
           version: () => {
             if (data.projectOntimeId !== undefined || data.releaseOntimeId !== undefined) {
@@ -346,14 +356,21 @@ class ItemController extends AbstractController {
           throw new InvalidTypeItemError();
         }
       })
+      // Result of Ontime.items
       .then(result => {
-        modelItem = new VersionModel(item);
+        modelItem = new VersionModel(modelItem);
         modelItem.update = modelItem.creation = {user: user._id, date: new Date()};
         modelItem.setting = new SettingModel(mapping.settingDtoToDal(undefined, data.setting));
-        modelItem.entries = this._createEntries(result.data);
+        modelItem.entries = ItemController._createEntries(result.data);
 
-        return ItemController._save(request, response, data, organization, modelItem, '2');
+        return ItemController._save(data, organization, modelItem, '2');
       })
+      // Promise-chaining Success (200)
+      .catch(Success, successMsg => {
+        const result = successMsg.result;
+        Http.sendResponse(request, response, 200, result, result.returnCode);
+      })
+      // Promise-chaining Errors/Exceptions (!200)
       .catch(OnTimeError, err => {
         const error = err.message;
         Http.sendResponse(
