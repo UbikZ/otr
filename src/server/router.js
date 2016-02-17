@@ -12,7 +12,7 @@ const controllers = {
   'ItemController': require('./controllers/ItemController'),
 };
 
-const methods = {GET: 'GET', POST: 'POST'};
+const methods = {GET: 'GET', POST: 'POST', DELETE: 'DELETE'};
 
 /**
  * Router
@@ -25,7 +25,8 @@ module.exports = (app, router) => {
    */
   router.routes.forEach(function (route) {
     route.subRoutes.forEach(function (subRoute) {
-      const args = [app.apiUrl + route.pattern + subRoute.pattern];
+      const args = [app.apiUrl + route.pattern + subRoute.pattern], cases = {};
+      let func;
       if (subRoute.checkSecurity === true) {
         args.push(Http.ensureAuthorized);
       }
@@ -33,15 +34,15 @@ module.exports = (app, router) => {
 
       logger.info('[ ' + subRoute.method + ' ] ' + args[0] + ' -> ' + route.controllerName + '/' + subRoute.actionName);
 
-      switch (subRoute.method) {
-        case methods.POST:
-          app.post.apply(app, args);
-          break;
-        case methods.GET:
-          app.get.apply(app, args);
-          break;
-        default:
-          throw new Error('Invalid Method : ' + subRoute.method);
+      // Switch-like
+      cases[methods.POST] = app.post;
+      cases[methods.GET] = app.get;
+      cases[methods.DELETE] = app.delete;
+
+      if (cases[subRoute.method]) {
+        cases[subRoute.method].apply(app, args);
+      } else {
+        throw new Error('Invalid Method : ' + subRoute.method);
       }
     });
   });
