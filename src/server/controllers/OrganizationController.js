@@ -124,17 +124,16 @@ class OrganizationController extends AbstractController {
    * Delete one organization
    * @param   request
    * @param   response
-   * @method  POST (FIXME: change to GET -> /:id)
+   * @method  DELETE
    */
   static deleteAction(request, response) {
-    const data = request.body;
-
+    const params = request.params;
     Http.checkAuthorized(request, response)
       .then(() => {
-        return Organization.findByIdAndRemove(data.id).lean().execAsync();
+        return Organization.findByIdAndRemove(params.organizationId).lean().execAsync();
       })
       .then(() => {
-        Http.sendResponse(request, response, 200, {id: data.id}, '7');
+        Http.sendResponse(request, response, 200, {id: params.organizationId}, '7');
       })
       .catch(err => {
         Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: delete organization', err);

@@ -296,12 +296,27 @@ module.exports = (agent, url) => {
       });
     });
 
-    describe('# [DELETE] ' + url + '/organization/delete', () => {
+    describe('# [DELETE] ' + url + '/organization/delete/:idOrganization', () => {
+      it('should get 404 not found (missing parameter)', done => {
+        const apiUrl = url + '/organization/delete';
+        agent
+          .delete(apiUrl)
+          .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
+          .expect(404)
+          .expect('Content-Type', 'text/html; charset=utf-8')
+          .then(res => {
+            const result = res.text;
+            assert.strictEqual(result, 'Cannot DELETE ' + apiUrl + '\n');
+            done();
+          })
+          .catch(err => done(err))
+        ;
+      });
+      
       it('should get an internal error (mongo fail)', done => {
         Helper.mockModel(mongoose.model('Organization'), 'findByIdAndRemove', stub => {
           agent
-            .post(url + '/organization/delete')
-            .send({id: organizationId})
+            .delete(url + '/organization/delete/' + organizationId)
             .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
             .expect(500)
             .expect('Content-Type', 'application/json; charset=utf-8')
@@ -320,8 +335,7 @@ module.exports = (agent, url) => {
 
       it('should delete one organization', done => {
         agent
-          .post(url + '/organization/delete')
-          .send({id: organizationId})
+          .delete(url + '/organization/delete/' + organizationId)
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(200)
           .expect('Content-Type', 'application/json; charset=utf-8')

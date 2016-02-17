@@ -77,8 +77,8 @@
         },
         {
           "name": "Delete organization",
-          "method": "POST",
-          "pattern": "/delete",
+          "method": "DELETE",
+          "pattern": "/delete/:organizationId",
           "actionName": "deleteAction",
           "checkSecurity": true
         }
