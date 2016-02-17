@@ -14,7 +14,7 @@ const OrganizationModel = require('../../models/organization');
 module.exports = (agent, url) => {
   describe('> Setting API', () => {
     let settingStandaloneId;
-    describe('# [POST] ~standalone' + url + '/setting/update', () => {
+    describe('# [POST] ~standalone ' + url + '/setting/update', () => {
       it('should get an internal error (findOne) on create a standalone setting (mongo fail)', done => {
         const sentData = require('./../fixtures/setting/create-ok-1');
         Helper.mockModel(mongoose.model('Setting'), 'findOne', stub => {
@@ -163,7 +163,7 @@ module.exports = (agent, url) => {
       });
     });
 
-    describe('# [GET] ~standalone' + url + '/setting', () => {
+    describe('# [GET] ~standalone ' + url + '/setting', () => {
       it('should get an internal error (find) for request a standalone setting (mongo fail)', done => {
         Helper.mockModel(mongoose.model('Setting'), 'find', stub => {
           agent
@@ -225,19 +225,18 @@ module.exports = (agent, url) => {
       });
     });
 
-    describe('# [POST] ~sub-item' + url + '/setting/update', () => {
-      it('should get an error request (not found because no organizationId given) a sub-item setting',
+    describe('# [POST] ~sub-item ' + url + '/setting/sub/update/:organizationId', () => {
+      const apiUrl = url + '/setting/sub/update';
+      it('should get 404 not found (organizationId parameter missing) to get sub-item setting',
         done => {
           agent
-            .post(url + '/setting/edit')
+            .post(apiUrl)
             .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
             .expect(404)
-            .expect('Content-Type', 'application/json; charset=utf-8')
+            .expect('Content-Type', 'text/html; charset=utf-8')
             .then(res => {
-              const result = res.body;
-              assert.strictEqual(result.code, 404);
-              assert.isUndefined(result.error);
-              assert.strictEqual(result.messageCode, '-1');
+              const result = res.text;
+              assert.strictEqual(result, 'Cannot POST ' + apiUrl + '\n');
               done();
             })
             .catch(err => done(err))
@@ -248,8 +247,7 @@ module.exports = (agent, url) => {
       it('should get an internal error request (findById) a sub-item setting (mongo fail)', done => {
         Helper.mockModel(mongoose.model('Organization'), 'findById', stub => {
           agent
-            .post(url + '/setting/edit')
-            .send({organizationId: global.organizationId})
+            .post(apiUrl + '/' + global.organizationId)
             .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
             .expect(500)
             .expect('Content-Type', 'application/json; charset=utf-8')
@@ -268,8 +266,7 @@ module.exports = (agent, url) => {
 
       it('should get an error request (unknown organizationId) a sub-item setting', done => {
         agent
-          .post(url + '/setting/edit')
-          .send({organizationId: '56961966de7cbad8ba3be467'})
+          .post(apiUrl + '/56961966de7cbad8ba3be467')
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(404)
           .expect('Content-Type', 'application/json; charset=utf-8')
@@ -284,13 +281,12 @@ module.exports = (agent, url) => {
         ;
       });
 
-      /*it('should get an internal error (update) for create a sub-item setting in organization (mongo fail)',
+      it('should get an internal error (update) for create a sub-item setting in organization (mongo fail)',
         done => {
           const sentData = require('./../fixtures/setting/create-ok-1');
-          sentData.organizationId = global.organizationId;
           Helper.mockModel(mongoose.model('Organization'), 'update', stub => {
             agent
-              .post(url + '/setting/edit')
+            .post(apiUrl + '/' + global.organizationId)
               .send(sentData)
               .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
               .expect(500)
@@ -307,13 +303,12 @@ module.exports = (agent, url) => {
             ;
           });
         })
-      ;*/
+      ;
 
       it('should create a sub-item setting in organization', done => {
         const sentData = require('./../fixtures/setting/create-ok-1');
-        sentData.organizationId = global.organizationId;
         agent
-          .post(url + '/setting/edit')
+          .post(apiUrl + '/' + global.organizationId)
           .send(sentData)
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(200)
@@ -325,7 +320,6 @@ module.exports = (agent, url) => {
             assert.strictEqual(result.messageCode, '10');
             assert.isDefined(result.organization);
             assert.isDefined(result.organization.setting);
-            assert.isUndefined(result.setting);
             const org = result.organization;
             assert.strictEqual(org.setting.projectDev.contributorPrice, sentData.contributorPrice);
             assert.strictEqual(org.setting.projectDev.contributorOccupation, sentData.contributorOccupation);
@@ -353,10 +347,9 @@ module.exports = (agent, url) => {
 
       it('should create a sub-item setting in organization (with previewMode enabled)', done => {
         const sentData = require('./../fixtures/setting/update-ok-1');
-        sentData.organizationId = global.organizationId;
         sentData.modePreview = 1;
         agent
-          .post(url + '/setting/edit')
+          .post(apiUrl + '/' + global.organizationId)
           .send(sentData)
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(200)
@@ -367,8 +360,8 @@ module.exports = (agent, url) => {
             assert.isUndefined(result.error);
             assert.strictEqual(result.messageCode, '10');
             assert.isUndefined(result.organization);
-            assert.isDefined(result.setting);
-            const sett = result.setting;
+            assert.isDefined(result.item);
+            const sett = result.item;
             assert.strictEqual(sett.projectDev.contributorPrice, sentData.contributorPrice);
             assert.strictEqual(sett.projectDev.contributorOccupation, sentData.contributorOccupation);
             assert.strictEqual(sett.projectManagement.scrummasterPrice, sentData.scrummasterPrice);
@@ -389,13 +382,12 @@ module.exports = (agent, url) => {
         ;
       });
 
-      /*it('should get an internal error (update) for create a sub-item setting in organization (mongo fail)',
+      it('should get an internal error (update) for create a sub-item setting in organization (mongo fail)',
         done => {
           const sentData = require('./../fixtures/setting/create-ok-1');
-          sentData.organizationId = global.organizationId;
           sentData.itemId = '56961966de7cbad8ba3be467';
           agent
-            .post(url + '/setting/edit')
+            .post(apiUrl + '/' + global.organizationId)
             .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
             .send(sentData)
             .expect(404)
@@ -410,15 +402,14 @@ module.exports = (agent, url) => {
             .catch(err => done(err))
           ;
         })
-      ;*/
+      ;
 
       it('should get an internal error (update) for create a sub-item setting in organization (mongo fail)',
         done => {
           const sentData = require('./../fixtures/setting/create-ok-1');
-          sentData.organizationId = global.organizationId;
           sentData.itemId = global.projectId;
           agent
-            .post(url + '/setting/edit')
+            .post(apiUrl + '/' + global.organizationId)
             .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
             .send(sentData)
             .expect(200)
@@ -456,30 +447,27 @@ module.exports = (agent, url) => {
       ;
     });
 
-    describe('# [GET] ~sub-item' + url + '/setting/sub', () => {
-      it('should get an error request (not found because no organizationId given) a sub-item setting',
-        done => {
-          agent
-            .get(url + '/setting/sub')
-            .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
-            .expect(404)
-            .expect('Content-Type', 'application/json; charset=utf-8')
-            .then(res => {
-              const result = res.body;
-              assert.strictEqual(result.code, 404);
-              assert.isUndefined(result.error);
-              assert.strictEqual(result.messageCode, '-1');
-              done();
-            })
-            .catch(err => done(err))
-          ;
-        })
-      ;
+    describe('# [GET] ~sub-item ' + url + '/setting/sub/:organizationId', () => {
+      const apiUrl = url + '/setting/sub';
+      it('should get 404 not found (organizationId parameter missing) for sub-item setting', done => {
+        agent
+          .get(apiUrl)
+          .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
+          .expect(404)
+          .expect('Content-Type', 'text/html; charset=utf-8')
+          .then(res => {
+            const result = res.text;
+            assert.strictEqual(result, 'Cannot GET ' + apiUrl + '\n');
+            done();
+          })
+          .catch(err => done(err))
+        ;
+      });
 
       it('should get an internal error request (findById) a sub-item setting (mongo fail)', done => {
         Helper.mockModel(mongoose.model('Organization'), 'findById', stub => {
           agent
-            .get(url + '/setting/sub?organizationId=' + global.organizationId)
+            .get(apiUrl + '/' + global.organizationId)
             .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
             .expect(500)
             .expect('Content-Type', 'application/json; charset=utf-8')
@@ -498,7 +486,7 @@ module.exports = (agent, url) => {
 
       it('should get an error request (unknown organizationId) a sub-item setting', done => {
         agent
-          .get(url + '/setting/sub?organizationId=56961966de7cbad8ba3be467')
+          .get(apiUrl + '/56961966de7cbad8ba3be467')
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(404)
           .expect('Content-Type', 'application/json; charset=utf-8')
@@ -515,7 +503,7 @@ module.exports = (agent, url) => {
 
       it('should get a sub-item setting for organization', done => {
         agent
-          .get(url + '/setting/sub?organizationId=' + global.organizationId)
+          .get(apiUrl + '/' + global.organizationId)
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(200)
           .expect('Content-Type', 'application/json; charset=utf-8')
@@ -533,7 +521,7 @@ module.exports = (agent, url) => {
 
       it('should get a sub-item setting for organization (with lazy)', done => {
         agent
-          .get(url + '/setting/sub?lazy=1&organizationId=' + global.organizationId)
+          .get(apiUrl + '/' + global.organizationId + '?lazy=1')
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(200)
           .expect('Content-Type', 'application/json; charset=utf-8')
@@ -551,7 +539,7 @@ module.exports = (agent, url) => {
 
       it('should get a sub-item setting for item', done => {
         agent
-          .get(url + '/setting/sub?organizationId=' + global.organizationId + '&itemId=' + global.projectId)
+          .get(apiUrl + '/' + global.organizationId + '?itemId=' + global.projectId)
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(200)
           .expect('Content-Type', 'application/json; charset=utf-8')

@@ -33,42 +33,6 @@ const Success = require('../errors/Success');
  */
 class ItemController extends AbstractController {
   /**
-   * Generic save method
-   * - update organization
-   * - "lazy" for delete entries
-   * @param data
-   * @param org
-   * @param item
-   * @param returnCode
-   * @returns {*}
-   * @private
-   */
-  static _save(data, org, item, returnCode) {
-    let organization = org;
-    return Organization.update({_id: organization._id}, organization, {}).lean().execAsync()
-      .then(() => {
-        /*jshint eqeqeq: false */
-        if (data.lazy == 1) {
-          /*jshint eqeqeq: true */
-          Organization.walkRecursively(organization, element => {
-            if (element.entries !== undefined) {
-              delete element.entries;
-              if (element.entries !== undefined) {
-                element.entries = null;
-              }
-            }
-          });
-          delete item.entries;
-          if (item.entries !== undefined) {
-            item.entries = null;
-          }
-        }
-        throw new Success({organization, item, type: data.type + 's', returnCode});
-      })
-    ;
-  }
-
-  /**
    * Get ONE item from Organization (potential parents: organization, project, document, version, entry)
    * - "lazy": delete useless stuff (like entries)
    * - "modePreview": for PDF render (send differents objects)
@@ -284,8 +248,9 @@ class ItemController extends AbstractController {
    * - create documents of n-project
    * - create versions of n-project
    * - create entries of version (check: _createEntries method)
-   * @param request
-   * @param response
+   * @param   request
+   * @param   response
+   * @method  POST
    */
   static createAction(request, response) {
     const data = request.body;
@@ -319,7 +284,7 @@ class ItemController extends AbstractController {
           modelItem = new ProjectModel(modelItem);
           organization.projects.push(modelItem);
 
-          return ItemController._save(data, organization, modelItem, '2');
+          return Organization.persist(data, organization, modelItem, '2');
         } else {
           throw new UndefinedParentIdOrTypeItemError();
         }
@@ -337,13 +302,13 @@ class ItemController extends AbstractController {
             modelItem = new ProjectModel(modelItem);
             element.projects.push(modelItem);
 
-            return ItemController._save(data, organization, modelItem, '2');
+            return Organization.persist(data, organization, modelItem, '2');
           },
           document: () => {
             modelItem = new DocumentModel(modelItem);
             element.documents.push(modelItem);
 
-            return ItemController._save(data, organization, modelItem, '2');
+            return Organization.persist(data, organization, modelItem, '2');
           },
           version: () => {
             if (data.projectOntimeId !== undefined || data.releaseOntimeId !== undefined) {
@@ -371,7 +336,7 @@ class ItemController extends AbstractController {
         modelItem.entries = ItemController._createEntries(result.data);
         element.versions.push(modelItem);
 
-        return ItemController._save(data, organization, modelItem, '2');
+        return Organization.persist(data, organization, modelItem, '2');
       })
       // Promise-chaining Success (200)
       .catch(Success, successMsg => {
@@ -424,8 +389,9 @@ class ItemController extends AbstractController {
   /**
    * Update method
    * - can only update basics stuff (name / description etc.)
-   * @param request
-   * @param response
+   * @param   request
+   * @param   response
+   * @method  POST
    */
   static updateAction(request, response) {
     const data = request.body;
@@ -463,7 +429,7 @@ class ItemController extends AbstractController {
         element = Object.assign(element, modelItem);
         data.type = element.projects === undefined ? 'document' : 'project';
 
-        return ItemController._save(data, organization, element, '3');
+        return Organization.persist(data, organization, element, '3');
       })
       // Promise-chaining Success (200)
       .catch(Success, successMsg => {
@@ -496,8 +462,9 @@ class ItemController extends AbstractController {
    * - project from n-project
    * - document from n-project
    * - version from n-project
-   * @param request
-   * @param response
+   * @param   request
+   * @param   response
+   * @method  DELETE
    */
   static deleteAction(request, response) {
     const params = request.params, lazy = request.query.lazy;
@@ -527,7 +494,7 @@ class ItemController extends AbstractController {
         data.type = result.type;
         element.remove();
 
-        return ItemController._save(data, organization, item, '4');
+        return Organization.persist(data, organization, item, '4');
       })
       // Promise-chaining Success (200)
       .catch(Success, successMsg => {

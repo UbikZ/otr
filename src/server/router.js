@@ -10,6 +10,7 @@ const controllers = {
   'OrganizationController': require('./controllers/OrganizationController'),
   'OnTimeController': require('./controllers/OnTimeController'),
   'ItemController': require('./controllers/ItemController'),
+  'SettingController': require('./controllers/SettingController'),
 };
 
 const methods = {GET: 'GET', POST: 'POST', DELETE: 'DELETE'};

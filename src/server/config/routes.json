@@ -146,6 +146,41 @@
           "checkSecurity": true
         }
       ]
+    },
+    {
+      "name": "Setting",
+      "pattern": "/setting",
+      "controllerName": "SettingController",
+      "subRoutes": [
+        {
+          "name": "Get a standalone setting",
+          "method": "GET",
+          "pattern": "/",
+          "actionName": "indexAction",
+          "checkSecurity": true
+        },
+        {
+          "name": "Update a standalone setting",
+          "method": "POST",
+          "pattern": "/update",
+          "actionName": "updateAction",
+          "checkSecurity": true
+        },
+        {
+          "name": "Get a setting from a sub-element",
+          "method": "GET",
+          "pattern": "/sub/:organizationId",
+          "actionName": "subIndexAction",
+          "checkSecurity": true
+        },
+        {
+          "name": "Update a setting from a sub-element",
+          "method": "POST",
+          "pattern": "/sub/update/:organizationId",
+          "actionName": "subUpdateAction",
+          "checkSecurity": true
+        }
+      ]
     }
   ]
 }
