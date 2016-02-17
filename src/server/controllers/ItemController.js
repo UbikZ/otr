@@ -83,7 +83,6 @@ class ItemController extends AbstractController {
     if (data.organizationId) {
       Organization.findById(data.organizationId).lean().execAsync()
         .then(org => {
-          console.log(org);
           organization = org;
           if (!organization) {
             throw new EmptyOrganizationError();
@@ -126,13 +125,11 @@ class ItemController extends AbstractController {
           Http.sendResponse(request, response, 200, result);
         })
         .catch(UndefinedItemError, () => {
-          console.log('catch - UndefinedItemError');
           Http.sendResponse(
             request, response, 404, {}, '-6', 'Error: item with id (' + data.itemId + ') for "get request" not found.'
           );
         })
         .catch(EmptyOrganizationError, () => {
-          console.log('catch - EmptyOrganizationError');
           Http.sendResponse(
             request, response, 404, {}, '-5', 'Error: organization with id (' + data.organizationId + ') not found.'
           );
@@ -297,8 +294,6 @@ class ItemController extends AbstractController {
     Http.checkAuthorized(request, response)
       // Result of checkAuthorize
       .then(userData => {
-        console.log('then - userData');
-
         user = userData;
         if (!data.organizationId) {
           throw new UndefinedOrganizationIdItemError();
@@ -308,8 +303,6 @@ class ItemController extends AbstractController {
       })
       // Result of Organization.findById
       .then(org => {
-        console.log('then - org');
-
         organization = org;
         modelItem = {
           name: data.name,
@@ -319,23 +312,15 @@ class ItemController extends AbstractController {
         };
 
         if (!organization) {
-          console.log('!organization');
-
           throw new NotFoundOrganizationIdItemError();
         } else if (data.parentId !== undefined) {
-          console.log('data.parentId !== undefined');
-
           return Organization.findDeepAttributeById(organization, data.parentId);
         } else if (data.type === 'project') {
-          console.log('data.type === \'project\'');
-
           modelItem = new ProjectModel(modelItem);
           organization.projects.push(modelItem);
 
           return ItemController._save(data, organization, modelItem, '2');
         } else {
-          console.log('else');
-
           throw new UndefinedParentIdOrTypeItemError();
         }
       })
@@ -461,7 +446,7 @@ class ItemController extends AbstractController {
           throw new NotFoundOrganizationIdItemError();
         }
         if (!data._id) {
-          throw new UndefinedIdItemError()
+          throw new UndefinedIdItemError();
         }
 
         return Organization.findDeepAttributeById(organization, data._id);
@@ -538,7 +523,6 @@ class ItemController extends AbstractController {
           throw new NotFoundItemError();
         }
 
-        console.log(element);
         data.lazy = lazy;
         data.type = result.type;
         element.remove();
@@ -552,7 +536,7 @@ class ItemController extends AbstractController {
       })
       .catch(NotFoundItemError, () => {
         Http.sendResponse(
-          request, response, 404, {}, '-6', 'Error: item to delete not found (data.itemId = ' + data._id + ').'
+          request, response, 404, {}, '-6', 'Error: item to delete not found (data.itemId = ' + params.itemId + ').'
         );
       })
       .catch(NotFoundOrganizationIdItemError, () => {
