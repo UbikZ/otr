@@ -29,6 +29,7 @@ const Success = require('../errors/Success');
  * - indexAction
  * - createAction
  * - updateAction
+ * - deleteAction
  */
 class ItemController extends AbstractController {
   /**
@@ -139,7 +140,12 @@ class ItemController extends AbstractController {
   }
 
   /**
-   *
+   * Create entries for ONE version
+   * - "items" from Ontime Service call
+   * - generate a tree nodes
+   * - each node get:
+   *    > count number of children
+   *    > sum of all estimates from children
    * @param items
    * @returns {Array}
    * @private
@@ -266,13 +272,18 @@ class ItemController extends AbstractController {
   }
 
   /**
-   *
+   * Create Method
+   * - create projects of organization
+   * - create projects of n-project
+   * - create documents of n-project
+   * - create versions of n-project
+   * - create entries of version (check: _createEntries method)
    * @param request
    * @param response
    */
   static createAction(request, response) {
     const data = request.body;
-    let modelItem = {}, user = {}, organization = {};
+    let modelItem = {}, user = {}, organization = {}, element = {};
 
     Http.checkAuthorized(request, response)
       // Result of checkAuthorize
@@ -311,7 +322,7 @@ class ItemController extends AbstractController {
 
           modelItem = new ProjectModel(modelItem);
           organization.projects.push(modelItem);
-          
+
           return ItemController._save(data, organization, modelItem, '2');
         } else {
           console.log('else');
@@ -324,7 +335,7 @@ class ItemController extends AbstractController {
         if (!result || !result.element) {
           throw new NotFoundItemError();
         }
-        let element = result.element;
+        element = result.element;
 
         // Switch-like
         const cases = {
@@ -364,6 +375,7 @@ class ItemController extends AbstractController {
         modelItem.update = modelItem.creation = {user: user._id, date: new Date()};
         modelItem.setting = new SettingModel(mapping.settingDtoToDal(undefined, data.setting));
         modelItem.entries = ItemController._createEntries(result.data);
+        element.versions.push(modelItem);
 
         return ItemController._save(data, organization, modelItem, '2');
       })
@@ -416,7 +428,8 @@ class ItemController extends AbstractController {
   }
 
   /**
-   *
+   * Update method
+   * - can only update basics stuff (name / description etc.)
    * @param request
    * @param response
    */
@@ -425,7 +438,6 @@ class ItemController extends AbstractController {
     let modelItem = {}, user = {}, organization = {};
 
     Http.checkAuthorized(request, response)
-      // Result of checkAuthorize
       .then(userData => {
         user = userData;
         if (!data.organizationId) {
@@ -480,6 +492,80 @@ class ItemController extends AbstractController {
       })
       .catch(err => {
         Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: update item', err);
+      })
+    ;
+  }
+
+  /**
+   * Delete ONE specific item from another
+   * - project from organization
+   * - project from n-project
+   * - document from n-project
+   * - version from n-project
+   * @param request
+   * @param response
+   */
+  static deleteAction(request, response) {
+    const params = request.params;
+    let organization = {};
+
+    Http.checkAuthorized(request, response)
+      // Result of checkAuthorize
+      .then(() => {
+        if (!params.organizationId) {
+          throw new UndefinedOrganizationIdItemError();
+        }
+
+        return Organization.findById(params.organizationId).lean().populate('creation.user').execAsync();
+      })
+      .then(org => {
+        organization = org;
+        if (!organization) {
+          throw new NotFoundOrganizationIdItemError();
+        }
+        if (!params.itemId) {
+          throw new UndefinedIdItemError()
+        }
+
+        return Organization.findDeepAttributeById(organization, params.itemId);
+      })
+      .then(result => {
+        let element = result.element;
+        const item = element;
+        if (!result || !result.element) {
+          throw new NotFoundItemError();
+        }
+
+        let data = {type: result.type};
+        element.remove();
+
+        return ItemController._save(data, organization, item, '4');
+      })
+      // Promise-chaining Success (200)
+      .catch(Success, successMsg => {
+        const result = successMsg.result;
+        Http.sendResponse(request, response, 200, result, result.returnCode);
+      })
+      .catch(NotFoundItemError, () => {
+        Http.sendResponse(
+          request, response, 404, {}, '-6', 'Error: item to delete not found (data.itemId = ' + data._id + ').'
+        );
+      })
+      .catch(UndefinedIdItemError, () => {
+        Http.sendResponse(
+          request, response, 404, {}, '-6', 'Error: item to delete not found (data.itemId = undefined).'
+        );
+      })
+      .catch(NotFoundOrganizationIdItemError, () => {
+        Http.sendResponse(
+          request, response, 404, {}, '-5', 'Error: organization with id (' + data.organizationId + ') not found.'
+        );
+      })
+      .catch(UndefinedOrganizationIdItemError, () => {
+        Http.sendResponse(request, response, 404, {}, '-1', 'Internal error: wrong parameters in "items/delete"');
+      })
+      .catch(err => {
+        Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: delete item', err);
       })
     ;
   }

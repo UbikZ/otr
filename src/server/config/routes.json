@@ -137,6 +137,13 @@
           "pattern": "/update",
           "actionName": "updateAction",
           "checkSecurity": true
+        },
+        {
+          "name": "Update an item",
+          "method": "DELETE",
+          "pattern": "/delete",
+          "actionName": "deleteAction",
+          "checkSecurity": true
         }
       ]
     }

@@ -4,7 +4,7 @@ const assert = require('chai').assert;
 const mongoose = require('mongoose');
 
 const Helper = require('./../Helper');
-//const ontimeRequester = require('../../controllers/helpers/ontime');
+const Ontime = require('../../controllers/helpers/Ontime');
 const OrganizationModel = require('../../models/organization');
 
 /**
@@ -14,7 +14,7 @@ const OrganizationModel = require('../../models/organization');
  */
 module.exports = (agent, url) => {
   describe('> Item API', () => {
-    let documentId/*, versionId, versionOtherId*/;
+    let documentId, versionId, versionOtherId;
     before('should create new organization', done => {
       const sentData = require('./../fixtures/organization/create');
       agent
@@ -123,7 +123,7 @@ module.exports = (agent, url) => {
         ;
       });
 
-      /*it('should get an error because unknown parentId given', done => {
+      it('should get an error because unknown parentId given', done => {
         const sentData = require('./../fixtures/item/create-ko-1');
         sentData.organizationId = global.organizationId;
         sentData.parentId = '56961966de7cbad8ba3be464';
@@ -142,7 +142,7 @@ module.exports = (agent, url) => {
           })
           .catch(err => done(err))
         ;
-      });*/
+      });
 
       it('should get an internal error (mongo fail)', done => {
         Helper.mockModel(mongoose.model('Organization'), 'update', stub => {
@@ -305,14 +305,12 @@ module.exports = (agent, url) => {
         ;
       });
 
-      /*it('should get an error because ontimeRequester.items throw an error', done => {
+      it('should get an error because Ontime.items throw an error', done => {
         const sentData = Object.assign(
           require('./../fixtures/item/create-ok-3'),
-          {organizationId: global.organizationId, parentId: documentId, ontimeId: 123}
+          {organizationId: global.organizationId, parentId: documentId, projectOntimeId: 123}
         );
-        ontimeRequester.items = (token, ontimeId, cb) => {
-          cb(JSON.stringify(require('./../fixtures/ontime/ko')));
-        };
+        Ontime.items = () => Helper.mockOnTimeAPIResponse(require('../fixtures/ontime/ko'));
         agent
           .post(url + '/item/create')
           .send(sentData)
@@ -330,14 +328,12 @@ module.exports = (agent, url) => {
         ;
       });
 
-      it('should get an error because ontimeRequester.items does nothing', done => {
+      it('should get an error because Ontime.items does nothing', done => {
         const sentData = Object.assign(
           require('./../fixtures/item/create-ok-3'),
-          {organizationId: global.organizationId, parentId: documentId, ontimeId: 123}
+          {organizationId: global.organizationId, parentId: documentId, projectOntimeId: 123}
         );
-        ontimeRequester.items = (token, ontimeId, cb) => {
-          cb(JSON.stringify({}));
-        };
+        Ontime.items = () => Helper.mockOnTimeAPIResponse();
         agent
           .post(url + '/item/create')
           .send(sentData)
@@ -347,7 +343,6 @@ module.exports = (agent, url) => {
           .then(res => {
             const result = res.body;
             assert.strictEqual(result.code, 500);
-            assert.isUndefined(result.error);
             assert.strictEqual(result.messageCode, '-1');
             done();
           })
@@ -358,12 +353,10 @@ module.exports = (agent, url) => {
       it('should create a new version in the document (with no settings)', done => {
         const sentData = Object.assign(
           require('./../fixtures/item/create-ok-3'),
-          {organizationId: global.organizationId, parentId: documentId, ontimeId: 123}
+          {organizationId: global.organizationId, parentId: documentId, projectOntimeId: 123}
         );
         const expectedData = require('./../fixtures/ontime/items');
-        ontimeRequester.items = (token, ontimeId, cb) => {
-          cb(JSON.stringify(expectedData));
-        };
+        Ontime.items = () => Helper.mockOnTimeAPIResponse(expectedData);
         agent
           .post(url + '/item/create')
           .send(sentData)
@@ -411,11 +404,9 @@ module.exports = (agent, url) => {
         const expectedData = require('./../fixtures/item/create-ok-4');
         const sentData = Object.assign(
           expectedData,
-          {organizationId: global.organizationId, parentId: documentId, ontimeId: 123}
+          {organizationId: global.organizationId, parentId: documentId, projectOntimeId: 123}
         );
-        ontimeRequester.items = (token, ontimeId, cb) => {
-          cb(JSON.stringify(require('./../fixtures/ontime/items')));
-        };
+        Ontime.items = () => Helper.mockOnTimeAPIResponse(require('./../fixtures/ontime/items'));
         agent
           .post(url + '/item/create')
           .send(sentData)
@@ -476,11 +467,10 @@ module.exports = (agent, url) => {
         const expectedData = require('./../fixtures/item/create-ok-5');
         const sentData = Object.assign(
           expectedData,
-          {organizationId: global.organizationId, parentId: documentId, ontimeId: 123, lazy: 1}
+          {organizationId: global.organizationId, parentId: documentId, projectOntimeId: 123, lazy: 1}
         );
-        ontimeRequester.items = (token, ontimeId, cb) => {
-          cb(JSON.stringify(require('./../fixtures/ontime/items')));
-        };
+        Ontime.items = () => Helper.mockOnTimeAPIResponse(require('../fixtures/ontime/items'));
+
         agent
           .post(url + '/item/create')
           .send(sentData)
@@ -510,7 +500,7 @@ module.exports = (agent, url) => {
           })
           .catch(err => done(err))
         ;
-      });*/
+      });
     });
 
     describe('# [UPDATE] ' + url + '/item/update', () => {
@@ -613,7 +603,7 @@ module.exports = (agent, url) => {
         ;
       });
 
-      /*it('should get an error because bad "data._id" given', done => {
+      it('should get an error because bad "data._id" given', done => {
         const sentData = Object.assign(
           require('./../fixtures/item/update-ok-1'),
           {organizationId: global.organizationId, _id: '569a498efd2e22a55a2822f4'}
@@ -633,7 +623,7 @@ module.exports = (agent, url) => {
           })
           .catch(err => done(err))
         ;
-      });*/
+      });
 
       it('should update an item (generic way for projects, documents and versions)', done => {
         const expectedData = require('./../fixtures/item/update-ok-1');
@@ -664,7 +654,7 @@ module.exports = (agent, url) => {
         ;
       });
 
-      /*it('should update a version with lazy', done => {
+      it('should update a version with lazy', done => {
         const expectedData = require('./../fixtures/item/update-ok-1');
         const sentData = Object.assign(expectedData, {organizationId: global.organizationId, _id: versionId, lazy: 1});
         agent
@@ -688,7 +678,7 @@ module.exports = (agent, url) => {
           })
           .catch(err => done(err))
         ;
-      });*/
+      });
     });
 
     describe('# [GET] ' + url + '/item', () => {
@@ -743,7 +733,7 @@ module.exports = (agent, url) => {
         ;
       });
 
-      /*it('should get an error because unknown item identifier given', done => {
+      it('should get an error because unknown item identifier given', done => {
         agent
           .get(url + '/item?organizationId=' + global.organizationId + '&itemId=badIdea#joke')
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
@@ -758,7 +748,7 @@ module.exports = (agent, url) => {
           })
           .catch(err => done(err))
         ;
-      });*/
+      });
 
       it('should get an item (project)', done => {
         agent
@@ -806,7 +796,7 @@ module.exports = (agent, url) => {
         ;
       });
 
-      /*it('should get an item (version)', done => {
+      it('should get an item (version)', done => {
         agent
           .get(url + '/item?organizationId=' + global.organizationId + '&itemId=' + versionId)
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
@@ -873,7 +863,7 @@ module.exports = (agent, url) => {
           })
           .catch(err => done(err))
         ;
-      });*/
+      });
 
       it('should get /organization for versions/entries (with lazy loading)', done => {
         agent
@@ -901,10 +891,8 @@ module.exports = (agent, url) => {
 
     describe('# [DELETE] ' + url + '/item', () => {
       it('should get an error because no organization identifier given', done => {
-        const sentData = {};
         agent
-          .post(url + '/item/delete')
-          .send(sentData)
+          .delete(url + '/item/delete')
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(404)
           .expect('Content-Type', 'application/json; charset=utf-8')
@@ -920,10 +908,8 @@ module.exports = (agent, url) => {
       });
 
       it('should get an error because bad organization identifier-type given', done => {
-        const sentData = {organizationId: 'badIdea#joke'};
         agent
-          .post(url + '/item/delete')
-          .send(sentData)
+          .delete(url + '/item/delete/badIdea#joke')
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(500)
           .expect('Content-Type', 'application/json; charset=utf-8')
@@ -939,10 +925,8 @@ module.exports = (agent, url) => {
       });
 
       it('should get an error because bad (not known) organization identifier given', done => {
-        const sentData = {organizationId: '569a498efd2e11a55a2822f4'};
         agent
-          .post(url + '/item/delete')
-          .send(sentData)
+          .delete(url + '/item/delete/569a498efd2e11a55a2822f4')
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(404)
           .expect('Content-Type', 'application/json; charset=utf-8')
@@ -958,10 +942,8 @@ module.exports = (agent, url) => {
       });
 
       it('should get an error because no "data.itemId" given', done => {
-        const sentData = {organizationId: global.organizationId};
         agent
-          .post(url + '/item/delete')
-          .send(sentData)
+          .delete(url + '/item/delete/' + global.organizationId)
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(404)
           .expect('Content-Type', 'application/json; charset=utf-8')
@@ -976,7 +958,7 @@ module.exports = (agent, url) => {
         ;
       });
 
-      /*it('should get an error because bad "data.itemId" given', done => {
+      it('should get an error because bad "data.itemId" given', done => {
         const sentData = {organizationId: global.organizationId, itemId: '009a498efd2e22a55a2822f4'};
         agent
           .post(url + '/item/delete')
@@ -1044,7 +1026,7 @@ module.exports = (agent, url) => {
           })
           .catch(err => done(err))
         ;
-      });*/
+      });
 
       it('should delete an item of document item', done => {
         const sentData = {organizationId: global.organizationId, itemId: documentId};
