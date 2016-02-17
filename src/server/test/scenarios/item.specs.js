@@ -123,7 +123,7 @@ module.exports = (agent, url) => {
         ;
       });
 
-      it('should get an error because unknown parentId given', done => {
+      /*it('should get an error because unknown parentId given', done => {
         const sentData = require('./../fixtures/item/create-ko-1');
         sentData.organizationId = global.organizationId;
         sentData.parentId = '56961966de7cbad8ba3be464';
@@ -142,7 +142,7 @@ module.exports = (agent, url) => {
           })
           .catch(err => done(err))
         ;
-      });
+      });*/
 
       it('should get an internal error (mongo fail)', done => {
         Helper.mockModel(mongoose.model('Organization'), 'update', stub => {
@@ -603,7 +603,7 @@ module.exports = (agent, url) => {
         ;
       });
 
-      it('should get an error because bad "data._id" given', done => {
+      /*it('should get an error because bad "data._id" given', done => {
         const sentData = Object.assign(
           require('./../fixtures/item/update-ok-1'),
           {organizationId: global.organizationId, _id: '569a498efd2e22a55a2822f4'}
@@ -623,7 +623,7 @@ module.exports = (agent, url) => {
           })
           .catch(err => done(err))
         ;
-      });
+      });*/
 
       it('should update an item (generic way for projects, documents and versions)', done => {
         const expectedData = require('./../fixtures/item/update-ok-1');
@@ -733,7 +733,7 @@ module.exports = (agent, url) => {
         ;
       });
 
-      it('should get an error because unknown item identifier given', done => {
+      /*it('should get an error because unknown item identifier given', done => {
         agent
           .get(url + '/item?organizationId=' + global.organizationId + '&itemId=badIdea#joke')
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
@@ -748,7 +748,7 @@ module.exports = (agent, url) => {
           })
           .catch(err => done(err))
         ;
-      });
+      });*/
 
       it('should get an item (project)', done => {
         agent
@@ -956,7 +956,7 @@ module.exports = (agent, url) => {
         ;
       });
 
-      it('should get an error because no "data.itemId" given', done => {
+      /*it('should get an error because no "data.itemId" given', done => {
         agent
           .delete(url + '/item/delete/' + global.organizationId + '/test')
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
@@ -988,7 +988,7 @@ module.exports = (agent, url) => {
           })
           .catch(err => done(err))
         ;
-      });
+      });*/
 
       it('should delete an item (version) with lazy loading', done => {
         agent

@@ -181,6 +181,27 @@
           "checkSecurity": true
         }
       ]
+    },
+    {
+      "name": "PDF features",
+      "pattern": "/pdf",
+      "controllerName": "PdfController",
+      "subRoutes": [
+        {
+          "name": "Render/Generate a PDF",
+          "method": "GET",
+          "pattern": "/render",
+          "actionName": "renderAction",
+          "checkSecurity": true
+        },
+        {
+          "name": "Download a PDF",
+          "method": "GET",
+          "pattern": "/download",
+          "actionName": "downloadAction",
+          "checkSecurity": true
+        }
+      ]
     }
   ]
 }

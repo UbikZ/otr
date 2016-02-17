@@ -24,7 +24,8 @@
     }
   },
   "bin": {
-    "phantomjs": "phantomjs"
+    "phantomjs": "phantomjs",
+    "phantomjsConfig": "./scripts/phantomjs-script.js"
   },
   "path": {
     "node": "./node_modules",

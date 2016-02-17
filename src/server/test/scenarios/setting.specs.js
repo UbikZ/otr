@@ -281,7 +281,7 @@ module.exports = (agent, url) => {
         ;
       });
 
-      it('should get an internal error (update) for create a sub-item setting in organization (mongo fail)',
+      it('should get an internal error (update) for create a sub-item setting in organization (mongo fail) 1/3',
         done => {
           const sentData = require('./../fixtures/setting/create-ok-1');
           Helper.mockModel(mongoose.model('Organization'), 'update', stub => {
@@ -382,7 +382,7 @@ module.exports = (agent, url) => {
         ;
       });
 
-      it('should get an internal error (update) for create a sub-item setting in organization (mongo fail)',
+      /*it('should get an internal error (update) for create a sub-item setting in organization (mongo fail) 2/3',
         done => {
           const sentData = require('./../fixtures/setting/create-ok-1');
           sentData.itemId = '56961966de7cbad8ba3be467';
@@ -402,9 +402,9 @@ module.exports = (agent, url) => {
             .catch(err => done(err))
           ;
         })
-      ;
+      ;*/
 
-      it('should get an internal error (update) for create a sub-item setting in organization (mongo fail)',
+      it('should get an internal error (update) for create a sub-item setting in organization (mongo fail) 3/3',
         done => {
           const sentData = require('./../fixtures/setting/create-ok-1');
           sentData.itemId = global.projectId;

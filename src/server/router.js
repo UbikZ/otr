@@ -11,6 +11,7 @@ const controllers = {
   'OnTimeController': require('./controllers/OnTimeController'),
   'ItemController': require('./controllers/ItemController'),
   'SettingController': require('./controllers/SettingController'),
+  'PdfController': require('./controllers/PdfController')
 };
 
 const methods = {GET: 'GET', POST: 'POST', DELETE: 'DELETE'};
