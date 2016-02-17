@@ -62,7 +62,7 @@ class AbstractApplication {
       if (!this.config.env.debug && ~req.url.indexOf('.gz.')) {
         res.setHeader('Content-Encoding', 'gzip');
       }
-      res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE');
       res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-tType, Authorization');
       next();
     });
