@@ -26,7 +26,7 @@ module.exports = (app, router) => {
   router.routes.forEach(function (route) {
     route.subRoutes.forEach(function (subRoute) {
       const args = [app.apiUrl + route.pattern + subRoute.pattern], cases = {};
-      let func;
+
       if (subRoute.checkSecurity === true) {
         args.push(Http.ensureAuthorized);
       }

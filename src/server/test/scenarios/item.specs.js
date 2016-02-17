@@ -889,18 +889,33 @@ module.exports = (agent, url) => {
       });
     });
 
-    describe('# [DELETE] ' + url + '/item', () => {
-      it('should get an error because no organization identifier given', done => {
+    describe('# [DELETE] ' + url + '/item/delete/:organizationId/:itemId', () => {
+      it('should get 404 not found because no parameters given', done => {
+        const apiUrl = url + '/item/delete';
         agent
-          .delete(url + '/item/delete')
+          .delete(apiUrl)
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(404)
-          .expect('Content-Type', 'application/json; charset=utf-8')
+          .expect('Content-Type', 'text/html; charset=utf-8')
           .then(res => {
-            const result = res.body;
-            assert.strictEqual(result.code, 404);
-            assert.isUndefined(result.error);
-            assert.strictEqual(result.messageCode, '-1');
+            const result = res.text;
+            assert.strictEqual(result, 'Cannot DELETE ' + apiUrl + '\n');
+            done();
+          })
+          .catch(err => done(err))
+        ;
+      });
+
+      it('should get 404 not found because missing one parameter', done => {
+        const apiUrl = url + '/item/delete/test';
+        agent
+          .delete(apiUrl)
+          .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
+          .expect(404)
+          .expect('Content-Type', 'text/html; charset=utf-8')
+          .then(res => {
+            const result = res.text;
+            assert.strictEqual(result, 'Cannot DELETE ' + apiUrl + '\n');
             done();
           })
           .catch(err => done(err))
@@ -909,7 +924,7 @@ module.exports = (agent, url) => {
 
       it('should get an error because bad organization identifier-type given', done => {
         agent
-          .delete(url + '/item/delete/badIdea#joke')
+          .delete(url + '/item/delete/badIdea/test#joke')
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(500)
           .expect('Content-Type', 'application/json; charset=utf-8')
@@ -926,7 +941,7 @@ module.exports = (agent, url) => {
 
       it('should get an error because bad (not known) organization identifier given', done => {
         agent
-          .delete(url + '/item/delete/569a498efd2e11a55a2822f4')
+          .delete(url + '/item/delete/569a498efd2e11a55a2822f4/test')
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(404)
           .expect('Content-Type', 'application/json; charset=utf-8')
@@ -943,7 +958,7 @@ module.exports = (agent, url) => {
 
       it('should get an error because no "data.itemId" given', done => {
         agent
-          .delete(url + '/item/delete/' + global.organizationId)
+          .delete(url + '/item/delete/' + global.organizationId + '/test')
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(404)
           .expect('Content-Type', 'application/json; charset=utf-8')
@@ -959,10 +974,8 @@ module.exports = (agent, url) => {
       });
 
       it('should get an error because bad "data.itemId" given', done => {
-        const sentData = {organizationId: global.organizationId, itemId: '009a498efd2e22a55a2822f4'};
         agent
-          .post(url + '/item/delete')
-          .send(sentData)
+          .delete(url + '/item/delete/' + global.organizationId + '/009a498efd2e22a55a2822f4')
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(404)
           .expect('Content-Type', 'application/json; charset=utf-8')
@@ -978,10 +991,8 @@ module.exports = (agent, url) => {
       });
 
       it('should delete an item (version) with lazy loading', done => {
-        const sentData = {organizationId: global.organizationId, itemId: versionOtherId, lazy: 1};
         agent
-          .post(url + '/item/delete')
-          .send(sentData)
+          .delete(url + '/item/delete/' + global.organizationId + '/' + versionOtherId + '?lazy=1')
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(200)
           .expect('Content-Type', 'application/json; charset=utf-8')
@@ -992,8 +1003,8 @@ module.exports = (agent, url) => {
             assert.isDefined(result.organization);
             assert.isDefined(result.item);
             assert.strictEqual(result.item._id, versionOtherId);
-            OrganizationModel.findDeepAttributeById(result.organization, versionOtherId, element => {
-              assert.isUndefined(element);
+            OrganizationModel.findDeepAttributeById(result.organization, versionOtherId).then(result => {
+              assert.isUndefined(result.element);
             });
             OrganizationModel.walkRecursively(result.organization, element => {
               assert(element.entries === undefined || element.entries === null);
@@ -1005,10 +1016,8 @@ module.exports = (agent, url) => {
       });
 
       it('should delete an item of version item', done => {
-        const sentData = {organizationId: global.organizationId, itemId: versionId};
         agent
-          .post(url + '/item/delete')
-          .send(sentData)
+          .delete(url + '/item/delete/' + global.organizationId + '/' + versionId)
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(200)
           .expect('Content-Type', 'application/json; charset=utf-8')
@@ -1019,8 +1028,8 @@ module.exports = (agent, url) => {
             assert.isDefined(result.organization);
             assert.isDefined(result.item);
             assert.strictEqual(result.item._id, versionId);
-            OrganizationModel.findDeepAttributeById(result.organization, versionId, element => {
-              assert.isUndefined(element);
+            OrganizationModel.findDeepAttributeById(result.organization, versionId).then(result => {
+              assert.isUndefined(result.element);
             });
             done();
           })
@@ -1029,10 +1038,8 @@ module.exports = (agent, url) => {
       });
 
       it('should delete an item of document item', done => {
-        const sentData = {organizationId: global.organizationId, itemId: documentId};
         agent
-          .post(url + '/item/delete')
-          .send(sentData)
+          .delete(url + '/item/delete/' + global.organizationId + '/' + documentId)
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(200)
           .expect('Content-Type', 'application/json; charset=utf-8')
@@ -1043,8 +1050,8 @@ module.exports = (agent, url) => {
             assert.isDefined(result.organization);
             assert.isDefined(result.item);
             assert.strictEqual(result.item._id, documentId);
-            OrganizationModel.findDeepAttributeById(result.organization, documentId, element => {
-              assert.isUndefined(element);
+            OrganizationModel.findDeepAttributeById(result.organization, documentId).then(result => {
+              assert.isUndefined(result.element);
             });
             done();
           })

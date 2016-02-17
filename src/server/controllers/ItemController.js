@@ -80,63 +80,72 @@ class ItemController extends AbstractController {
     const data = request.query;
     let organization = {};
 
-    Organization.findById(data.organizationId).lean().execAsync()
-      .then(org => {
-        organization = org;
-        if (!organization) {
-          throw new EmptyOrganizationError();
-        }
-        /*jshint eqeqeq: false */
-        if (data.lazy == 1) {
-          /*jshint eqeqeq: true */
-          Organization.walkRecursively(organization, element => {
-            if (element.entries !== undefined) {
-              delete element.entries;
-            }
-          });
-        }
-
-        return Organization.findDeepAttributeById(organization, data.itemId);
-      })
-      .then(data => {
-        const element = data.element;
-        const parentElement = data.parentElement;
-        const result = {};
-
-        if (element === undefined) {
-          throw new UndefinedItemError();
-        }
-        /*jshint eqeqeq: false */
-        if (data.modePreview == 1) {
-          /*jshint eqeqeq: true */
-          result.item = element;
-          result.documentName = parentElement.name;
-          result.organizationName = organization.name;
-        } else {
-          result.item = element;
+    if (data.organizationId) {
+      Organization.findById(data.organizationId).lean().execAsync()
+        .then(org => {
+          console.log(org);
+          organization = org;
+          if (!organization) {
+            throw new EmptyOrganizationError();
+          }
           /*jshint eqeqeq: false */
           if (data.lazy == 1) {
             /*jshint eqeqeq: true */
-            delete result.item.entries;
+            Organization.walkRecursively(organization, element => {
+              if (element.entries !== undefined) {
+                delete element.entries;
+              }
+            });
           }
-          result.organization = organization;
-        }
-        Http.sendResponse(request, response, 200, result);
-      })
-      .catch(UndefinedItemError, () => {
-        Http.sendResponse(
-          request, response, 404, {}, '-6', 'Error: item with id (' + data.itemId + ') for "get request" not found.'
-        );
-      })
-      .catch(EmptyOrganizationError, () => {
-        Http.sendResponse(
-          request, response, 404, {}, '-5', 'Error: organization with id (' + data.organizationId + ') not found.'
-        );
-      })
-      .catch(err => {
-        Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: get organization', err);
-      })
-    ;
+
+          return Organization.findDeepAttributeById(organization, data.itemId);
+        })
+        .then(item => {
+          const element = item.element;
+          const parentElement = item.parentElement;
+          const result = {};
+
+          if (element === undefined) {
+            throw new UndefinedItemError();
+          }
+          /*jshint eqeqeq: false */
+          if (data.modePreview == 1) {
+            /*jshint eqeqeq: true */
+            result.item = element;
+            result.documentName = parentElement.name;
+            result.organizationName = organization.name;
+          } else {
+            result.item = element;
+            /*jshint eqeqeq: false */
+            if (data.lazy == 1) {
+              /*jshint eqeqeq: true */
+              delete result.item.entries;
+            }
+            result.organization = organization;
+          }
+          Http.sendResponse(request, response, 200, result);
+        })
+        .catch(UndefinedItemError, () => {
+          console.log('catch - UndefinedItemError');
+          Http.sendResponse(
+            request, response, 404, {}, '-6', 'Error: item with id (' + data.itemId + ') for "get request" not found.'
+          );
+        })
+        .catch(EmptyOrganizationError, () => {
+          console.log('catch - EmptyOrganizationError');
+          Http.sendResponse(
+            request, response, 404, {}, '-5', 'Error: organization with id (' + data.organizationId + ') not found.'
+          );
+        })
+        .catch(err => {
+          Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: get organization', err);
+        })
+      ;
+    } else {
+      Http.sendResponse(
+        request, response, 404, {}, '-5', 'Error: organization with id (' + data.organizationId + ') not found.'
+      );
+    }
   }
 
   /**
@@ -506,37 +515,32 @@ class ItemController extends AbstractController {
    * @param response
    */
   static deleteAction(request, response) {
-    const params = request.params;
+    const params = request.params, lazy = request.query.lazy;
     let organization = {};
 
     Http.checkAuthorized(request, response)
       // Result of checkAuthorize
       .then(() => {
-        if (!params.organizationId) {
-          throw new UndefinedOrganizationIdItemError();
-        }
-
-        return Organization.findById(params.organizationId).lean().populate('creation.user').execAsync();
+        return Organization.findById(params.organizationId).populate('creation.user').execAsync();
       })
       .then(org => {
         organization = org;
         if (!organization) {
           throw new NotFoundOrganizationIdItemError();
         }
-        if (!params.itemId) {
-          throw new UndefinedIdItemError()
-        }
 
         return Organization.findDeepAttributeById(organization, params.itemId);
       })
       .then(result => {
-        let element = result.element;
+        let element = result.element, data = params;
         const item = element;
         if (!result || !result.element) {
           throw new NotFoundItemError();
         }
 
-        let data = {type: result.type};
+        console.log(element);
+        data.lazy = lazy;
+        data.type = result.type;
         element.remove();
 
         return ItemController._save(data, organization, item, '4');
@@ -551,18 +555,10 @@ class ItemController extends AbstractController {
           request, response, 404, {}, '-6', 'Error: item to delete not found (data.itemId = ' + data._id + ').'
         );
       })
-      .catch(UndefinedIdItemError, () => {
-        Http.sendResponse(
-          request, response, 404, {}, '-6', 'Error: item to delete not found (data.itemId = undefined).'
-        );
-      })
       .catch(NotFoundOrganizationIdItemError, () => {
         Http.sendResponse(
-          request, response, 404, {}, '-5', 'Error: organization with id (' + data.organizationId + ') not found.'
+          request, response, 404, {}, '-5', 'Error: organization with id (' + params.organizationId + ') not found.'
         );
-      })
-      .catch(UndefinedOrganizationIdItemError, () => {
-        Http.sendResponse(request, response, 404, {}, '-1', 'Internal error: wrong parameters in "items/delete"');
       })
       .catch(err => {
         Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: delete item', err);

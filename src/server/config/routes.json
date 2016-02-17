@@ -139,9 +139,9 @@
           "checkSecurity": true
         },
         {
-          "name": "Update an item",
+          "name": "Delete an item",
           "method": "DELETE",
-          "pattern": "/delete",
+          "pattern": "/delete/:organizationId/:itemId",
           "actionName": "deleteAction",
           "checkSecurity": true
         }
