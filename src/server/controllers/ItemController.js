@@ -14,6 +14,7 @@ const mapping = require('../models/helpers/mapping');
 
 const EmptyOrganizationError = require('../errors/EmptyOrganizationError');
 const UndefinedItemError = require('../errors/UndefinedItemError');
+const UndefinedIdItemError = require('../errors/UndefinedIdItemError');
 const UndefinedOrganizationIdItemError = require('../errors/UndefinedOrganizationIdItemError');
 const NotFoundOrganizationIdItemError = require('../errors/NotFoundOrganizationIdItemError');
 const UndefinedParentIdOrTypeItemError = require('../errors/UndefinedParentIdOrTypeItemError');
@@ -27,6 +28,7 @@ const Success = require('../errors/Success');
  * Item Controller
  * - indexAction
  * - createAction
+ * - updateAction
  */
 class ItemController extends AbstractController {
   /**
@@ -409,6 +411,75 @@ class ItemController extends AbstractController {
       })
       .catch(err => {
         Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: create item', err);
+      })
+    ;
+  }
+
+  /**
+   *
+   * @param request
+   * @param response
+   */
+  static updateAction(request, response) {
+    const data = request.body;
+    let modelItem = {}, user = {}, organization = {};
+
+    Http.checkAuthorized(request, response)
+      // Result of checkAuthorize
+      .then(userData => {
+        user = userData;
+        if (!data.organizationId) {
+          throw new UndefinedOrganizationIdItemError();
+        }
+
+        return Organization.findById(data.organizationId).lean().populate('creation.user').execAsync();
+      })
+      .then(org => {
+        organization = org;
+        if (!organization) {
+          throw new NotFoundOrganizationIdItemError();
+        }
+        if (!data._id) {
+          throw new UndefinedIdItemError()
+        }
+
+        return Organization.findDeepAttributeById(organization, data._id);
+      })
+      .then(result => {
+        let element = result.element;
+        if (!result || !result.element) {
+          throw new NotFoundItemError();
+        }
+
+        modelItem.name = data.name ? data.name : modelItem.name;
+        modelItem.description = data.description ? data.description : modelItem.description;
+        modelItem.update = {user: user._id, date: new Date()};
+        element = Object.assign(element, modelItem);
+        data.type = element.projects === undefined ? 'document' : 'project';
+
+        return ItemController._save(data, organization, element, '3');
+      })
+      // Promise-chaining Success (200)
+      .catch(Success, successMsg => {
+        const result = successMsg.result;
+        Http.sendResponse(request, response, 200, result, result.returnCode);
+      })
+      .catch(NotFoundItemError, () => {
+        Http.sendResponse(request, response, 404, {}, '-8', 'Error: item not found (data._id = ' + data._id + ').');
+      })
+      .catch(UndefinedIdItemError, () => {
+        Http.sendResponse(request, response, 404, {}, '-8', 'Error: item to update not found (data._id = undefined).');
+      })
+      .catch(NotFoundOrganizationIdItemError, () => {
+        Http.sendResponse(
+          request, response, 404, {}, '-5', 'Error: organization with id (' + data.organizationId + ') not found.'
+        );
+      })
+      .catch(UndefinedOrganizationIdItemError, () => {
+        Http.sendResponse(request, response, 404, {}, '-1', 'Internal error: wrong parameters in "items/update"');
+      })
+      .catch(err => {
+        Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: update item', err);
       })
     ;
   }

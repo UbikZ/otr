@@ -130,6 +130,13 @@
           "pattern": "/create",
           "actionName": "createAction",
           "checkSecurity": true
+        },
+        {
+          "name": "Update an item",
+          "method": "POST",
+          "pattern": "/update",
+          "actionName": "updateAction",
+          "checkSecurity": true
         }
       ]
     }
