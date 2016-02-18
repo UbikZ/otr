@@ -183,7 +183,7 @@
       ]
     },
     {
-      "name": "PDF features",
+      "name": "PDF",
       "pattern": "/pdf",
       "controllerName": "PdfController",
       "subRoutes": [

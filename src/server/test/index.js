@@ -34,7 +34,7 @@ describe('> Application', () => {
     done();
   });
 
-  ['init', 'auth', 'user', 'org', 'ot', 'item', 'setting'].forEach(spec => {
+  ['init', 'auth', 'user', 'org', 'ot', 'item', 'setting', 'pdf'].forEach(spec => {
     require('./scenarios/' + spec + '.specs')(agent, url, Application.config);
   });
 

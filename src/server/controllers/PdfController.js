@@ -13,6 +13,7 @@ const logger = require('../logger');
 const UndefinedUrl = require('../errors/UndefinedUrl');
 const NotFoundPdfFile = require('../errors/NotFoundPdfFile');
 const UndefinedDownloadFile = require('../errors/UndefinedDownloadFile');
+const UndefinedName = require('../errors/UndefinedName');
 
 const config = require('../../../config');
 
@@ -67,12 +68,15 @@ class PdfController extends AbstractController {
         if (!data.url) {
           throw new UndefinedUrl();
         }
+        if (!data.name) {
+          throw new UndefinedName();
+        }
 
         filePath = config.path.export + '/' +
         data.name.replace(/[^a-z0-9]/gi, '_').toLowerCase() +
         moment().format('.YYYYMMDDHHmmSS') + '.pdf';
         url = request.protocol + '://' + request.get('host') + '/#' + data.url;
-        execArgs = [require(config.bin.phantomjsConfig).path, url, filePath, 1];
+        execArgs = [require('../../../' + config.bin.phantomjsConfig).path, url, filePath, 1];
 
         return childProcess.execFileAsync(PdfController._getPhantomBinaryPath(), execArgs);
       })
@@ -89,9 +93,14 @@ class PdfController extends AbstractController {
           request, response, 404, {}, '-1', 'Error (' + user.name.username + '): pdf file not created'
         );
       })
+      .catch(UndefinedName, () => {
+        Http.sendResponse(
+          request, response, 404, {}, '-1', 'Error (' + user.name.username + '): rendered name (undefined)'
+        );
+      })
       .catch(UndefinedUrl, () => {
         Http.sendResponse(
-          request, response, 404, {}, '-1', 'Error (' + user.name.username + '): rendered url (' + data.url + ')'
+          request, response, 404, {}, '-1', 'Error (' + user.name.username + '): rendered url (undefined)'
         );
       })
       .catch(err => {
