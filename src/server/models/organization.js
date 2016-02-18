@@ -66,7 +66,6 @@ function persist(data, org, item, returnCode) {
   return model.update({ _id: organization._id }, organization, { upsert: true }).lean().execAsync()
     .then(() => {
       let returnValue = { organization, item, type: data.type + 's', returnCode };
-      console.log('# PERSIST', data);
       /*jshint eqeqeq: false */
       if (data.modePreview == 1) {
         /*jshint eqeqeq: true */

@@ -185,7 +185,6 @@ class SettingController extends AbstractController {
       })
       .catch(Success, successMsg => {
         const result = successMsg.result;
-        console.log('# SUCCESS', result);
         Http.sendResponse(request, response, 200, result, result.returnCode);
       })
       .catch(NotFoundItemError, () => {
