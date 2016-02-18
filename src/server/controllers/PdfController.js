@@ -32,10 +32,12 @@ class PdfController extends AbstractController {
   static _getPhantomBinaryPath() {
     let binPath = '';
     try {
-      binPath = require('phantomjs2').path;
+      binPath = require('phantomjs').path;
     } catch (error) {
       binPath = config.bin.phantomjs;
     }
+    
+    return binPath;
   }
   
   /**
@@ -76,12 +78,16 @@ class PdfController extends AbstractController {
         data.name.replace(/[^a-z0-9]/gi, '_').toLowerCase() +
         moment().format('.YYYYMMDDHHmmSS') + '.pdf';
         url = request.protocol + '://' + request.get('host') + '/#' + data.url;
-        execArgs = [require('../../../' + config.bin.phantomjsConfig).path, url, filePath, 1];
+        execArgs = [path.join(__dirname, '../../../' + config.bin.phantomjsConfig), url, filePath, 1];
 
+        console.log(PdfController._getPhantomBinaryPath(), execArgs);
         return childProcess.execFileAsync(PdfController._getPhantomBinaryPath(), execArgs);
       })
       .then(result => {
-        console.log(result);
+        result[0].split('\n').forEach(el => {
+          console.log(el);
+        });
+        
         if (!fs.existsSync(filePath)) {
           throw new NotFoundPdfFile();
         }
