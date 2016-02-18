@@ -36,7 +36,7 @@ module.exports = (agent, url) => {
       });
 
       it('should get an internal error on sign-up (mongo fail)', done => {
-        const sentData = {username: 'test_stage', password: 'test_stage'};
+        const sentData = { username: 'test_stage', password: 'test_stage' };
         const expectedData = require('./../fixtures/auth/signup');
         /*jshint camelcase: false */
         expectedData.access_token += 'delta';
@@ -64,7 +64,7 @@ module.exports = (agent, url) => {
       });
 
       it('should get an internal error on the create (mongo fail)', done => {
-        const sentData = {username: 'test_stage', password: 'test_stage'};
+        const sentData = { username: 'test_stage', password: 'test_stage' };
         const expectedData = require('./../fixtures/auth/signup');
         /*jshint camelcase: false */
         expectedData.access_token += 'delta';
@@ -91,7 +91,7 @@ module.exports = (agent, url) => {
       });
 
       it('should sign-up new user the first time', done => {
-        const sentData = {username: 'test_stage', password: 'test_stage'};
+        const sentData = { username: 'test_stage', password: 'test_stage' };
         const expectedData = require('./../fixtures/auth/signup');
         /*jshint camelcase: false */
         expectedData.access_token += 'delta';
@@ -125,7 +125,7 @@ module.exports = (agent, url) => {
       });
 
       it('should get an internal error on sign-up same user the others times (mongo fail)', done => {
-        const sentData = {username: 'test_stage', password: 'test_stage'};
+        const sentData = { username: 'test_stage', password: 'test_stage' };
         Helper.mockModel(mongoose.model('User'), 'update', stub => {
           agent
             .post(url + '/sign-up')
@@ -146,7 +146,7 @@ module.exports = (agent, url) => {
       });
 
       it('should sign-up same user the others times', done => {
-        const sentData = {username: 'test_stage', password: 'test_stage'};
+        const sentData = { username: 'test_stage', password: 'test_stage' };
         let expectedData = require('./../fixtures/auth/signup');
         /*jshint camelcase: false */
         expectedData.access_token += 'delta';

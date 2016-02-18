@@ -16,7 +16,7 @@ module.exports = (agent, url, config) => {
   describe('> Pdf API', () => {
     describe('# [GET] /pdf/render', () => {
       const apiUrl = url + '/pdf/render';
-      
+
       it('should get an error because no url given', done => {
         agent
           .get(apiUrl)
@@ -33,7 +33,7 @@ module.exports = (agent, url, config) => {
           .catch(err => done(err))
         ;
       });
-      
+
       it('should get an error because no name given', done => {
         agent
           .get(apiUrl)
@@ -50,7 +50,7 @@ module.exports = (agent, url, config) => {
           .catch(err => done(err))
         ;
       });
-      
+
       it('should get an error because no pdf file created', function (done) {
         this.timeout(10000);
         agent
@@ -68,7 +68,7 @@ module.exports = (agent, url, config) => {
           .catch(err => done(err))
         ;
       });
-      
+
       it('should get an pdf file', function (done) {
         this.timeout(10000);
         agent

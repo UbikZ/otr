@@ -55,13 +55,13 @@ class Helper {
         return this;
       },
       execAsync: () => new BPromise((resolve, reject) => {
-          if (empty === true) {
-            resolve();
-          } else {
-            reject(new Error({error: 'error'}));
-          }
+        if (empty === true) {
+          resolve();
+        } else {
+          reject(new Error({ error: 'error' }));
         }
-      ),
+      }
+        ),
     }, callback);
   }
 }

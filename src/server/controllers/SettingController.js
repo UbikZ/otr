@@ -41,13 +41,13 @@ class SettingController extends AbstractController {
         if (!settings) {
           throw new SettingNotFound();
         }
-    
+
         Http.sendResponse(request, response, 200, { setting: settings[0] });
       })
       .catch(SettingNotFound, () => {
         Http.sendResponse(
           request, response, 404, {}, '-10', 'Error: settings is undefined (criteria = ' + criteria + ').'
-        );
+          );
       })
       .catch(err => {
         Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: get setting', err);
@@ -95,12 +95,12 @@ class SettingController extends AbstractController {
    * @param   response
    * @method  GET
    */
-  static subIndexAction(request, response) {  
+  static subIndexAction(request, response) {
     const data = request.query, params = request.params;
     let organization = {}, setting = {};
     Http.checkAuthorized(request, response)
       .then(() => {
-        return Organization.findById(params.organizationId).lean().execAsync();       
+        return Organization.findById(params.organizationId).lean().execAsync();
       })
       .then(orgData => {
         organization = orgData;
@@ -123,17 +123,17 @@ class SettingController extends AbstractController {
         } else {
           setting = organization.setting;
           Http.sendResponse(request, response, 200, { setting });
-        }    
+        }
       })
-      // Then from Organization.findDeepAttributeById
+    // Then from Organization.findDeepAttributeById
       .then(result => {
         setting = result.element;
         Http.sendResponse(request, response, 200, { setting });
       })
       .catch(EmptyOrganizationError, () => {
-         Http.sendResponse(
-           request, response, 404, {}, '-5', 'Error: organization with id (' + params.organizationId + ') not found.'
-         );
+        Http.sendResponse(
+          request, response, 404, {}, '-5', 'Error: organization with id (' + params.organizationId + ') not found.'
+          );
       })
       .catch(err => {
         Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: get setting (in sub-element)', err);
@@ -165,22 +165,22 @@ class SettingController extends AbstractController {
           return Organization.findDeepAttributeById(organization, data.itemId);
         } else {
           setting = mapping.settingDtoToDal(organization.setting, data);
-          setting.update = {user: user._id, date: new Date()};
+          setting.update = { user: user._id, date: new Date() };
           organization.setting = setting;
 
           return Organization.persist(data, organization, setting, '10');
-        }    
+        }
       })
       .then(result => {
         if (!result || !result.element) {
           throw new NotFoundItemError();
         }
         let element = result.element;
-        
+
         setting = new Setting(mapping.settingDtoToDal(element.setting, data));
-        setting.update = {user: user._id, date: new Date()};
+        setting.update = { user: user._id, date: new Date() };
         element.setting = setting;
-        
+
         return Organization.persist(data, organization, setting, '10');
       })
       .catch(Success, successMsg => {
@@ -188,14 +188,14 @@ class SettingController extends AbstractController {
         Http.sendResponse(request, response, 200, result, result.returnCode);
       })
       .catch(NotFoundItemError, () => {
-         Http.sendResponse(
-           request, response, 404, {}, '-11', 'Error: setting not found (data.itemId = ' + data.itemId + ').'
-         );
+        Http.sendResponse(
+          request, response, 404, {}, '-11', 'Error: setting not found (data.itemId = ' + data.itemId + ').'
+          );
       })
       .catch(EmptyOrganizationError, () => {
-         Http.sendResponse(
-           request, response, 404, {}, '-5', 'Error: organization with id (' + params.organizationId + ') not found.'
-         );
+        Http.sendResponse(
+          request, response, 404, {}, '-5', 'Error: organization with id (' + params.organizationId + ') not found.'
+          );
       })
       .catch(err => {
         Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: update setting (in sub-element)', err);

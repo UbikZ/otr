@@ -14,7 +14,7 @@ const controllers = {
   'PdfController': require('./controllers/PdfController')
 };
 
-const methods = {GET: 'GET', POST: 'POST', DELETE: 'DELETE'};
+const methods = { GET: 'GET', POST: 'POST', DELETE: 'DELETE' };
 
 /**
  * Router

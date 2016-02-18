@@ -15,7 +15,7 @@ class Application extends AbstractApplication {
 
     this.logger.info(process.env.NODE_ENV);
     if (!~['production', 'development'].indexOf(process.env.NODE_ENV)) {
-      throw 'Wrong NODE_ENV ('+ process.env.NODE_ENV + ') set for the application';
+      throw 'Wrong NODE_ENV (' + process.env.NODE_ENV + ') set for the application';
     }
   }
 }

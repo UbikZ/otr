@@ -21,7 +21,7 @@ class ApplicationTest extends AbstractApplication {
     super._checkSettings();
 
     if (!~['staging'].indexOf(process.env.NODE_ENV)) {
-      throw 'Wrong NODE_ENV ('+ process.env.NODE_ENV + ') set for the test application';
+      throw 'Wrong NODE_ENV (' + process.env.NODE_ENV + ') set for the test application';
     }
   }
 }
