@@ -36,15 +36,13 @@ class PdfController extends AbstractController {
     } catch (error) {
       binPath = config.bin.phantomjs;
     }
-    
+
     return binPath;
   }
   
   /**
    * Index Action
    * TODO: list all rendered files
-   * @param   request
-   * @param   response
    * @method  GET
    */
   static indexAction() {
@@ -52,12 +50,63 @@ class PdfController extends AbstractController {
   }
 
   /**
-   * Render Action
-   * - Enable rendering for specific element
-   * - Return a public link to get the file
-   * @param   request
-   * @param   response
-   * @method  GET
+   * @api {get} /pdf/render Generate PDF file
+   * @apiVersion 0.0.1
+   * 
+   * @apiName RenderPdf
+   * 
+   * @apiDescription The goal is to generate a file using PhantomJS on specific URL
+   * - Enable rendering for specific element.
+   * - Return a public link to get the file.
+   * 
+   * @apiGroup PDF
+   *
+   * @apiUse Generic
+   * 
+   * @apiParam  {String}  url The <code>url</code> parameter used to define entrypoint to generate the PDF
+   * @apiParam  {String}  name  The output <code>name</code> for the file (<i>we wil add timestamp to unify file</i>)
+   * 
+   *  * @apiParamExample {json} Query
+   *     {
+   *        "url": "http://localhost:3000/#/pdf/render/xxxxxxxxxxxxxxxxx",
+   *        "fileName": "test"
+   *     }
+   * 
+   * @apiSuccess  {String}  fileName  Unique file name of the generated file
+   *
+   * @apiSuccessExample Success
+   *     HTTP/1.1 200 OK
+   *     {
+   *       "fileName": "test.20160218175589.pdf"
+   *     }
+   *
+   *
+   * @apiErrorExample UndefinedUrl
+   *     -- "The url parameter is missing." -- 
+   *     HTTP/1.1 404 Not Found
+   *     {
+   *        "code": 404,
+   *        "date": "2016-02-18 17:56:05",
+   *        "messageCode: "-1"
+   *     }
+   * 
+   * @apiErrorExample UndefinedName
+   *     -- "The file name parameter is missing." -- 
+   *     HTTP/1.1 404 Not Found
+   *     {
+   *        "code": 404,
+   *        "date": "2016-02-18 17:56:05",
+   *        "messageCode: "-1"
+   *     }
+   * 
+   * @apiErrorExample NotFoundPdfFile
+   *     -- "The PDF generated file is not found." -- 
+   *     HTTP/1.1 404 Not Found
+   *     {
+   *        "code": 404,
+   *        "date": "2016-02-18 17:56:05",
+   *        "messageCode: "-1"
+   *     }
    */
   static renderAction(request, response) {
     const data = request.query;
@@ -87,7 +136,7 @@ class PdfController extends AbstractController {
         result[0].split('\n').forEach(el => {
           console.log(el);
         });
-        
+
         if (!fs.existsSync(filePath)) {
           throw new NotFoundPdfFile();
         }
@@ -97,17 +146,17 @@ class PdfController extends AbstractController {
       .catch(NotFoundPdfFile, () => {
         Http.sendResponse(
           request, response, 404, {}, '-1', 'Error (' + user.name.username + '): pdf file not created'
-        );
+          );
       })
       .catch(UndefinedName, () => {
         Http.sendResponse(
           request, response, 404, {}, '-1', 'Error (' + user.name.username + '): rendered name (undefined)'
-        );
+          );
       })
       .catch(UndefinedUrl, () => {
         Http.sendResponse(
           request, response, 404, {}, '-1', 'Error (' + user.name.username + '): rendered url (undefined)'
-        );
+          );
       })
       .catch(err => {
         Http.sendResponse(request, response, 500, {}, '-1', 'Error: renderer fail. Check logs.', err);
@@ -151,12 +200,12 @@ class PdfController extends AbstractController {
       .catch(NotFoundPdfFile, () => {
         Http.sendResponse(
           request, response, 404, {}, '-1', 'Error: pdf file not found (' + finalPdfPath + ')'
-        );
+          );
       })
       .catch(UndefinedDownloadFile, () => {
         Http.sendResponse(
           request, response, 404, {}, '-1', 'Error (' + user.name.username + '): download file (none)'
-        );
+          );
       })
       .catch(err => {
         Http.sendResponse(request, response, 500, {}, '-1', 'Error: download fail. Check logs.', err);

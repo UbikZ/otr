@@ -47,7 +47,6 @@ class Http {
       code: status,
       error: err,
       messageCode: message,
-      data: {},
     }, data);
 
     response.status(status).json(dat);
@@ -66,7 +65,7 @@ class Http {
     if (err) {
       const errors = err ? err.stack.split('\n') : [];
       logger.debug('[' + moment().format('YYYY-MM-DD HH:mm:SS') + ']');
-      errors.forEach(function(error) {
+      errors.forEach(function (error) {
         logger.debug(error);
       });
     }
@@ -101,7 +100,7 @@ class Http {
    * @returns {*}
    */
   static checkAuthorized(request, response) {
-    return User.findOne({'identity.token': request.token}).lean().execAsync()
+    return User.findOne({ 'identity.token': request.token }).lean().execAsync()
       .then(user => {
         if (!user) {
           throw new EmptyUserError();
@@ -116,7 +115,7 @@ class Http {
       .catch(err => {
         Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: check authorization.', err);
       })
-    ;
+      ;
   }
 
   /**
@@ -126,7 +125,7 @@ class Http {
    * @returns {*}
    */
   static ontimeRequestToken(request, response) {
-    return OntimeRequester.requestToken({username: request.body.username, password: request.body.password})
+    return OntimeRequester.requestToken({ username: request.body.username, password: request.body.password })
       .then(result => {
         if (result.error) {
           throw new OnTimeError(result);
@@ -138,23 +137,23 @@ class Http {
 
         return new BPromise(resolve => {
           /* jshint camelcase: false */
-          resolve(merge(result.data, {accessToken: result.access_token}));
+          resolve(merge(result.data, { accessToken: result.access_token }));
           /* jshint camelcase: true */
         });
       })
       .catch(OnTimeError, err => {
         Http.sendResponse(
-          /* jshint camelcase: false */
-          request, response, 403, {error: err}, '-3', 'Ontime Error: ' + err.error_description, err.error
-          /* jshint camelcase: true */
-        );
+        /* jshint camelcase: false */
+          request, response, 403, { error: err }, '-3', 'Ontime Error: ' + err.error_description, err.error
+        /* jshint camelcase: true */
+          );
       })
       .catch(err => {
         Http.sendResponse(
           request, response, 500, {}, '-1', 'Ontime Error: issue during OnTime "/authenticate" request', err
-        );
+          );
       })
-    ;
+      ;
   }
 }
 
