@@ -26,6 +26,7 @@ import jshint from 'gulp-jshint';
 import istanbul from 'gulp-istanbul';
 import mocha from 'gulp-mocha';
 import coveralls from 'gulp-coveralls';
+import docApi from 'gulp-apidoc';
 //import angularProtractor from 'gulp-angular-protractor';
 import angularTemplateCache from 'gulp-angular-templatecache';
 import gulpIf from 'gulp-if';
@@ -44,12 +45,13 @@ import taskRevision from './tasks/revision';
 import taskTestBack from './tasks/test-back';
 import taskTestFront from './tasks/test-front';
 import taskVendor from './tasks/vendor';
+import taskDocApi from './tasks/doc-api';
 
 function createTask(closure, dependencies = []) {
   return {
     module: closure,
     requires: dependencies,
-  }
+  };
 }
 
 /**
@@ -91,7 +93,7 @@ class GulpApplication {
     this.plugins = {
       browserify, babelify, tsify, nodeResolve, source, streamify, del, mapStream, less, concat, uglify, minifyCss,
       minifyHtml, rev, buffer, gzip, jshint, istanbul, mocha, coveralls, /*angularProtractor,*/ angularTemplateCache,
-      gulpIf
+      gulpIf, docApi
     };
 
     // Plugin for production/staging mode
@@ -105,6 +107,7 @@ class GulpApplication {
   _registerTasks() {
     this.tasks = {
       'pre-clean': createTask(taskPreClean),
+      'doc-api': createTask(taskDocApi),
       'jshint': createTask(taskJshint),
       'node-copy': createTask(taskNodeCopy),
       'less-variable': createTask(taskLessVariable, ['node-copy']),
@@ -156,7 +159,7 @@ class GulpApplication {
     return this.tasks[taskName].module(gulp, this.plugins, () => {
       var dependenciesObj = require('./../package.json').dependencies;
 
-      return Object.keys(dependenciesObj).filter(element => ~this.browserDependencies.indexOf(element));
+      return Object.keys(dependenciesObj).filter(element => Boolean(~this.browserDependencies.indexOf(element)));
     }, this.config);
   }
 }

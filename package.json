@@ -1,7 +1,19 @@
 {
   "name": "otr",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "main": "app.js",
+  "apidoc": {
+    "name": "OnTime Reader v3",
+    "forceLanguage": "en",
+    "description": "Documentation of the REST Api",
+    "title": "OnTime Reader API Documentation",
+    "order": [
+      "RenderPdf"
+    ],
+    "template": {
+      "withCompare": true
+    }
+  },
   "devDependencies": {
     "babel-core": "^6.4.5",
     "babel-preset-es2015": "^6.3.13",
@@ -12,6 +24,7 @@
     "del": "^2.2.0",
     "gulp": "^3.8.7",
     "gulp-angular-templatecache": "^1.8.0",
+    "gulp-apidoc": "^0.2.3",
     "gulp-buffer": "0.0.2",
     "gulp-concat": "^2.6.0",
     "gulp-coveralls": "^0.1.4",

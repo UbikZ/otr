@@ -6,6 +6,7 @@ public/index.html
 public/lib
 .idea
 coverage
+documentation
 npm-debug.log
 .DS_Store
 .vscode

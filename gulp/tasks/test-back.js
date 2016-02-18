@@ -1,7 +1,5 @@
 'use strict';
 
-const babel = require('babel-core/register');
-
 /**
  * ONLY IN STAGE ENV
  * Task to execute BACK-END unit tests
