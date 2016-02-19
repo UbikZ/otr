@@ -52,7 +52,7 @@ class UserController extends AbstractController {
       .then(user => {
         userModel = user;
         if (!user) {
-          throw new EmptyUserError({});
+          throw new EmptyUserError();
         }
         if (data.firstname) {
           userModel.name.firstname = data.firstname;
@@ -74,11 +74,13 @@ class UserController extends AbstractController {
       .then(() => {
         Http.sendResponse(request, response, 200, { user: userModel }, '11');
       })
-      .catch(EmptyUserError, () => {
-        Http.sendResponse(request, response, 404, {}, '-12');
+      .catch(EmptyUserError, error => {
+        Http.sendResponse(
+          request, response, 404, {}, '-12', 'User with token(' + request.token + ') not found', error
+          );
       })
-      .catch(err => {
-        Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: update user', err);
+      .catch(error => {
+        Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: update user', error);
       })
     ;
   }

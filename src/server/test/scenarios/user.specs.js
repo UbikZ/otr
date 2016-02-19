@@ -24,13 +24,14 @@ module.exports = (agent, url) => {
               const result = res.body;
               assert.strictEqual(result.code, 500);
               assert.isDefined(result.error);
+              assert.strictEqual(result.error.type, 'Error');
               assert.strictEqual(result.messageCode, '-1');
               stub.restore();
               done();
             })
             .catch(err => done(err))
           ;
-        });
+        }, false);
       });
 
       it('should get an error (empty response)', done => {
@@ -43,7 +44,8 @@ module.exports = (agent, url) => {
             .then(res => {
               const result = res.body;
               assert.strictEqual(result.code, 404);
-              assert.isUndefined(result.error);
+              assert.isDefined(result.error);
+              assert.strictEqual(result.error.type, 'EmptyUserError');
               assert.strictEqual(result.messageCode, '-12');
               stub.restore();
               done();
@@ -87,13 +89,14 @@ module.exports = (agent, url) => {
               const result = res.body;
               assert.strictEqual(result.code, 500);
               assert.isDefined(result.error);
+              assert.strictEqual(result.error.type, 'Error');
               assert.strictEqual(result.messageCode, '-1');
               stub.restore();
               done();
             })
             .catch(err => done(err))
           ;
-        });
+        }, false);
       });
 
       it('should get an error (empty response) for update current user', done => {
@@ -108,7 +111,8 @@ module.exports = (agent, url) => {
             .then(res => {
               const result = res.body;
               assert.strictEqual(result.code, 404);
-              assert.isUndefined(result.error);
+              assert.isDefined(result.error);
+              assert.strictEqual(result.error.type, 'EmptyUserError');
               assert.strictEqual(result.messageCode, '-12');
               stub.restore();
               done();
@@ -131,13 +135,14 @@ module.exports = (agent, url) => {
               const result = res.body;
               assert.strictEqual(result.code, 500);
               assert.isDefined(result.error);
+              assert.strictEqual(result.error.type, 'Error');
               assert.strictEqual(result.messageCode, '-1');
               stub.restore();
               done();
             })
             .catch(err => done(err))
           ;
-        });
+        }, false);
       });
 
       it('should update current user', done => {
