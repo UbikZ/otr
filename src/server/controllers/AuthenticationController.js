@@ -52,8 +52,8 @@ class AuthenticationController extends AbstractController {
       .then(() => {
         Http.sendResponse(request, response, 200, { user: userModel }, '1');
       })
-      .catch(err => {
-        Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: check /sign-up.', err);
+      .catch(error => {
+        Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: check /sign-up.', error);
       })
     ;
   }
@@ -72,11 +72,11 @@ class AuthenticationController extends AbstractController {
         }
         Http.sendResponse(request, response, 200, { user: user });
       })
-      .catch(EmptyUserError, () => {
-        Http.sendResponse(request, response, 404, {}, '-3', 'Error: token (' + request.token + ') not found.');
+      .catch(EmptyUserError, error => {
+        Http.sendResponse(request, response, 404, {}, '-3', 'Error: token (' + request.token + ') not found.', error);
       })
-      .catch(err => {
-        Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: check /me', err);
+      .catch(error => {
+        Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: check /me', error);
       })
     ;
   }

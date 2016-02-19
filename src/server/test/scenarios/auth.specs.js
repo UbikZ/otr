@@ -28,6 +28,8 @@ module.exports = (agent, url) => {
           .then(res => {
             const result = res.body;
             assert.strictEqual(result.code, 500);
+            assert.isDefined(result.error);
+            assert.strictEqual(result.error.type, 'TypeError');
             assert.strictEqual(result.messageCode, '-1');
             done();
           })
@@ -53,14 +55,15 @@ module.exports = (agent, url) => {
             .then(res => {
               const result = res.body;
               assert.strictEqual(result.code, 500);
-              assert.strictEqual(result.messageCode, '-1');
               assert.isDefined(result.error);
+              assert.strictEqual(result.error.type, 'Error');
+              assert.strictEqual(result.messageCode, '-1');
               stub.restore();
               done();
             })
             .catch(err => done(err))
           ;
-        });
+        }, false);
       });
 
       it('should get an internal error on the create (mongo fail)', done => {
@@ -80,14 +83,15 @@ module.exports = (agent, url) => {
             .then(res => {
               const result = res.body;
               assert.strictEqual(result.code, 500);
-              assert.strictEqual(result.messageCode, '-1');
               assert.isDefined(result.error);
+              assert.strictEqual(result.error.type, 'Error');
+              assert.strictEqual(result.messageCode, '-1');
               stub.restore();
               done();
             })
             .catch(err => done(err))
           ;
-        });
+        }, false);
       });
 
       it('should sign-up new user the first time', done => {
@@ -135,14 +139,15 @@ module.exports = (agent, url) => {
             .then(res => {
               const result = res.body;
               assert.strictEqual(result.code, 500);
-              assert.strictEqual(result.messageCode, '-1');
               assert.isDefined(result.error);
+              assert.strictEqual(result.error.type, 'Error');
+              assert.strictEqual(result.messageCode, '-1');
               stub.restore();
               done();
             })
             .catch(err => done(err))
           ;
-        });
+        }, false);
       });
 
       it('should sign-up same user the others times', done => {
@@ -191,7 +196,8 @@ module.exports = (agent, url) => {
           .then(res => {
             const result = res.body;
             assert.strictEqual(result.code, 404);
-            assert.isUndefined(result.error);
+            assert.isDefined(result.error);
+            assert.strictEqual(result.error.type, 'EmptyUserError');
             assert.strictEqual(result.messageCode, '-3');
             done();
           })
@@ -210,13 +216,14 @@ module.exports = (agent, url) => {
               const result = res.body;
               assert.strictEqual(result.code, 500);
               assert.isDefined(result.error);
+              assert.strictEqual(result.error.type, 'Error');
               assert.strictEqual(result.messageCode, '-1');
               stub.restore();
               done();
             })
             .catch(err => done(err))
           ;
-        });
+        }, false);
       });
 
       it('should request information for logged user', done => {
