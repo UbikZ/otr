@@ -27,6 +27,9 @@ class Http {
    * @param err
    */
   static sendResponse(request, res, status, data, msgCode, msgLog, err) {
+    if (err && err.constructor) {
+      err.type = err.constructor.name;
+    }
     if (status !== 200) {
       Http.log(request, msgLog, err);
     }

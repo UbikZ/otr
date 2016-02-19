@@ -129,7 +129,6 @@ class PdfController extends AbstractController {
         url = request.protocol + '://' + request.get('host') + '/#' + data.url;
         execArgs = [path.join(__dirname, '../../../' + config.bin.phantomjsConfig), url, filePath, 1];
 
-        console.log(PdfController._getPhantomBinaryPath(), execArgs);
         return childProcess.execFileAsync(PdfController._getPhantomBinaryPath(), execArgs);
       })
       .then(result => {
@@ -143,23 +142,23 @@ class PdfController extends AbstractController {
 
         Http.sendResponse(request, response, 200, { fileName: path.basename(filePath) });
       })
-      .catch(NotFoundPdfFile, () => {
+      .catch(NotFoundPdfFile, error => {
         Http.sendResponse(
-          request, response, 404, {}, '-1', 'Error (' + user.name.username + '): pdf file not created'
+          request, response, 404, {}, '-1', 'Error (' + user.name.username + '): pdf file not created', error
           );
       })
-      .catch(UndefinedName, () => {
+      .catch(UndefinedName, error => {
         Http.sendResponse(
-          request, response, 404, {}, '-1', 'Error (' + user.name.username + '): rendered name (undefined)'
+          request, response, 404, {}, '-1', 'Error (' + user.name.username + '): rendered name (undefined)', error
           );
       })
-      .catch(UndefinedUrl, () => {
+      .catch(UndefinedUrl, error => {
         Http.sendResponse(
-          request, response, 404, {}, '-1', 'Error (' + user.name.username + '): rendered url (undefined)'
+          request, response, 404, {}, '-1', 'Error (' + user.name.username + '): rendered url (undefined)', error
           );
       })
-      .catch(err => {
-        Http.sendResponse(request, response, 500, {}, '-1', 'Error: renderer fail. Check logs.', err);
+      .catch(error => {
+        Http.sendResponse(request, response, 500, {}, '-1', 'Error: renderer fail. Check logs.', error);
       })
     ;
   }
@@ -197,18 +196,18 @@ class PdfController extends AbstractController {
           }
         });
       })
-      .catch(NotFoundPdfFile, () => {
+      .catch(NotFoundPdfFile, error => {
         Http.sendResponse(
-          request, response, 404, {}, '-1', 'Error: pdf file not found (' + finalPdfPath + ')'
+          request, response, 404, {}, '-1', 'Error: pdf file not found (' + finalPdfPath + ')', error
           );
       })
-      .catch(UndefinedDownloadFile, () => {
+      .catch(UndefinedDownloadFile, error => {
         Http.sendResponse(
-          request, response, 404, {}, '-1', 'Error (' + user.name.username + '): download file (none)'
+          request, response, 404, {}, '-1', 'Error (' + user.name.username + '): download file (none)', error
           );
       })
-      .catch(err => {
-        Http.sendResponse(request, response, 500, {}, '-1', 'Error: download fail. Check logs.', err);
+      .catch(error => {
+        Http.sendResponse(request, response, 500, {}, '-1', 'Error: download fail. Check logs.', error);
       })
     ;
   }
