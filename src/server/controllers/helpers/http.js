@@ -8,7 +8,8 @@ const User = require('../../models/user');
 const OntimeRequester = require('./Ontime');
 const logger = require('../../logger');
 
-const EmptyUserError = require('../../errors/EmptyUserError');
+const NotFoundTokenError = require('../../errors/NotFoundTokenError');
+const UndefinedTokenError = require('../../errors/UndefinedTokenError');
 const OnTimeError = require('../../errors/OnTimeError');
 
 
@@ -92,7 +93,7 @@ class Http {
       request.ontimeToken = bearerOtToken;
       next();
     } else {
-      Http.sendResponse(request, response, 403, {}, '-3', 'No bearer header provided');
+      Http.sendResponse(request, response, 403, {}, '-3', 'No bearer header provided', new UndefinedTokenError());
     }
   }
 
@@ -106,17 +107,19 @@ class Http {
     return User.findOne({ 'identity.token': request.token }).lean().execAsync()
       .then(user => {
         if (!user) {
-          throw new EmptyUserError();
+          throw new NotFoundTokenError();
         }
         return new BPromise(resolve => {
           resolve(user);
         });
       })
-      .catch(EmptyUserError, () => {
-        Http.sendResponse(request, response, 404, {}, '-2', 'Error: token provided is not associated with an account.');
+      .catch(NotFoundTokenError, error => {
+        Http.sendResponse(
+          request, response, 404, {}, '-2', 'Error: token provided is not associated with an account.', error
+          );
       })
-      .catch(err => {
-        Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: check authorization.', err);
+      .catch(error => {
+        Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: check authorization.', error);
       })
       ;
   }
@@ -144,16 +147,16 @@ class Http {
           /* jshint camelcase: true */
         });
       })
-      .catch(OnTimeError, err => {
+      .catch(OnTimeError, error => {
         Http.sendResponse(
         /* jshint camelcase: false */
-          request, response, 403, { error: err }, '-3', 'Ontime Error: ' + err.error_description, err.error
+          request, response, 403, { error: error }, '-3', 'Ontime Error: ' + error.error_description, error
         /* jshint camelcase: true */
           );
       })
-      .catch(err => {
+      .catch(error => {
         Http.sendResponse(
-          request, response, 500, {}, '-1', 'Ontime Error: issue during OnTime "/authenticate" request', err
+          request, response, 500, {}, '-1', 'Ontime Error: issue during OnTime "/authenticate" request', error
           );
       })
       ;

@@ -76,6 +76,7 @@ module.exports = (agent, url, config) => {
           .then(res => {
             const result = res.body;
             assert.strictEqual(result.code, 403);
+            assert.strictEqual(result.error.type, 'UndefinedTokenError');
             assert.strictEqual(result.messageCode, '-3');
             done();
           })
@@ -95,12 +96,13 @@ module.exports = (agent, url, config) => {
               assert.strictEqual(result.code, 500);
               assert.strictEqual(result.messageCode, '-1');
               assert.isDefined(result.error);
+              assert.strictEqual(result.error.type, 'Error');
               stub.restore();
               done();
             })
             .catch(err => done(err))
           ;
-        });
+        }, false);
       });
 
       it('returns an internal error (checkAuthorized with unknown token)', done => {
@@ -113,7 +115,7 @@ module.exports = (agent, url, config) => {
             const result = res.body;
             assert.strictEqual(result.code, 404);
             assert.strictEqual(result.messageCode, '-2');
-            assert.isUndefined(result.error);
+            assert.strictEqual(result.error.type, 'NotFoundTokenError');
             done();
           })
           .catch(err => done(err))

@@ -29,11 +29,11 @@ class UserController extends AbstractController {
         }
         Http.sendResponse(request, response, 200, { users: users });
       })
-      .catch(EmptyUserError, () => {
-        Http.sendResponse(request, response, 404, {}, '-12', 'Error: users is undefined (criteria = ' + {} + ').');
+      .catch(EmptyUserError, error => {
+        Http.sendResponse(request, response, 404, {}, '-12', 'Error: users is undefined (criteria = {}).', error);
       })
-      .catch(err => {
-        Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: get users', err);
+      .catch(error => {
+        Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: get users', error);
       })
     ;
   }
