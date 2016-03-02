@@ -13,10 +13,11 @@ class Helper {
    *  Simulate internal error response from Ontime API
    *  - to use with wrap function (ex: () => mockOnTimeAPIResponse(data))
    */
-  static mockOnTimeAPIResponse(result) {
+  static mockOnTimeAPIResponse(res) {
+    let result = res || {};
     return new BPromise((resolve, reject) => {
       if (result.error) {
-        reject(new OnTimeError(result));
+        reject(new OnTimeError());
       } else if (!result.data) {
         reject(new Error());
       } else {

@@ -29,7 +29,7 @@ module.exports = (agent, url) => {
             const result = res.body;
             assert.strictEqual(result.code, 500);
             assert.isDefined(result.error);
-            assert.strictEqual(result.error.type, 'TypeError');
+            assert.strictEqual(result.error.type, 'Error');
             assert.strictEqual(result.messageCode, '-1');
             done();
           })

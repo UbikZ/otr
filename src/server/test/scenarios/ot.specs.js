@@ -29,6 +29,7 @@ module.exports = (agent, url) => {
             const result = res.body;
             assert.strictEqual(result.code, 403);
             assert.isDefined(result.error);
+            assert.strictEqual(result.error.type, 'OnTimeError');
             assert.strictEqual(result.messageCode, '-3');
             done();
           })
@@ -49,7 +50,8 @@ module.exports = (agent, url) => {
           .then(res => {
             const result = res.body;
             assert.strictEqual(result.code, 500);
-            assert.isUndefined(result.error);
+            assert.isDefined(result.error);
+            assert.strictEqual(result.error.type, 'Error');
             assert.strictEqual(result.messageCode, '-1');
             done();
           })
@@ -67,8 +69,10 @@ module.exports = (agent, url) => {
           .expect('Content-Type', 'application/json; charset=utf-8')
           .then(res => {
             const result = res.body;
+            console.log(result.error);
             assert.strictEqual(result.code, 403);
             assert.isDefined(result.error);
+            assert.strictEqual(result.error.type, 'OnTimeError');
             assert.strictEqual(result.messageCode, '-3');
             done();
           })
@@ -116,6 +120,7 @@ module.exports = (agent, url) => {
             const result = res.body;
             assert.strictEqual(result.code, 403);
             assert.isDefined(result.error);
+            assert.strictEqual(result.error.type, 'OnTimeError');
             assert.strictEqual(result.messageCode, '-3');
             done();
           })
@@ -134,7 +139,8 @@ module.exports = (agent, url) => {
           .then(res => {
             const result = res.body;
             assert.strictEqual(result.code, 500);
-            assert.isUndefined(result.error);
+            assert.isDefined(result.error);
+            assert.strictEqual(result.error.type, 'Error');
             assert.strictEqual(result.messageCode, '-1');
             done();
           })
@@ -170,7 +176,7 @@ module.exports = (agent, url) => {
     });
 
     describe('# [GET] ' + url + '/items', () => {
-      it('should get an error with token', done => {
+      it('should get an error with token (error OnTime Response)', done => {
         Ontime.items = () => Helper.mockOnTimeAPIResponse(require('../fixtures/ontime/ko'));
 
         agent
@@ -182,6 +188,7 @@ module.exports = (agent, url) => {
             const result = res.body;
             assert.strictEqual(result.code, 403);
             assert.isDefined(result.error);
+            assert.strictEqual(result.error.type, 'OnTimeError');
             assert.strictEqual(result.messageCode, '-3');
             done();
           })
@@ -189,7 +196,7 @@ module.exports = (agent, url) => {
         ;
       });
 
-      it('should get an error with token', done => {
+      it('should get an error with token (empty OnTime Response)', done => {
         Ontime.items = () => Helper.mockOnTimeAPIResponse();
 
         agent
@@ -200,7 +207,8 @@ module.exports = (agent, url) => {
           .then(res => {
             const result = res.body;
             assert.strictEqual(result.code, 500);
-            assert.isUndefined(result.error);
+            assert.isDefined(result.error);
+            assert.strictEqual(result.error.type, 'Error');
             assert.strictEqual(result.messageCode, '-1');
             done();
           })
