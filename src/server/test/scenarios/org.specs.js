@@ -26,6 +26,7 @@ module.exports = (agent, url) => {
               const result = res.body;
               assert.strictEqual(result.code, 500);
               assert.isDefined(result.error);
+              assert.strictEqual(result.error.type, 'Error');
               assert.strictEqual(result.messageCode, '-1');
               stub.restore();
               done();
@@ -48,6 +49,7 @@ module.exports = (agent, url) => {
               const result = res.body;
               assert.strictEqual(result.code, 500);
               assert.isDefined(result.error);
+              assert.strictEqual(result.error.type, 'Error');
               assert.strictEqual(result.messageCode, '-1');
               stub.restore();
               done();
@@ -224,7 +226,8 @@ module.exports = (agent, url) => {
             .then(res => {
               const result = res.body;
               assert.strictEqual(result.code, 404);
-              assert.isUndefined(result.error);
+              assert.isDefined(result.error);
+              assert.strictEqual(result.error.type, 'EmptyOrganizationError');
               assert.strictEqual(result.messageCode, '-9');
               stub.restore();
               done();
@@ -312,7 +315,7 @@ module.exports = (agent, url) => {
           .catch(err => done(err))
         ;
       });
-      
+
       it('should get an internal error (mongo fail)', done => {
         Helper.mockModel(mongoose.model('Organization'), 'findByIdAndRemove', stub => {
           agent
