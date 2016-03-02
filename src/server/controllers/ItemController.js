@@ -88,20 +88,19 @@ class ItemController extends AbstractController {
           }
           Http.sendResponse(request, response, 200, result);
         })
-        .catch(UndefinedItemError, () => {
+        .catch(UndefinedItemError, error => {
           Http.sendResponse(
-            request, response, 404, {}, '-6', 'Error: item with id (' + data.itemId + ') for "get request" not found.'
+            request, response, 404, {}, '-6', 'Error: item (' + data.itemId + ') for "get request" not found.', error
           );
         })
-        .catch(EmptyOrganizationError, () => {
+        .catch(EmptyOrganizationError, error => {
           Http.sendResponse(
-            request, response, 404, {}, '-5', 'Error: organization with id (' + data.organizationId + ') not found.'
+            request, response, 404, {}, '-5', 'Error: organization (' + data.organizationId + ') not found.', error
           );
         })
-        .catch(err => {
-          Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: get organization', err);
-        })
-      ;
+        .catch(error => {
+          Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: get organization', error);
+        });
     } else {
       Http.sendResponse(
         request, response, 404, {}, '-5', 'Error: organization with id (' + data.organizationId + ') not found.'
@@ -123,7 +122,7 @@ class ItemController extends AbstractController {
   static _createEntries(items) {
     let entries = [];
 
-    items.forEach(function (item) {
+    items.forEach(function(item) {
       /* jshint camelcase: false */
       var indexOfParentProject = entries.pluck('ontimeId').indexOf(item.parent_project.id);
       if (indexOfParentProject === -1) {
@@ -150,7 +149,7 @@ class ItemController extends AbstractController {
 
       var indexOfEntry =
         entries[indexOfParentProject].children[indexOfProject].children.pluck('ontimeId')
-          .indexOf(item.parent.id);
+        .indexOf(item.parent.id);
 
       if (indexOfEntry === -1) {
         entries[indexOfParentProject].children[indexOfProject].children.push(new EntryModel({
@@ -192,7 +191,7 @@ class ItemController extends AbstractController {
       entries[indexOfParentProject].children[indexOfProject].size++;
       if (indexOfEntry !== -1) {
         if (entries[indexOfParentProject]
-            .children[indexOfProject].children[indexOfEntry].size === undefined) {
+          .children[indexOfProject].children[indexOfEntry].size === undefined) {
           entries[indexOfParentProject].children[indexOfProject]
             .children[indexOfEntry].size = 0;
         }
@@ -218,19 +217,19 @@ class ItemController extends AbstractController {
 
       // Sum of parent project entries
       if (entries[indexOfParentProject]
-          .children[indexOfProject].estimate.durationMinutes === undefined) {
+        .children[indexOfProject].estimate.durationMinutes === undefined) {
         entries[indexOfParentProject].children[indexOfProject].estimate.durationMinutes = 0;
       }
       entries[indexOfParentProject].children[indexOfProject].estimate.durationMinutes +=
         item.estimated_duration.duration_minutes;
       if (entries[indexOfParentProject]
-          .children[indexOfProject].estimate.otrLow === undefined) {
+        .children[indexOfProject].estimate.otrLow === undefined) {
         entries[indexOfParentProject].children[indexOfProject].estimate.otrLow = 0;
       }
       entries[indexOfParentProject].children[indexOfProject].estimate.otrLow +=
         item.custom_fields !== undefined ? item.custom_fields.custom_257 : 0;
       if (entries[indexOfParentProject]
-          .children[indexOfProject].estimate.otrHigh === undefined) {
+        .children[indexOfProject].estimate.otrHigh === undefined) {
         entries[indexOfParentProject].children[indexOfProject].estimate.otrHigh = 0;
       }
       entries[indexOfParentProject].children[indexOfProject].estimate.otrHigh +=
@@ -254,7 +253,10 @@ class ItemController extends AbstractController {
    */
   static createAction(request, response) {
     const data = request.body;
-    let modelItem = {}, user = {}, organization = {}, element = {};
+    let modelItem = {},
+      user = {},
+      organization = {},
+      element = {};
 
     Http.checkAuthorized(request, response)
       // Result of checkAuthorize
@@ -272,8 +274,14 @@ class ItemController extends AbstractController {
         modelItem = {
           name: data.name,
           description: data.description,
-          update: {user: user._id, date: new Date()},
-          creation: {user: user._id, date: new Date()},
+          update: {
+            user: user._id,
+            date: new Date()
+          },
+          creation: {
+            user: user._id,
+            date: new Date()
+          },
         };
 
         if (!organization) {
@@ -313,8 +321,10 @@ class ItemController extends AbstractController {
           version: () => {
             if (data.projectOntimeId !== undefined || data.releaseOntimeId !== undefined) {
               return Ontime.items(
-                request.ontimeToken,
-                {projectId: data.projectOntimeId, releaseId: data.releaseOntimeId}
+                request.ontimeToken, {
+                  projectId: data.projectOntimeId,
+                  releaseId: data.releaseOntimeId
+                }
               );
             } else {
               throw new UndefinedOnTimeIdVersionError();
@@ -331,7 +341,10 @@ class ItemController extends AbstractController {
       // Result of Ontime.items
       .then(result => {
         modelItem = new VersionModel(modelItem);
-        modelItem.update = modelItem.creation = {user: user._id, date: new Date()};
+        modelItem.update = modelItem.creation = {
+          user: user._id,
+          date: new Date()
+        };
         modelItem.setting = new SettingModel(mapping.settingDtoToDal(undefined, data.setting));
         modelItem.entries = ItemController._createEntries(result.data);
         element.versions.push(modelItem);
@@ -344,46 +357,47 @@ class ItemController extends AbstractController {
         Http.sendResponse(request, response, 200, result, result.returnCode);
       })
       // Promise-chaining Errors/Exceptions (!200)
-      .catch(OnTimeError, err => {
-        const error = err.message;
+      .catch(OnTimeError, error => {
         Http.sendResponse(
           /* jshint camelcase: false */
-          request, response, 403, {error: error}, '-3', 'Ontime Error: ' + error.error_description, error.error
+          request, response, 403, {
+            error: error
+          }, '-3', 'Ontime Error', error
           /* jshint camelcase: true */
         );
       })
-      .catch(UndefinedOnTimeIdVersionError, () => {
+      .catch(UndefinedOnTimeIdVersionError, error => {
         Http.sendResponse(
-          request, response, 404, {}, '-7', 'Error: item creation (version one) failed (data.ontimeId is undefined).'
+          request, response, 404, {}, '-7',
+          'Error: item creation (version one) failed (data.ontimeId is undefined).', error
         );
       })
-      .catch(InvalidTypeItemError, () => {
+      .catch(InvalidTypeItemError, error => {
         Http.sendResponse(
-          request, response, 404, {}, '-7', 'Error: item creation failed (data.type is undefined or invalid).'
+          request, response, 404, {}, '-7', 'Error: item creation failed (data.type is undefined or invalid).', error
         );
       })
-      .catch(NotFoundItemError, () => {
+      .catch(NotFoundItemError, error => {
         Http.sendResponse(
-          request, response, 404, {}, '-7', 'Error: project not found (data.parentId = ' + data.parentId + ').'
+          request, response, 404, {}, '-7', 'Error: project not found (data.parentId = ' + data.parentId + ').', error
         );
       })
-      .catch(UndefinedParentIdOrTypeItemError, () => {
+      .catch(UndefinedParentIdOrTypeItemError, error => {
         Http.sendResponse(
-          request, response, 404, {}, '-7', 'Error: item creation failed (data.parentId / type is undefined).'
+          request, response, 404, {}, '-7', 'Error: item creation failed (data.parentId / type is undefined).', error
         );
       })
-      .catch(NotFoundOrganizationIdItemError, () => {
+      .catch(NotFoundOrganizationIdItemError, error => {
         Http.sendResponse(
-          request, response, 404, {}, '-5', 'Error: organization with id (' + data.organizationId + ') not found.'
+          request, response, 404, {}, '-5', 'Error: org with id (' + data.organizationId + ') not found.', error
         );
       })
-      .catch(UndefinedOrganizationIdItemError, () => {
-        Http.sendResponse(request, response, 404, {}, '-1', 'Internal error: wrong parameters in "items/create"');
+      .catch(UndefinedOrganizationIdItemError, error => {
+        Http.sendResponse(request, response, 404, {}, '-1', 'Internal error: wrong params in "items/create"', error);
       })
-      .catch(err => {
-        Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: create item', err);
-      })
-    ;
+      .catch(error => {
+        Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: create item', error);
+      });
   }
 
   /**
@@ -395,7 +409,9 @@ class ItemController extends AbstractController {
    */
   static updateAction(request, response) {
     const data = request.body;
-    let modelItem = {}, user = {}, organization = {};
+    let modelItem = {},
+      user = {},
+      organization = {};
 
     Http.checkAuthorized(request, response)
       .then(userData => {
@@ -425,7 +441,10 @@ class ItemController extends AbstractController {
 
         modelItem.name = data.name ? data.name : modelItem.name;
         modelItem.description = data.description ? data.description : modelItem.description;
-        modelItem.update = {user: user._id, date: new Date()};
+        modelItem.update = {
+          user: user._id,
+          date: new Date()
+        };
         element = Object.assign(element, modelItem);
         data.type = element.projects === undefined ? 'document' : 'project';
 
@@ -436,24 +455,29 @@ class ItemController extends AbstractController {
         const result = successMsg.result;
         Http.sendResponse(request, response, 200, result, result.returnCode);
       })
-      .catch(NotFoundItemError, () => {
-        Http.sendResponse(request, response, 404, {}, '-8', 'Error: item not found (data._id = ' + data._id + ').');
-      })
-      .catch(UndefinedIdItemError, () => {
-        Http.sendResponse(request, response, 404, {}, '-8', 'Error: item to update not found (data._id = undefined).');
-      })
-      .catch(NotFoundOrganizationIdItemError, () => {
+      .catch(NotFoundItemError, error => {
         Http.sendResponse(
-          request, response, 404, {}, '-5', 'Error: organization with id (' + data.organizationId + ') not found.'
+          request, response, 404, {}, '-8', 'Error: item not found (data._id = ' + data._id + ').', error
         );
       })
-      .catch(UndefinedOrganizationIdItemError, () => {
-        Http.sendResponse(request, response, 404, {}, '-1', 'Internal error: wrong parameters in "items/update"');
+      .catch(UndefinedIdItemError, error => {
+        Http.sendResponse(
+          request, response, 404, {}, '-8', 'Error: item to update not found (data._id = undefined).', error
+        );
       })
-      .catch(err => {
-        Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: update item', err);
+      .catch(NotFoundOrganizationIdItemError, error => {
+        Http.sendResponse(
+          request, response, 404, {}, '-5', 'Error: org with id (' + data.organizationId + ') not found.', error
+        );
       })
-    ;
+      .catch(UndefinedOrganizationIdItemError, error => {
+        Http.sendResponse(
+          request, response, 404, {}, '-1', 'Internal error: wrong parameters in "items/update"', error
+        );
+      })
+      .catch(error => {
+        Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: update item', error);
+      });
   }
 
   /**
@@ -467,7 +491,8 @@ class ItemController extends AbstractController {
    * @method  DELETE
    */
   static deleteAction(request, response) {
-    const params = request.params, lazy = request.query.lazy;
+    const params = request.params,
+      lazy = request.query.lazy;
     let organization = {};
 
     Http.checkAuthorized(request, response)
@@ -484,7 +509,8 @@ class ItemController extends AbstractController {
         return Organization.findDeepAttributeById(organization, params.itemId);
       })
       .then(result => {
-        let element = result.element, data = params;
+        let element = result.element,
+          data = params;
         const item = element;
         if (!result || !result.element) {
           throw new NotFoundItemError();
@@ -501,20 +527,19 @@ class ItemController extends AbstractController {
         const result = successMsg.result;
         Http.sendResponse(request, response, 200, result, result.returnCode);
       })
-      .catch(NotFoundItemError, () => {
+      .catch(NotFoundItemError, error => {
         Http.sendResponse(
-          request, response, 404, {}, '-6', 'Error: item to delete not found (data.itemId = ' + params.itemId + ').'
+          request, response, 404, {}, '-6', 'Error: item to del not found (data.itemId = ' + params.itemId + ').', error
         );
       })
-      .catch(NotFoundOrganizationIdItemError, () => {
+      .catch(NotFoundOrganizationIdItemError, error => {
         Http.sendResponse(
-          request, response, 404, {}, '-5', 'Error: organization with id (' + params.organizationId + ') not found.'
+          request, response, 404, {}, '-5', 'Error: org with id (' + params.organizationId + ') not found.', error
         );
       })
-      .catch(err => {
-        Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: delete item', err);
-      })
-    ;
+      .catch(error => {
+        Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: delete item', error);
+      });
   }
 }
 
