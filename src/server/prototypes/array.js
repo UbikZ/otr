@@ -3,12 +3,12 @@
 // Can't use arrow notation ('this' scope...)
 
 Object.defineProperty(Array.prototype, 'pluck', {
-  value: function (key) {
+  value: function(key) {
     return this.map(object => object[key]);
   }
 });
 
-Array.prototype.id = function (elementId) {
+Array.prototype.id = function(elementId) {
   const result =
     this.filter(obj => {
       /*jshint eqeqeq: false */

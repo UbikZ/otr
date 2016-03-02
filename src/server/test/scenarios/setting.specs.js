@@ -32,8 +32,7 @@ module.exports = (agent, url) => {
               stub.restore();
               done();
             })
-            .catch(err => done(err))
-          ;
+            .catch(err => done(err));
         });
       });
 
@@ -54,8 +53,7 @@ module.exports = (agent, url) => {
               stub.restore();
               done();
             })
-            .catch(err => done(err))
-          ;
+            .catch(err => done(err));
         });
       });
 
@@ -95,8 +93,7 @@ module.exports = (agent, url) => {
             settingStandaloneId = result.setting._id;
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
 
       it('should get an internal error (update) on update a standalone setting (mongo fail)', done => {
@@ -117,8 +114,7 @@ module.exports = (agent, url) => {
               stub.restore();
               done();
             })
-            .catch(err => done(err))
-          ;
+            .catch(err => done(err));
         });
       });
 
@@ -158,8 +154,7 @@ module.exports = (agent, url) => {
             settingStandaloneId = result.setting._id;
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
     });
 
@@ -179,8 +174,7 @@ module.exports = (agent, url) => {
               stub.restore();
               done();
             })
-            .catch(err => done(err))
-          ;
+            .catch(err => done(err));
         });
       });
 
@@ -200,11 +194,9 @@ module.exports = (agent, url) => {
                 stub.restore();
                 done();
               })
-              .catch(err => done(err))
-            ;
+              .catch(err => done(err));
           }, true);
-        })
-      ;
+        });
 
       it('should request a standalone setting', done => {
         agent
@@ -220,8 +212,7 @@ module.exports = (agent, url) => {
             assert.isDefined(result.setting);
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
     });
 
@@ -239,10 +230,8 @@ module.exports = (agent, url) => {
               assert.strictEqual(result, 'Cannot POST ' + apiUrl + '\n');
               done();
             })
-            .catch(err => done(err))
-          ;
-        })
-      ;
+            .catch(err => done(err));
+        });
 
       it('should get an internal error request (findById) a sub-item setting (mongo fail)', done => {
         Helper.mockModel(mongoose.model('Organization'), 'findById', stub => {
@@ -259,8 +248,7 @@ module.exports = (agent, url) => {
               stub.restore();
               done();
             })
-            .catch(err => done(err))
-          ;
+            .catch(err => done(err));
         });
       });
 
@@ -277,8 +265,7 @@ module.exports = (agent, url) => {
             assert.strictEqual(result.messageCode, '-5');
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
 
       it('should get an internal error (update) for create a sub-item setting in organization (mongo fail) 1/3',
@@ -286,7 +273,7 @@ module.exports = (agent, url) => {
           const sentData = require('./../fixtures/setting/create-ok-1');
           Helper.mockModel(mongoose.model('Organization'), 'update', stub => {
             agent
-            .post(apiUrl + '/' + global.organizationId)
+              .post(apiUrl + '/' + global.organizationId)
               .send(sentData)
               .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
               .expect(500)
@@ -299,11 +286,9 @@ module.exports = (agent, url) => {
                 stub.restore();
                 done();
               })
-              .catch(err => done(err))
-            ;
+              .catch(err => done(err));
           });
-        })
-      ;
+        });
 
       it('should create a sub-item setting in organization', done => {
         const sentData = require('./../fixtures/setting/create-ok-1');
@@ -341,8 +326,7 @@ module.exports = (agent, url) => {
             assert.strictEqual(org.setting.iteration.weekPerIteration, sentData.weekPerIteration);
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
 
       it('should create a sub-item setting in organization (with previewMode enabled)', done => {
@@ -378,8 +362,7 @@ module.exports = (agent, url) => {
             assert.strictEqual(sett.iteration.weekPerIteration, sentData.weekPerIteration);
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
 
       /*it('should get an internal error (update) for create a sub-item setting in organization (mongo fail) 2/3',
@@ -420,7 +403,7 @@ module.exports = (agent, url) => {
               assert.isUndefined(result.error);
               assert.strictEqual(result.messageCode, '10');
               assert.isDefined(result.organization);
-              OrganizationModel.findDeepAttributeById(result.organization, global.projectId, function (element) {
+              OrganizationModel.findDeepAttributeById(result.organization, global.projectId, function(element) {
                 assert.isDefined(element);
                 assert.isDefined(element.setting);
                 const sett = element.setting;
@@ -441,10 +424,8 @@ module.exports = (agent, url) => {
               });
               done();
             })
-            .catch(err => done(err))
-          ;
-        })
-      ;
+            .catch(err => done(err));
+        });
     });
 
     describe('# [GET] ~sub-item ' + url + '/setting/sub/:organizationId', () => {
@@ -460,8 +441,7 @@ module.exports = (agent, url) => {
             assert.strictEqual(result, 'Cannot GET ' + apiUrl + '\n');
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
 
       it('should get an internal error request (findById) a sub-item setting (mongo fail)', done => {
@@ -479,8 +459,7 @@ module.exports = (agent, url) => {
               stub.restore();
               done();
             })
-            .catch(err => done(err))
-          ;
+            .catch(err => done(err));
         });
       });
 
@@ -497,8 +476,7 @@ module.exports = (agent, url) => {
             assert.strictEqual(result.messageCode, '-5');
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
 
       it('should get a sub-item setting for organization', done => {
@@ -515,8 +493,7 @@ module.exports = (agent, url) => {
             assert.isDefined(result.setting);
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
 
       it('should get a sub-item setting for organization (with lazy)', done => {
@@ -533,8 +510,7 @@ module.exports = (agent, url) => {
             assert.isDefined(result.setting);
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
 
       it('should get a sub-item setting for item', done => {
@@ -551,8 +527,7 @@ module.exports = (agent, url) => {
             assert.isDefined(result.setting);
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
     });
   });

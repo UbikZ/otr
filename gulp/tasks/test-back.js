@@ -21,12 +21,19 @@ export default (gulp, plugins, npmPackages, config) => {
           '!' + config.path.server.root + '/test/**/*',
           '!' + config.path.server.root + '/Application.js'
         ])
-        .pipe(plugins.istanbul({ includeUntested: true }))
+        .pipe(plugins.istanbul({
+          includeUntested: true
+        }))
         .pipe(plugins.istanbul.hookRequire())
         .on('finish', () => {
           return gulp.src(config.path.server.test + '/index.js')
-            .pipe(plugins.mocha({ reporter: 'spec', compilers: ['js:babel-core/register'] }))
-            .pipe(plugins.istanbul.writeReports({ dir: config.path.server.coverage }))
+            .pipe(plugins.mocha({
+              reporter: 'spec',
+              compilers: ['js:babel-core/register']
+            }))
+            .pipe(plugins.istanbul.writeReports({
+              dir: config.path.server.coverage
+            }))
             .on('end', () => {
               //if (!process.env.CI) {
               gulp.src(config.path.server.coverage + '/lcov.info')

@@ -14,7 +14,11 @@ const controllers = {
   'PdfController': require('./controllers/PdfController')
 };
 
-const methods = { GET: 'GET', POST: 'POST', DELETE: 'DELETE' };
+const methods = {
+  GET: 'GET',
+  POST: 'POST',
+  DELETE: 'DELETE'
+};
 
 /**
  * Router
@@ -25,9 +29,10 @@ module.exports = (app, router) => {
   /**
    * Register all routes
    */
-  router.routes.forEach(function (route) {
-    route.subRoutes.forEach(function (subRoute) {
-      const args = [app.apiUrl + route.pattern + subRoute.pattern], cases = {};
+  router.routes.forEach(function(route) {
+    route.subRoutes.forEach(function(subRoute) {
+      const args = [app.apiUrl + route.pattern + subRoute.pattern],
+        cases = {};
 
       if (subRoute.checkSecurity === true) {
         args.push(Http.ensureAuthorized);

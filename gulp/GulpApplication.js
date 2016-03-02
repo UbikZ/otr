@@ -91,9 +91,29 @@ class GulpApplication {
    */
   _registerPlugins() {
     this.plugins = {
-      browserify, babelify, tsify, nodeResolve, source, streamify, del, mapStream, less, concat, uglify, minifyCss,
-      minifyHtml, rev, buffer, gzip, jshint, istanbul, mocha, coveralls, /*angularProtractor,*/ angularTemplateCache,
-      gulpIf, docApi
+      browserify,
+      babelify,
+      tsify,
+      nodeResolve,
+      source,
+      streamify,
+      del,
+      mapStream,
+      less,
+      concat,
+      uglify,
+      minifyCss,
+      minifyHtml,
+      rev,
+      buffer,
+      gzip,
+      jshint,
+      istanbul,
+      mocha,
+      coveralls,
+      angularTemplateCache,
+      gulpIf,
+      docApi
     };
 
     // Plugin for production/staging mode
@@ -129,9 +149,22 @@ class GulpApplication {
    */
   _registerBrowserDependencies() {
     this.browserDependencies = [
-      'angular', 'angular-gravatar', 'angular-ui-router', 'angular-ui-sortable', 'angular-ui-bootstrap',
-      'angular-translate', 'bootstrap-ui', 'ngstorage', 'angular-tree-control', 'jquery', 'jquery-ui',
-      'jquery-slimscroll', 'metismenu', 'oclazyload', 'pace', 'toastr', 'q'
+      'angular',
+      'angular-gravatar',
+      'angular-ui-router',
+      'angular-ui-sortable',
+      'angular-ui-bootstrap',
+      'angular-translate',
+      'bootstrap-ui',
+      'ngstorage',
+      'angular-tree-control',
+      'jquery',
+      'jquery-ui',
+      'jquery-slimscroll',
+      'metismenu',
+      'oclazyload',
+      'pace',
+      'toastr'
     ];
   }
 

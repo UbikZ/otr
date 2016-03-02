@@ -27,15 +27,16 @@ class UserController extends AbstractController {
         if (!users) {
           throw new EmptyUserError();
         }
-        Http.sendResponse(request, response, 200, { users: users });
+        Http.sendResponse(request, response, 200, {
+          users: users
+        });
       })
       .catch(EmptyUserError, error => {
         Http.sendResponse(request, response, 404, {}, '-12', 'Error: users is undefined (criteria = {}).', error);
       })
       .catch(error => {
         Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: get users', error);
-      })
-    ;
+      });
   }
 
   /**
@@ -48,7 +49,9 @@ class UserController extends AbstractController {
     const data = request.body;
     let userModel = {};
 
-    User.findOne({ 'identity.token': request.token }).lean().execAsync()
+    User.findOne({
+        'identity.token': request.token
+      }).lean().execAsync()
       .then(user => {
         userModel = user;
         if (!user) {
@@ -69,20 +72,23 @@ class UserController extends AbstractController {
         if (data.job) {
           userModel.info.job = data.job;
         }
-        return User.update({ _id: userModel._id }, userModel, {}).lean().execAsync();
+        return User.update({
+          _id: userModel._id
+        }, userModel, {}).lean().execAsync();
       })
       .then(() => {
-        Http.sendResponse(request, response, 200, { user: userModel }, '11');
+        Http.sendResponse(request, response, 200, {
+          user: userModel
+        }, '11');
       })
       .catch(EmptyUserError, error => {
         Http.sendResponse(
           request, response, 404, {}, '-12', 'User with token(' + request.token + ') not found', error
-          );
+        );
       })
       .catch(error => {
         Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: update user', error);
-      })
-    ;
+      });
   }
 }
 

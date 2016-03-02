@@ -17,11 +17,15 @@
  */
 export default (gulp, plugins, npmPackages, config) => {
   return () => {
-    let b = plugins.browserify({debug: config.env.debug});
+    let b = plugins.browserify({
+      debug: config.env.debug
+    });
 
     npmPackages().forEach(id => {
       if (Object.keys(config.particularities).indexOf(id) == -1) {
-        b.require(plugins.nodeResolve.sync(id), {expose: id});
+        b.require(plugins.nodeResolve.sync(id), {
+          expose: id
+        });
       } else {
         b.require(config.particularities[id]);
       }
@@ -32,12 +36,16 @@ export default (gulp, plugins, npmPackages, config) => {
       .pipe(plugins.ifProd(plugins.buffer()))
       .pipe(plugins.ifProd(plugins.rev()))
       .pipe(plugins.ifProd(plugins.streamify(plugins.uglify())))
-      .pipe(plugins.ifProd(plugins.gzip({gzipOptions: {level: 9}, preExtension: 'gz'})))
+      .pipe(plugins.ifProd(plugins.gzip({
+        gzipOptions: {
+          level: 9
+        },
+        preExtension: 'gz'
+      })))
       .pipe(plugins.ifProd(gulp.dest(config.path.public + '/dist')))
       .pipe(plugins.ifProd(plugins.rev.manifest(config.path.public + '/dist/rev-manifest.vendor.json', {
         base: config.path.public + '/dist/',
       })))
-      .pipe(gulp.dest(config.path.public + '/dist'))
-      ;
+      .pipe(gulp.dest(config.path.public + '/dist'));
   };
 };

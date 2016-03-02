@@ -4,8 +4,7 @@
  * Error class
  */
 /*jshint unused: true */
-class UndefinedDownloadFile extends Error {
-}
+class UndefinedDownloadFile extends Error {}
 /*jshint unused: false */
 
 module.exports = UndefinedDownloadFile;

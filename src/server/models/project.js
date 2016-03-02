@@ -11,7 +11,7 @@ Project.add({
   priority: { type: Number, min: 0, max: 2 },
   creation: {
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    date: Date
+    date: Date,
   },
   update: {
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },

@@ -10,19 +10,19 @@
  * @param config
  * @returns {Function}
  */
-export default (gulp, plugins, npmPackages, config) => {
+export default (/*gulp, plugins, npmPackages, config*/) => {
   return () => {
-    if (process.env.NODE_ENV === 'staging') {
-      /*return gulp.src([config.path.client.test])
-       .pipe(plugins.angularProtractor({
-       'configFile': config.path.client.test.concat('/protractor.config.js'),
-       'autoStartStopServer': true,
-       'debug': true
-       }))
-       .on('error', error => {
-       throw error
-       });*/
-    }
+    // if (process.env.NODE_ENV === 'staging') {
+    //   return gulp.src([config.path.client.test])
+    //     .pipe(plugins.angularProtractor({
+    //       'configFile': config.path.client.test.concat('/protractor.config.js'),
+    //       'autoStartStopServer': true,
+    //       'debug': true
+    //     }))
+    //     .on('error', error => {
+    //       throw error;
+    //     });
+    // }
     return;
   };
 };

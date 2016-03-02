@@ -25,8 +25,7 @@ module.exports = (agent, url) => {
             assert.strictEqual(result.messageCode, '-1');
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
 
       it('should get an error because no name given', done => {
@@ -42,11 +41,10 @@ module.exports = (agent, url) => {
             assert.strictEqual(result.messageCode, '-1');
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
 
-      it('should get an pdf file', function (done) {
+      it('should get an pdf file', function(done) {
         this.timeout(10000);
         agent
           .get(apiUrl + '?url=/&name=test')
@@ -60,14 +58,13 @@ module.exports = (agent, url) => {
             assert.isTrue(Boolean(~result.fileName.indexOf('test')));
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
     });
-    
+
     describe('# [GET] /pdf/render', () => {
       const apiUrl = url + '/pdf/download';
-      
+
       it('should get an error because no fileName given', done => {
         agent
           .get(apiUrl)
@@ -81,11 +78,10 @@ module.exports = (agent, url) => {
             assert.strictEqual(result.messageCode, '-1');
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
-      
-      it('should get an error because no pdf file created', function (done) {
+
+      it('should get an error because no pdf file created', function(done) {
         this.timeout(10000);
         agent
           .get(apiUrl + '?fileName=test')
@@ -99,8 +95,7 @@ module.exports = (agent, url) => {
             assert.strictEqual(result.messageCode, '-1');
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
     });
   });

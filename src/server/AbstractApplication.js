@@ -50,11 +50,15 @@ class AbstractApplication {
 
   _registerLogger() {
     this.logger = require('./logger');
-    this.app.use(morgan('combined', { stream: this.logger.stream }));
+    this.app.use(morgan('combined', {
+      stream: this.logger.stream
+    }));
   }
 
   _registerHttpMiddleware() {
-    this.app.use(bodyParser.urlencoded({ extended: true }));
+    this.app.use(bodyParser.urlencoded({
+      extended: true
+    }));
     this.app.use(bodyParser.json());
 
     this.app.use((req, res, next) => {

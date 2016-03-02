@@ -39,7 +39,7 @@ class PdfController extends AbstractController {
 
     return binPath;
   }
-  
+
   /**
    * Index Action
    * TODO: list all rendered files
@@ -52,26 +52,26 @@ class PdfController extends AbstractController {
   /**
    * @api {get} /pdf/render Generate PDF file
    * @apiVersion 0.0.1
-   * 
+   *
    * @apiName RenderPdf
-   * 
+   *
    * @apiDescription The goal is to generate a file using PhantomJS on specific URL
    * - Enable rendering for specific element.
    * - Return a public link to get the file.
-   * 
+   *
    * @apiGroup PDF
    *
    * @apiUse Generic
-   * 
+   *
    * @apiParam  {String}  url The <code>url</code> parameter used to define entrypoint to generate the PDF
    * @apiParam  {String}  name  The output <code>name</code> for the file (<i>we wil add timestamp to unify file</i>)
-   * 
+   *
    *  * @apiParamExample {json} Query
    *     {
    *        "url": "http://localhost:3000/#/pdf/render/xxxxxxxxxxxxxxxxx",
    *        "fileName": "test"
    *     }
-   * 
+   *
    * @apiSuccess  {String}  fileName  Unique file name of the generated file
    *
    * @apiSuccessExample Success
@@ -82,25 +82,25 @@ class PdfController extends AbstractController {
    *
    *
    * @apiErrorExample UndefinedUrl
-   *     -- "The url parameter is missing." -- 
+   *     -- "The url parameter is missing." --
    *     HTTP/1.1 404 Not Found
    *     {
    *        "code": 404,
    *        "date": "2016-02-18 17:56:05",
    *        "messageCode: "-1"
    *     }
-   * 
+   *
    * @apiErrorExample UndefinedName
-   *     -- "The file name parameter is missing." -- 
+   *     -- "The file name parameter is missing." --
    *     HTTP/1.1 404 Not Found
    *     {
    *        "code": 404,
    *        "date": "2016-02-18 17:56:05",
    *        "messageCode: "-1"
    *     }
-   * 
+   *
    * @apiErrorExample NotFoundPdfFile
-   *     -- "The PDF generated file is not found." -- 
+   *     -- "The PDF generated file is not found." --
    *     HTTP/1.1 404 Not Found
    *     {
    *        "code": 404,
@@ -110,7 +110,8 @@ class PdfController extends AbstractController {
    */
   static renderAction(request, response) {
     const data = request.query;
-    let user = {}, filePath = '';
+    let user = {},
+      filePath = '';
 
     Http.checkAuthorized(request, response)
       .then(userData => {
@@ -123,9 +124,9 @@ class PdfController extends AbstractController {
           throw new UndefinedName();
         }
 
-        filePath = config.path.export + '/' +
-        data.name.replace(/[^a-z0-9]/gi, '_').toLowerCase() +
-        moment().format('.YYYYMMDDHHmmSS') + '.pdf';
+        filePath = config.path.export+'/' +
+          data.name.replace(/[^a-z0-9]/gi, '_').toLowerCase() +
+          moment().format('.YYYYMMDDHHmmSS') + '.pdf';
         url = request.protocol + '://' + request.get('host') + '/#' + data.url;
         execArgs = [path.join(__dirname, '../../../' + config.bin.phantomjsConfig), url, filePath, 1];
 
@@ -140,29 +141,30 @@ class PdfController extends AbstractController {
           throw new NotFoundPdfFile();
         }
 
-        Http.sendResponse(request, response, 200, { fileName: path.basename(filePath) });
+        Http.sendResponse(request, response, 200, {
+          fileName: path.basename(filePath)
+        });
       })
       .catch(NotFoundPdfFile, error => {
         Http.sendResponse(
           request, response, 404, {}, '-1', 'Error (' + user.name.username + '): pdf file not created', error
-          );
+        );
       })
       .catch(UndefinedName, error => {
         Http.sendResponse(
           request, response, 404, {}, '-1', 'Error (' + user.name.username + '): rendered name (undefined)', error
-          );
+        );
       })
       .catch(UndefinedUrl, error => {
         Http.sendResponse(
           request, response, 404, {}, '-1', 'Error (' + user.name.username + '): rendered url (undefined)', error
-          );
+        );
       })
       .catch(error => {
         Http.sendResponse(request, response, 500, {}, '-1', 'Error: renderer fail. Check logs.', error);
-      })
-    ;
+      });
   }
-  
+
   /**
    * Download Action
    * - Return a stream & force the downloading
@@ -174,12 +176,13 @@ class PdfController extends AbstractController {
    */
   static downloadAction(request, response) {
     const data = request.query;
-    let user = {}, finalPdfPath = '';
+    let user = {},
+      finalPdfPath = '';
 
     Http.checkAuthorized(request, response)
       .then(userData => {
         user = userData;
-        finalPdfPath = config.path.export + '/' + data.fileName;
+        finalPdfPath = config.path.export+'/' + data.fileName;
         if (!data.fileName) {
           throw new UndefinedDownloadFile();
         }
@@ -192,26 +195,24 @@ class PdfController extends AbstractController {
           if (err) {
             logger.error(err);
           } else {
-            fs.unlink(config.path.export + '/' + data.fileName);
+            fs.unlink(config.path.export+'/' + data.fileName);
           }
         });
       })
       .catch(NotFoundPdfFile, error => {
         Http.sendResponse(
           request, response, 404, {}, '-1', 'Error: pdf file not found (' + finalPdfPath + ')', error
-          );
+        );
       })
       .catch(UndefinedDownloadFile, error => {
         Http.sendResponse(
           request, response, 404, {}, '-1', 'Error (' + user.name.username + '): download file (none)', error
-          );
+        );
       })
       .catch(error => {
         Http.sendResponse(request, response, 500, {}, '-1', 'Error: download fail. Check logs.', error);
-      })
-    ;
+      });
   }
 }
 
 module.exports = PdfController;
-

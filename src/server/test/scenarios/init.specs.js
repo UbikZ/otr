@@ -26,8 +26,7 @@ module.exports = (agent, url, config) => {
             res.text.should.be.a('string');
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
     });
 
@@ -61,8 +60,7 @@ module.exports = (agent, url, config) => {
                 done();
               }
             })
-            .catch(err => done(err))
-          ;
+            .catch(err => done(err));
         });
       });
     });
@@ -80,8 +78,7 @@ module.exports = (agent, url, config) => {
             assert.strictEqual(result.messageCode, '-3');
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
 
       it('returns an internal error (checkAuthorized fail)', done => {
@@ -100,8 +97,7 @@ module.exports = (agent, url, config) => {
               stub.restore();
               done();
             })
-            .catch(err => done(err))
-          ;
+            .catch(err => done(err));
         }, false);
       });
 
@@ -118,8 +114,7 @@ module.exports = (agent, url, config) => {
             assert.strictEqual(result.error.type, 'NotFoundTokenError');
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
     });
   });

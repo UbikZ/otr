@@ -22,7 +22,7 @@ const schema = new mongoose.Schema({
     postCode: { type: String, trim: true },
     region: { type: String, trim: true },
     city: { type: String, trim: true },
-    country: { type: String, trim: true }
+    country: { type: String, trim: true },
   },
   creation: {
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
@@ -49,7 +49,6 @@ function walkRecursively(model, callback) {
     }
   });
 }
-
 /**
  * Generic save method
  * - update organization
@@ -59,13 +58,22 @@ function walkRecursively(model, callback) {
  * @param item
  * @param returnCode
  * @returns {*}
-*/
+ */
 function persist(data, org, item, returnCode) {
   const model = mongoose.model('Organization');
   let organization = org;
-  return model.update({ _id: organization._id }, organization, { upsert: true }).lean().execAsync()
+  return model.update({
+      _id: organization._id
+    }, organization, {
+      upsert: true
+    }).lean().execAsync()
     .then(() => {
-      let returnValue = { organization, item, type: data.type + 's', returnCode };
+      let returnValue = {
+        organization,
+        item,
+        type: data.type + 's',
+        returnCode
+      };
       /*jshint eqeqeq: false */
       if (data.modePreview == 1) {
         /*jshint eqeqeq: true */
@@ -73,7 +81,7 @@ function persist(data, org, item, returnCode) {
         delete returnValue.type;
         /*jshint eqeqeq: false */
       }
-      
+
       /*jshint eqeqeq: false */
       if (data.lazy == 1) {
         /*jshint eqeqeq: true */
@@ -93,8 +101,7 @@ function persist(data, org, item, returnCode) {
         returnValue.item = item;
       }
       throw new Success(returnValue);
-    })
-    ;
+    });
 }
 
 /**
@@ -106,7 +113,11 @@ function persist(data, org, item, returnCode) {
 function findDeepAttributeById(model, elementId) {
   return new BPromise(resolve => {
     Find.findRecursively(model, elementId, (element, parentElement, type) => {
-      resolve({ element, parentElement, type });
+      resolve({
+        element,
+        parentElement,
+        type
+      });
     });
   });
 }

@@ -1,7 +1,5 @@
 'use strict';
 
-import typescript from 'typescript';
-
 /**
  * Task for application javascript
  * - exclude vendor
@@ -22,9 +20,13 @@ import typescript from 'typescript';
 export default (gulp, plugins, npmPackages, config) => {
   return () => {
     let b = plugins
-      .browserify('./src/client/app/js/app.js', {debug: config.env.debug})
+      .browserify('./src/client/app/js/app.js', {
+        debug: config.env.debug
+      })
       //.plugin(plugins.tsify, { target: 'es6', typescript})
-      .transform(plugins.babelify, {presets: ["es2015"]});
+      .transform(plugins.babelify, {
+        presets: ['es2015']
+      });
 
     npmPackages().forEach(id => {
       b.external(id);
@@ -45,13 +47,19 @@ export default (gulp, plugins, npmPackages, config) => {
      }*/
 
     return stream.pipe(plugins.ifProd(plugins.rev()))
-      .pipe(plugins.ifProd(plugins.streamify(plugins.uglify({mangle: false}))))
-      .pipe(plugins.ifProd(plugins.gzip({gzipOptions: {level: 9}, preExtension: 'gz'})))
+      .pipe(plugins.ifProd(plugins.streamify(plugins.uglify({
+        mangle: false
+      }))))
+      .pipe(plugins.ifProd(plugins.gzip({
+        gzipOptions: {
+          level: 9
+        },
+        preExtension: 'gz'
+      })))
       .pipe(plugins.ifProd(gulp.dest(config.path.public + '/dist')))
       .pipe(plugins.ifProd(plugins.rev.manifest(config.path.public + '/dist/rev-manifest.app.json', {
         base: config.path.public + '/dist/'
       })))
-      .pipe(gulp.dest(config.path.public + '/dist'))
-      ;
+      .pipe(gulp.dest(config.path.public + '/dist'));
   };
 };

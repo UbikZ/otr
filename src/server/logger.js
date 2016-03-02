@@ -22,11 +22,14 @@ transports.push(new winston.transports.File({
   colorize: false,
 }));
 
-var logger = new winston.Logger({ transports: transports, exitOnError: false });
+var logger = new winston.Logger({
+  transports: transports,
+  exitOnError: false
+});
 
 module.exports = logger;
 module.exports.stream = {
-  write: function (message) {
+  write: function(message) {
     logger.info(message);
   }
 };
