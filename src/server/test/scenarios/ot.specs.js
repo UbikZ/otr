@@ -67,7 +67,6 @@ module.exports = (agent, url) => {
           .expect('Content-Type', 'application/json; charset=utf-8')
           .then(res => {
             const result = res.body;
-            console.log(result.error);
             assert.strictEqual(result.code, 403);
             assert.isDefined(result.error);
             assert.strictEqual(result.error.type, 'OnTimeError');

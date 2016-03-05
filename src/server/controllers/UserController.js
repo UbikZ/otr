@@ -2,7 +2,8 @@
 
 const AbstractController = require('./AbstractController');
 const Http = require('./helpers/Http');
-const User = require('../models/user');
+
+const User = require('../models/UserModel').model;
 
 const EmptyUserError = require('./../errors/EmptyUserError');
 
@@ -12,31 +13,50 @@ const EmptyUserError = require('./../errors/EmptyUserError');
  *  - updateAction
  */
 class UserController extends AbstractController {
+
   /**
-   * Get information about logged ontime user
-   * @param   request
-   * @param   response
-   * @method  GET
+   * Private method to process the get of users by criteria
+   * @param  {Object} criteria Criteria for search on or several users
+   * @param  {Object} request
+   * @param  {Object} response
    */
-  static indexAction(request, response) {
-    Http.checkAuthorized(request, response)
+  static _processGetUsers(criteria, request, response) {
+    return Http.checkAuthorized(request, response)
       .then(() => {
-        return User.find({}).lean().execAsync();
+        return User.find(criteria).lean().execAsync();
       })
       .then(users => {
         if (!users) {
           throw new EmptyUserError();
         }
         Http.sendResponse(request, response, 200, {
-          users: users
+          users
         });
       })
       .catch(EmptyUserError, error => {
-        Http.sendResponse(request, response, 404, {}, '-12', 'Error: users is undefined (criteria = {}).', error);
+        Http.sendResponse(request, response, 404, {}, '-12', 'Error: `users` is undefined.', error);
       })
       .catch(error => {
         Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: get users', error);
       });
+  }
+
+  /**
+   * Get users from the application by criteria
+   * @param  {Object} request
+   * @param  {Object} response
+   */
+  static indexAction(request, response) {
+    UserController._processGetUsers(request.query, request, response);
+  }
+
+  /**
+   * Get ONE user from the application by his OID (Object ID)
+   * @param  {Object} request
+   * @param  {Object} response
+   */
+  static getAction(request, response) {
+    UserController._processGetUsers(request.query, request, response);
   }
 
   /**
@@ -45,7 +65,14 @@ class UserController extends AbstractController {
    * @param   response
    * @method  POST
    */
+  /**
+   * Update logged user
+   * @param  {[type]} request  [description]
+   * @param  {[type]} response [description]
+   * @return {[type]}          [description]
+   */
   static updateAction(request, response) {
+    const query = request.query;
     const data = request.body;
     let userModel = {};
 

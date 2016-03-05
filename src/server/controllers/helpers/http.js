@@ -4,7 +4,8 @@ const moment = require('moment');
 const merge = require('merge');
 const BPromise = require('bluebird');
 
-const User = require('../../models/user');
+const User = require('../../models/UserModel').model;
+
 const OntimeRequester = require('./Ontime');
 const logger = require('../../logger');
 

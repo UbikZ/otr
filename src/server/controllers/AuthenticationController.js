@@ -4,7 +4,8 @@ const jwt = require('jsonwebtoken');
 
 const AbstractController = require('./AbstractController');
 const Http = require('./helpers/Http');
-const User = require('../models/user');
+const User = require('../models/UserModel').model;
+
 const otrConf = require('../config/ontime');
 
 const EmptyUserError = require('../errors/EmptyUserError');

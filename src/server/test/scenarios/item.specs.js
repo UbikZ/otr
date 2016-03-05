@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 
 const Helper = require('./../Helper');
 const Ontime = require('../../controllers/helpers/Ontime');
-const OrganizationModel = require('../../models/organization');
+const OrganizationModel = require('../../models/OrganizationModel').model;
 
 /**
  * Items Scenario

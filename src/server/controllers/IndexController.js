@@ -1,8 +1,8 @@
 'use strict';
 
-const AbstractController = require('./AbstractController');
 const path = require('path');
 
+const AbstractController = require('./AbstractController');
 
 /**
  * Index controller: just to point on index.html

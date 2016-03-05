@@ -4,12 +4,13 @@ const AbstractController = require('./AbstractController');
 const Http = require('./helpers/Http');
 const Ontime = require('./helpers/Ontime');
 
-const Organization = require('../models/organization');
-const SettingModel = require('../models/setting');
-const ProjectModel = require('../models/project');
-const DocumentModel = require('../models/document');
-const VersionModel = require('../models/version');
-const EntryModel = require('../models/entry');
+const Organization = require('../models/OrganizationModel').model;
+const SettingModel = require('../models/SettingModel').model;
+const ProjectModel = require('../models/ProjectModel').model;
+const DocumentModel = require('../models/DocumentModel').model;
+const VersionModel = require('../models/VersionModel').model;
+const EntryModel = require('../models/EntryModel').model;
+
 const mapping = require('../models/helpers/mapping');
 
 const EmptyOrganizationError = require('../errors/EmptyOrganizationError');

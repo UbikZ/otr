@@ -4,7 +4,8 @@ const mongoose = require('mongoose');
 
 const AbstractController = require('./AbstractController');
 const Http = require('./helpers/Http');
-const Organization = require('../models/organization');
+
+const Organization = require('../models/OrganizationModel').model;
 
 const EmptyOrganizationError = require('../errors/EmptyOrganizationError');
 

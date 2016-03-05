@@ -3,8 +3,9 @@
 const AbstractController = require('./AbstractController');
 const Http = require('./helpers/Http');
 
-const Setting = require('../models/setting');
-const Organization = require('../models/organization');
+const Setting = require('../models/SettingModel').model;
+const Organization = require('../models/OrganizationModel').model;
+
 // FIXME: clean it...
 const mapping = require('../models/helpers/mapping');
 

@@ -4,7 +4,7 @@ const assert = require('chai').assert;
 const mongoose = require('mongoose');
 
 const Helper = require('./../Helper');
-const OrganizationModel = require('../../models/organization');
+const OrganizationModel = require('../../models/OrganizationModel').model;
 
 /**
  * Setting Scenario
