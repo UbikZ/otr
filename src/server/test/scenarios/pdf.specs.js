@@ -44,7 +44,7 @@ module.exports = (agent, url) => {
           .catch(err => done(err));
       });
 
-      it('should get an pdf file', function(done) {
+      it('should get an pdf file', function (done) {
         this.timeout(10000);
         agent
           .get(apiUrl + '?url=/&name=test')
@@ -81,7 +81,7 @@ module.exports = (agent, url) => {
           .catch(err => done(err));
       });
 
-      it('should get an error because no pdf file created', function(done) {
+      it('should get an error because no pdf file created', function (done) {
         this.timeout(10000);
         agent
           .get(apiUrl + '?fileName=test')

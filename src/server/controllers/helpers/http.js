@@ -70,7 +70,7 @@ class Http {
     if (err) {
       const errors = err ? err.stack.split('\n') : [];
       logger.debug('[' + moment().format('YYYY-MM-DD HH:mm:SS') + ']');
-      errors.forEach(function(error) {
+      errors.forEach(function (error) {
         logger.debug(error);
       });
     }
@@ -105,9 +105,7 @@ class Http {
    * @returns {*}
    */
   static checkAuthorized(request, response) {
-    return User.findOne({
-        'identity.token': request.token
-      }).lean().execAsync()
+    return User.findOne({ 'identity.token': request.token }).lean().execAsync()
       .then(user => {
         if (!user) {
           throw new NotFoundTokenError();
@@ -133,10 +131,7 @@ class Http {
    * @returns {*}
    */
   static ontimeRequestToken(request, response) {
-    return OntimeRequester.requestToken({
-        username: request.body.username,
-        password: request.body.password
-      })
+    return OntimeRequester.requestToken({ username: request.body.username, password: request.body.password })
       .then(result => {
         if (result.error) {
           throw new OnTimeError(result);
@@ -148,18 +143,14 @@ class Http {
 
         return new BPromise(resolve => {
           /* jshint camelcase: false */
-          resolve(merge(result.data, {
-            accessToken: result.access_token
-          }));
+          resolve(merge(result.data, { accessToken: result.access_token }));
           /* jshint camelcase: true */
         });
       })
       .catch(OnTimeError, error => {
         Http.sendResponse(
           /* jshint camelcase: false */
-          request, response, 403, {
-            error: error
-          }, '-3', 'Ontime Error: ' + error.error_description, error
+          request, response, 403, { error: error }, '-3', 'Ontime Error: ' + error.error_description, error
           /* jshint camelcase: true */
         );
       })

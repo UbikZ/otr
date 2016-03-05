@@ -65,9 +65,7 @@ module.exports = (agent, url) => {
       });
 
       it('should get an error because bad organization identifier-type given', done => {
-        const sentData = {
-          organizationId: 'badIdea#joke'
-        };
+        const sentData = { organizationId: 'badIdea#joke' };
         agent
           .post(url + '/item/create')
           .send(sentData)
@@ -86,9 +84,7 @@ module.exports = (agent, url) => {
       });
 
       it('should get an error because bad (not known) organization identifier given', done => {
-        const sentData = {
-          organizationId: '569a498efd2e11a55a2822f4'
-        };
+        const sentData = { organizationId: '569a498efd2e11a55a2822f4' };
         agent
           .post(url + '/item/create')
           .send(sentData)
@@ -358,13 +354,11 @@ module.exports = (agent, url) => {
       });
 
       it('should create a new version in the document (with no settings)', done => {
-        const sentData = Object.assign(
-          require('./../fixtures/item/create-ok-3'), {
-            organizationId: global.organizationId,
-            parentId: documentId,
-            projectOntimeId: 123
-          }
-        );
+        const sentData = Object.assign(require('./../fixtures/item/create-ok-3'), {
+          organizationId: global.organizationId,
+          parentId: documentId,
+          projectOntimeId: 123
+        });
         const expectedData = require('./../fixtures/ontime/items');
         Ontime.items = () => Helper.mockOnTimeAPIResponse(expectedData);
         agent
@@ -476,14 +470,12 @@ module.exports = (agent, url) => {
 
       it('should create a new version in the document with lazy loading', done => {
         const expectedData = require('./../fixtures/item/create-ok-5');
-        const sentData = Object.assign(
-          expectedData, {
-            organizationId: global.organizationId,
-            parentId: documentId,
-            projectOntimeId: 123,
-            lazy: 1
-          }
-        );
+        const sentData = Object.assign(expectedData, {
+          organizationId: global.organizationId,
+          parentId: documentId,
+          projectOntimeId: 123,
+          lazy: 1
+        });
         Ontime.items = () => Helper.mockOnTimeAPIResponse(require('../fixtures/ontime/items'));
 
         agent
@@ -538,9 +530,7 @@ module.exports = (agent, url) => {
       });
 
       it('should get an error because bad organization identifier-type given', done => {
-        const sentData = {
-          organizationId: 'badIdea#joke'
-        };
+        const sentData = { organizationId: 'badIdea#joke' };
         agent
           .post(url + '/item/update')
           .send(sentData)
@@ -558,9 +548,7 @@ module.exports = (agent, url) => {
       });
 
       it('should get an error because bad (not known) organization identifier given', done => {
-        const sentData = {
-          organizationId: '569a498efd2e11a55a2822f4'
-        };
+        const sentData = { organizationId: '569a498efd2e11a55a2822f4' };
         agent
           .post(url + '/item/update')
           .send(sentData)
@@ -599,11 +587,9 @@ module.exports = (agent, url) => {
       });
 
       it('should get an error because no "data._id" given', done => {
-        const sentData = Object.assign(
-          require('./../fixtures/item/update-ok-1'), {
-            organizationId: global.organizationId
-          }
-        );
+        const sentData = Object.assign(require('./../fixtures/item/update-ok-1'), {
+          organizationId: global.organizationId
+        });
         agent
           .post(url + '/item/update')
           .send(sentData)

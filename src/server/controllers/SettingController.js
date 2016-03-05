@@ -34,9 +34,7 @@ class SettingController extends AbstractController {
     let criteria = {};
     Http.checkAuthorized(request, response)
       .then(() => {
-        criteria = data.id ? {
-          id: data.id
-        } : {};
+        criteria = data.id ? { id: data.id } : {};
 
         return Setting.find(criteria).lean().execAsync();
       })
@@ -45,9 +43,7 @@ class SettingController extends AbstractController {
           throw new SettingNotFound();
         }
 
-        Http.sendResponse(request, response, 200, {
-          setting: settings[0]
-        });
+        Http.sendResponse(request, response, 200, { setting: settings[0] });
       })
       .catch(SettingNotFound, () => {
         Http.sendResponse(
@@ -74,9 +70,7 @@ class SettingController extends AbstractController {
     Http.checkAuthorized(request, response)
       .then(userData => {
         user = userData;
-        criteria = data.id ? {
-          id: data.id
-        } : {};
+        criteria = data.id ? { id: data.id } : {};
 
         return Setting.findOne(criteria).lean().execAsync();
       })
@@ -85,21 +79,12 @@ class SettingController extends AbstractController {
         setting = settingData ? mapping.settingDtoToDal(settingData, data) :
           new Setting(mapping.settingDtoToDal(undefined, data));
         setting.id = 42; // We force ONLY ONE setting on the collection (no need more at the moment)
-        setting.update = {
-          user: user._id,
-          date: new Date()
-        };
+        setting.update = { user: user._id, date: new Date() };
 
-        return Setting.update({
-          _id: setting._id
-        }, setting, {
-          upsert: true
-        }).lean().execAsync();
+        return Setting.update({ _id: setting._id }, setting, { upsert: true }).lean().execAsync();
       })
       .then(() => {
-        Http.sendResponse(request, response, 200, {
-          setting
-        }, isNew ? '8' : '9');
+        Http.sendResponse(request, response, 200, { setting }, isNew ? '8' : '9');
       })
       .catch(err => {
         Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: update setting (in collection)', err);
@@ -141,17 +126,13 @@ class SettingController extends AbstractController {
           return Organization.findDeepAttributeById(organization, data.itemId);
         } else {
           setting = organization.setting;
-          Http.sendResponse(request, response, 200, {
-            setting
-          });
+          Http.sendResponse(request, response, 200, { setting });
         }
       })
       // Then from Organization.findDeepAttributeById
       .then(result => {
         setting = result.element;
-        Http.sendResponse(request, response, 200, {
-          setting
-        });
+        Http.sendResponse(request, response, 200, { setting });
       })
       .catch(EmptyOrganizationError, () => {
         Http.sendResponse(
@@ -190,10 +171,7 @@ class SettingController extends AbstractController {
           return Organization.findDeepAttributeById(organization, data.itemId);
         } else {
           setting = mapping.settingDtoToDal(organization.setting, data);
-          setting.update = {
-            user: user._id,
-            date: new Date()
-          };
+          setting.update = { user: user._id, date: new Date() };
           organization.setting = setting;
 
           return Organization.persist(data, organization, setting, '10');
@@ -206,10 +184,7 @@ class SettingController extends AbstractController {
         let element = result.element;
 
         setting = new Setting(mapping.settingDtoToDal(element.setting, data));
-        setting.update = {
-          user: user._id,
-          date: new Date()
-        };
+        setting.update = { user: user._id, date: new Date() };
         element.setting = setting;
 
         return Organization.persist(data, organization, setting, '10');

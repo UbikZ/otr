@@ -30,9 +30,7 @@ class AuthenticationController extends AbstractController {
     Http.ontimeRequestToken(request, response)
       .then(userData => {
         data = userData;
-        return User.findOne({
-          'info.email': userData.email
-        }).lean().execAsync();
+        return User.findOne({ 'info.email': userData.email }).lean().execAsync();
       })
       .then(user => {
         let options = {};
@@ -51,14 +49,10 @@ class AuthenticationController extends AbstractController {
           /*jshint camelcase: true */
           options.upsert = true;
         }
-        return User.update({
-          _id: userModel._id
-        }, userModel, options).lean().execAsync();
+        return User.update({ _id: userModel._id }, userModel, options).lean().execAsync();
       })
       .then(() => {
-        Http.sendResponse(request, response, 200, {
-          user: userModel
-        }, '1');
+        Http.sendResponse(request, response, 200, { user: userModel }, '1');
       })
       .catch(error => {
         Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: check /sign-up.', error);
@@ -72,16 +66,12 @@ class AuthenticationController extends AbstractController {
    * @method  GET
    */
   static meAction(request, response) {
-    User.findOne({
-        'identity.token': request.token
-      }).lean().execAsync()
+    User.findOne({ 'identity.token': request.token }).lean().execAsync()
       .then(user => {
         if (!user) {
           throw new EmptyUserError();
         }
-        Http.sendResponse(request, response, 200, {
-          user: user
-        });
+        Http.sendResponse(request, response, 200, { user: user });
       })
       .catch(EmptyUserError, error => {
         Http.sendResponse(request, response, 404, {}, '-3', 'Error: token (' + request.token + ') not found.', error);

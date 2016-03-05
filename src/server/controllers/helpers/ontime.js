@@ -20,17 +20,11 @@ class Ontime {
    */
   static execRequest(url) {
     logger.info('# Ontime Call : ' + url);
-    return request({
-        uri: url,
-        method: 'GET',
-        resolveWithFullResponse: true
-      })
+    return request({ uri: url, method: 'GET', resolveWithFullResponse: true })
       .then(response => {
         const result = JSON.parse(response.body);
         if (response.statusCode !== 200) {
-          throw new Error({
-            error: 'StatusCode = ' + response.statusCode
-          });
+          throw new Error({ error: 'StatusCode = ' + response.statusCode });
         }
         return new BPromise((resolve, reject) => {
           if (result.error) {
@@ -94,9 +88,7 @@ class Ontime {
   static tree(accessToken, idProject) {
     const requestUrl = idProject === undefined ? 'projects' : 'releases';
     /*jshint camelcase: false */
-    const params = {
-      'access_token': accessToken
-    };
+    const params = { 'access_token': accessToken };
     if (idProject !== undefined) {
       params.filter_by_project_id = idProject ? idProject : 0;
     }

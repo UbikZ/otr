@@ -141,9 +141,7 @@ class PdfController extends AbstractController {
           throw new NotFoundPdfFile();
         }
 
-        Http.sendResponse(request, response, 200, {
-          fileName: path.basename(filePath)
-        });
+        Http.sendResponse(request, response, 200, { fileName: path.basename(filePath) });
       })
       .catch(NotFoundPdfFile, error => {
         Http.sendResponse(

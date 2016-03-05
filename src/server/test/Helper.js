@@ -49,19 +49,17 @@ class Helper {
    */
   static mockModel(model, method, callback, empty) {
     Helper.mock(model, method, {
-      populate: function() {
+      populate: function () {
         return this;
       },
-      lean: function() {
+      lean: function () {
         return this;
       },
       execAsync: () => new BPromise((resolve, reject) => {
         if (empty === true) {
           resolve();
         } else {
-          reject(new Error({
-            error: 'error'
-          }));
+          reject(new Error({ error: 'error' }));
         }
       }),
     }, callback);

@@ -34,21 +34,12 @@ class OrganizationController extends AbstractController {
         let fields = {};
 
         if (data.id) {
-          criteria = {
-            _id: new mongoose.Types.ObjectId(data.id),
-          };
+          criteria = { _id: new mongoose.Types.ObjectId(data.id) };
         }
         /*jshint eqeqeq: false */
         if (data.lazy == 1) {
           /*jshint eqeqeq: true */
-          fields = {
-            name: 1,
-            description: 1,
-            active: 1,
-            url: 1,
-            logo: 1,
-            creation: 1
-          };
+          fields = { name: 1, description: 1, active: 1, url: 1, logo: 1, creation: 1 };
         }
 
         return Organization.find(criteria, fields).lean().populate('creation.user').execAsync();
@@ -68,9 +59,7 @@ class OrganizationController extends AbstractController {
             });
           });
         }
-        Http.sendResponse(request, response, 200, {
-          organizations: organizations
-        });
+        Http.sendResponse(request, response, 200, { organizations: organizations });
       })
       .catch(EmptyOrganizationError, error => {
         Http.sendResponse(
@@ -100,14 +89,7 @@ class OrganizationController extends AbstractController {
     /*jshint eqeqeq: false */
     if (data.lazy == 1) {
       /*jshint eqeqeq: true */
-      fields = {
-        name: 1,
-        description: 1,
-        active: 1,
-        url: 1,
-        logo: 1,
-        creation: 1
-      };
+      fields = { name: 1, description: 1, active: 1, url: 1, logo: 1, creation: 1 };
     }
 
     Http.checkAuthorized(request, response)
@@ -124,25 +106,13 @@ class OrganizationController extends AbstractController {
         orgModel.active = data.active !== undefined ? data.active : orgModel.active;
         orgModel.logo = data.logo || orgModel.logo;
         orgModel.url = data.url || orgModel.url;
-        orgModel.creation = {
-          user: userModel._id,
-          date: new Date()
-        };
-        orgModel.update = {
-          user: userModel._id,
-          date: new Date()
-        };
+        orgModel.creation = { user: userModel._id, date: new Date() };
+        orgModel.update = { user: userModel._id, date: new Date() };
 
-        return Organization.update({
-          _id: orgModel._id
-        }, orgModel, {
-          upsert: true
-        }).lean().execAsync();
+        return Organization.update({ _id: orgModel._id }, orgModel, { upsert: true }).lean().execAsync();
       })
       .then(() => {
-        Http.sendResponse(request, response, 200, {
-          organization: orgModel
-        }, isNew ? '5' : '6');
+        Http.sendResponse(request, response, 200, { organization: orgModel }, isNew ? '5' : '6');
       })
       .catch(EmptyOrganizationError, error => {
         Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: edit -> save organization', error);
@@ -165,9 +135,7 @@ class OrganizationController extends AbstractController {
         return Organization.findByIdAndRemove(params.organizationId).lean().execAsync();
       })
       .then(() => {
-        Http.sendResponse(request, response, 200, {
-          id: params.organizationId
-        }, '7');
+        Http.sendResponse(request, response, 200, { id: params.organizationId }, '7');
       })
       .catch(error => {
         Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: delete organization', error);

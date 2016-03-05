@@ -123,7 +123,7 @@ class ItemController extends AbstractController {
   static _createEntries(items) {
     let entries = [];
 
-    items.forEach(function(item) {
+    items.forEach(function (item) {
       /* jshint camelcase: false */
       var indexOfParentProject = entries.pluck('ontimeId').indexOf(item.parent_project.id);
       if (indexOfParentProject === -1) {
@@ -321,12 +321,10 @@ class ItemController extends AbstractController {
           },
           version: () => {
             if (data.projectOntimeId !== undefined || data.releaseOntimeId !== undefined) {
-              return Ontime.items(
-                request.ontimeToken, {
-                  projectId: data.projectOntimeId,
-                  releaseId: data.releaseOntimeId
-                }
-              );
+              return Ontime.items(request.ontimeToken, {
+                projectId: data.projectOntimeId,
+                releaseId: data.releaseOntimeId
+              });
             } else {
               throw new UndefinedOnTimeIdVersionError();
             }
@@ -342,10 +340,7 @@ class ItemController extends AbstractController {
       // Result of Ontime.items
       .then(result => {
         modelItem = new VersionModel(modelItem);
-        modelItem.update = modelItem.creation = {
-          user: user._id,
-          date: new Date()
-        };
+        modelItem.update = modelItem.creation = { user: user._id, date: new Date() };
         modelItem.setting = new SettingModel(mapping.settingDtoToDal(undefined, data.setting));
         modelItem.entries = ItemController._createEntries(result.data);
         element.versions.push(modelItem);
@@ -361,9 +356,7 @@ class ItemController extends AbstractController {
       .catch(OnTimeError, error => {
         Http.sendResponse(
           /* jshint camelcase: false */
-          request, response, 403, {
-            error: error
-          }, '-3', 'Ontime Error', error
+          request, response, 403, { error: error }, '-3', 'Ontime Error', error
           /* jshint camelcase: true */
         );
       })
@@ -442,10 +435,7 @@ class ItemController extends AbstractController {
 
         modelItem.name = data.name ? data.name : modelItem.name;
         modelItem.description = data.description ? data.description : modelItem.description;
-        modelItem.update = {
-          user: user._id,
-          date: new Date()
-        };
+        modelItem.update = { user: user._id, date: new Date() };
         element = Object.assign(element, modelItem);
         data.type = element.projects === undefined ? 'document' : 'project';
 
