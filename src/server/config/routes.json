@@ -13,7 +13,8 @@
           "checkSecurity": false
         }
       ]
-    }, {
+    },
+    {
       "name": "Authentication",
       "pattern": "/authentication",
       "controllerName": "AuthenticationController",
@@ -24,7 +25,8 @@
           "pattern": "/sign-up",
           "actionName": "signUpAction",
           "checkSecurity": false
-        }, {
+        },
+        {
           "name": "Get logged user information",
           "method": "GET",
           "pattern": "/me",
@@ -32,7 +34,8 @@
           "checkSecurity": true
         }
       ]
-    }, {
+    },
+    {
       "name": "User",
       "pattern": "/user",
       "controllerName": "UserController",
@@ -43,7 +46,15 @@
           "pattern": "/",
           "actionName": "indexAction",
           "checkSecurity": true
-        }, {
+        },
+        {
+          "name": "Get ONE user",
+          "method": "GET",
+          "pattern": "/:idUser",
+          "actionName": "getAction",
+          "checkSecurity": true
+        },
+        {
           "name": "Update user information",
           "method": "POST",
           "pattern": "/update",
@@ -51,7 +62,8 @@
           "checkSecurity": true
         }
       ]
-    }, {
+    },
+    {
       "name": "Organization",
       "pattern": "/organization",
       "controllerName": "OrganizationController",
@@ -76,7 +88,8 @@
           "checkSecurity": true
         }
       ]
-    }, {
+    },
+    {
       "name": "OnTime",
       "pattern": "/on-time",
       "controllerName": "OnTimeController",
@@ -87,13 +100,15 @@
           "pattern": "/me",
           "actionName": "meAction",
           "checkSecurity": true
-        }, {
+        },
+        {
           "name": "Get OnTime projects/release tree",
           "method": "GET",
           "pattern": "/tree",
           "actionName": "treeAction",
           "checkSecurity": true
-        }, {
+        },
+        {
           "name": "Get OnTime stories",
           "method": "GET",
           "pattern": "/items",
@@ -101,7 +116,8 @@
           "checkSecurity": true
         }
       ]
-    }, {
+    },
+    {
       "name": "Item",
       "pattern": "/item",
       "controllerName": "ItemController",
@@ -112,19 +128,22 @@
           "pattern": "/",
           "actionName": "indexAction",
           "checkSecurity": true
-        }, {
+        },
+        {
           "name": "Create an item",
           "method": "POST",
           "pattern": "/create",
           "actionName": "createAction",
           "checkSecurity": true
-        }, {
+        },
+        {
           "name": "Update an item",
           "method": "POST",
           "pattern": "/update",
           "actionName": "updateAction",
           "checkSecurity": true
-        }, {
+        },
+        {
           "name": "Delete an item",
           "method": "DELETE",
           "pattern": "/delete/:organizationId/:itemId",
@@ -132,7 +151,8 @@
           "checkSecurity": true
         }
       ]
-    }, {
+    },
+    {
       "name": "Setting",
       "pattern": "/setting",
       "controllerName": "SettingController",
@@ -143,19 +163,22 @@
           "pattern": "/",
           "actionName": "indexAction",
           "checkSecurity": true
-        }, {
+        },
+        {
           "name": "Update a standalone setting",
           "method": "POST",
           "pattern": "/update",
           "actionName": "updateAction",
           "checkSecurity": true
-        }, {
+        },
+        {
           "name": "Get a setting from a sub-element",
           "method": "GET",
           "pattern": "/sub/:organizationId",
           "actionName": "subIndexAction",
           "checkSecurity": true
-        }, {
+        },
+        {
           "name": "Update a setting from a sub-element",
           "method": "POST",
           "pattern": "/sub/update/:organizationId",
@@ -163,7 +186,8 @@
           "checkSecurity": true
         }
       ]
-    }, {
+    },
+    {
       "name": "PDF",
       "pattern": "/pdf",
       "controllerName": "PdfController",
@@ -174,7 +198,8 @@
           "pattern": "/render",
           "actionName": "renderAction",
           "checkSecurity": true
-        }, {
+        },
+        {
           "name": "Download a PDF",
           "method": "GET",
           "pattern": "/download",
