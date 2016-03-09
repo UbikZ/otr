@@ -31,6 +31,38 @@ class UserModel extends AbstractModel {
     };
     this.register();
   }
+
+  /**
+   * Parse params for User
+   * @param  {Object} parameters
+   * @return {Object}
+   */
+  parseParams(parameters) {
+    const params = parameters || {};
+    let result = super.parseParams(parameters);
+
+    ['name.username', 'info.email'].forEach(key => {
+      this.attachParam(result, params, key);
+    });
+
+    return result;
+  }
+
+  /**
+   * Parse request data
+   * @param  {Object} model existing model to add data
+   * @param  {Object} data
+   * @return {Object}
+   */
+  parseData(model, data) {
+    let result = model || {};
+
+    ['name.username', 'name.firstname', 'name.lastname', 'info.skype', 'info.location', 'info.job'].forEach(key => {
+      this.attachParam(result, data, key);
+    });
+
+    return result;
+  }
 }
 
 module.exports = new UserModel();

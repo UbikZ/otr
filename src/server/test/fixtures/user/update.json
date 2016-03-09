@@ -1,7 +1,7 @@
 {
-  "firstname": "Test Updated Firstname",
-  "lastname": "Test Updated Lastname",
-  "skype": "test.skype.pseudo",
-  "location": "Bordeaux, France",
-  "job": "Engineer"
+  "name.firstname": "Test Updated Firstname",
+  "name.lastname": "Test Updated Lastname",
+  "info.skype": "test.skype.pseudo",
+  "info.location": "Bordeaux, France",
+  "info.job": "Engineer"
 }

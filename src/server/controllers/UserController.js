@@ -3,7 +3,7 @@
 const AbstractController = require('./AbstractController');
 const Http = require('./helpers/Http');
 
-const User = require('../models/UserModel').model;
+const User = require('../models/UserModel');
 
 const EmptyUserError = require('./../errors/EmptyUserError');
 
@@ -23,7 +23,7 @@ class UserController extends AbstractController {
   static _processGetUsers(criteria, request, response) {
     return Http.checkAuthorized(request, response)
       .then(() => {
-        return User.find(criteria).lean().execAsync();
+        return User.model.find(criteria).lean().execAsync();
       })
       .then(users => {
         if (!users) {
@@ -45,7 +45,8 @@ class UserController extends AbstractController {
    * @param  {Object} response
    */
   static indexAction(request, response) {
-    UserController._processGetUsers(request.query, request, response);
+    const parsedParams = User.parseParams(request.query);
+    UserController._processGetUsers(parsedParams, request, response);
   }
 
   /**
@@ -53,48 +54,32 @@ class UserController extends AbstractController {
    * @param  {Object} request
    * @param  {Object} response
    */
-  static getAction(request, response) {
-    UserController._processGetUsers(request.query, request, response);
+  static getByIdAction(request, response) {
+    const parsedParams = User.parseParams(request.params);
+    UserController._processGetUsers(parsedParams, request, response);
   }
 
   /**
-   * Update logged user information
-   * @param   request
-   * @param   response
-   * @method  POST
-   */
-  /**
-   * Update logged user
-   * @param  {[type]} request  [description]
-   * @param  {[type]} response [description]
-   * @return {[type]}          [description]
+   * Update user by his ID
+   * TODO: At this moment, we only update if a user is found with these criteria (userId param is associated to the
+   * user with current logged token). So only update for the logged use. We will need to improve this, to enable
+   * the update for all use if logged user is allowed to.
+   * @param  {Object} request
+   * @param  {Object} response
    */
   static updateAction(request, response) {
-    const data = request.body;
+    const criteria = User.parseParams(request.params);
+    criteria['identity.token'] = request.token;
+
     let userModel = {};
 
-    User.findOne({ 'identity.token': request.token }).lean().execAsync()
+    User.model.findOne(criteria).lean().execAsync()
       .then(user => {
-        userModel = user;
         if (!user) {
           throw new EmptyUserError();
         }
-        if (data.firstname) {
-          userModel.name.firstname = data.firstname;
-        }
-        if (data.lastname) {
-          userModel.name.lastname = data.lastname;
-        }
-        if (data.skype) {
-          userModel.info.skype = data.skype;
-        }
-        if (data.location) {
-          userModel.info.location = data.location;
-        }
-        if (data.job) {
-          userModel.info.job = data.job;
-        }
-        return User.update({ _id: userModel._id }, userModel, {}).lean().execAsync();
+        userModel = User.parseData(user, request.body);
+        return User.model.update({ _id: userModel._id }, userModel, {}).lean().execAsync();
       })
       .then(() => {
         Http.sendResponse(request, response, 200, { user: userModel }, '11');

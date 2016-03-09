@@ -187,6 +187,7 @@ module.exports = (agent, url) => {
             assert.isDefined(result.user.identity.token);
             assert.notEqual(tokenOtBearer, result.user.identity.ontimeToken);
             // We set tokens for next tests
+            global.userId = result.user._id;
             global.tokenOtBearer = tokenOtBearer = result.user.identity.ontimeToken;
             global.tokenBearer = tokenBearer = result.user.identity.token;
             done();

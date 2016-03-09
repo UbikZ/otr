@@ -50,6 +50,21 @@ class AbstractModel {
 
     return result;
   }
+
+  /**
+   * Attach / Set parameters
+   * @param  {ObjectId} result Result object which will me changed with parsed data object
+   * @param  {Object} data   Data to parse
+   * @param  {String} key    key string for parameter
+   * @return {object} 
+   */
+  attachParam(result, data, key) {
+    const elements = key.split('.');
+    if (data[key]) {
+      result[elements[0]] = result[elements[0]] || {};
+      result[elements[0]][elements[1]] = data[key];
+    }
+  }
 }
 
 module.exports = AbstractModel;

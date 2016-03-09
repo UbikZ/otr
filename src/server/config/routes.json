@@ -50,14 +50,14 @@
         {
           "name": "Get ONE user",
           "method": "GET",
-          "pattern": "/:idUser",
-          "actionName": "getAction",
+          "pattern": "/:id",
+          "actionName": "getByIdAction",
           "checkSecurity": true
         },
         {
           "name": "Update user information",
           "method": "POST",
-          "pattern": "/update",
+          "pattern": "/update/:id",
           "actionName": "updateAction",
           "checkSecurity": true
         }
