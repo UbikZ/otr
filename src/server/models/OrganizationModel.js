@@ -47,24 +47,13 @@ class OrganizationModel extends AbstractModel {
     this.register();
   }
 
-
   /**
-   * Abstract Register + Own registering (static methods)
-   */
-  register() {
-    this.modelSchema.statics.persist = OrganizationModel._persist;
-    this.modelSchema.statics.findDeepAttributeById = OrganizationModel._findDeepAttributeById;
-    this.modelSchema.statics.walkRecursively = OrganizationModel._walkRecursively;
-    super.register();
-  }
-
-  /**
-   * No promise here (will see after)
+   * No promise here (will see later)
    * - hard recursive method (performance needed)
    * @param model
    * @param callback
    */
-  static _walkRecursively(model, callback) {
+  walkRecursively(model, callback) {
     FindHelper.walkRecursively(model, element => {
       if (element !== undefined) {
         callback(element);
@@ -78,14 +67,10 @@ class OrganizationModel extends AbstractModel {
    * @param elementId
    * @returns {*|void}
    */
-  static _findDeepAttributeById(model, elementId) {
+  findDeepAttributeById(model, elementId) {
     return new BPromise(resolve => {
       FindHelper.findRecursively(model, elementId, (element, parentElement, type) => {
-        resolve({
-          element,
-          parentElement,
-          type
-        });
+        resolve({ element, parentElement, type });
       });
     });
   }
@@ -100,21 +85,11 @@ class OrganizationModel extends AbstractModel {
    * @param returnCode
    * @returns {*}
    */
-  static _persist(data, org, item, returnCode) {
-    const model = mongoose.model('Organization');
+  persist(data, org, item, returnCode) {
     let organization = org;
-    return model.update({
-        _id: organization._id
-      }, organization, {
-        upsert: true
-      }).lean().execAsync()
+    return this.model.update({ _id: organization._id }, organization, { upsert: true }).lean().execAsync()
       .then(() => {
-        let returnValue = {
-          organization,
-          item,
-          type: data.type + 's',
-          returnCode
-        };
+        let returnValue = { organization, item, type: data.type + 's', returnCode };
         /*jshint eqeqeq: false */
         if (data.modePreview == 1) {
           /*jshint eqeqeq: true */
@@ -126,7 +101,7 @@ class OrganizationModel extends AbstractModel {
         /*jshint eqeqeq: false */
         if (data.lazy == 1) {
           /*jshint eqeqeq: true */
-          OrganizationModel._walkRecursively(organization, element => {
+          this.walkRecursively(organization, element => {
             if (element.entries !== undefined) {
               delete element.entries;
               if (element.entries !== undefined) {

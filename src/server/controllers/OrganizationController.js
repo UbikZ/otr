@@ -1,11 +1,9 @@
 'use strict';
 
-const mongoose = require('mongoose');
-
 const AbstractController = require('./AbstractController');
 const Http = require('./helpers/Http');
 
-const Organization = require('../models/OrganizationModel').model;
+const Organization = require('../models/OrganizationModel');
 
 const EmptyOrganizationError = require('../errors/EmptyOrganizationError');
 
@@ -27,22 +25,20 @@ class OrganizationController extends AbstractController {
    */
   static indexAction(request, response) {
     const data = request.query;
-    let criteria = {};
+    let criteria = {},
+      fields = {};
 
     Http.checkAuthorized(request, response)
       .then(() => {
-        let fields = {};
+        criteria = Organization.parseParams(data);
 
-        if (data.id) {
-          criteria = { _id: new mongoose.Types.ObjectId(data.id) };
-        }
         /*jshint eqeqeq: false */
         if (data.lazy == 1) {
           /*jshint eqeqeq: true */
           fields = { name: 1, description: 1, active: 1, url: 1, logo: 1, creation: 1 };
         }
 
-        return Organization.find(criteria, fields).lean().populate('creation.user').execAsync();
+        return Organization.model.find(criteria, fields).lean().populate('creation.user').execAsync();
       })
       .then(organizations => {
         if (!organizations) {
@@ -95,11 +91,11 @@ class OrganizationController extends AbstractController {
     Http.checkAuthorized(request, response)
       .then(user => {
         userModel = user;
-        return Organization.findById(data._id, fields).lean().populate('creation.user').execAsync();
+        return Organization.model.findById(data._id, fields).lean().populate('creation.user').execAsync();
       })
       .then(organization => {
         isNew = !organization;
-        orgModel = organization || new Organization();
+        orgModel = organization || new Organization.model();
 
         orgModel.name = data.name || orgModel.name;
         orgModel.description = data.description || orgModel.description;
@@ -109,7 +105,7 @@ class OrganizationController extends AbstractController {
         orgModel.creation = { user: userModel._id, date: new Date() };
         orgModel.update = { user: userModel._id, date: new Date() };
 
-        return Organization.update({ _id: orgModel._id }, orgModel, { upsert: true }).lean().execAsync();
+        return Organization.model.update({ _id: orgModel._id }, orgModel, { upsert: true }).lean().execAsync();
       })
       .then(() => {
         Http.sendResponse(request, response, 200, { organization: orgModel }, isNew ? '5' : '6');
@@ -132,7 +128,7 @@ class OrganizationController extends AbstractController {
     const params = request.params;
     Http.checkAuthorized(request, response)
       .then(() => {
-        return Organization.findByIdAndRemove(params.organizationId).lean().execAsync();
+        return Organization.model.findByIdAndRemove(params.organizationId).lean().execAsync();
       })
       .then(() => {
         Http.sendResponse(request, response, 200, { id: params.organizationId }, '7');

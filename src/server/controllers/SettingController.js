@@ -3,8 +3,8 @@
 const AbstractController = require('./AbstractController');
 const Http = require('./helpers/Http');
 
-const Setting = require('../models/SettingModel').model;
-const Organization = require('../models/OrganizationModel').model;
+const Setting = require('../models/SettingModel');
+const Organization = require('../models/OrganizationModel');
 
 // FIXME: clean it...
 const mapping = require('../models/helpers/mapping');
@@ -36,7 +36,7 @@ class SettingController extends AbstractController {
       .then(() => {
         criteria = data.id ? { id: data.id } : {};
 
-        return Setting.find(criteria).lean().execAsync();
+        return Setting.model.find(criteria).lean().execAsync();
       })
       .then(settings => {
         if (!settings) {
@@ -72,16 +72,16 @@ class SettingController extends AbstractController {
         user = userData;
         criteria = data.id ? { id: data.id } : {};
 
-        return Setting.findOne(criteria).lean().execAsync();
+        return Setting.model.findOne(criteria).lean().execAsync();
       })
       .then(settingData => {
         isNew = !settingData;
         setting = settingData ? mapping.settingDtoToDal(settingData, data) :
-          new Setting(mapping.settingDtoToDal(undefined, data));
+          new Setting.model(mapping.settingDtoToDal(undefined, data));
         setting.id = 42; // We force ONLY ONE setting on the collection (no need more at the moment)
         setting.update = { user: user._id, date: new Date() };
 
-        return Setting.update({ _id: setting._id }, setting, { upsert: true }).lean().execAsync();
+        return Setting.model.update({ _id: setting._id }, setting, { upsert: true }).lean().execAsync();
       })
       .then(() => {
         Http.sendResponse(request, response, 200, { setting }, isNew ? '8' : '9');
@@ -104,7 +104,7 @@ class SettingController extends AbstractController {
       setting = {};
     Http.checkAuthorized(request, response)
       .then(() => {
-        return Organization.findById(params.organizationId).lean().execAsync();
+        return Organization.model.findById(params.organizationId).lean().execAsync();
       })
       .then(orgData => {
         organization = orgData;
@@ -159,7 +159,7 @@ class SettingController extends AbstractController {
     Http.checkAuthorized(request, response)
       .then(userData => {
         user = userData;
-        return Organization.findById(params.organizationId).populate('creation.user').lean().execAsync();
+        return Organization.model.findById(params.organizationId).populate('creation.user').lean().execAsync();
       })
       .then(orgData => {
         organization = orgData;
@@ -183,7 +183,7 @@ class SettingController extends AbstractController {
         }
         let element = result.element;
 
-        setting = new Setting(mapping.settingDtoToDal(element.setting, data));
+        setting = new Setting.model(mapping.settingDtoToDal(element.setting, data));
         setting.update = { user: user._id, date: new Date() };
         element.setting = setting;
 

@@ -4,12 +4,12 @@ const AbstractController = require('./AbstractController');
 const Http = require('./helpers/Http');
 const Ontime = require('./helpers/Ontime');
 
-const Organization = require('../models/OrganizationModel').model;
-const SettingModel = require('../models/SettingModel').model;
-const ProjectModel = require('../models/ProjectModel').model;
-const DocumentModel = require('../models/DocumentModel').model;
-const VersionModel = require('../models/VersionModel').model;
-const EntryModel = require('../models/EntryModel').model;
+const Organization = require('../models/OrganizationModel');
+const Setting = require('../models/SettingModel');
+const Project = require('../models/ProjectModel');
+const Doc = require('../models/DocumentModel');
+const Version = require('../models/VersionModel');
+const Entry = require('../models/EntryModel');
 
 const mapping = require('../models/helpers/mapping');
 
@@ -46,7 +46,7 @@ class ItemController extends AbstractController {
     let organization = {};
 
     if (data.organizationId) {
-      Organization.findById(data.organizationId).lean().execAsync()
+      Organization.model.findById(data.organizationId).lean().execAsync()
         .then(org => {
           organization = org;
           if (!organization) {
@@ -127,7 +127,7 @@ class ItemController extends AbstractController {
       /* jshint camelcase: false */
       var indexOfParentProject = entries.pluck('ontimeId').indexOf(item.parent_project.id);
       if (indexOfParentProject === -1) {
-        entries.push(new EntryModel({
+        entries.push(new Entry.model({
           name: item.parent_project.name,
           ontimeId: item.parent_project.id,
           path: item.parent_project.path ? item.parent_project.path.split('\\') : [],
@@ -139,7 +139,7 @@ class ItemController extends AbstractController {
       var indexOfProject =
         entries[indexOfParentProject].children.pluck('ontimeId').indexOf(item.project.id);
       if (indexOfProject === -1) {
-        entries[indexOfParentProject].children.push(new EntryModel({
+        entries[indexOfParentProject].children.push(new Entry.model({
           name: item.project.name,
           ontimeId: item.project.id,
           path: item.project.path ? item.project.path.split('\\') : [],
@@ -153,7 +153,7 @@ class ItemController extends AbstractController {
         .indexOf(item.parent.id);
 
       if (indexOfEntry === -1) {
-        entries[indexOfParentProject].children[indexOfProject].children.push(new EntryModel({
+        entries[indexOfParentProject].children[indexOfProject].children.push(new Entry.model({
           name: item.name,
           description: item.description,
           notes: item.notes,
@@ -167,7 +167,7 @@ class ItemController extends AbstractController {
         }));
       } else {
         entries[indexOfParentProject]
-          .children[indexOfProject].children[indexOfEntry].children.push(new EntryModel({
+          .children[indexOfProject].children[indexOfEntry].children.push(new Entry.model({
             name: item.name,
             description: item.description,
             notes: item.notes,
@@ -267,7 +267,7 @@ class ItemController extends AbstractController {
           throw new UndefinedOrganizationIdItemError();
         }
 
-        return Organization.findById(data.organizationId).lean().populate('creation.user').execAsync();
+        return Organization.model.findById(data.organizationId).lean().populate('creation.user').execAsync();
       })
       // Result of Organization.findById
       .then(org => {
@@ -290,7 +290,7 @@ class ItemController extends AbstractController {
         } else if (data.parentId !== undefined) {
           return Organization.findDeepAttributeById(organization, data.parentId);
         } else if (data.type === 'project') {
-          modelItem = new ProjectModel(modelItem);
+          modelItem = new Project.model(modelItem);
           organization.projects.push(modelItem);
 
           return Organization.persist(data, organization, modelItem, '2');
@@ -308,13 +308,13 @@ class ItemController extends AbstractController {
         // Switch-like
         const cases = {
           project: () => {
-            modelItem = new ProjectModel(modelItem);
+            modelItem = new Project.model(modelItem);
             element.projects.push(modelItem);
 
             return Organization.persist(data, organization, modelItem, '2');
           },
           document: () => {
-            modelItem = new DocumentModel(modelItem);
+            modelItem = new Doc.model(modelItem);
             element.documents.push(modelItem);
 
             return Organization.persist(data, organization, modelItem, '2');
@@ -339,9 +339,9 @@ class ItemController extends AbstractController {
       })
       // Result of Ontime.items
       .then(result => {
-        modelItem = new VersionModel(modelItem);
+        modelItem = new Version.model(modelItem);
         modelItem.update = modelItem.creation = { user: user._id, date: new Date() };
-        modelItem.setting = new SettingModel(mapping.settingDtoToDal(undefined, data.setting));
+        modelItem.setting = new Setting.model(mapping.settingDtoToDal(undefined, data.setting));
         modelItem.entries = ItemController._createEntries(result.data);
         element.versions.push(modelItem);
 
@@ -414,7 +414,7 @@ class ItemController extends AbstractController {
           throw new UndefinedOrganizationIdItemError();
         }
 
-        return Organization.findById(data.organizationId).lean().populate('creation.user').execAsync();
+        return Organization.model.findById(data.organizationId).lean().populate('creation.user').execAsync();
       })
       .then(org => {
         organization = org;
@@ -489,7 +489,7 @@ class ItemController extends AbstractController {
     Http.checkAuthorized(request, response)
       // Result of checkAuthorize
       .then(() => {
-        return Organization.findById(params.organizationId).populate('creation.user').execAsync();
+        return Organization.model.findById(params.organizationId).populate('creation.user').execAsync();
       })
       .then(org => {
         organization = org;
