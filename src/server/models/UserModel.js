@@ -1,6 +1,9 @@
 'use strict';
 
 const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
+
+const otrConf = require('../config/ontime');
 
 const AbstractModel = require('./AbstractModel');
 
@@ -62,6 +65,24 @@ class UserModel extends AbstractModel {
     });
 
     return result;
+  }
+
+  /**
+   * Parse request from ontime
+   * @param  {Object} model
+   * @param  {Object} data
+   * @return {Object}       Updated model (not necessary)
+   */
+  parseDataFromOntime(model, data) {
+    model.info.email = data.email;
+    model.name.username = data.username;
+    /*jshint camelcase: false */
+    model.name.firstname = data.first_name;
+    model.name.lastname = data.last_name;
+    /*jshint camelcase: true */
+    model.identity.token = jwt.sign(model._id, otrConf.jwtSecret);
+
+    return model;
   }
 }
 

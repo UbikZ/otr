@@ -1,12 +1,10 @@
 'use strict';
 
-const jwt = require('jsonwebtoken');
+const merge = require('merge');
 
 const AbstractController = require('./AbstractController');
 const Http = require('./helpers/Http');
-const User = require('../models/UserModel').model;
-
-const otrConf = require('../config/ontime');
+const User = require('../models/UserModel');
 
 const EmptyUserError = require('../errors/EmptyUserError');
 
@@ -30,26 +28,18 @@ class AuthenticationController extends AbstractController {
     Http.ontimeRequestToken(request, response)
       .then(userData => {
         data = userData;
-        return User.findOne({ 'info.email': userData.email }).lean().execAsync();
+        return User.model.findOne({ 'info.email': userData.email }).lean().execAsync();
       })
       .then(user => {
         let options = {};
-        if (user) {
-          userModel = user;
-          userModel.identity.ontimeToken = data.accessToken;
-        } else {
-          userModel = new User();
-          userModel.identity.ontimeToken = data.accessToken;
-          userModel.identity.token = jwt.sign(userModel._id, otrConf.jwtSecret);
-          userModel.info.email = data.email;
-          userModel.name.username = request.body.username;
-          /*jshint camelcase: false */
-          userModel.name.firstname = data.first_name;
-          userModel.name.lastname = data.last_name;
-          /*jshint camelcase: true */
+
+        userModel = user || new User.model();
+        userModel.identity.ontimeToken = data.accessToken;
+        if (!user) {
+          User.parseDataFromOntime(userModel, merge(data, request.body));
           options.upsert = true;
         }
-        return User.update({ _id: userModel._id }, userModel, options).lean().execAsync();
+        return User.model.update({ _id: userModel._id }, userModel, options).lean().execAsync();
       })
       .then(() => {
         Http.sendResponse(request, response, 200, { user: userModel }, '1');
@@ -66,7 +56,7 @@ class AuthenticationController extends AbstractController {
    * @method  GET
    */
   static meAction(request, response) {
-    User.findOne({ 'identity.token': request.token }).lean().execAsync()
+    User.model.findOne({ 'identity.token': request.token }).lean().execAsync()
       .then(user => {
         if (!user) {
           throw new EmptyUserError();
