@@ -14,24 +14,19 @@ const EmptyOrganizationError = require('../errors/EmptyOrganizationError');
  * - deleteAction
  */
 class OrganizationController extends AbstractController {
+
   /**
-   * Get organizations information
-   * - use "id" as criteria (request ONE organization)
-   * - use "lazy" as criteria (get only simple elements from organizations)
-   * - use "lazyVersion" as criteria (get complex elements from organizations without no-need one: versions && entries)
-   * @param   request
-   * @param   response
-   * @method  GET
+   * Private method to process the get of organizations by criteria
+   * @param  {Object} criteria Criteria for search on or several organizations
+   * @param  {Object} request
+   * @param  {Object} response
    */
-  static indexAction(request, response) {
+  static _processGetOrganizations(criteria, request, response) {
     const data = request.query;
-    let criteria = {},
-      fields = {};
+    let fields = {};
 
     Http.checkAuthorized(request, response)
       .then(() => {
-        criteria = Organization.parseParams(data);
-
         /*jshint eqeqeq: false */
         if (data.lazy == 1) {
           /*jshint eqeqeq: true */
@@ -47,13 +42,7 @@ class OrganizationController extends AbstractController {
         /*jshint eqeqeq: false */
         if (data.lazyVersion == 1) {
           /*jshint eqeqeq: true */
-          organizations.forEach(organization => {
-            Organization.walkRecursively(organization, element => {
-              if (element.entries !== undefined) {
-                delete element.entries;
-              }
-            });
-          });
+          Organization.cleanEntries(organizations);
         }
         Http.sendResponse(request, response, 200, { organizations: organizations });
       })
@@ -65,6 +54,30 @@ class OrganizationController extends AbstractController {
       .catch(error => {
         Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: get organizations.', error);
       });
+  }
+
+  /**
+   * Get organizations information
+   * - use "id" as criteria (request ONE organization)
+   * - use "lazy" as criteria (get only simple elements from organizations)
+   * - use "lazyVersion" as criteria (get complex elements from organizations without no-need one: versions && entries)
+   * @param   request
+   * @param   response
+   * @method  GET
+   */
+  static indexAction(request, response) {
+    const parsedParams = Organization.parseParams(request.query);
+    OrganizationController._processGetOrganizations(parsedParams, request, response);
+  }
+
+  /**
+   * Get ONE organization from the application by his OID (Object ID)
+   * @param  {Object} request
+   * @param  {Object} response
+   */
+  static getByIdAction(request, response) {
+    const parsedParams = Organization.parseParams(request.params);
+    OrganizationController._processGetOrganizations(parsedParams, request, response);
   }
 
   /**

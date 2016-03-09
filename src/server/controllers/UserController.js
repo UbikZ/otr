@@ -21,7 +21,7 @@ class UserController extends AbstractController {
    * @param  {Object} response
    */
   static _processGetUsers(criteria, request, response) {
-    return Http.checkAuthorized(request, response)
+    Http.checkAuthorized(request, response)
       .then(() => {
         return User.model.find(criteria).lean().execAsync();
       })

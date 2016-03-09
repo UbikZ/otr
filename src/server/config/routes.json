@@ -74,13 +74,22 @@
           "pattern": "/",
           "actionName": "indexAction",
           "checkSecurity": true
-        }, {
+        },
+        {
+          "name": "Get ONE organization",
+          "method": "GET",
+          "pattern": "/:id",
+          "actionName": "getByIdAction",
+          "checkSecurity": true
+        },
+        {
           "name": "Edit organization",
           "method": "POST",
           "pattern": "/edit",
           "actionName": "editAction",
           "checkSecurity": true
-        }, {
+        },
+        {
           "name": "Delete organization",
           "method": "DELETE",
           "pattern": "/delete/:organizationId",

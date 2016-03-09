@@ -48,6 +48,23 @@ class OrganizationModel extends AbstractModel {
   }
 
   /**
+   * Clean entries (to perfom) in Organization (recursively)
+   * @param  {Array<Object>} organizations
+   */
+  cleanEntries(organizations) {
+    organizations.forEach(organization => {
+      this.walkRecursively(organization, element => {
+        if (element.entries !== undefined) {
+          delete element.entries;
+          if (element.entries !== undefined) {
+            element.entries = null;
+          }
+        }
+      });
+    });
+  }
+
+  /**
    * No promise here (will see later)
    * - hard recursive method (performance needed)
    * @param model
@@ -101,14 +118,7 @@ class OrganizationModel extends AbstractModel {
         /*jshint eqeqeq: false */
         if (data.lazy == 1) {
           /*jshint eqeqeq: true */
-          this.walkRecursively(organization, element => {
-            if (element.entries !== undefined) {
-              delete element.entries;
-              if (element.entries !== undefined) {
-                element.entries = null;
-              }
-            }
-          });
+          this.cleanEntries([organization]);
           returnValue.organization = organization;
           delete item.entries;
           if (item.entries !== undefined) {

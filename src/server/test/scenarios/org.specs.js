@@ -228,7 +228,7 @@ module.exports = (agent, url) => {
         }, true);
       });
 
-      it('should request one organization', done => {
+      it('should request one organization (w/o param && w/ query)', done => {
         agent
           .get(url + '/organization?id=' + organizationId)
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
@@ -247,6 +247,24 @@ module.exports = (agent, url) => {
           .catch(err => done(err));
       });
 
+      it('should request one organization (w/ param && w/o query)', done => {
+        agent
+          .get(url + '/organization/' + organizationId)
+          .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
+          .expect(200)
+          .expect('Content-Type', 'application/json; charset=utf-8')
+          .then(res => {
+            const result = res.body;
+            assert.strictEqual(result.code, 200);
+            assert.isUndefined(result.error);
+            assert.isUndefined(result.messageCode);
+            assert.isArray(result.organizations);
+            assert.strictEqual(result.organizations.length, 1);
+            assert.isArray(result.organizations[0].projects);
+            done();
+          })
+          .catch(err => done(err));
+      });
 
       it('should request list of all organizations (without lazy loading)', done => {
         agent
@@ -287,7 +305,7 @@ module.exports = (agent, url) => {
       });
     });
 
-    describe('# [DELETE] ' + url + '/organization/delete/:idOrganization', () => {
+    describe('# [DELETE] ' + url + '/organization/delete/:id', () => {
       it('should get 404 not found (missing parameter)', done => {
         const apiUrl = url + '/organization/delete';
         agent
