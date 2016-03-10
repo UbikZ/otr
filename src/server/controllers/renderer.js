@@ -13,7 +13,7 @@ module.exports.controller = function (app, config) {
   var binPath;
 
   try {
-    binPath = require('phantomjs2').path;
+    binPath = require('phantomjs-prebuilt').path;
   } catch (e) {
     binPath = config.bin.phantomjs;
   }
