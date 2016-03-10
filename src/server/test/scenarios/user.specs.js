@@ -23,8 +23,7 @@ module.exports = (agent, url) => {
               stub.restore();
               done();
             })
-            .catch(err => done(err))
-          ;
+            .catch(err => done(err));
         });
       });
 
@@ -43,8 +42,7 @@ module.exports = (agent, url) => {
               stub.restore();
               done();
             })
-            .catch(err => done(err))
-          ;
+            .catch(err => done(err));
         }, true);
       });
 
@@ -63,8 +61,7 @@ module.exports = (agent, url) => {
             assert.strictEqual(result.users.length, 1);
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
     });
 
@@ -86,8 +83,7 @@ module.exports = (agent, url) => {
               stub.restore();
               done();
             })
-            .catch(err => done(err))
-          ;
+            .catch(err => done(err));
         });
       });
 
@@ -108,8 +104,7 @@ module.exports = (agent, url) => {
               stub.restore();
               done();
             })
-            .catch(err => done(err))
-          ;
+            .catch(err => done(err));
         }, true);
       });
 
@@ -130,8 +125,7 @@ module.exports = (agent, url) => {
               stub.restore();
               done();
             })
-            .catch(err => done(err))
-          ;
+            .catch(err => done(err));
         });
       });
 
@@ -155,8 +149,7 @@ module.exports = (agent, url) => {
             assert.strictEqual(result.user.info.job, sentData.job);
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
     });
   });

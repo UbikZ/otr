@@ -13,7 +13,7 @@ module.exports.controller = function (app, config) {
   var binPath;
 
   try {
-    binPath = require('phantomjs').path;
+    binPath = require('phantomjs2').path;
   } catch (e) {
     binPath = config.bin.phantomjs;
   }
@@ -50,7 +50,7 @@ module.exports.controller = function (app, config) {
           if (!fs.existsSync(filePath)) {
             http.response(res, 500, {}, '-1');
           } else {
-            http.response(res, 200, {fileName: path.basename(filePath)});
+            http.response(res, 200, { fileName: path.basename(filePath) });
           }
         });
       } else {

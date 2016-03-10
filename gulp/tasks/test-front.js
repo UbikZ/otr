@@ -10,9 +10,10 @@
  * @param config
  * @returns {Function}
  */
-export default (gulp, plugins, npmPackages, config) => {
+export default () => {
   return () => {
     if (process.env.NODE_ENV === 'staging') {
+      return;
       /*return gulp.src([config.path.client.test])
        .pipe(plugins.angularProtractor({
        'configFile': config.path.client.test.concat('/protractor.config.js'),

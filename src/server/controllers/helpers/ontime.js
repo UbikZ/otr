@@ -45,7 +45,7 @@ function me(accessToken, cb) {
 function tree(accessToken, idProject, cb) {
   var requestUrl = idProject === undefined ? 'projects' : 'releases';
   /*jshint camelcase: false */
-  var params = {'access_token': accessToken};
+  var params = { 'access_token': accessToken };
   if (idProject !== undefined) {
     params.filter_by_project_id = idProject ? idProject : 0;
   }

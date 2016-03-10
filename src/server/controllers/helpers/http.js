@@ -45,7 +45,7 @@ function ensureAuthorized(req, res, next) {
 }
 
 function checkAuthorized(req, res, cb) {
-  User.findOne({'identity.token': req.token}).lean().exec(function (err, user) {
+  User.findOne({ 'identity.token': req.token }).lean().exec(function (err, user) {
     if (err) {
       log(req, 'Internal error: check authorization.', err);
       response(res, 500, {}, '-1', err);
@@ -59,16 +59,16 @@ function checkAuthorized(req, res, cb) {
 }
 
 function ontimeRequestToken(req, res, cb) {
-  ontimeRequester.requestToken({username: req.body.username, password: req.body.password}, function (result) {
+  ontimeRequester.requestToken({ username: req.body.username, password: req.body.password }, function (result) {
     result = JSON.parse(result);
     if (result.error) {
       /*jshint camelcase: false */
       log(req, 'Ontime Error: ' + result.error_description);
       /*jshint camelcase: true */
-      response(res, 403, {error: result}, '-3', result.error);
+      response(res, 403, { error: result }, '-3', result.error);
       /*jshint camelcase: false */
     } else if (result.access_token) {
-      cb(merge(result.data, {accessToken: result.access_token}));
+      cb(merge(result.data, { accessToken: result.access_token }));
       /*jshint camelcase: true */
     } else {
       log(req, 'Ontime Error: issue during OnTime "/authenticate" request');
@@ -84,5 +84,3 @@ module.exports = {
   checkAuthorized: checkAuthorized,
   ontimeRequestToken: ontimeRequestToken,
 };
-
-

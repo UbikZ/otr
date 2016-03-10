@@ -14,14 +14,15 @@ module.exports.controller = function (app, config) {
   app.get(prefix, http.ensureAuthorized, function (req, res) {
     var data = req.query;
     http.checkAuthorized(req, res, function () {
-      var criteria = {}, fields = {};
+      var criteria = {},
+        fields = {};
       if (data.id) {
-        criteria = {_id: new mongoose.Types.ObjectId(data.id)};
+        criteria = { _id: new mongoose.Types.ObjectId(data.id) };
       }
       /*jshint eqeqeq: false */
       if (data.lazy == 1) {
         /*jshint eqeqeq: true */
-        fields = {name: 1, description: 1, active: 1, url: 1, logo: 1, creation: 1};
+        fields = { name: 1, description: 1, active: 1, url: 1, logo: 1, creation: 1 };
       }
 
       var query = Organization.find(criteria, fields).lean().populate('creation.user');
@@ -42,7 +43,7 @@ module.exports.controller = function (app, config) {
               });
             });
           }
-          http.response(res, 200, {organizations: organizations});
+          http.response(res, 200, { organizations: organizations });
         } else {
           http.log(req, 'Error: organizations is undefined (criteria = ' + criteria + ').');
           http.response(res, 404, {}, '-9');
@@ -60,19 +61,20 @@ module.exports.controller = function (app, config) {
           http.log(req, 'Internal error: delete organization', err);
           http.response(res, 500, {}, '-1', err);
         } else {
-          http.response(res, 200, {id: data.id}, '7');
+          http.response(res, 200, { id: data.id }, '7');
         }
       });
     });
   });
 
   app.post(prefix + '/edit', http.ensureAuthorized, function (req, res) {
-    var data = req.body, fields = {};
+    var data = req.body,
+      fields = {};
 
     /*jshint eqeqeq: false */
     if (data.lazy == 1) {
       /*jshint eqeqeq: true */
-      fields = {name: 1, description: 1, active: 1, url: 1, logo: 1, creation: 1};
+      fields = { name: 1, description: 1, active: 1, url: 1, logo: 1, creation: 1 };
     }
 
     http.checkAuthorized(req, res, function (user) {
@@ -96,20 +98,20 @@ module.exports.controller = function (app, config) {
           if (data.url !== undefined) {
             organization.url = data.url;
           }
-          organization.update = {user: user._id, date: new Date()};
-          Organization.update({_id: organization._id}, organization, {}).lean().exec(function (err) {
+          organization.update = { user: user._id, date: new Date() };
+          Organization.update({ _id: organization._id }, organization, {}).lean().exec(function (err) {
             if (err) {
               http.log(req, 'Internal error: update organization -> save organization', err);
               http.response(res, 500, {}, '-1', err);
             } else {
-              http.response(res, 200, {organization: organization}, '6');
+              http.response(res, 200, { organization: organization }, '6');
             }
           });
         } else {
           var org = new Organization({
             name: data.name,
-            creation: {user: user._id},
-            update: {user: user._id},
+            creation: { user: user._id },
+            update: { user: user._id },
           });
 
           if (data.description) {
@@ -125,12 +127,12 @@ module.exports.controller = function (app, config) {
             org.url = data.url;
           }
 
-          Organization.update({_id: org._id}, org, {upsert: true}).lean().exec(function (err) {
+          Organization.update({ _id: org._id }, org, { upsert: true }).lean().exec(function (err) {
             if (err) {
               http.log(req, 'Internal error: create organization -> save organization', err);
               http.response(res, 500, {}, '-1', err);
             } else {
-              http.response(res, 200, {organization: org}, '5');
+              http.response(res, 200, { organization: org }, '5');
             }
           });
         }

@@ -14,10 +14,9 @@
 export default (gulp, plugins, npmPackages, config) => {
   return () => {
     return gulp.src([config.path.client.app + '/views/**/*', '!' + config.path.client.app + '/views/index.html'])
-      .pipe(plugins.minifyHtml({empty: true, spare: true, quotes: true}))
+      .pipe(plugins.minifyHtml({ empty: true, spare: true, quotes: true }))
       .pipe(plugins.angularTemplateCache(
-        'template-cache.js',
-        {module: 'gulp.cached.tmpl', moduleSystem: 'Browserify', standalone: true}
+        'template-cache.js', { module: 'gulp.cached.tmpl', moduleSystem: 'Browserify', standalone: true }
       ))
       .pipe(gulp.dest(config.path.client.app + '/dist/cache'));
   };

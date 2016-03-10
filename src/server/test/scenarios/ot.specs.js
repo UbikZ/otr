@@ -22,8 +22,7 @@ module.exports = (agent, url) => {
             assert.strictEqual(result.messageCode, '-3');
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
     });
 
@@ -42,8 +41,7 @@ module.exports = (agent, url) => {
             assert.strictEqual(result.messageCode, '-1');
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
 
       it('should get an internal error', done => {
@@ -60,8 +58,7 @@ module.exports = (agent, url) => {
             assert.strictEqual(result.messageCode, '-3');
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
 
       it('should get ontime user information', done => {
@@ -81,14 +78,14 @@ module.exports = (agent, url) => {
             assert.isUndefined(result.messageCode);
             assert.isDefined(result.ontimeUser);
             ['id', 'login_id', 'is_active', 'is_locked', 'last_login_date_time', 'created_date_time',
-              'culture_info', 'first_name', 'last_name', 'email', 'is_admin']
-              .forEach(item => {
-                assert.strictEqual(result.ontimeUser[item], expectedData.data[item]);
-              });
+              'culture_info', 'first_name', 'last_name', 'email', 'is_admin'
+            ]
+            .forEach(item => {
+              assert.strictEqual(result.ontimeUser[item], expectedData.data[item]);
+            });
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
     });
 
@@ -107,8 +104,7 @@ module.exports = (agent, url) => {
             assert.strictEqual(result.messageCode, '-3');
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
 
       it('should get an error with token', done => {
@@ -125,8 +121,7 @@ module.exports = (agent, url) => {
             assert.strictEqual(result.messageCode, '-1');
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
 
       it('should get ontime tree items', done => {
@@ -152,8 +147,7 @@ module.exports = (agent, url) => {
             assert.strictEqual(result.tree[2].children[0].name, expectedData.data[2].children[0].name);
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
     });
 
@@ -172,8 +166,7 @@ module.exports = (agent, url) => {
             assert.strictEqual(result.messageCode, '-3');
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
 
       it('should get an error with token', done => {
@@ -190,8 +183,7 @@ module.exports = (agent, url) => {
             assert.strictEqual(result.messageCode, '-1');
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
 
       it('should get ontime tree items', done => {
@@ -224,8 +216,7 @@ module.exports = (agent, url) => {
             });
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
     });
   });

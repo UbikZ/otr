@@ -20,11 +20,11 @@ export default (gulp, plugins, npmPackages, config) => {
     });
 
     return gulp.src([
-      config.path.client.app + '/js/**/*.js',
-      'app.js',
-      config.path.server.root + '/**/*.js',
-      config.path.scripts + '/**/*.js',
-    ]).pipe(plugins.jshint())
+        config.path.client.app + '/js/**/*.js',
+        'app.js',
+        config.path.server.root + '/**/*.js',
+        config.path.scripts + '/**/*.js',
+      ]).pipe(plugins.jshint())
       .pipe(plugins.jshint.reporter(jshintStylish))
       .pipe(exitOnJshintError);
   };

@@ -9,7 +9,7 @@ const OrganizationModel = require('../../models/organization');
 
 module.exports = (agent, url) => {
   describe('> Item API', () => {
-    let documentId/*, versionId, versionOtherId*/;
+    let documentId /*, versionId, versionOtherId*/ ;
     before('should create new organization', done => {
       const sentData = require('./../fixtures/organization/create');
       agent
@@ -36,8 +36,7 @@ module.exports = (agent, url) => {
           global.organizationId = result.organization._id;
           done();
         })
-        .catch(err => done(err))
-      ;
+        .catch(err => done(err));
     });
 
     describe('# [POST] ' + url + '/item/create', () => {
@@ -56,12 +55,11 @@ module.exports = (agent, url) => {
             assert.strictEqual(result.messageCode, '-1');
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
 
       it('should get an error because bad organization identifier-type given', done => {
-        const sentData = {organizationId: 'badIdea#joke'};
+        const sentData = { organizationId: 'badIdea#joke' };
         agent
           .post(url + '/item/create')
           .send(sentData)
@@ -75,12 +73,11 @@ module.exports = (agent, url) => {
             assert.strictEqual(result.messageCode, '-1');
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
 
       it('should get an error because bad (not known) organization identifier given', done => {
-        const sentData = {organizationId: '569a498efd2e11a55a2822f4'};
+        const sentData = { organizationId: '569a498efd2e11a55a2822f4' };
         agent
           .post(url + '/item/create')
           .send(sentData)
@@ -94,8 +91,7 @@ module.exports = (agent, url) => {
             assert.strictEqual(result.messageCode, '-5');
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
 
       it('should get an error because no "parentId" and no "project" type given', done => {
@@ -114,8 +110,7 @@ module.exports = (agent, url) => {
             assert.strictEqual(result.messageCode, '-7');
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
 
       /*it('should get an error because unknown parentId given', done => {
@@ -157,8 +152,7 @@ module.exports = (agent, url) => {
               stub.restore();
               done();
             })
-            .catch(err => done(err))
-          ;
+            .catch(err => done(err));
         });
       });
 
@@ -187,8 +181,7 @@ module.exports = (agent, url) => {
             global.projectId = result.item._id;
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
 
       it('should get an error because bad  "project" type given', done => {
@@ -208,8 +201,7 @@ module.exports = (agent, url) => {
             assert.strictEqual(result.messageCode, '-7');
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
 
       it('should create a new project in the only project of the organization', done => {
@@ -239,8 +231,7 @@ module.exports = (agent, url) => {
             global.projectId = result.item._id;
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
 
       it('should create a new document in the subProject of the only project of the organization', done => {
@@ -274,8 +265,7 @@ module.exports = (agent, url) => {
             documentId = result.item._id;
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
 
       it('should get an error because no "ontimeId" given (for version create)', done => {
@@ -296,8 +286,7 @@ module.exports = (agent, url) => {
             assert.strictEqual(result.messageCode, '-7');
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
 
       /*it('should get an error because ontimeRequester.items throw an error', done => {
@@ -524,12 +513,11 @@ module.exports = (agent, url) => {
             assert.strictEqual(result.messageCode, '-1');
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
 
       it('should get an error because bad organization identifier-type given', done => {
-        const sentData = {organizationId: 'badIdea#joke'};
+        const sentData = { organizationId: 'badIdea#joke' };
         agent
           .post(url + '/item/update')
           .send(sentData)
@@ -543,12 +531,11 @@ module.exports = (agent, url) => {
             assert.strictEqual(result.messageCode, '-1');
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
 
       it('should get an error because bad (not known) organization identifier given', done => {
-        const sentData = {organizationId: '569a498efd2e11a55a2822f4'};
+        const sentData = { organizationId: '569a498efd2e11a55a2822f4' };
         agent
           .post(url + '/item/update')
           .send(sentData)
@@ -562,8 +549,7 @@ module.exports = (agent, url) => {
             assert.strictEqual(result.messageCode, '-5');
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
 
       it('should get an error because bad not parentId / "project" type given', done => {
@@ -582,14 +568,12 @@ module.exports = (agent, url) => {
             assert.strictEqual(result.messageCode, '-8');
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
 
       it('should get an error because no "data._id" given', done => {
         const sentData = Object.assign(
-          require('./../fixtures/item/update-ok-1'),
-          {organizationId: global.organizationId}
+          require('./../fixtures/item/update-ok-1'), { organizationId: global.organizationId }
         );
         agent
           .post(url + '/item/update')
@@ -604,8 +588,7 @@ module.exports = (agent, url) => {
             assert.strictEqual(result.messageCode, '-8');
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
 
       /*it('should get an error because bad "data._id" given', done => {
@@ -632,7 +615,7 @@ module.exports = (agent, url) => {
 
       it('should update an item (generic way for projects, documents and versions)', done => {
         const expectedData = require('./../fixtures/item/update-ok-1');
-        const sentData = Object.assign(expectedData, {organizationId: global.organizationId, _id: documentId});
+        const sentData = Object.assign(expectedData, { organizationId: global.organizationId, _id: documentId });
         agent
           .post(url + '/item/update')
           .send(sentData)
@@ -655,8 +638,7 @@ module.exports = (agent, url) => {
             assert.strictEqual(result.item.description, expectedData.description);
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
 
       /*it('should update a version with lazy', done => {
@@ -700,8 +682,7 @@ module.exports = (agent, url) => {
             assert.strictEqual(result.messageCode, '-5');
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
 
       it('should get an error because bad organization identifier-type given', done => {
@@ -717,8 +698,7 @@ module.exports = (agent, url) => {
             assert.strictEqual(result.messageCode, '-1');
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
 
       it('should get an error because bad (not known) organization identifier given', done => {
@@ -734,8 +714,7 @@ module.exports = (agent, url) => {
             assert.strictEqual(result.messageCode, '-5');
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
 
       /*it('should get an error because unknown item identifier given', done => {
@@ -774,8 +753,7 @@ module.exports = (agent, url) => {
             });
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
 
       it('should get an item (document)', done => {
@@ -797,8 +775,7 @@ module.exports = (agent, url) => {
             });
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
 
       /*it('should get an item (version)', done => {
@@ -889,8 +866,7 @@ module.exports = (agent, url) => {
             });
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
     });
 
@@ -910,12 +886,11 @@ module.exports = (agent, url) => {
             assert.strictEqual(result.messageCode, '-1');
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
 
       it('should get an error because bad organization identifier-type given', done => {
-        const sentData = {organizationId: 'badIdea#joke'};
+        const sentData = { organizationId: 'badIdea#joke' };
         agent
           .post(url + '/item/delete')
           .send(sentData)
@@ -929,12 +904,11 @@ module.exports = (agent, url) => {
             assert.strictEqual(result.messageCode, '-1');
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
 
       it('should get an error because bad (not known) organization identifier given', done => {
-        const sentData = {organizationId: '569a498efd2e11a55a2822f4'};
+        const sentData = { organizationId: '569a498efd2e11a55a2822f4' };
         agent
           .post(url + '/item/delete')
           .send(sentData)
@@ -948,12 +922,11 @@ module.exports = (agent, url) => {
             assert.strictEqual(result.messageCode, '-5');
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
 
       it('should get an error because no "data.itemId" given', done => {
-        const sentData = {organizationId: global.organizationId};
+        const sentData = { organizationId: global.organizationId };
         agent
           .post(url + '/item/delete')
           .send(sentData)
@@ -967,8 +940,7 @@ module.exports = (agent, url) => {
             assert.strictEqual(result.messageCode, '-6');
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
 
       /*it('should get an error because bad "data.itemId" given', done => {
@@ -1042,7 +1014,7 @@ module.exports = (agent, url) => {
       });*/
 
       it('should delete an item of document item', done => {
-        const sentData = {organizationId: global.organizationId, itemId: documentId};
+        const sentData = { organizationId: global.organizationId, itemId: documentId };
         agent
           .post(url + '/item/delete')
           .send(sentData)
@@ -1061,8 +1033,7 @@ module.exports = (agent, url) => {
             });
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
     });
   });

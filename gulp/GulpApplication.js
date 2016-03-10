@@ -49,7 +49,7 @@ function createTask(closure, dependencies = []) {
   return {
     module: closure,
     requires: dependencies,
-  }
+  };
 }
 
 /**
@@ -89,8 +89,27 @@ class GulpApplication {
    */
   _registerPlugins() {
     this.plugins = {
-      browserify, babelify, tsify, nodeResolve, source, streamify, del, mapStream, less, concat, uglify, minifyCss,
-      minifyHtml, rev, buffer, gzip, jshint, istanbul, mocha, coveralls, /*angularProtractor,*/ angularTemplateCache,
+      browserify,
+      babelify,
+      tsify,
+      nodeResolve,
+      source,
+      streamify,
+      del,
+      mapStream,
+      less,
+      concat,
+      uglify,
+      minifyCss,
+      minifyHtml,
+      rev,
+      buffer,
+      gzip,
+      jshint,
+      istanbul,
+      mocha,
+      coveralls,
+      /*angularProtractor,*/ angularTemplateCache,
       gulpIf
     };
 

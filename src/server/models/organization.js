@@ -6,27 +6,27 @@ const Setting = require('./setting').schema;
 const utilsHelper = require('./helpers/utils');
 
 const schema = new mongoose.Schema({
-  name: {type: String, index: {unique: true}, trim: true, require: true},
-  description: {type: String, trim: true},
+  name: { type: String, index: { unique: true }, trim: true, require: true },
+  description: { type: String, trim: true },
   active: Boolean,
-  url: {type: String, trim: true},
-  logo: {type: String, trim: true},
+  url: { type: String, trim: true },
+  logo: { type: String, trim: true },
   address: {
-    line1: {type: String, trim: true},
-    line2: {type: String, trim: true},
-    line3: {type: String, trim: true},
-    postCode: {type: String, trim: true},
-    region: {type: String, trim: true},
-    city: {type: String, trim: true},
-    country: {type: String, trim: true}
+    line1: { type: String, trim: true },
+    line2: { type: String, trim: true },
+    line3: { type: String, trim: true },
+    postCode: { type: String, trim: true },
+    region: { type: String, trim: true },
+    city: { type: String, trim: true },
+    country: { type: String, trim: true }
   },
   creation: {
-    user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
-    date: {type: Date, default: Date.now},
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    date: { type: Date, default: Date.now },
   },
   update: {
-    user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
-    date: {type: Date, default: Date.now},
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    date: { type: Date, default: Date.now },
   },
   projects: [Project],
   setting: Setting,

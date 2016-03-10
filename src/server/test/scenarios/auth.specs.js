@@ -26,12 +26,11 @@ module.exports = (agent, url) => {
             assert.strictEqual(result.messageCode, '-1');
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
 
       it('should get an internal error on sign-up (mongo fail)', done => {
-        const sentData = {username: 'test_stage', password: 'test_stage'};
+        const sentData = { username: 'test_stage', password: 'test_stage' };
         const expectedData = require('./../fixtures/auth/signup');
         ontimeRequester.requestToken = (authObject, cb) => {
           /*jshint camelcase: false */
@@ -54,13 +53,12 @@ module.exports = (agent, url) => {
               stub.restore();
               done();
             })
-            .catch(err => done(err))
-          ;
+            .catch(err => done(err));
         });
       });
 
       it('should get an internal error on the create (mongo fail)', done => {
-        const sentData = {username: 'test_stage', password: 'test_stage'};
+        const sentData = { username: 'test_stage', password: 'test_stage' };
         const expectedData = require('./../fixtures/auth/signup');
         ontimeRequester.requestToken = (authObject, cb) => {
           /*jshint camelcase: false */
@@ -83,13 +81,12 @@ module.exports = (agent, url) => {
               stub.restore();
               done();
             })
-            .catch(err => done(err))
-          ;
+            .catch(err => done(err));
         });
       });
 
       it('should sign-up new user the first time', done => {
-        const sentData = {username: 'test_stage', password: 'test_stage'};
+        const sentData = { username: 'test_stage', password: 'test_stage' };
         const expectedData = require('./../fixtures/auth/signup');
         ontimeRequester.requestToken = (authObject, cb) => {
           /*jshint camelcase: false */
@@ -119,12 +116,11 @@ module.exports = (agent, url) => {
             tokenOtBearer = result.user.identity.ontimeToken;
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
 
       it('should get an internal error on sign-up same user the others times (mongo fail)', done => {
-        const sentData = {username: 'test_stage', password: 'test_stage'};
+        const sentData = { username: 'test_stage', password: 'test_stage' };
         helpers.mockModel(mongoose.model('User'), 'update', stub => {
           agent
             .post(url + '/sign-up')
@@ -139,20 +135,20 @@ module.exports = (agent, url) => {
               stub.restore();
               done();
             })
-            .catch(err => done(err))
-          ;
+            .catch(err => done(err));
         });
       });
 
       it('should sign-up same user the others times', done => {
-        const sentData = {username: 'test_stage', password: 'test_stage'};
+        const sentData = { username: 'test_stage', password: 'test_stage' };
         agent
           .post(url + '/sign-up')
           .send(sentData)
           .expect(200)
           .expect('Content-Type', 'application/json; charset=utf-8')
           .then(res => {
-            const result = res.body, expectedData = require('./../fixtures/auth/signup');
+            const result = res.body,
+              expectedData = require('./../fixtures/auth/signup');
             assert.strictEqual(result.code, 200);
             assert.isUndefined(result.error);
             assert.strictEqual(result.messageCode, '1');
@@ -171,8 +167,7 @@ module.exports = (agent, url) => {
             global.tokenBearer = tokenBearer = result.user.identity.token;
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
     });
 
@@ -190,8 +185,7 @@ module.exports = (agent, url) => {
             assert.strictEqual(result.messageCode, '-3');
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
 
       it('should get an internal error on request information for logged user (mongo fail)', done => {
@@ -209,8 +203,7 @@ module.exports = (agent, url) => {
               stub.restore();
               done();
             })
-            .catch(err => done(err))
-          ;
+            .catch(err => done(err));
         });
       });
 
@@ -221,7 +214,8 @@ module.exports = (agent, url) => {
           .expect(200)
           .expect('Content-Type', 'application/json; charset=utf-8')
           .then(res => {
-            const result = res.body, expectedData = require('./../fixtures/auth/signup');
+            const result = res.body,
+              expectedData = require('./../fixtures/auth/signup');
             assert.strictEqual(result.code, 200);
             assert.isUndefined(result.error);
             assert.isUndefined(result.messageCode);
@@ -236,8 +230,7 @@ module.exports = (agent, url) => {
             assert.strictEqual(result.user.identity.token, tokenBearer);
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
     });
   });

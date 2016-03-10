@@ -22,7 +22,7 @@ module.exports.controller = (app, config) => {
   app.post(prefix + '/sign-up', (req, res) => {
     http.ontimeRequestToken(req, res, userData => {
       let userModel = {};
-      User.findOne({'info.email': userData.email}).lean().execAsync()
+      User.findOne({ 'info.email': userData.email }).lean().execAsync()
         .then(user => {
           let options = {};
           if (user) {
@@ -40,16 +40,15 @@ module.exports.controller = (app, config) => {
             /*jshint camelcase: true */
             options.upsert = true;
           }
-          return User.update({_id: userModel._id}, userModel, options).lean().exec();
+          return User.update({ _id: userModel._id }, userModel, options).lean().exec();
         })
         .then(() => {
-          http.response(res, 200, {user: userModel}, '1');
+          http.response(res, 200, { user: userModel }, '1');
         })
         .catch(err => {
           http.log(req, 'Internal error: check /sign-up.', err);
           http.response(res, 500, {}, '-1', err);
-        })
-      ;
+        });
     });
   });
 
@@ -57,10 +56,10 @@ module.exports.controller = (app, config) => {
    * Get Ontime information about logged user
    */
   app.get(prefix + '/me', http.ensureAuthorized, (req, res) => {
-    User.findOne({'identity.token': req.token}).lean().execAsync()
+    User.findOne({ 'identity.token': req.token }).lean().execAsync()
       .then(user => {
         if (user) {
-          http.response(res, 200, {user: user});
+          http.response(res, 200, { user: user });
         } else {
           http.log(req, 'Error: user with token (' + req.token + ') not found.');
           http.response(res, 404, {}, '-3');
@@ -69,7 +68,6 @@ module.exports.controller = (app, config) => {
       .catch(err => {
         http.log(req, 'Internal error: check /me', err);
         http.response(res, 500, {}, '-1', err);
-      })
-    ;
+      });
   });
 };

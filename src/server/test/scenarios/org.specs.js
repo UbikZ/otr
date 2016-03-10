@@ -25,8 +25,7 @@ module.exports = (agent, url) => {
               stub.restore();
               done();
             })
-            .catch(err => done(err))
-          ;
+            .catch(err => done(err));
         });
       });
 
@@ -47,8 +46,7 @@ module.exports = (agent, url) => {
               stub.restore();
               done();
             })
-            .catch(err => done(err))
-          ;
+            .catch(err => done(err));
         });
       });
 
@@ -78,8 +76,7 @@ module.exports = (agent, url) => {
             organizationId = result.organization._id;
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
 
       it('should get an internal error on update (mongo fail)', done => {
@@ -100,8 +97,7 @@ module.exports = (agent, url) => {
               stub.restore();
               done();
             })
-            .catch(err => done(err))
-          ;
+            .catch(err => done(err));
         });
       });
 
@@ -132,8 +128,7 @@ module.exports = (agent, url) => {
             assert.isDefined(result.organization.update.user);
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
 
       it('should update organization (with lazy loading)', done => {
@@ -164,8 +159,7 @@ module.exports = (agent, url) => {
             assert.isUndefined(result.organization.projects);
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
     });
 
@@ -185,8 +179,7 @@ module.exports = (agent, url) => {
               stub.restore();
               done();
             })
-            .catch(err => done(err))
-          ;
+            .catch(err => done(err));
         });
       });
 
@@ -205,8 +198,7 @@ module.exports = (agent, url) => {
             assert.strictEqual(result.organizations.length, 0);
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
 
       it('should get an error 404 not found (query issue)', done => {
@@ -224,8 +216,7 @@ module.exports = (agent, url) => {
               stub.restore();
               done();
             })
-            .catch(err => done(err))
-          ;
+            .catch(err => done(err));
         }, true);
       });
 
@@ -245,8 +236,7 @@ module.exports = (agent, url) => {
             assert.isArray(result.organizations[0].projects);
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
 
 
@@ -266,8 +256,7 @@ module.exports = (agent, url) => {
             assert.isArray(result.organizations[0].projects);
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
 
       it('should request list of all organizations (with lazy loading)', done => {
@@ -286,8 +275,7 @@ module.exports = (agent, url) => {
             assert.isUndefined(result.organizations[0].projects);
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
     });
 
@@ -296,7 +284,7 @@ module.exports = (agent, url) => {
         helpers.mockModel(mongoose.model('Organization'), 'findByIdAndRemove', stub => {
           agent
             .post(url + '/organization/delete')
-            .send({id: organizationId})
+            .send({ id: organizationId })
             .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
             .expect(500)
             .expect('Content-Type', 'application/json; charset=utf-8')
@@ -308,15 +296,14 @@ module.exports = (agent, url) => {
               stub.restore();
               done();
             })
-            .catch(err => done(err))
-          ;
+            .catch(err => done(err));
         });
       });
 
       it('should delete one organization', done => {
         agent
           .post(url + '/organization/delete')
-          .send({id: organizationId})
+          .send({ id: organizationId })
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .expect(200)
           .expect('Content-Type', 'application/json; charset=utf-8')
@@ -327,8 +314,7 @@ module.exports = (agent, url) => {
             assert.strictEqual(result.messageCode, '7');
             done();
           })
-          .catch(err => done(err))
-        ;
+          .catch(err => done(err));
       });
     });
   });

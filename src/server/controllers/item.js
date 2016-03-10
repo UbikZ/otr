@@ -15,7 +15,7 @@ module.exports.controller = function (app, config) {
   var prefix = '/api/v' + config.api.version + '/item';
 
   function saveOrganization(res, req, data, organization, modelItem, errorCode) {
-    OrganizationModel.update({_id: organization._id}, organization, {}).lean().exec(function (err) {
+    OrganizationModel.update({ _id: organization._id }, organization, {}).lean().exec(function (err) {
       if (err) {
         http.log(req, 'Internal error: create item -> save organization', err);
         http.response(res, 500, {}, '-1', err);
@@ -36,7 +36,7 @@ module.exports.controller = function (app, config) {
             modelItem.entries = null;
           }
         }
-        http.response(res, 200, {organization: organization, item: modelItem, type: data.type + 's'}, errorCode);
+        http.response(res, 200, { organization: organization, item: modelItem, type: data.type + 's' }, errorCode);
       }
     });
   }
@@ -146,8 +146,8 @@ module.exports.controller = function (app, config) {
               var item = {
                 name: data.name,
                 description: data.description,
-                update: {user: user._id, date: new Date()},
-                creation: {user: user._id, date: new Date()},
+                update: { user: user._id, date: new Date() },
+                creation: { user: user._id, date: new Date() },
               };
 
               if (data.parentId !== undefined) {
@@ -164,14 +164,14 @@ module.exports.controller = function (app, config) {
                     } else if (data.type === 'version') {
                       if (data.projectOntimeId !== undefined || data.releaseOntimeId !== undefined) {
                         modelItem = new VersionModel(item);
-                        modelItem.update = modelItem.creation = {user: user._id, date: new Date()};
-                        var ids = {projectId: data.projectOntimeId, releaseId: data.releaseOntimeId};
+                        modelItem.update = modelItem.creation = { user: user._id, date: new Date() };
+                        var ids = { projectId: data.projectOntimeId, releaseId: data.releaseOntimeId };
                         ontimeRequester.items(req.ontimeToken, ids, function (result) {
                           /*jshint camelcase: false */
                           result = JSON.parse(result);
                           if (result.error) {
                             http.log(req, 'Ontime Error: ' + result.error_description);
-                            http.response(res, 403, {error: result}, '-3', result.error);
+                            http.response(res, 403, { error: result }, '-3', result.error);
                           } else if (result.data) {
                             var elements = [];
                             result.data.forEach(function (item) {
@@ -200,7 +200,7 @@ module.exports.controller = function (app, config) {
 
                               var indexOfEntry =
                                 elements[indexOfParentProject].children[indexOfProject].children.pluck('ontimeId')
-                                  .indexOf(item.parent.id);
+                                .indexOf(item.parent.id);
 
                               if (indexOfEntry === -1) {
                                 elements[indexOfParentProject].children[indexOfProject].children.push(new EntryModel({
@@ -212,8 +212,8 @@ module.exports.controller = function (app, config) {
                                     durationMinutes: item.estimated_duration.duration_minutes,
                                     otrLow: item.custom_fields !== undefined ? item.custom_fields.custom_257 : null,
                                     otrHigh: item.custom_fields !== undefined ? item.custom_fields.custom_259 : null,
-                                    otrIsEstimated:
-                                      item.custom_fields !== undefined ? item.custom_fields.custom_262 : null,
+                                    otrIsEstimated: item.custom_fields !== undefined ?
+                                      item.custom_fields.custom_262 : null,
                                   },
                                 }));
                               } else {
@@ -227,8 +227,8 @@ module.exports.controller = function (app, config) {
                                       durationMinutes: item.estimated_duration.duration_minutes,
                                       otrLow: item.custom_fields !== undefined ? item.custom_fields.custom_257 : null,
                                       otrHigh: item.custom_fields !== undefined ? item.custom_fields.custom_259 : null,
-                                      otrIsEstimated:
-                                        item.custom_fields !== undefined ? item.custom_fields.custom_262 : null,
+                                      otrIsEstimated: item.custom_fields !== undefined ?
+                                        item.custom_fields.custom_262 : null,
                                     },
                                   }));
                               }
@@ -245,7 +245,7 @@ module.exports.controller = function (app, config) {
                               elements[indexOfParentProject].children[indexOfProject].size++;
                               if (indexOfEntry !== -1) {
                                 if (elements[indexOfParentProject]
-                                    .children[indexOfProject].children[indexOfEntry].size === undefined) {
+                                  .children[indexOfProject].children[indexOfEntry].size === undefined) {
                                   elements[indexOfParentProject].children[indexOfProject]
                                     .children[indexOfEntry].size = 0;
                                 }
@@ -271,19 +271,19 @@ module.exports.controller = function (app, config) {
 
                               // Sum of parent project entries
                               if (elements[indexOfParentProject]
-                                  .children[indexOfProject].estimate.durationMinutes === undefined) {
+                                .children[indexOfProject].estimate.durationMinutes === undefined) {
                                 elements[indexOfParentProject].children[indexOfProject].estimate.durationMinutes = 0;
                               }
                               elements[indexOfParentProject].children[indexOfProject].estimate.durationMinutes +=
                                 item.estimated_duration.duration_minutes;
                               if (elements[indexOfParentProject]
-                                  .children[indexOfProject].estimate.otrLow === undefined) {
+                                .children[indexOfProject].estimate.otrLow === undefined) {
                                 elements[indexOfParentProject].children[indexOfProject].estimate.otrLow = 0;
                               }
                               elements[indexOfParentProject].children[indexOfProject].estimate.otrLow +=
                                 item.custom_fields !== undefined ? item.custom_fields.custom_257 : 0;
                               if (elements[indexOfParentProject]
-                                  .children[indexOfProject].estimate.otrHigh === undefined) {
+                                .children[indexOfProject].estimate.otrHigh === undefined) {
                                 elements[indexOfParentProject].children[indexOfProject].estimate.otrHigh = 0;
                               }
                               elements[indexOfParentProject].children[indexOfProject].estimate.otrHigh +=
@@ -350,7 +350,7 @@ module.exports.controller = function (app, config) {
               if (data.description !== undefined) {
                 item.description = data.description;
               }
-              item.update = {user: user._id, date: new Date()};
+              item.update = { user: user._id, date: new Date() };
 
               if (data._id !== undefined) {
                 OrganizationModel.findDeepAttributeById(organization, data._id, function (element) {

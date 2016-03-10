@@ -38,9 +38,9 @@ function mockModel(model, method, callback, empty) {
       return this;
     },
     exec: function (cb) {
-      cb(empty === true ? null : {error: 'error'});
+      cb(empty === true ? null : { error: 'error' });
     },
-    execAsync: () => promise.reject({error: 'error'}),
+    execAsync: () => promise.reject({ error: 'error' }),
   }, callback);
 }
 

@@ -73,6 +73,7 @@
     "oclazyload": "^1.0.6",
     "pace": "github:hubspot/pace",
     "phantomjs": "^1.9.19",
+    "phantomjs2": "^2.2.0",
     "q": "^1.4.1",
     "querystring": "^0.2.0",
     "spinkit": "^1.2.5",

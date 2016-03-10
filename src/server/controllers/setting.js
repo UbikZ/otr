@@ -24,7 +24,7 @@ module.exports.controller = function (app, config) {
           http.log(req, 'Internal error: get setting', err);
           http.response(res, 500, {}, '-1', err);
         } else if (settings) {
-          http.response(res, 200, {setting: settings[0]});
+          http.response(res, 200, { setting: settings[0] });
         } else {
           http.log(req, 'Error: settings is undefined (criteria = ' + criteria + ').');
           http.response(res, 404, {}, '-10');
@@ -67,7 +67,7 @@ module.exports.controller = function (app, config) {
               modelItem.label = null;
             }
 
-            http.response(res, 200, {setting: modelItem});
+            http.response(res, 200, { setting: modelItem });
           } else {
             http.log(req, 'Error: organization with id (' + data.organizationId + ') not found.');
             http.response(res, 404, {}, '-5');
@@ -96,25 +96,25 @@ module.exports.controller = function (app, config) {
           http.response(res, 500, {}, '-1', err);
         } else if (setting) {
           setting = mapping.settingDtoToDal(setting, data);
-          setting.update = {user: user._id, date: new Date()};
+          setting.update = { user: user._id, date: new Date() };
 
-          Setting.update({_id: setting._id}, setting, {}).lean().exec(function (err) {
+          Setting.update({ _id: setting._id }, setting, {}).lean().exec(function (err) {
             if (err) {
               http.log(req, 'Internal error: update setting (in collection) -> save setting', err);
               http.response(res, 500, {}, '-1', err);
             } else {
-              http.response(res, 200, {setting: setting}, '9');
+              http.response(res, 200, { setting: setting }, '9');
             }
           });
         } else {
           var nSetting = new Setting(mapping.settingDtoToDal(undefined, data));
           nSetting.id = 42; // We force ONLY ONE setting on the collection
-          Setting.update({_id: nSetting._id}, nSetting, {upsert: true}).lean().exec(function (err) {
+          Setting.update({ _id: nSetting._id }, nSetting, { upsert: true }).lean().exec(function (err) {
             if (err) {
               http.log(req, 'Internal error: create setting (in collection)', err);
               http.response(res, 500, {}, '-1', err);
             } else {
-              http.response(res, 200, {setting: nSetting}, '8');
+              http.response(res, 200, { setting: nSetting }, '8');
             }
           });
         }
@@ -148,7 +148,7 @@ module.exports.controller = function (app, config) {
               Organization.findDeepAttributeById(organization, data.itemId, function (element) {
                 if (element !== undefined) {
                   modelItem = new Setting(mapping.settingDtoToDal(element.setting, data));
-                  modelItem.update = {user: user._id, date: new Date()};
+                  modelItem.update = { user: user._id, date: new Date() };
                   element.setting = modelItem;
                 } else {
                   http.log(req, 'Error: setting not found in organization (data.itemId = ' + data.itemId + ').');
@@ -157,11 +157,11 @@ module.exports.controller = function (app, config) {
               });
             } else {
               modelItem = mapping.settingDtoToDal(organization.setting, data);
-              modelItem.update = {user: user._id, date: new Date()};
+              modelItem.update = { user: user._id, date: new Date() };
               organization.setting = modelItem;
             }
 
-            Organization.update({_id: organization._id}, organization, {upsert: true}).lean().exec(function (err) {
+            Organization.update({ _id: organization._id }, organization, { upsert: true }).lean().exec(function (err) {
               if (err) {
                 http.log(req, 'Internal error: edit setting (in organization) -> save organization', err);
                 http.response(res, 500, {}, '-1', err);
