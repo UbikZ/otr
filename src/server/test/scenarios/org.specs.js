@@ -14,7 +14,7 @@ module.exports = (agent, url) => {
   describe('> Organization API', () => {
     let organizationId;
 
-    describe('# [POST] ' + url + '/organization/edit', () => {
+    describe('# [POST] ' + url + '/organization/edit/:id*?', () => {
       it('should get an internal error on "findById" (mongo fail)', done => {
         Helper.mockModel(mongoose.model('Organization'), 'findById', stub => {
           agent
@@ -110,9 +110,8 @@ module.exports = (agent, url) => {
 
       it('should update organization', done => {
         const sentData = require('./../fixtures/organization/update');
-        sentData._id = organizationId;
         agent
-          .post(url + '/organization/edit')
+          .post(url + '/organization/edit/' + organizationId)
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .send(sentData)
           .expect(200)
@@ -140,10 +139,9 @@ module.exports = (agent, url) => {
 
       it('should update organization (with lazy loading)', done => {
         const sentData = require('./../fixtures/organization/update');
-        sentData._id = organizationId;
         sentData.lazy = 1;
         agent
-          .post(url + '/organization/edit')
+          .post(url + '/organization/edit/' + organizationId)
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .send(sentData)
           .expect(200)

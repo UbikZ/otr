@@ -65,6 +65,26 @@ class OrganizationModel extends AbstractModel {
   }
 
   /**
+   * Parse data for update process
+   * @param  {Object} model organization model
+   * @param  {Object} data  data to update
+   */
+  parseData(model, data) {
+    const elements = [
+      { name: 'name', type: 'string' },
+      { name: 'description', type: 'string' },
+      { name: 'active', type: 'boolean' },
+      { name: 'logo', type: 'string' },
+      { name: 'url', type: 'string' },
+    ];
+    elements.forEach(object => {
+      model = Object.assign(model, this.attachParam(data, object.name, object.type));
+    });
+
+    return model;
+  }
+
+  /**
    * No promise here (will see later)
    * - hard recursive method (performance needed)
    * @param model

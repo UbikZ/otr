@@ -89,6 +89,7 @@ class OrganizationController extends AbstractController {
    * @method  POST
    */
   static editAction(request, response) {
+    const criteria = Organization.parseParams(request.params);
     const data = request.body;
     let userModel = {},
       fields = {},
@@ -104,20 +105,14 @@ class OrganizationController extends AbstractController {
     Http.checkAuthorized(request, response)
       .then(user => {
         userModel = user;
-        return Organization.model.findById(data._id, fields).lean().populate('creation.user').execAsync();
+        return Organization.model.findById(criteria._id, fields).lean().populate('creation.user').execAsync();
       })
       .then(organization => {
         isNew = !organization;
         orgModel = organization || new Organization.model();
-
-        orgModel.name = data.name || orgModel.name;
-        orgModel.description = data.description || orgModel.description;
-        orgModel.active = data.active !== undefined ? data.active : orgModel.active;
-        orgModel.logo = data.logo || orgModel.logo;
-        orgModel.url = data.url || orgModel.url;
+        Organization.parseData(orgModel, data);
         orgModel.creation = { user: userModel._id, date: new Date() };
         orgModel.update = { user: userModel._id, date: new Date() };
-
         return Organization.model.update({ _id: orgModel._id }, orgModel, { upsert: true }).lean().execAsync();
       })
       .then(() => {
@@ -138,13 +133,13 @@ class OrganizationController extends AbstractController {
    * @method  DELETE
    */
   static deleteAction(request, response) {
-    const params = request.params;
+    const criteria = Organization.parseParams(request.params);
     Http.checkAuthorized(request, response)
       .then(() => {
-        return Organization.model.findByIdAndRemove(params.organizationId).lean().execAsync();
+        return Organization.model.findByIdAndRemove(criteria._id).lean().execAsync();
       })
       .then(() => {
-        Http.sendResponse(request, response, 200, { id: params.organizationId }, '7');
+        Http.sendResponse(request, response, 200, { id: criteria._id }, '7');
       })
       .catch(error => {
         Http.sendResponse(request, response, 500, {}, '-1', 'Internal error: delete organization', error);

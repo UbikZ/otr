@@ -1,6 +1,7 @@
 'use strict';
 
 const mongoose = require('mongoose');
+const merge = require('merge');
 const jwt = require('jsonwebtoken');
 
 const otrConf = require('../config/ontime');
@@ -43,9 +44,12 @@ class UserModel extends AbstractModel {
   parseParams(parameters) {
     const params = parameters || {};
     let result = super.parseParams(parameters);
-
-    ['name.username', 'info.email'].forEach(key => {
-      this.attachParam(result, params, key);
+    const elements = [
+      { name: 'name.username', type: 'string' },
+      { name: 'info.email', type: 'string' },
+    ];
+    elements.forEach(object => {
+      result = merge.recursive(result, this.attachParam(params, object.name, object.key));
     });
 
     return result;
@@ -59,9 +63,16 @@ class UserModel extends AbstractModel {
    */
   parseData(model, data) {
     let result = model || {};
-
-    ['name.username', 'name.firstname', 'name.lastname', 'info.skype', 'info.location', 'info.job'].forEach(key => {
-      this.attachParam(result, data, key);
+    const elements = [
+      { name: 'name.username', type: 'string' },
+      { name: 'name.firstname', type: 'string' },
+      { name: 'name.lastname', type: 'string' },
+      { name: 'info.skype', type: 'string' },
+      { name: 'info.location', type: 'string' },
+      { name: 'info.job', type: 'string' },
+    ];
+    elements.forEach(object => {
+      result = merge.recursive(result, this.attachParam(data, object.name, object.type));
     });
 
     return result;
