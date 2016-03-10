@@ -1,6 +1,7 @@
 'use strict';
 
 const mongoose = require('mongoose');
+const merge = require('merge');
 
 /**
  * Abstract Model
@@ -52,6 +53,27 @@ class AbstractModel {
   }
 
   /**
+   * Handle query parsing
+   * @param  {ObjectId} query Query from HTTP (for example)
+   * @return {Object}         Formatted return with pre-parsed query object
+   */
+  parseQuery(query) {
+    const params = query || {};
+    let result = {};
+
+    const elements = [
+      { name: 'lazy', type: 'number' },
+      { name: 'lazyVersion', type: 'number' },
+      { name: 'previewMode', type: 'number' },
+    ];
+    elements.forEach(object => {
+      result = merge.recursive(result, this.attachParam(params, object.name, object.type));
+    });
+
+    return result;
+  }
+
+  /**
    * Attach / Set parameters
    * @param  {Object} data   Data to parse
    * @param  {String} key    key string for parameter
@@ -76,6 +98,7 @@ class AbstractModel {
   _parseResult(data, type) {
     const cases = {
       boolean: data => !!data,
+      number: data => Number(data),
     };
 
     if (cases[type]) {

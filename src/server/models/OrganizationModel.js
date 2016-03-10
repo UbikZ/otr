@@ -48,23 +48,6 @@ class OrganizationModel extends AbstractModel {
   }
 
   /**
-   * Clean entries (to perfom) in Organization (recursively)
-   * @param  {Array<Object>} organizations
-   */
-  cleanEntries(organizations) {
-    organizations.forEach(organization => {
-      this.walkRecursively(organization, element => {
-        if (element.entries !== undefined) {
-          delete element.entries;
-          if (element.entries !== undefined) {
-            element.entries = null;
-          }
-        }
-      });
-    });
-  }
-
-  /**
    * Parse data for update process
    * @param  {Object} model organization model
    * @param  {Object} data  data to update
@@ -82,6 +65,23 @@ class OrganizationModel extends AbstractModel {
     });
 
     return model;
+  }
+
+  /**
+   * Clean entries (to perfom) in Organization (recursively)
+   * @param  {Array<Object>} organizations
+   */
+  cleanEntries(organizations) {
+    organizations.forEach(organization => {
+      this.walkRecursively(organization, element => {
+        if (element.entries !== undefined) {
+          delete element.entries;
+          if (element.entries !== undefined) {
+            element.entries = null;
+          }
+        }
+      });
+    });
   }
 
   /**

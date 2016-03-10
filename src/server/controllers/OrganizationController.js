@@ -22,14 +22,12 @@ class OrganizationController extends AbstractController {
    * @param  {Object} response
    */
   static _processGetOrganizations(criteria, request, response) {
-    const data = request.query;
+    const data = Organization.parseQuery(request.query);
     let fields = {};
 
     Http.checkAuthorized(request, response)
       .then(() => {
-        /*jshint eqeqeq: false */
-        if (data.lazy == 1) {
-          /*jshint eqeqeq: true */
+        if (data.lazy === 1) {
           fields = { name: 1, description: 1, active: 1, url: 1, logo: 1, creation: 1 };
         }
 
@@ -39,12 +37,10 @@ class OrganizationController extends AbstractController {
         if (!organizations) {
           throw new EmptyOrganizationError();
         }
-        /*jshint eqeqeq: false */
-        if (data.lazyVersion == 1) {
-          /*jshint eqeqeq: true */
+        if (data.lazyVersion === 1) {
           Organization.cleanEntries(organizations);
         }
-        Http.sendResponse(request, response, 200, { organizations: organizations });
+        Http.sendResponse(request, response, 200, { organizations });
       })
       .catch(EmptyOrganizationError, error => {
         Http.sendResponse(
@@ -90,15 +86,14 @@ class OrganizationController extends AbstractController {
    */
   static editAction(request, response) {
     const criteria = Organization.parseParams(request.params);
+    const query = Organization.parseQuery(request.query);
     const data = request.body;
     let userModel = {},
       fields = {},
       orgModel = {},
       isNew = false;
 
-    /*jshint eqeqeq: false */
-    if (data.lazy == 1) {
-      /*jshint eqeqeq: true */
+    if (query.lazy === 1) {
       fields = { name: 1, description: 1, active: 1, url: 1, logo: 1, creation: 1 };
     }
 

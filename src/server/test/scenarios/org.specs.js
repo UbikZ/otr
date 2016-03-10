@@ -139,9 +139,8 @@ module.exports = (agent, url) => {
 
       it('should update organization (with lazy loading)', done => {
         const sentData = require('./../fixtures/organization/update');
-        sentData.lazy = 1;
         agent
-          .post(url + '/organization/edit/' + organizationId)
+          .post(url + '/organization/edit/' + organizationId + '?lazy=1')
           .set('Authorization', 'Bearer ' + global.tokenBearer + ' ' + global.tokenOtBearer)
           .send(sentData)
           .expect(200)
