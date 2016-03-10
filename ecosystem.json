@@ -25,15 +25,6 @@
       "pre-deploy-local": "bash ./scripts/staging/pre-deploy-local.sh",
       "post-deploy": "bash ./scripts/staging/post-deploy.sh"
     },
-    "pre-production": {
-      "user": "www-data",
-      "host": "ubikz.com",
-      "ref": "origin/master",
-      "repo": "https://github.com/UbikZ/otr.git",
-      "path": "/var/www/otr3/pre-prod",
-      "pre-deploy-local": "bash ./scripts/production/pre-deploy-local.sh",
-      "post-deploy": "bash ./scripts/production/post-deploy.sh"
-    },
     "production": {
       "user": "www-data",
       "host": "ubikz.com",
