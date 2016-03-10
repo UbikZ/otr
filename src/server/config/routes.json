@@ -85,7 +85,7 @@
         {
           "name": "Edit organization",
           "method": "POST",
-          "pattern": "/edit",
+          "pattern": "/edit/:id*?",
           "actionName": "editAction",
           "checkSecurity": true
         },
