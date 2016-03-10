@@ -53,17 +53,51 @@ class AbstractModel {
 
   /**
    * Attach / Set parameters
-   * @param  {ObjectId} result Result object which will me changed with parsed data object
    * @param  {Object} data   Data to parse
    * @param  {String} key    key string for parameter
-   * @return {object} 
+   * @return {object}
    */
-  attachParam(result, data, key) {
-    const elements = key.split('.');
-    if (data[key]) {
-      result[elements[0]] = result[elements[0]] || {};
-      result[elements[0]][elements[1]] = data[key];
+  attachParam(data, key, type) {
+    var item = {};
+    if (data[key] !== undefined) {
+      item = this._recurse(key.split('.'), this._parseResult(data[key], type));
     }
+
+    return item;
+  }
+
+  /**
+   * Parse result by Type
+   * - if no type provided, we send the data with no parsing
+   * @param  {Any} data data to parse
+   * @param  {String} type type of the data
+   * @return {Any}        data parsed
+   */
+  _parseResult(data, type) {
+    const cases = {
+      boolean: data => !!data,
+    };
+
+    if (cases[type]) {
+      return cases[type](data);
+    }
+    return data;
+  }
+
+  /**
+   * Recursive method to handle generic key parameter
+   * @param  {Array<Object>} elements
+   * @param  {Object} data
+   * @return {Object}
+   */
+  _recurse(elements, data) {
+    var obj = {};
+    if (elements.length === 1) {
+      obj[elements.shift()] = data;
+    } else {
+      obj[elements.shift()] = this._recurse(elements, data);
+    }
+    return obj;
   }
 }
 
